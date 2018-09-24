@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/ivForMenuItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/height_30"
+                android:layout_height="@dimen/height_30"
                 android:layout_marginStart="@dimen/height_5"
                 android:contentDescription="@null"
                 android:padding="@dimen/height_4" />

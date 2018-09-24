@@ -63,8 +63,8 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
                     mContext.getResources().getString(R.string.txt_lab_test)};
 
             icon = new int[]{
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera};
+                    R.drawable.capsules,
+                    R.drawable.syringe};
 
 
             holder.rvSubMenuNavigation.setLayoutManager(new LinearLayoutManager(mContext));

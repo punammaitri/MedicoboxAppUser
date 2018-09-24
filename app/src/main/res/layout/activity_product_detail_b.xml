@@ -1,9 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.aiprous.medicobox.activity.ProductDetailBActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <include layout="@layout/custom_toolbar"
+        android:id="@+id/toolbar_product"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_product">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/height_15"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADILIN 10mg Tablet 10's"
+            android:textColor="@color/colorblack"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADILIN 10mg Tablet 10's"
+            android:textColor="@color/colorblack"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginTop="@dimen/height_10"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="By Lincoln Pharmaceuticals Ltd"
+            android:textColor="@color/colorblack"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="@dimen/height_10"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/height_10">
+
+            <ImageView
+                android:layout_width="@dimen/height_25"
+                android:layout_height="@dimen/height_15"
+                android:src="@drawable/ic_menu_camera"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prescription Required"
+                android:textColor="@color/colorblack"
+                android:layout_marginLeft="@dimen/height_5"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/height_10"
+            android:background="@drawable/custom_gray_broder">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slidermedicine"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/height_10"
+                android:scaleType="fitXY"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/height_8"
+            app:cardElevation="@dimen/height_8"
+            android:layout_marginTop="@dimen/height_10"
+            android:layout_gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/height_5">
+
+                <RelativeLayout
+                    android:id="@+id/rlayout_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <TextView
+                            android:id="@+id/tv_mrp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MRP" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rs.68.60 (Rs.6.86/Tablet SR)"
+                            android:layout_marginLeft="@dimen/height_5"
+                            android:textColor="@color/colorblack"
+                            android:layout_toRightOf="@+id/tv_mrp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true">
+                        <TextView
+                            android:id="@+id/tv_minus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textSize="15sp"
+                            android:background="@drawable/rounded_textview"
+                            android:textColor="@color/colorblack"
+                            android:gravity="center"
+                            android:layout_toRightOf="@+id/tv_quantity"
+                            android:layout_marginRight="@dimen/height_10"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@+id/tv_minus"/>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+"
+                            android:textSize="15sp"
+                            android:background="@drawable/rounded_textview"
+                            android:textColor="@color/colorblack"
+                            android:gravity="center"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:layout_toRightOf="@+id/tv_value"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_marginTop="@dimen/height_15"
+                    android:layout_below="@+id/rlayout_price">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.55"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10 tablet sr in 1 strip"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10 tablet sr in 1 strip"
+                            android:layout_marginTop="@dimen/height_5"/>
+                    </LinearLayout>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.45"
+                        android:layout_gravity="center"
+                        android:background="@drawable/custom_btn_bg"
+                        android:text="Add to cart"
+                        android:textAllCaps="true"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_15"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drug Information"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2">
+
+                <ImageView
+                    android:layout_width="@dimen/height_25"
+                    android:layout_height="@dimen/height_25"
+                    android:src="@drawable/downarrow"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/height_10"
+            android:background="@color/divider_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/height_15">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:text="Substitutes for Adilin Tablet SR"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="VIEW ALL"
+                android:gravity="end"
+                android:textStyle="bold"
+                android:textColor="@color/coloryellow"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_substitute_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_10"/>
+
+
+
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

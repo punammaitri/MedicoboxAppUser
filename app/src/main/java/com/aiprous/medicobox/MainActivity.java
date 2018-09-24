@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.aiprous.medicobox.activity.ForgotPasswordActivity;
 import com.aiprous.medicobox.activity.ProductDescriptionActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
+import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.activity.SetPasswordActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.fragment.HomeFragment;
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))){
              startActivity(new Intent(mContext, ProductDescriptionActivity.class));
+             drawerLayout.closeDrawer(GravityCompat.START);
              return;
          }
          else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
@@ -169,6 +171,7 @@ public class MainActivity extends AppCompatActivity
             return;
         } else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
          {
+             startActivity(new Intent(this, ProductDetailBActivity.class));
              return;
          }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
          {
@@ -193,13 +196,13 @@ public class MainActivity extends AppCompatActivity
                     mContext.getResources().getString(R.string.txt_logout)};
 
             icon = new int[]{
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera,
-                    R.drawable.ic_menu_camera,};
+                    R.drawable.home,
+                    R.drawable.box,
+                    R.drawable.user,
+                    R.drawable.cart,
+                    R.drawable.bell,
+                    R.drawable.settings,
+                    R.drawable.logout,};
 
         navAdaptor = new NavAdaptor(mContext, this, title, icon);
         rvForNavigation.setAdapter(navAdaptor);
