@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorwhite">
+
+
+
+        <LinearLayout
+            android:id="@+id/llSubNavItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|start"
+            android:minHeight="@dimen/height_50"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/height_50"
+            android:layout_marginRight="@dimen/height_10"
+            android:layout_marginTop="@dimen/height_5">
+            <!--android:padding="@dimen/height_5">-->
+
+            <ImageView
+                android:id="@+id/ivForMenuItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/height_5"
+                android:contentDescription="@null"
+                android:padding="@dimen/height_4" />
+
+           <!-- <View
+                android:id="@+id/viewForDivider"
+                android:layout_width="@dimen/height_1"
+                android:layout_height="@dimen/height_25"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/height_10"
+                android:layout_marginStart="@dimen/height_5"
+                android:background="@color/divider_bg" />-->
+
+            <TextView
+                android:id="@+id/tvForMenuItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:text="abc"
+                android:layout_marginStart="@dimen/height_10"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack" />
+
+            <TextView
+                android:id="@+id/cart_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="@dimen/height_8"
+                android:layout_marginRight="@dimen/height_8"
+                android:background="@drawable/badge_background"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:visibility="gone" />
+            <!--android:textSize="@dimen/text_size_16" />-->
+
+
+        </LinearLayout>
+    <View
+        android:id="@+id/viewForDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="@color/colorblack" />
+
+
+</LinearLayout>
