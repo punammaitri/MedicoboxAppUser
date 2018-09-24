@@ -1,7 +1,9 @@
 package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.fragment.HomeFragment;
+import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 
 import java.util.ArrayList;
 
@@ -49,7 +52,12 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_mrp()+"  "+mDataArrayList.get(position).getProduct_discount()+"%"+"OFF");
         holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_price());
 
-
+        holder.cardRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, InstaProductDetailActivity.class));
+            }
+        });
 
 
     }
@@ -68,7 +76,8 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         TextView tv_product_mrp;
         @BindView(R.id.tv_product_price)
         TextView tv_product_price;
-
+        @BindView(R.id.cardRating)
+        CardView cardRating;
 
         ViewHolder(@NonNull View view) {
             super(view);

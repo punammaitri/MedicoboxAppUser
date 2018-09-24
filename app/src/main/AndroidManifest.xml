@@ -49,8 +49,17 @@
         <activity
             android:name="com.aiprous.medicobox.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.aiprous.medicobox.activity.ProductDetailBActivity"
+        <activity
+            android:name="com.aiprous.medicobox.activity.ProductDetailBActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.aiprous.medicobox.instaorder.InstaProductDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.aiprous.medicobox.instaorder.InstaAddNewListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

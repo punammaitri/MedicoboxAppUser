@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/height_5"
+    android:layout_marginLeft="@dimen/height_5"
+    android:layout_marginRight="@dimen/height_5"
+    android:layout_marginTop="@dimen/height_3"
+    app:cardCornerRadius="@dimen/height_8"
+    app:cardElevation="@dimen/height_8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/height_7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv_medicine_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:maxLines="2"
+                android:text="Diabetes"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25">
+
+                <ImageView
+                    android:layout_width="@dimen/height_25"
+                    android:layout_height="@dimen/height_25"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/height_20"
+                    android:src="@drawable/ic_menu_camera" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_add_to_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/height_3"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_btn_bg_gray"
+                    android:text="Add to cart"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                <Button
+                    android:id="@+id/btn_order_checkout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/height_3"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_btn_bg_gray"
+                    android:text="Order Checkout"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25">
+
+                <ImageView
+                    android:layout_width="@dimen/height_25"
+                    android:layout_height="@dimen/height_25"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/height_20"
+                    android:src="@drawable/ic_menu_camera" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
