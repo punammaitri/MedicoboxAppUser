@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
+import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import medicobox.aiprous.com.medicobox.R;
 
 
@@ -36,6 +39,8 @@ public class HomeFragment extends Fragment {
     SliderLayout slider_contactus;
     @BindView(R.id.rc_product)
     RecyclerView rc_product;
+    @BindView(R.id.relInstaOrder)
+    RelativeLayout relInstaOrder;
     View view;
     ArrayList<Integer> sliderimages=new ArrayList<>();
     ArrayList<Integer> sliderimagesCall=new ArrayList<>();
@@ -135,8 +140,12 @@ public class HomeFragment extends Fragment {
 
             slider_contactus.addSlider(textSliderView);
         }
+    }
 
 
+    @OnClick(R.id.relInstaOrder)
+    public void onViewInstaOrderClicked() {
+        startActivity(new Intent(getActivity(), InstaProductDetailActivity.class));
 
     }
 

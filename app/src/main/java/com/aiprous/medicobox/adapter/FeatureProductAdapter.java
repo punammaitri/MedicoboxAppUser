@@ -55,12 +55,6 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount()+"%"+"off");
         holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_price());
 
-        holder.cardRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, InstaProductDetailActivity.class));
-            }
-        });
 
 
     }
