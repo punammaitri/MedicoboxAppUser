@@ -7,372 +7,370 @@
     tools:context="com.aiprous.medicobox.activity.ProductDetailActivity">
 
 
-    <include layout="@layout/custom_toolbar"
-        android:id="@+id/layout_custom_toolbar"/>
+    <include
+        android:id="@+id/layout_custom_toolbar"
+        layout="@layout/custom_toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_below="@+id/layout_custom_toolbar">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/height_15">
+        android:layout_below="@+id/layout_custom_toolbar"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:text="Combiflam Icy Hot Fast Pain Relief Gel"
-                android:textColor="@color/colorblack"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold"/>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:gravity="center|top">
-
-                <ImageView
-                    android:layout_width="@dimen/height_30"
-                    android:layout_height="@dimen/height_30"
-                    android:src="@drawable/heart" />
-            </RelativeLayout>
-        </LinearLayout>
-
-         <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="@dimen/height_10"
-             android:text="Sanofi India Ltd"
-             android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/height_10">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs 150.00"
-                android:layout_marginRight="@dimen/height_10"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs 135.00"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold"
-                android:layout_marginRight="@dimen/height_10"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(per unit)"
-                android:layout_marginRight="@dimen/height_10"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="In Stock"
-                android:layout_marginRight="@dimen/height_10"
-                android:textColor="@android:color/holo_green_dark"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10% OFF"
-            android:layout_marginTop="@dimen/height_10"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold"/>
-
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="@dimen/height_10"
-            android:background="@drawable/custom_gray_broder">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_marginBottom="8dp"
-                android:layout_centerInParent="true" />
+            android:layout_margin="@dimen/height_15"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/SliderDots"
-                android:layout_below="@+id/viewPager"
-                android:orientation="horizontal"
-                android:gravity="center_vertical|center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:text="Combiflam Icy Hot Fast Pain Relief Gel"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/height_10"
-           android:gravity="center">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="center|top">
 
-
-           <TextView
-               android:id="@+id/tv_quantity"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Quantity"
-               android:layout_marginRight="@dimen/height_10"
-               android:textColor="@color/colorblack"
-               android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-              <!-- <TextView
-                   android:id="@+id/tv_minus"
-                   android:layout_width="@dimen/height_20"
-                   android:layout_height="@dimen/height_20"
-                   android:text="-"
-                   android:layout_marginRight="@dimen/height_10"
-                   android:textAppearance="?android:attr/textAppearanceLarge"
-                   android:textStyle="bold"
-                   android:gravity="center"
-                   android:background="@drawable/circle_bg"
-                    android:layout_toRightOf="@+id/tv_quantity" />-->
-
-           <TextView
-               android:id="@+id/tv_minus"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="-"
-               android:textSize="15sp"
-               android:background="@drawable/rounded_textview"
-               android:textColor="@color/colorblack"
-               android:gravity="center"
-               android:layout_toRightOf="@+id/tv_quantity"
-               android:layout_marginRight="@dimen/height_10"/>
-
+                    <ImageView
+                        android:layout_width="@dimen/height_30"
+                        android:layout_height="@dimen/height_30"
+                        android:src="@drawable/heart" />
+                </RelativeLayout>
+            </LinearLayout>
 
             <TextView
-               android:id="@+id/tv_value"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="1"
-               android:layout_marginRight="@dimen/height_10"
-               android:textAppearance="?android:attr/textAppearanceLarge"
-               android:textColor="@color/colorblack"
-               android:textStyle="bold"
-               android:layout_toRightOf="@+id/tv_minus"/>
-
-
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="+"
-               android:textSize="15sp"
-               android:background="@drawable/rounded_textview"
-               android:textColor="@color/colorblack"
-               android:gravity="center"
-               android:layout_marginRight="@dimen/height_10"
-               android:layout_toRightOf="@+id/tv_value"/>
-
-       </RelativeLayout>
-        
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/height_10"
-            android:background="@color/divider_bg"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/height_10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.77"
-                android:text="Delivery between Sep 10th-11th -445002"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.23"
-                android:text="CHANGE"
-                android:gravity="end"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/height_10"
-            android:background="@color/divider_bg"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_10"
-            android:weightSum="1"
-            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:text="Sanofi India Ltd"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product Review"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:text="Rs 150.00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:text="Rs 135.00"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product Review"/>
+                    android:layout_marginRight="@dimen/height_10"
+                    android:text="(per unit)" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:text="In Stock"
+                    android:textColor="@android:color/holo_green_dark" />
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:text="10% OFF"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold" />
+
+
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2">
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/height_10"
+                android:background="@drawable/custom_gray_broder">
 
-                <ImageView
-                    android:layout_width="@dimen/height_25"
-                    android:layout_height="@dimen/height_25"
-                    android:src="@drawable/downarrow"
-                    android:layout_centerInParent="true"/>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/SliderDots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewPager"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal" />
             </RelativeLayout>
-        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/height_10"
-            android:background="@color/divider_bg"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_10"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/height_10"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:text="Quantity"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorblack" />
+
+                <!-- <TextView
+                     android:id="@+id/tv_minus"
+                     android:layout_width="@dimen/height_20"
+                     android:layout_height="@dimen/height_20"
+                     android:text="-"
+                     android:layout_marginRight="@dimen/height_10"
+                     android:textAppearance="?android:attr/textAppearanceLarge"
+                     android:textStyle="bold"
+                     android:gravity="center"
+                     android:background="@drawable/circle_bg"
+                      android:layout_toRightOf="@+id/tv_quantity" />-->
+
+                <TextView
+                    android:id="@+id/tv_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:layout_toRightOf="@+id/tv_quantity"
+                    android:background="@drawable/rounded_textview"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="@color/colorblack"
+                    android:textSize="15sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:layout_toRightOf="@+id/tv_minus"
+                    android:text="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product Details"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:layout_toRightOf="@+id/tv_value"
+                    android:background="@drawable/rounded_textview"
+                    android:gravity="center"
+                    android:text="+"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textSize="15sp" />
 
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/height_10"
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:text="Delivery between Sep 10th-11th -445002"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.23"
+                    android:gravity="end"
+                    android:text="CHANGE"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="0dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/height_10"
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2">
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <ImageView
-                    android:layout_width="@dimen/height_25"
-                    android:layout_height="@dimen/height_25"
-                    android:src="@drawable/downarrow"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/height_10"
-            android:background="@color/divider_bg"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Product Review"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/colorblack"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Product Review" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="People Also Viewed "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:textColor="@color/colorblack"/>
+                </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_people_also_viewed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_10"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/height_10">
+                    <ImageView
+                        android:layout_width="@dimen/height_25"
+                        android:layout_height="@dimen/height_25"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/downarrow" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/height_10"
+                android:background="@color/divider_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Product Details"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/colorblack"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2">
+
+                    <ImageView
+                        android:layout_width="@dimen/height_25"
+                        android:layout_height="@dimen/height_25"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/downarrow" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/height_10"
+                android:background="@color/divider_bg" />
+
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.77"
-                android:text="More Products From Herbolalab India Pvt Ltd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="People Also Viewed "
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorblack"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.23"
-                android:text="MORE"
-                android:gravity="end"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_people_also_viewed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:text="More Products From Herbolalab India Pvt Ltd"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.23"
+                    android:gravity="end"
+                    android:text="MORE"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonRegistration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/height_10"
+                android:background="@color/colorPrimary"
+                android:text="Add to cart"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+
         </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonRegistration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/height_10"
-            android:text="Add to cart"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
-            android:textStyle="bold" />
-
-
-
-
-    </LinearLayout>
     </ScrollView>
 </RelativeLayout>
