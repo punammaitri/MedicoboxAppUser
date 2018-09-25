@@ -1,13 +1,18 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.adapter.SubstitutesProductAdapter;
+import com.aiprous.medicobox.adapter.ViewPagerAdapter;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -22,14 +27,18 @@ import medicobox.aiprous.com.medicobox.R;
 
 public class ProductDetailBActivity extends AppCompatActivity {
 
-    @BindView(R.id.slidermedicine)
-    SliderLayout slidermedicine;
+
+
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+    @BindView(R.id.SliderDots)
+    LinearLayout SliderDots;
     @BindView(R.id.rv_substitute_product)
     RecyclerView rv_substitute_product;
-    private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
-    ArrayList<Integer> sliderimages=new ArrayList<>();
     ArrayList<SubstituteProductModel> substituteProductModelArrayList=new ArrayList<>();
     private Context mcontext=this;
+    private int dotscount;
+    private ImageView[] dots;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,37 +49,55 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
     private void init() {
 
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
-        //add static slider images
-        sliderimages.add(R.drawable.bannerimage);
-        sliderimages.add(R.drawable.contactus);
+        //set view pager
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
+        dotscount = viewPagerAdapter.getCount();
+        dots = new ImageView[dotscount];
 
-        //show slider images
-        for (int i = 0; i < sliderimages.size(); i++) {
-            DefaultSliderView textSliderView = new DefaultSliderView(this);
-            final int imageUrl = sliderimages.get(i);
-            textSliderView.image(imageUrl).setScaleType(BaseSliderView.ScaleType.Fit).empty(R.drawable.bannerimage)
-                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                        @Override
-                        public void onSliderClick(BaseSliderView baseSliderView) {
-                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
+        for(int i = 0; i < dotscount; i++){
 
-                        }
-                    });
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
 
-            if (sliderimages.size() > 1)
-                slidermedicine.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
-            slidermedicine.setIndicatorVisibility(mVisibility);
-            slidermedicine.setCustomAnimation(new DescriptionAnimation());
-            slidermedicine.setDuration(4000);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            slidermedicine.addSlider(textSliderView);
+            params.setMargins(8, 0, 8, 0);
+
+            SliderDots.addView(dots[i], params);
+
         }
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                for(int i = 0; i< dotscount; i++){
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
+                }
+
+                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
+        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
+        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
+        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
+        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's","By Abbott",50));
 
         //set adapter
         rv_substitute_product.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
