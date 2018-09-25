@@ -39,4 +39,18 @@
         <item name="android:maxHeight">40dp</item>
     </style>
 
+    <style name="Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Customize your theme here. -->
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@android:color/transparent</item>
+
+    </style>
 </resources>

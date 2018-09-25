@@ -23,4 +23,9 @@
     <string name="txt_logout">Logout</string>
     <string name="txt_medicines">Medicines</string>
     <string name="txt_lab_test">Lab Test</string>
+    <string name="rs_symbol">\u20B968.60</string>
+    <string name="rs_symbol_with_tablet_name">( \u20B96.860/Tablet SR )</string>
+    <string name="order_checkout">Order &amp; Checkout</string>
+    <string name="text_suppliment">This supplement is used to prevent or treat a lack of viatamin E in the body. A low body level of vitamin E is rare. Most people who eat a normal diet do not need extra vitamin E.</string>
+    <string name="tabSubname"><u>Isoxsuprine 10mg</u></string>
 </resources>

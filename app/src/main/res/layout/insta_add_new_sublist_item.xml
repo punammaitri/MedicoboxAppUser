@@ -1,0 +1,86 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/height_5"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_tab_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/height_5"
+            android:layout_toRightOf="@+id/checkbox"
+            android:text="Tab Evion 400mg"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/coloryellow" />
+
+
+        <ImageView
+            android:layout_width="@dimen/height_25"
+            android:layout_height="@dimen/height_25"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/height_5"
+            android:layout_toRightOf="@+id/txt_tab_name"
+            android:src="@drawable/down_arrow" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/height_5">
+
+            <TextView
+                android:id="@+id/tv_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/height_10"
+                android:layout_toRightOf="@+id/tv_quantity"
+                android:background="@drawable/rounded_textview"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/tv_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/height_10"
+                android:layout_toRightOf="@+id/tv_minus"
+                android:text="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/height_10"
+                android:layout_toRightOf="@+id/tv_value"
+                android:background="@drawable/rounded_textview"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

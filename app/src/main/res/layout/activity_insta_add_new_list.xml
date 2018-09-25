@@ -89,37 +89,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/llayout_sort"
+        android:layout_above="@+id/btn_insta_list"
         android:layout_below="@+id/rlayout_list_toolbar"
         android:orientation="vertical">
-
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/height_10"
+            android:layout_marginTop="@dimen/height_8"
+            android:padding="@dimen/height_8"
             android:text="Insta Orders"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorblack"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/searchview_medicine"
-            android:iconifiedByDefault="false"
-            android:layout_marginTop="@dimen/height_8"
-            android:layout_marginLeft="@dimen/height_15"
-            android:layout_marginRight="@dimen/height_15"
-            android:background="@drawable/custom_btn_bg_white"
-            app:queryHint="Search Medicine to Add" />
-
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_medicine_list"
-            android:layout_marginTop="@dimen/height_8"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/height_8" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_insta_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/height_8"
+        android:layout_marginTop="@dimen/height_8"
+        android:background="@drawable/custom_btn_bg"
+        android:paddingBottom="-4dp"
+        android:paddingLeft="@dimen/height_35"
+        android:paddingRight="@dimen/height_35"
+        android:paddingTop="-4dp"
+        android:text="New Insta list"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

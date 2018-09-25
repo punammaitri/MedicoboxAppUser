@@ -2,6 +2,7 @@ package com.aiprous.medicobox.instaorder;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,11 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
 
     private ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList;
     private Context mContext;
-
-    public InstaAddNewListAdapter(Context mContext, ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList) {
+    private ArrayList<InstaAddNewListActivity.SubListModel> mSubListModelArray;
+    public InstaAddNewListAdapter(Context mContext, ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList, ArrayList<InstaAddNewListActivity.SubListModel> mSubListModel) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
+        this.mSubListModelArray = mSubListModel;
     }
 
     @NonNull
@@ -41,6 +43,9 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         //holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
         holder.tvMedicineType.setText(mDataArrayList.get(position).getMedicineName());
 
+        holder.list.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.list.setAdapter(new InstaProductSubListDetailAdapter(mContext, mSubListModelArray));
+
     }
 
     @Override
@@ -56,6 +61,9 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         Button btnAddToCart;
         @BindView(R.id.btn_order_checkout)
         Button btnOrderCheckout;
+        @BindView(R.id.list)
+        RecyclerView list;
+
 
         ViewHolder(@NonNull View view) {
             super(view);

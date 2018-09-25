@@ -26,18 +26,17 @@
                 android:id="@+id/tv_medicine_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
+                android:layout_weight="0.9"
                 android:maxLines="2"
                 android:text="Diabetes"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
+                android:textColor="@color/colorred" />
 
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25">
+                android:layout_weight="0.1">
 
                 <ImageView
                     android:layout_width="@dimen/height_25"
@@ -46,7 +45,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/height_20"
-                    android:src="@drawable/ic_menu_camera" />
+                    android:src="@drawable/dots" />
 
 
             </RelativeLayout>
@@ -63,36 +62,49 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
+                android:layout_marginBottom="@dimen/height_10"
+                android:layout_weight="0.9"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_add_to_cart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="@dimen/height_5"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_btn_bg_gray"
+                    android:background="@drawable/custom_btn_bg"
+                    android:paddingLeft="@dimen/height_5"
+                    android:paddingRight="@dimen/height_5"
+                    android:singleLine="true"
                     android:text="Add to cart"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
 
 
                 <Button
                     android:id="@+id/btn_order_checkout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="@dimen/height_5"
+                    android:layout_marginTop="@dimen/height_5"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_btn_bg_gray"
-                    android:text="Order Checkout"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:background="@drawable/custom_btn_bg"
+                    android:paddingLeft="@dimen/height_5"
+                    android:paddingRight="@dimen/height_5"
+                    android:singleLine="true"
+                    android:text="@string/order_checkout"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25">
+                android:layout_marginRight="@dimen/height_20"
+                android:layout_weight="0.1">
 
                 <ImageView
                     android:layout_width="@dimen/height_25"
@@ -100,12 +112,16 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/height_20"
-                    android:src="@drawable/ic_menu_camera" />
-
+                    android:src="@drawable/arrow_yellow" />
 
             </RelativeLayout>
+
         </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
