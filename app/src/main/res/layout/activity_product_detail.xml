@@ -398,6 +398,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/height_10"
+            android:layout_marginBottom="@dimen/height_20"
             android:text="Add to cart"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceMedium"

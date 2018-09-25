@@ -10,85 +10,8 @@
 
 
 
-    <RelativeLayout
-        android:id="@+id/rlayout_list_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
-
-        <RelativeLayout
-            android:id="@+id/rlayout_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             android:layout_centerVertical="true">
-
-            <ImageView
-                android:layout_width="@dimen/height_25"
-                android:layout_height="@dimen/height_25"
-                android:src="@drawable/backarrow"
-                android:layout_marginLeft="@dimen/height_20" />
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:id="@+id/rlayout_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/rlayout_back_button">
-
-            <ImageView
-                android:layout_width="@dimen/height_35"
-                android:layout_height="@dimen/height_35"
-                android:src="@drawable/ic_menu_camera"
-                android:layout_marginLeft="@dimen/height_10" />
-        </RelativeLayout>
-
-
-        <android.support.v7.widget.SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/rlayout_plus"
-            android:background="@drawable/custom_btn_bg_white"
-            android:layout_toLeftOf="@+id/rlayout_cart"
-            android:layout_marginLeft="@dimen/height_10"
-            android:layout_centerInParent="true"
-            >
-
-        </android.support.v7.widget.SearchView>
-
-        <RelativeLayout
-            android:id="@+id/rlayout_cart"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/height_20"
-            android:layout_alignParentRight="true">
-
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="@dimen/height_27"
-                android:layout_marginTop="@dimen/height_4"
-                android:background="@drawable/border_circle"
-                android:gravity="center"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/txtCart"
-                android:layout_width="22dp"
-                android:layout_height="25dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/white_cart"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        </RelativeLayout>
-    </RelativeLayout>
-
+    <include layout="@layout/custom_toolbar"
+        android:id="@+id/rlayout_list_toolbar"/>
 
 
    <LinearLayout

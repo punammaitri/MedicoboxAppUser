@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +21,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -51,8 +54,8 @@ public class MainActivity extends AppCompatActivity
     FrameLayout layoutContainer;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-    @BindView(R.id.tvMainToolbarTitle)
-    TextView tvMainToolbarTitle;
+   // @BindView(R.id.tvMainToolbarTitle)
+   //TextView tvMainToolbarTitle;
     private final String TAG = MainActivity.class.getSimpleName();
     private Unbinder unbinder;
     public static DrawerLayout drawerLayout;
@@ -70,13 +73,19 @@ public class MainActivity extends AppCompatActivity
          setContentView(R.layout.activity_main);
          unbinder = ButterKnife.bind(this);
 
-        toolbarMain = findViewById(R.id.toolbarMain);
-        toolbarMain.setContentInsetStartWithNavigation(0);
+       toolbarMain = findViewById(R.id.toolbarMain);
+       toolbarMain.setContentInsetStartWithNavigation(0);
          drawerLayout = findViewById(R.id.drawerLayout);
          init();
         }
 
       private void init() {
+
+          //set status bar color
+          Window window = this.getWindow();
+          window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+          window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+          window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
 
           homeFragment = new HomeFragment(this);
           setDrawerToggle();
@@ -115,6 +124,8 @@ public class MainActivity extends AppCompatActivity
                 hideKeyboard(mContext, drawerView);
             }
 
+
+
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -127,7 +138,7 @@ public class MainActivity extends AppCompatActivity
             }
         };
         drawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorwhite));
+        mDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorPrimary));
         mDrawerToggle.syncState();
     }
 
@@ -155,7 +166,7 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().popBackStackImmediate();
                 }
             }
-            tvMainToolbarTitle.setText(mContext.getResources().getString(R.string.txt_home));
+            //tvMainToolbarTitle.setText(mContext.getResources().getString(R.string.txt_home));
             addFragment();
            // BaseActivity.FirebaseAnalytics(mContext, "Home", "Navigation Menu to Home");
             return;
@@ -168,16 +179,19 @@ public class MainActivity extends AppCompatActivity
          else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
         {
             startActivity(new Intent(mContext, ProductDetailActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
             return;
         } else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
          {
              startActivity(new Intent(this, ProductDetailBActivity.class));
+             drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
+         }/*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
          {
 
              return;
-         }
+         }*/
+
 
     }
 
