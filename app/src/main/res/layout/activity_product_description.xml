@@ -165,7 +165,8 @@
             android:text="People Also Viewed "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
-            android:textColor="@color/colorblack"/>
+            android:textColor="@color/colorblack"
+            android:layout_marginTop="@dimen/height_10"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_people_also_viewed"

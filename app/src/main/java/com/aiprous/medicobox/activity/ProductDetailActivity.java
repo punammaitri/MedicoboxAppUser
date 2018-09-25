@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.adapter.ViewPagerAdapter;
@@ -34,6 +36,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     LinearLayout SliderDots;
     @BindView(R.id.rv_people_also_viewed)
     RecyclerView rv_people_also_viewed;
+    @BindView(R.id.tv_product_price)
+    TextView tv_product_price;
     ArrayList<HomeFragment.Product> mlistModelsArray=new ArrayList<>();
     private Context mcontext=this;
     private int dotscount;
@@ -48,6 +52,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void init() {
 
+        tv_product_price.setPaintFlags(tv_product_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         //set view pager
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);

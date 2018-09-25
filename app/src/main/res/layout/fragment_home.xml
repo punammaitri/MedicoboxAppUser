@@ -39,7 +39,7 @@
                         android:id="@+id/img_medicine"
                         android:layout_width="@dimen/height_50"
                         android:layout_height="@dimen/height_50"
-                        android:src="@drawable/ic_menu_manage" />
+                        android:src="@drawable/prescription" />
                 </RelativeLayout>
 
 
@@ -53,7 +53,9 @@
                     android:layout_toRightOf="@+id/img_file"
                     android:layout_weight="0.55"
                     android:gravity="center"
-                    android:text="Order with Prescription" />
+                    android:text="Order with Prescription"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold"/>
 
                 <RelativeLayout
                     android:id="@+id/rlayout_upload"
@@ -64,10 +66,12 @@
 
                     <Button
                         android:id="@+id/btn_upload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:text="Upload"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:textColor="@color/colorwhite"
+                        android:background="@drawable/custom_btn_bg"/>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -96,7 +100,7 @@
                         <ImageView
                             android:layout_width="@dimen/height_50"
                             android:layout_height="@dimen/height_50"
-                            android:src="@drawable/ic_menu_camera" />
+                            android:src="@drawable/capsules_home" />
                     </RelativeLayout>
 
                     <TextView
@@ -107,7 +111,8 @@
                         android:gravity="center"
                         android:text="MEDICINES"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -116,7 +121,7 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="100,000+ Medicines"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/coloryellow" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -136,7 +141,7 @@
                         <ImageView
                             android:layout_width="@dimen/height_50"
                             android:layout_height="@dimen/height_50"
-                            android:src="@drawable/ic_menu_camera" />
+                            android:src="@drawable/test_tubes" />
                     </RelativeLayout>
 
                     <TextView
@@ -147,7 +152,8 @@
                         android:gravity="center"
                         android:text="LAB TESTS"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -156,7 +162,7 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="Free sample Collection"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/coloryellow" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -185,7 +191,7 @@
                         <ImageView
                             android:layout_width="@dimen/height_50"
                             android:layout_height="@dimen/height_50"
-                            android:src="@drawable/ic_menu_camera" />
+                            android:src="@drawable/cardboxes" />
                     </RelativeLayout>
 
                     <TextView
@@ -195,9 +201,10 @@
                         android:layout_below="@+id/rlayout_quick_order"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="QUICK ORDERS"
+                        android:text="INSTA ORDERS"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -205,7 +212,7 @@
                         android:layout_below="@+id/tv_quick_order"
                         android:gravity="center"
                         android:text="65,000+ Products"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/coloryellow" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -225,7 +232,7 @@
                         <ImageView
                             android:layout_width="@dimen/height_50"
                             android:layout_height="@dimen/height_50"
-                            android:src="@drawable/ic_menu_camera" />
+                            android:src="@drawable/doctor" />
                     </RelativeLayout>
 
                     <TextView
@@ -237,7 +244,8 @@
                         android:singleLine="true"
                         android:text="E-CONSULTATION"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -246,7 +254,7 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="Chat for Free"
-                        android:textColor="@color/colorblack" />
+                        android:textColor="@color/coloryellow" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -254,7 +262,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
-                android:text="FEATURED PRODUCTS" />
+                android:text="FEATURED PRODUCTS"
+               android:textColor="@color/colorblack"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_product"

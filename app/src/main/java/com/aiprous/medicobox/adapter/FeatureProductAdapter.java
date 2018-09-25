@@ -2,6 +2,7 @@ package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +50,9 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
 
         holder.img_product.setImageResource(mDataArrayList.get(position).getProduct_image());
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getProduct_name());
-        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_mrp()+"  "+mDataArrayList.get(position).getProduct_discount()+"%"+"OFF");
+        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_mrp());
+        holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount()+"%"+"off");
         holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_price());
 
         holder.cardRating.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +81,8 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         TextView tv_product_price;
         @BindView(R.id.cardRating)
         CardView cardRating;
+        @BindView(R.id.tv_product_discount)
+        TextView tv_product_discount;
 
         ViewHolder(@NonNull View view) {
             super(view);

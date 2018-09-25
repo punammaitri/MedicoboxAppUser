@@ -3,7 +3,7 @@
     android:id="@+id/rlayout_list_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary">
+    android:background="@color/coloryellow">
 
 <RelativeLayout
     android:id="@+id/rlayout_back_button"
@@ -30,7 +30,7 @@
     <ImageView
         android:layout_width="@dimen/height_35"
         android:layout_height="@dimen/height_35"
-        android:src="@drawable/ic_menu_camera"
+        android:src="@drawable/plus"
         android:layout_marginLeft="@dimen/height_10" />
 </RelativeLayout>
 
@@ -65,14 +65,14 @@
         android:gravity="center"
         android:text="0"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/colorwhite" />
 
     <TextView
         android:id="@+id/txtCart"
         android:layout_width="22dp"
         android:layout_height="25dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/white_cart"
+        android:background="@drawable/cart"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
    </RelativeLayout>

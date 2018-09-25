@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aiprous.medicobox.activity.ProductDetailActivity">
+    tools:context="com.aiprous.medicobox.activity.ProductDetailActivity"
+    >
 
 
     <include layout="@layout/custom_toolbar"
@@ -13,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:layout_below="@+id/layout_custom_toolbar">
+        android:layout_below="@+id/layout_custom_toolbar"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="Combiflam Icy Hot Fast Pain Relief Gel"
-                android:textColor="@color/colorblack"
+                android:textColor="@color/colorPrimary"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
@@ -63,6 +65,7 @@
             android:layout_marginTop="@dimen/height_10">
 
             <TextView
+                android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rs 150.00"
@@ -87,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="In Stock"
                 android:layout_marginRight="@dimen/height_10"
-                android:textColor="@android:color/holo_green_dark"/>
+                android:textColor="@color/colorgreen"/>
 
         </LinearLayout>
 
@@ -141,17 +144,6 @@
                android:textColor="@color/colorblack"
                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-              <!-- <TextView
-                   android:id="@+id/tv_minus"
-                   android:layout_width="@dimen/height_20"
-                   android:layout_height="@dimen/height_20"
-                   android:text="-"
-                   android:layout_marginRight="@dimen/height_10"
-                   android:textAppearance="?android:attr/textAppearanceLarge"
-                   android:textStyle="bold"
-                   android:gravity="center"
-                   android:background="@drawable/circle_bg"
-                    android:layout_toRightOf="@+id/tv_quantity" />-->
 
            <TextView
                android:id="@+id/tv_minus"
@@ -219,7 +211,7 @@
                 android:text="CHANGE"
                 android:gravity="end"
                 android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/coloryellow"/>
         </LinearLayout>
 
         <View
@@ -249,22 +241,63 @@
                     android:textStyle="bold"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product Review"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5.0"
+                        android:textColor="@color/colorblack"
+                        android:textStyle="bold"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
+                    <RatingBar
+                        android:id="@+id/rateFirst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        style="@android:style/Widget.Holo.Light.RatingBar.Small"
+                        android:layout_marginLeft="@dimen/height_10"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9 review (s)"
+                        android:layout_marginLeft="@dimen/height_10"
+                        android:textStyle="bold"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+
+                </LinearLayout>
+
+
+<!--
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:fitsSystemWindows="true"
+                    style="@style/CustomRating"
+                    android:id="@+id/rating_bar"
+                    android:rating="5"
+                    android:layout_marginBottom="-20dp"/>-->
+
 
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2">
+                android:layout_weight="0.2"
+                android:layout_gravity="center">
 
                 <ImageView
                     android:layout_width="@dimen/height_25"
                     android:layout_height="@dimen/height_25"
-                    android:src="@drawable/downarrow"
+                    android:src="@drawable/right_arrow"
                     android:layout_centerInParent="true"/>
             </RelativeLayout>
         </LinearLayout>
@@ -306,7 +339,7 @@
                 <ImageView
                     android:layout_width="@dimen/height_25"
                     android:layout_height="@dimen/height_25"
-                    android:src="@drawable/downarrow"
+                    android:src="@drawable/right_arrow"
                     android:layout_centerInParent="true"/>
             </RelativeLayout>
         </LinearLayout>
@@ -324,7 +357,8 @@
             android:text="People Also Viewed "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
-            android:textColor="@color/colorblack"/>
+            android:textColor="@color/colorblack"
+            android:layout_marginTop="@dimen/height_10"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_people_also_viewed"
@@ -354,8 +388,9 @@
                 android:text="MORE"
                 android:gravity="end"
                 android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/coloryellow"/>
         </LinearLayout>
+
 
         <Button
             android:id="@+id/buttonRegistration"
@@ -372,7 +407,7 @@
 
 
 
-
     </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>

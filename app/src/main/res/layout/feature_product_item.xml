@@ -42,15 +42,32 @@
             android:text="Flexi-Tip Digital Thermometer"
             android:gravity="center"
             android:textColor="@color/colorblack"
+            android:textStyle="bold"
             android:layout_marginTop="@dimen/height_10"/>
 
-        <TextView
-            android:id="@+id/tv_product_mrp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Rs123 30% OFF"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="@dimen/height_10"/>
+            android:layout_marginTop="@dimen/height_10">
+            <TextView
+                android:id="@+id/tv_product_mrp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Rs123" />
+
+            <TextView
+                android:id="@+id/tv_product_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="30% OFF"
+                android:layout_marginLeft="@dimen/height_10"
+                android:textColor="@color/colorgreen"
+                />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -59,6 +76,7 @@
             android:text="Rs123"
             android:gravity="center"
             android:textColor="@color/colorblack"
+            android:textStyle="bold"
             android:layout_marginTop="@dimen/height_5"/>
 
 

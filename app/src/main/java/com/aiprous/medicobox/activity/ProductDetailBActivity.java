@@ -1,14 +1,18 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.adapter.SubstitutesProductAdapter;
@@ -35,10 +39,15 @@ public class ProductDetailBActivity extends AppCompatActivity {
     LinearLayout SliderDots;
     @BindView(R.id.rv_substitute_product)
     RecyclerView rv_substitute_product;
+    @BindView(R.id.tv_medicine_contains)
+    TextView tv_medicine_contains;
+    @BindView(R.id.spinner_count)
+    Spinner spinner_count;
     ArrayList<SubstituteProductModel> substituteProductModelArrayList=new ArrayList<>();
     private Context mcontext=this;
     private int dotscount;
     private ImageView[] dots;
+    String[] mValue = { "1 Strip", "2 Strip", "3 Strip", "4 Strip", "5 Strip"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +58,14 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
     private void init() {
 
+        //set spinner
+        //Creating the ArrayAdapter instance having the value list
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,mValue);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spinner_count.setAdapter(aa);
+        //add underline to text
+        tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         //set view pager
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
