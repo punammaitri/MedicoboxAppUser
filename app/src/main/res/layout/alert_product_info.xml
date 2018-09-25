@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_margin="@dimen/height_8"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/height_5"
-        app:cardElevation="0dp">
+        app:cardElevation="@dimen/height_5">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,11 +31,11 @@
                 <TextView
                     android:id="@+id/txtTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/height_30"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/height_15"
                     android:gravity="center"
                     android:text="Product Information"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/colorblack" />
 
                 <ImageView
@@ -44,7 +45,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/height_5"
+                    android:layout_marginRight="@dimen/height_15"
                     android:background="@drawable/rx" />
 
             </RelativeLayout>
@@ -98,15 +99,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="  "
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:text="  " />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/height_5"
+                    android:layout_marginLeft="@dimen/height_3"
                     android:layout_toRightOf="@+id/txtEmpty"
                     android:text="@string/rs_symbol_with_tablet_name"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -116,18 +116,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="@dimen/height_10"
+                    android:layout_marginLeft="@dimen/height_8"
                     android:layout_toLeftOf="@+id/txtEmpty"
                     android:text="@string/rs_symbol"
                     android:textColor="@color/colorblack"
-                    android:textSize="@dimen/height_28" />
+                    android:textSize="@dimen/height_25" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/height_15"
+                    android:layout_marginLeft="@dimen/height_12"
                     android:layout_toLeftOf="@+id/txt_price"
                     android:text="MRp"
                     android:textAllCaps="true"
@@ -179,22 +179,21 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/height_5"
-                    android:layout_marginRight="@dimen/height_5"
                     android:layout_toRightOf="@+id/txtMoreInfo"
-                    android:background="@drawable/ic_menu_camera" />
+                    android:background="@drawable/ic_arrow_right_yellow" />
 
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/height_5"
                     android:layout_toRightOf="@+id/img_forward_arrow"
-                    android:background="@drawable/ic_menu_camera" />
+                    android:background="@drawable/ic_arrow_right_yellow" />
 
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/txtOk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"

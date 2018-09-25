@@ -1,8 +1,8 @@
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/height_5"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:padding="@dimen/height_5">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,16 +24,17 @@
             android:layout_toRightOf="@+id/checkbox"
             android:text="Tab Evion 400mg"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/coloryellow" />
+            android:textColor="@color/colorblack" />
 
 
         <ImageView
+            android:id="@+id/img_Info"
             android:layout_width="@dimen/height_25"
             android:layout_height="@dimen/height_25"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/height_5"
+            android:layout_marginLeft="@dimen/height_8"
             android:layout_toRightOf="@+id/txt_tab_name"
-            android:src="@drawable/down_arrow" />
+            android:src="@drawable/ic_info" />
 
 
         <RelativeLayout
@@ -48,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/height_10"
-                android:layout_toRightOf="@+id/tv_quantity"
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
                 android:text="-"
@@ -63,15 +63,14 @@
                 android:layout_marginRight="@dimen/height_10"
                 android:layout_toRightOf="@+id/tv_minus"
                 android:text="1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_5"
                 android:layout_toRightOf="@+id/tv_value"
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
@@ -82,5 +81,13 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="@dimen/height_40"
+        android:layout_marginTop="@dimen/height_5"
+        android:background="@color/colorblack"/>
 
 </LinearLayout>

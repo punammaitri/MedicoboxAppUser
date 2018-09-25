@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.instaorder;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
 
     private ArrayList<InstaAddNewListActivity.SubListModel> mSubListArray;
     private Context mContext;
+    private Dialog dialog;
+    private TextView txtOk;
 
     public InstaProductSubListDetailAdapter(Context mContext, ArrayList<InstaAddNewListActivity.SubListModel> mDataArrayList) {
         this.mContext = mContext;
@@ -41,6 +46,36 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
 
         holder.txt_tab_name.setText(mSubListArray.get(position).medicineName);
         holder.tv_value.setText(mSubListArray.get(position).price);
+
+        holder.img_Info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowProductInfoAlert(mContext);
+            }
+        });
+
+    }
+
+    private void ShowProductInfoAlert(Context mContext) {
+        dialog = new Dialog(mContext, R.style.Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.dimAmount = 1f;
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        dialog.setContentView(R.layout.alert_product_info);
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        txtOk = dialog.findViewById(R.id.txtOk);
+
+        txtOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -54,7 +89,8 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
         TextView txt_tab_name;
         @BindView(R.id.tv_value)
         TextView tv_value;
-
+        @BindView(R.id.img_Info)
+        ImageView img_Info;
 
         ViewHolder(@NonNull View view) {
             super(view);

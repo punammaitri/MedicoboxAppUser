@@ -83,7 +83,7 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         txtSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowProductInfoAlert(mActivityContext);
+                dialog.dismiss();
             }
         });
 
@@ -93,23 +93,8 @@ public class InstaAddNewListActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
     }
 
-    private void ShowProductInfoAlert(InstaAddNewListActivity mActivityContext) {
-        dialog = new Dialog(mActivityContext,R.style.Dialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-        lp.dimAmount = 1f;
-        dialog.getWindow().setAttributes(lp);
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        dialog.setContentView(R.layout.alert_product_info);
-        dialog.show();
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-
-    }
 
     public class ListModel {
         int image;

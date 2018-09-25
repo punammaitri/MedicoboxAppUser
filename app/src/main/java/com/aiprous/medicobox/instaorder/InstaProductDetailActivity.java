@@ -32,11 +32,11 @@ public class InstaProductDetailActivity extends AppCompatActivity {
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
         //add static data into array list
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
 
 
         layoutManager = new LinearLayoutManager(mContext);

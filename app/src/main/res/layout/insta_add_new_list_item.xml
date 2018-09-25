@@ -34,6 +34,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/relOptionDots"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.1">
@@ -41,10 +42,8 @@
                 <ImageView
                     android:layout_width="@dimen/height_25"
                     android:layout_height="@dimen/height_25"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/height_20"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/height_15"
                     android:src="@drawable/dots" />
 
 
@@ -55,6 +54,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_5"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -64,14 +64,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/height_10"
                 android:layout_weight="0.9"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <Button
                     android:id="@+id/btn_add_to_cart"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="@dimen/height_5"
-                    android:layout_weight="1"
+                    android:layout_weight="0.45"
                     android:background="@drawable/custom_btn_bg"
                     android:paddingLeft="@dimen/height_5"
                     android:paddingRight="@dimen/height_5"
@@ -84,11 +85,11 @@
 
                 <Button
                     android:id="@+id/btn_order_checkout"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="@dimen/height_5"
                     android:layout_marginTop="@dimen/height_5"
-                    android:layout_weight="1"
+                    android:layout_weight="0.45"
                     android:background="@drawable/custom_btn_bg"
                     android:paddingLeft="@dimen/height_5"
                     android:paddingRight="@dimen/height_5"
@@ -103,25 +104,54 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/height_20"
                 android:layout_weight="0.1">
 
                 <ImageView
                     android:layout_width="@dimen/height_25"
                     android:layout_height="@dimen/height_25"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/height_15"
                     android:src="@drawable/arrow_yellow" />
+
 
             </RelativeLayout>
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/height_5"
+            android:paddingRight="@dimen/height_5"
+            android:paddingTop="@dimen/height_5">
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_tab_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/height_5"
+                android:layout_toRightOf="@+id/checkbox"
+                android:text="Select all"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/coloryellow"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_5" />
 
     </LinearLayout>
 

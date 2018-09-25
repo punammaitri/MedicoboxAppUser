@@ -1,14 +1,22 @@
 package com.aiprous.medicobox.instaorder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,6 +31,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
     private ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList;
     private Context mContext;
     private ArrayList<InstaAddNewListActivity.SubListModel> mSubListModelArray;
+
     public InstaAddNewListAdapter(Context mContext, ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList, ArrayList<InstaAddNewListActivity.SubListModel> mSubListModel) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
@@ -46,6 +55,39 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         holder.list.setLayoutManager(new LinearLayoutManager(mContext));
         holder.list.setAdapter(new InstaProductSubListDetailAdapter(mContext, mSubListModelArray));
 
+        holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onClick(View view) {
+                @SuppressLint("RestrictedApi") MenuBuilder menuBuilder = new MenuBuilder(mContext);
+                MenuInflater inflater = new MenuInflater(mContext);
+                inflater.inflate(R.menu.option_menu, menuBuilder);
+                @SuppressLint("RestrictedApi") MenuPopupHelper optionsMenu = new MenuPopupHelper(mContext, menuBuilder, view);
+                optionsMenu.setForceShowIcon(true);
+
+               /* // Set Item Click Listener
+                menuBuilder.setCallback(new MenuBuilder.Callback() {
+                    @Override
+                    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.opt1: // Handle option1 Click
+                                return true;
+                            case R.id.opt2: // Handle option2 Click
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+
+                    @Override
+                    public void onMenuModeChange(MenuBuilder menu) {}
+                });*/
+
+
+                // Display the menu
+                optionsMenu.show();
+            }
+        });
     }
 
     @Override
@@ -63,6 +105,8 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         Button btnOrderCheckout;
         @BindView(R.id.list)
         RecyclerView list;
+        @BindView(R.id.relOptionDots)
+        RelativeLayout relOptionDots;
 
 
         ViewHolder(@NonNull View view) {

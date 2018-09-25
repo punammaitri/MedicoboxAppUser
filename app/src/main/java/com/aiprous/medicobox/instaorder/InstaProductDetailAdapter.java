@@ -43,7 +43,7 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
         holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
         holder.tvMedicineName.setText(mDataArrayList.get(position).getMedicineName());
         holder.tvContent.setText(mDataArrayList.get(position).getValue());
-        holder.tvMrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMrp() + "  " + mDataArrayList.get(position).getDiscount() + "%" + "OFF");
+        holder.tvMrp.setText(mContext.getResources().getString(R.string.mrp_rs) + mDataArrayList.get(position).getMrp() + "  " + mDataArrayList.get(position).getDiscount() + "OFF");
         holder.tvPrice.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
 
         holder.llMain.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,6 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
                 mContext.startActivity(new Intent(mContext, InstaAddNewListActivity.class));
             }
         });
-
     }
 
     @Override

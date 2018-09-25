@@ -30,7 +30,7 @@
                 android:id="@+id/img_product"
                 android:layout_width="@dimen/height_50"
                 android:layout_height="@dimen/height_50"
-                android:src="@drawable/ic_menu_manage" />
+                android:src="@drawable/bottle" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -43,7 +43,7 @@
                 android:id="@+id/tv_medicine_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/img_wishlist"
+                android:layout_toLeftOf="@+id/img_wishlist_icon"
                 android:maxLines="2"
                 android:text="abc"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -56,7 +56,7 @@
                 android:layout_height="@dimen/height_25"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_menu_camera" />
+                android:src="@drawable/heart_active" />
 
 
             <TextView
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_content"
                 android:layout_marginTop="@dimen/height_3"
-                android:text="MRP Rs151  10%OFF"
+                android:text="@string/mrp_rupees"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView

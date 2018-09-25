@@ -13,6 +13,7 @@
 
     <string name="terms_and_Condition"><u>Terms and Condition</u></string>
     <string name="Rs">\u20B9</string>
+    <string name="mrp_rs">MRP \u20B9</string>
 
     <string name="txt_home">Home</string>
     <string name="txt_orders">Orders</string>
@@ -28,4 +29,5 @@
     <string name="order_checkout">Order &amp; Checkout</string>
     <string name="text_suppliment">This supplement is used to prevent or treat a lack of viatamin E in the body. A low body level of vitamin E is rare. Most people who eat a normal diet do not need extra vitamin E.</string>
     <string name="tabSubname"><u>Isoxsuprine 10mg</u></string>
+    <string name="mrp_rupees">MRP \u20B150  10%OFF</string>
 </resources>
