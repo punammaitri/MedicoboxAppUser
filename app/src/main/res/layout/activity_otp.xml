@@ -54,6 +54,7 @@
                 android:layout_marginTop="@dimen/height_15">
 
                 <EditText
+                    android:id="@+id/edt_one"
                     android:layout_width="0dp"
                     android:layout_weight="0.25"
                     android:layout_height="wrap_content"
@@ -66,6 +67,7 @@
                     android:background="@drawable/edittext_background_gray"/>
 
                 <EditText
+                    android:id="@+id/edt_two"
                     android:layout_width="0dp"
                     android:layout_weight="0.25"
                     android:layout_height="wrap_content"
@@ -78,6 +80,7 @@
                     android:background="@drawable/edittext_background_gray"/>
 
                 <EditText
+                    android:id="@+id/edt_there"
                     android:layout_width="0dp"
                     android:layout_weight="0.25"
                     android:layout_height="wrap_content"
@@ -89,6 +92,7 @@
                     android:imeOptions="actionNext"
                     android:background="@drawable/edittext_background_gray"/>
                 <EditText
+                    android:id="@+id/edt_four"
                     android:layout_width="0dp"
                     android:layout_weight="0.25"
                     android:layout_height="wrap_content"

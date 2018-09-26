@@ -72,9 +72,9 @@
                             android:layout_marginTop="@dimen/height_4"
                             android:background="@drawable/border_circle"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="2"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/colorwhite" />
 
                         <TextView
                             android:id="@+id/txtCart"
