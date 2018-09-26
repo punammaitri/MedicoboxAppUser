@@ -32,7 +32,7 @@
             android:id="@+id/tv_medicine_contains"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ADILIN 10mg Tablet 10's"
+            android:text="@string/tabSubname"
             android:textColor="@color/colorPrimary"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_marginTop="@dimen/height_10"/>
@@ -51,8 +51,8 @@
             android:layout_marginTop="@dimen/height_10">
 
             <ImageView
-                android:layout_width="@dimen/height_25"
-                android:layout_height="@dimen/height_15"
+                android:layout_width="@dimen/height_30"
+                android:layout_height="@dimen/height_30"
                 android:src="@drawable/rx"
                 android:layout_gravity="center"/>
 
@@ -114,7 +114,8 @@
                             android:id="@+id/tv_mrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="MRP" />
+                            android:text="MRP"
+                            android:gravity="center"/>
 
                         <TextView
                             android:id="@+id/tv_mrp_price"
@@ -124,6 +125,7 @@
                             android:layout_marginLeft="@dimen/height_5"
                             android:textColor="@color/colorblack"
                             android:layout_toRightOf="@+id/tv_mrp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textStyle="bold"/>
 
                         <TextView
@@ -131,6 +133,7 @@
                             android:layout_height="wrap_content"
                             android:text="(Rs.6.86/Tablet SR)"
                             android:layout_marginLeft="@dimen/height_5"
+                            android:gravity="center"
                             android:layout_toRightOf="@+id/tv_mrp_price" />
                     </RelativeLayout>
                     <RelativeLayout
@@ -276,6 +279,7 @@
                 android:layout_weight="0.7"
                 android:text="Substitutes for Adilin Tablet SR"
                 android:textColor="@color/colorblack"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"/>
 
             <TextView

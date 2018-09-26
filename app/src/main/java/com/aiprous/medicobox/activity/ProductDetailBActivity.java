@@ -46,6 +46,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     TextView tv_medicine_contains;
     @BindView(R.id.spinner_count)
     Spinner spinner_count;
+    @BindView(R.id.tv_mrp_price)
+    TextView tv_mrp_price;
     ArrayList<SubstituteProductModel> substituteProductModelArrayList=new ArrayList<>();
     private Context mcontext=this;
     private int dotscount;
@@ -60,6 +62,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     }
 
     private void init() {
+        tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs)+"68.60");
 
         //set status bar color
         Window window = this.getWindow();

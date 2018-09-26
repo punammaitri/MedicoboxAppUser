@@ -52,7 +52,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getProduct_name());
         holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_mrp());
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount()+"%"+"off");
+        holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount()+"off");
         holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getProduct_price());
 
 

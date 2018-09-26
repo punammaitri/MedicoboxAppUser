@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -22,6 +23,8 @@ import medicobox.aiprous.com.medicobox.R;
 public class ListActivity extends AppCompatActivity {
 
    // @BindView(R.id.rc_medicine_list)
+    @BindView(R.id.searchview_medicine)
+    SearchView searchview_medicine;
     RecyclerView rc_medicine_list;
     ArrayList<ListActivity.ListModel> mlistModelsArray=new ArrayList<>();
     private Context mContext=this;
@@ -35,6 +38,11 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+
+      //  searchview_medicine.onActionViewExpanded();
+      //  searchview_medicine.setIconified(true);
+
 
         //set status bar color
         Window window = this.getWindow();

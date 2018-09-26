@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Desscription"
+            android:text="Description"
             android:layout_marginTop="@dimen/height_10"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorblack"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Comblfan Icy Hot Fast Pain Relief Spray contains Combiflam Icy Hot Fast Pain Relief Spray contains Diclofenac Diclofenac Diethylamin 1.16% w/w(equivalent to Diclofenac Sodium-1% w/w) "
             android:layout_marginTop="@dimen/height_10"
-            android:textColor="@color/colorblack"/>
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,13 +57,15 @@
                 android:layout_weight="0.5"
                 android:text="FORMULATION"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/colorblack"
+                />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="Balm"
+                android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -87,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="False"
+                android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -110,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="Bottle"
+                android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -118,13 +122,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1"
+            android:textColor="@color/colorlightblack"
             android:layout_marginTop="@dimen/height_10">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Size"
+                android:text="SIZE"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"/>
 
@@ -133,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="NA"
+                android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -141,6 +147,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1"
+            android:textColor="@color/colorlightblack"
             android:layout_marginTop="@dimen/height_10">
 
             <TextView
@@ -156,6 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="NA"
+                android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlayout_list_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -35,7 +36,7 @@
         android:layout_marginLeft="@dimen/height_10" />
 </RelativeLayout>
 
-
+<!--
 <android.support.v7.widget.SearchView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -43,10 +44,23 @@
     android:background="@drawable/custom_btn_bg_white"
     android:layout_toLeftOf="@+id/rlayout_cart"
     android:layout_marginLeft="@dimen/height_10"
+    app:queryHint="Search Medicine"
     android:layout_centerInParent="true"
     >
 
-</android.support.v7.widget.SearchView>
+</android.support.v7.widget.SearchView>-->
+    <android.support.v7.widget.SearchView
+        android:id="@+id/searchview_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_40"
+        android:layout_toLeftOf="@+id/rlayout_cart"
+        android:layout_toRightOf="@+id/rlayout_plus"
+        android:background="@drawable/custom_btn_bg_white"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/height_10"
+        android:clickable="true"
+        app:queryHint="Search Medicine"
+       />
 
 <RelativeLayout
     android:id="@+id/rlayout_cart"

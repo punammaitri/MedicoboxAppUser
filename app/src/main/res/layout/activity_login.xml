@@ -101,7 +101,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1.1"
                 android:layout_gravity="center"
-                android:background="@color/colorblack"
+                android:background="@color/colorGray"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -117,7 +117,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1.1"
                 android:layout_gravity="center"
-                android:background="@color/colorblack"
+                android:background="@color/colorGray"
                 />
         </LinearLayout>
 
@@ -165,7 +165,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1.1"
                 android:layout_gravity="center"
-                android:background="@color/colorblack"
+                android:background="@color/colorGray"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -181,7 +181,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1.1"
                 android:layout_gravity="center"
-                android:background="@color/colorblack"
+                android:background="@color/colorGray"
                 />
         </LinearLayout>
 
@@ -257,7 +257,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have an account ? "/>
+                android:text="Don't have an account? "
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:id="@+id/tv_sign_up_here"
@@ -265,7 +266,8 @@
                 android:layout_height="wrap_content"
                 android:text="Sign Up here"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
         </LinearLayout>
     </LinearLayout>
 
