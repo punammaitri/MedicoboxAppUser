@@ -39,6 +39,7 @@ public class InstaAddNewListActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
