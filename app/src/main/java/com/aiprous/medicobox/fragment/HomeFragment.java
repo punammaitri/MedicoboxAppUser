@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.aiprous.medicobox.MainActivity;
+import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -141,6 +142,12 @@ public class HomeFragment extends Fragment {
             slider_contactus.addSlider(textSliderView);
         }
     }
+    @OnClick(R.id.rlayout_medicines)
+    public void onClickMedicines()
+    {
+        startActivity(new Intent(getActivity(),ListActivity.class));
+    }
+
 
 
     @OnClick(R.id.relInstaOrder)

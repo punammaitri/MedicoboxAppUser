@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.activity.ForgotPasswordActivity;
+import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.ProductDescriptionActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -171,11 +172,10 @@ public class MainActivity extends AppCompatActivity
            // BaseActivity.FirebaseAnalytics(mContext, "Home", "Navigation Menu to Home");
             return;
         }
-        else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))){
-             startActivity(new Intent(mContext, ProductDescriptionActivity.class));
+       /* else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))){
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }
+         }*/
          else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
         {
             startActivity(new Intent(mContext, ProductDetailActivity.class));
@@ -186,11 +186,16 @@ public class MainActivity extends AppCompatActivity
              startActivity(new Intent(this, ProductDetailBActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }/*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
+         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
          {
-
+             startActivity(new Intent(this, ListActivity.class));
+             drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }*/
+         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))){
+             startActivity(new Intent(mContext, ProductDescriptionActivity.class));
+             drawerLayout.closeDrawer(GravityCompat.START);
+             return;
+         }
 
 
     }

@@ -85,6 +85,7 @@
                 android:weightSum="1">
 
                 <RelativeLayout
+                    android:id="@+id/rlayout_medicines"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/height_5"
@@ -93,7 +94,7 @@
                     android:padding="@dimen/height_10">
 
                     <RelativeLayout
-                        android:id="@+id/rlayout_medicines"
+                        android:id="@+id/rl_medicines"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center">
@@ -108,7 +109,7 @@
                         android:id="@+id/tv_medicines"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/rlayout_medicines"
+                        android:layout_below="@+id/rl_medicines"
                         android:gravity="center"
                         android:text="MEDICINES"
                         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -121,7 +122,7 @@
                         android:layout_below="@+id/tv_medicines"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="100,000+ Medicines"
+                        android:text="1,00,000+ Medicines"
                         android:textColor="@color/coloryellow" />
                 </RelativeLayout>
 

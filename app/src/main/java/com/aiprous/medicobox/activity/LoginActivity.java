@@ -25,8 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_forgot_password;
     @BindView(R.id.tv_sign_up_here)
     TextView tv_sign_up_here;
-    @BindView(R.id.btn_sign_in_withotp)
-    Button btn_sign_in_withotp;
+    //@BindView(R.id.btn_sign_in_withotp)
+    //Button btn_sign_in_withotp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this,SignUpActivity.class));
         finish();
     }
-    @OnClick(R.id.btn_sign_in_withotp)
+    @OnClick(R.id.tv_sign_in_withotp)
     public void onClickSignInWithOtp()
     {
         startActivity(new Intent(this,OTPActivity.class));

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import medicobox.aiprous.com.medicobox.R;
 
 
@@ -44,17 +45,22 @@ public class ListActivity extends AppCompatActivity {
         rc_medicine_list=(RecyclerView)findViewById(R.id.rc_medicine_list);
 
          //add static data into array list
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage,"ABC","Bottle of 60 tablet","150","30%","135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage,"ABC","Bottle of 60 tablet","150","30%","135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage,"ABC","Bottle of 60 tablet","150","30%","135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage,"ABC","Bottle of 60 tablet","150","30%","135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage,"ABC","Bottle of 60 tablet","150","30%","135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle,"ABC","Bottle of 60 tablet","150","30%","135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle,"ABC","Bottle of 60 tablet","150","30%","135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle,"ABC","Bottle of 60 tablet","150","30%","135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle,"ABC","Bottle of 60 tablet","150","30%","135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle,"ABC","Bottle of 60 tablet","150","30%","135"));
 
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_medicine_list.setHasFixedSize(true);
         rc_medicine_list.setAdapter(new ListAdapter(mContext, mlistModelsArray));
+    }
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressList()
+    {
+        finish();
     }
 
     public class ListModel{

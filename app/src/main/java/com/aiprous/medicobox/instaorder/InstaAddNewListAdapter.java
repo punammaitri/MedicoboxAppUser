@@ -2,21 +2,32 @@ package com.aiprous.medicobox.instaorder;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.aiprous.medicobox.MainActivity;
 
 import java.util.ArrayList;
 
@@ -31,6 +42,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
     private ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList;
     private Context mContext;
     private ArrayList<InstaAddNewListActivity.SubListModel> mSubListModelArray;
+    private PopupWindow window;
 
     public InstaAddNewListAdapter(Context mContext, ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList, ArrayList<InstaAddNewListActivity.SubListModel> mSubListModel) {
         this.mContext = mContext;
@@ -55,7 +67,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         holder.list.setLayoutManager(new LinearLayoutManager(mContext));
         holder.list.setAdapter(new InstaProductSubListDetailAdapter(mContext, mSubListModelArray));
 
-        holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
+        /*holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View view) {
@@ -65,7 +77,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 @SuppressLint("RestrictedApi") MenuPopupHelper optionsMenu = new MenuPopupHelper(mContext, menuBuilder, view);
                 optionsMenu.setForceShowIcon(true);
 
-               /* // Set Item Click Listener
+               *//* // Set Item Click Listener
                 menuBuilder.setCallback(new MenuBuilder.Callback() {
                     @Override
                     public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
@@ -81,13 +93,66 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
 
                     @Override
                     public void onMenuModeChange(MenuBuilder menu) {}
-                });*/
+                });*//*
 
 
                 // Display the menu
                 optionsMenu.show();
             }
+        });*/
+
+        holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowPopupWindow(view);
+            }
         });
+    }
+
+    private void ShowPopupWindow(View view) {
+        Rect r = locateView(view);
+        LayoutInflater lInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popup_view = lInflater.inflate(R.layout.popupwindow, null);
+        final PopupWindow popup = new PopupWindow(popup_view, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+        popup.setFocusable(true);
+        popup.setBackgroundDrawable(new ColorDrawable());
+        popup.showAtLocation(popup_view, Gravity.TOP | Gravity.LEFT, r.right, r.bottom);
+
+        LinearLayout mLinearEdit = popup_view.findViewById(R.id.linearEdit);
+        LinearLayout mLinearAdd = popup_view.findViewById(R.id.linearAdd);
+
+        mLinearEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.dismiss();
+            }
+        });
+
+        mLinearAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popup.dismiss();
+            }
+        });
+
+
+    }
+
+    public static Rect locateView(View v) {
+        int[] loc_int = new int[2];
+        if (v == null)
+            return null;
+        try {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe) {
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = loc_int[0] + v.getWidth();
+        location.bottom = loc_int[1] + v.getHeight();
+        return location;
     }
 
     @Override

@@ -8,8 +8,6 @@
     android:orientation="vertical"
     android:background="@color/colorlightlightlightGray">
 
-
-
     <include layout="@layout/custom_toolbar"
         android:id="@+id/rlayout_list_toolbar"/>
 
@@ -38,45 +36,79 @@
    </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/llayout_sort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:weightSum="1"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/height_5"
-        android:layout_marginLeft="@dimen/height_20"
-        android:layout_marginRight="@dimen/height_20"
-        android:layout_marginBottom="@dimen/height_5">
 
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:layout_gravity="center"
-            android:background="@drawable/custom_btn_bg_white"
-            android:text="Sort by"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorblack"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/llayout_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/height_15"
+            android:layout_marginLeft="@dimen/height_20"
+            android:layout_marginRight="@dimen/height_20"
+            android:layout_marginBottom="@dimen/height_15">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/height_20"
+                android:layout_marginRight="@dimen/height_20"
+                android:background="@drawable/custom_btn_bg_broder">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:layout_gravity="center"
-            android:background="@drawable/custom_btn_bg_white"
-            android:text="Filter"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorblack"
-            android:textStyle="bold"
-            android:layout_marginLeft="@dimen/height_10"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/facebook" />
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:text="Sort by"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/height_20"
+                android:layout_marginRight="@dimen/height_20"
+                android:background="@drawable/custom_btn_bg_broder">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/facebook" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:text="Filter"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+            </LinearLayout>
+        </LinearLayout>
 </RelativeLayout>

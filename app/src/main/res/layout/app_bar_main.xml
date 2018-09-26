@@ -72,9 +72,9 @@
                             android:layout_marginTop="@dimen/height_4"
                             android:background="@drawable/border_circle"
                             android:gravity="center"
-                            android:text="0"
+                            android:text="2"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/colorwhite" />
 
                         <TextView
                             android:id="@+id/txtCart"
@@ -124,6 +124,7 @@
                         android:maxLines="1"
                         android:paddingLeft="@dimen/height_5"
                         android:singleLine="true"
+                        android:ellipsize="end"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/textColor"
                         android:textColorHint="@color/textColor" />
