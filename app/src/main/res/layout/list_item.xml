@@ -29,7 +29,7 @@
                 android:id="@+id/img_medicine"
                 android:layout_width="@dimen/height_50"
                 android:layout_height="@dimen/height_50"
-                android:src="@drawable/ic_menu_manage"/>
+                android:src="@drawable/bottle"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
             <ImageView
                 android:layout_width="@dimen/height_25"
                 android:layout_height="@dimen/height_25"
-                android:src="@drawable/ic_menu_camera"/>
+                android:src="@drawable/heart_active"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

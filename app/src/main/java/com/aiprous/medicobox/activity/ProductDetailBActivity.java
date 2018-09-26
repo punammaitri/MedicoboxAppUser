@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import medicobox.aiprous.com.medicobox.R;
 
 public class ProductDetailBActivity extends AppCompatActivity {
@@ -166,5 +167,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
         public void setPrice(int price) {
             this.price = price;
         }
+    }
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressDetail()
+    {
+        finish();
     }
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import medicobox.aiprous.com.medicobox.R;
 
 
@@ -118,5 +119,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         rv_people_also_viewed.setHasFixedSize(true);
         rv_people_also_viewed.setAdapter(new FeatureProductAdapter(mcontext, mlistModelsArray));
 
+    }
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressDetail()
+    {
+        finish();
     }
 }

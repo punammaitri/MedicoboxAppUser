@@ -12,9 +12,10 @@
     android:layout_centerVertical="true">
 
     <ImageView
-        android:layout_width="@dimen/height_25"
-        android:layout_height="@dimen/height_25"
+        android:layout_width="@dimen/height_35"
+        android:layout_height="@dimen/height_35"
         android:src="@drawable/backarrow"
+        android:padding="@dimen/height_2"
         android:layout_marginLeft="@dimen/height_20" />
 </RelativeLayout>
 
