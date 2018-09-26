@@ -45,7 +45,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email/Mobile Number"
+                android:hint="Email / Mobile Number"
                 android:inputType="text"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -108,7 +108,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="OR"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"/>
 
             <View
                 android:layout_width="0dp"
@@ -119,7 +121,7 @@
                 />
         </LinearLayout>
 
-        <Button
+       <!-- <Button
             android:id="@+id/btn_sign_in_withotp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_45"
@@ -127,12 +129,27 @@
             android:layout_marginRight="@dimen/height_20"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/height_10"
-            android:background="@drawable/custom_btn_bg_gray"
+            android:background="@drawable/custom_btn_bg"
             android:text="Sign In with OTP"
             android:textAllCaps="true"
+            android:textColor="@color/colorwhite"
             android:textAppearance="?android:attr/textAppearanceMedium"
             />
-
+-->
+        <TextView
+            android:id="@+id/tv_sign_in_withotp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_45"
+            android:layout_marginLeft="@dimen/height_20"
+            android:layout_marginRight="@dimen/height_20"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/height_10"
+            android:background="@drawable/custom_btn_bg"
+            android:text="Sign In with OTP"
+            android:gravity="center"
+            android:textColor="@color/colorwhite"
+            android:clickable="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -155,7 +172,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:text="OR"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"/>
 
             <View
                 android:layout_width="0dp"

@@ -124,6 +124,7 @@
                         android:maxLines="1"
                         android:paddingLeft="@dimen/height_5"
                         android:singleLine="true"
+                        android:ellipsize="end"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/textColor"
                         android:textColorHint="@color/textColor" />

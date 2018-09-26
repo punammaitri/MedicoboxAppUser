@@ -309,6 +309,7 @@
             android:background="@color/divider_bg"/>
 
         <LinearLayout
+            android:id="@+id/llayout_product_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/height_10"

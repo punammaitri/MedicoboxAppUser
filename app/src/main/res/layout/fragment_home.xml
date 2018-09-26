@@ -122,7 +122,7 @@
                         android:layout_below="@+id/tv_medicines"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="100,000+ Medicines"
+                        android:text="1,00,000+ Medicines"
                         android:textColor="@color/coloryellow" />
                 </RelativeLayout>
 

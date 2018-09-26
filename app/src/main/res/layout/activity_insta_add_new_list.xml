@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/height_8"
             android:padding="@dimen/height_8"
+            android:layout_marginLeft="@dimen/height_8"
             android:text="Insta Orders"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorblack"
