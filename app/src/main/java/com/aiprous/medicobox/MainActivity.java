@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.activity.ForgotPasswordActivity;
+import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.ProductDescriptionActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -186,11 +187,11 @@ public class MainActivity extends AppCompatActivity
              startActivity(new Intent(this, ProductDetailBActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }/*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
+         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
          {
-
+             startActivity(new Intent(this, ListActivity.class));
              return;
-         }*/
+         }
 
 
     }
