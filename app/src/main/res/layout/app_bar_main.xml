@@ -99,7 +99,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="@dimen/height_8"
                     android:layout_marginRight="@dimen/height_8"
-                    android:background="@drawable/border_for_search_rectangle"
+                    android:background="@drawable/custom_btn_bg_white"
                     android:orientation="horizontal">
 
                     <TextView
@@ -127,7 +127,7 @@
                         android:ellipsize="end"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/textColor"
-                        android:textColorHint="@color/textColor" />
+                        android:textColorHint="@color/colorlightGray" />
 
 
                 </RelativeLayout>

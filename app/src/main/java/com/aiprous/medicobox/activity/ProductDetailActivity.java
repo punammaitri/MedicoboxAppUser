@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -34,12 +35,16 @@ import medicobox.aiprous.com.medicobox.R;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
+    @BindView(R.id.searchview_medicine)
+    SearchView searchview_medicine;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.SliderDots)
     LinearLayout SliderDots;
     @BindView(R.id.rv_people_also_viewed)
     RecyclerView rv_people_also_viewed;
+    @BindView(R.id.tv_product_mrp)
+    TextView tv_product_mrp;
     @BindView(R.id.tv_product_price)
     TextView tv_product_price;
     ArrayList<HomeFragment.Product> mlistModelsArray=new ArrayList<>();
@@ -56,13 +61,16 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void init() {
 
+        searchview_medicine.setFocusable(false);
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
 
-        tv_product_price.setPaintFlags(tv_product_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        tv_product_mrp.setText(mcontext.getResources().getString(R.string.Rs)+"150.00");
+        tv_product_mrp.setPaintFlags(tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        tv_product_price.setText(mcontext.getResources().getString(R.string.Rs)+"135.00");
         //set view pager
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);

@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comblfan Icy Hot Fast Pain Relief Spray contains Combiflam Icy Hot Fast Pain Relief Spray contains Diclofenac Diclofenac Diethylamin 1.16% w/w(equivalent to Diclofenac Sodium-1% w/w) "
+            android:text="Comblfam Icy Hot Fast Pain Relief Spray contains Combiflam Icy Hot Fast Pain Relief Spray contains Diclofenac  Diethylamin 1.16% w/w(equivalent to Diclofenac Sodium-1% w/w). "
             android:layout_marginTop="@dimen/height_10"
             />
 
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="PACKGING"
+                android:text="PACKAGING"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"/>
 

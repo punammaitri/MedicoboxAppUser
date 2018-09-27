@@ -43,6 +43,7 @@ public class ListActivity extends AppCompatActivity {
       //  searchview_medicine.onActionViewExpanded();
       //  searchview_medicine.setIconified(true);
 
+        searchview_medicine.setFocusable(false);
 
         //set status bar color
         Window window = this.getWindow();

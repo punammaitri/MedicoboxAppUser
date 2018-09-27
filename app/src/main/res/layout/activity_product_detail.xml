@@ -65,16 +65,17 @@
             android:layout_marginTop="@dimen/height_10">
 
             <TextView
-                android:id="@+id/tv_product_price"
+                android:id="@+id/tv_product_mrp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs 150.00"
+                android:text=""
                 android:layout_marginRight="@dimen/height_10"/>
 
             <TextView
+                android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs 135.00"
+                android:text=""
                 android:textColor="@color/colorblack"
                 android:textStyle="bold"
                 android:layout_marginRight="@dimen/height_10"/>

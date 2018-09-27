@@ -6,17 +6,23 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import medicobox.aiprous.com.medicobox.R;
 
 public class InstaProductDetailActivity extends AppCompatActivity {
 
     // @BindView(R.id.rc_medicine_list)
+    @BindView(R.id.searchview_medicine)
+    SearchView searchview_medicine;
+    @BindView(R.id.searchview_sub_medicine)
+    SearchView searchview_sub_medicine;
     RecyclerView rc_medicine_list;
     ArrayList<ListModel> mlistModelsArray = new ArrayList<>();
     private Context mContext = this;
@@ -31,6 +37,8 @@ public class InstaProductDetailActivity extends AppCompatActivity {
     }
 
     private void init() {
+        searchview_medicine.setFocusable(false);searchview_medicine.setQueryHint("Search Lists");
+        searchview_sub_medicine.setFocusable(false);
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

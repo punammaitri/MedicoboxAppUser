@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -23,6 +24,8 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_people_also_viewed)
     RecyclerView rv_people_also_viewed;
+    @BindView(R.id.searchview_medicine)
+    SearchView searchview_medicine;
 
     ArrayList<HomeFragment.Product> mlistModelsArray=new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
@@ -38,6 +41,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 
     private void init() {
 
+        searchview_medicine.setFocusable(false);
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

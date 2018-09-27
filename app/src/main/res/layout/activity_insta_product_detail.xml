@@ -35,13 +35,16 @@
         <android.support.v7.widget.SearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchview_medicine"
+            android:id="@+id/searchview_sub_medicine"
             android:iconifiedByDefault="false"
             android:layout_marginTop="@dimen/height_8"
             android:layout_marginLeft="@dimen/height_15"
             android:layout_marginRight="@dimen/height_15"
             android:background="@drawable/custom_btn_bg_white"
-            app:queryHint="Search Medicine to Add" />
+            app:queryHint="Search Medicines to add"
+            android:clickable="true"
+            app:iconifiedByDefault="false"
+           />
 
 
         <android.support.v7.widget.RecyclerView

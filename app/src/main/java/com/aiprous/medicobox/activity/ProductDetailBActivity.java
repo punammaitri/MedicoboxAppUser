@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -36,6 +37,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
 
 
+    @BindView(R.id.searchview_medicine)
+    SearchView searchview_medicine;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.SliderDots)
@@ -64,6 +67,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private void init() {
         tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs)+"68.60");
 
+        searchview_medicine.setFocusable(false);
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
