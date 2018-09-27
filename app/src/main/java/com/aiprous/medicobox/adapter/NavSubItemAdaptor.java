@@ -14,11 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.model.NavItemClicked;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import medicobox.aiprous.com.medicobox.R;
+
 
 import static com.aiprous.medicobox.MainActivity.drawerLayout;
 

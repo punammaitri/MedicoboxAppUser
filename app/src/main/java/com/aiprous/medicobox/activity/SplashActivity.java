@@ -9,8 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.MainActivity;
+import com.aiprous.medicobox.R;
 
-import medicobox.aiprous.com.medicobox.R;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -12,10 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 public class PrescriptionOderDetailsActivity extends AppCompatActivity {
 

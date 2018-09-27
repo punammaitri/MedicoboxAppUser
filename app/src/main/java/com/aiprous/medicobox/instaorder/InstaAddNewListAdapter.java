@@ -28,12 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
+import com.aiprous.medicobox.R;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import medicobox.aiprous.com.medicobox.R;
+
 
 
 public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewListAdapter.ViewHolder> {

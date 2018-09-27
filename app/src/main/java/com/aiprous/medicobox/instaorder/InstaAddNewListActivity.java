@@ -13,12 +13,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 public class InstaAddNewListActivity extends AppCompatActivity {
 
@@ -105,6 +107,11 @@ public class InstaAddNewListActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+     @OnClick(R.id.rlayout_back_button)
+     public void BackPressSDescription()
+    {
+        finish();
     }
 
 

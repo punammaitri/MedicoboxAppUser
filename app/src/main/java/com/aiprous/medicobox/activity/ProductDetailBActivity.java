@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.adapter.SubstitutesProductAdapter;
 import com.aiprous.medicobox.adapter.ViewPagerAdapter;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 public class ProductDetailBActivity extends AppCompatActivity {
 
@@ -51,6 +52,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     Spinner spinner_count;
     @BindView(R.id.tv_mrp_price)
     TextView tv_mrp_price;
+    @BindView(R.id.tv_per_tablet_price)
+     TextView tv_per_tablet_price;
     ArrayList<SubstituteProductModel> substituteProductModelArrayList=new ArrayList<>();
     private Context mcontext=this;
     private int dotscount;
@@ -66,6 +69,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
     private void init() {
         tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs)+"68.60");
+        tv_per_tablet_price.setText("("+mcontext.getResources().getString(R.string.Rs)+"6.86/Tablet SR"+")");
 
         searchview_medicine.setFocusable(false);
         //set status bar color

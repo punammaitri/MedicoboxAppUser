@@ -10,11 +10,14 @@ import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.aiprous.medicobox.R;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import medicobox.aiprous.com.medicobox.R;
+import butterknife.OnClick;
+
 
 public class InstaProductDetailActivity extends AppCompatActivity {
 
@@ -37,7 +40,7 @@ public class InstaProductDetailActivity extends AppCompatActivity {
     }
 
     private void init() {
-        searchview_medicine.setFocusable(false);searchview_medicine.setQueryHint("Search Lists");
+        searchview_medicine.setFocusable(false);
         searchview_sub_medicine.setFocusable(false);
         //set status bar color
         Window window = this.getWindow();
@@ -61,6 +64,11 @@ public class InstaProductDetailActivity extends AppCompatActivity {
         rc_medicine_list.setAdapter(new InstaProductDetailAdapter(mContext, mlistModelsArray));
 
 
+    }
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressSDescription()
+    {
+        finish();
     }
 
     public class ListModel {

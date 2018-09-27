@@ -12,13 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import medicobox.aiprous.com.medicobox.R;
+
 
 
 public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProductDetailAdapter.ViewHolder> {
@@ -47,8 +49,7 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
         holder.tvMedicineName.setText(mDataArrayList.get(position).getMedicineName());
         holder.tvContent.setText(mDataArrayList.get(position).getValue());
        // holder.tvMrp.setText(mContext.getResources().getString(R.string.mrp_rs) + mDataArrayList.get(position).getMrp() + "  " + mDataArrayList.get(position).getDiscount() + "OFF");
-       // holder.tvPrice.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
-
+        holder.tvPrice.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
         holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
         holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.llMain.setOnClickListener(new View.OnClickListener() {

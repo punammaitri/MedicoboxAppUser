@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import medicobox.aiprous.com.medicobox.R;
+
 
 
 public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<InstaProductSubListDetailAdapter.ViewHolder> {

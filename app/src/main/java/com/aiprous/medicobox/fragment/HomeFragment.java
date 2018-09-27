@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.aiprous.medicobox.MainActivity;
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 
 public class HomeFragment extends Fragment {

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -24,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {

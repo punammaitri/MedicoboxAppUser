@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import medicobox.aiprous.com.medicobox.R;
+
 
 
 

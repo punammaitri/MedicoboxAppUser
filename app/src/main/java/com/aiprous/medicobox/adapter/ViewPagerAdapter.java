@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import medicobox.aiprous.com.medicobox.R;
+import com.aiprous.medicobox.R;
+
 
 public class ViewPagerAdapter extends PagerAdapter {
 

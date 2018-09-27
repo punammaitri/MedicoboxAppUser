@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -24,12 +25,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.activity.ForgotPasswordActivity;
 import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.ProductDescriptionActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -42,7 +45,8 @@ import com.aiprous.medicobox.model.NavItemClicked;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import medicobox.aiprous.com.medicobox.R;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavItemClicked {
@@ -195,7 +199,14 @@ public class MainActivity extends AppCompatActivity
              startActivity(new Intent(mContext, ProductDescriptionActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
+         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))){
+             logout();
+             drawerLayout.closeDrawer(GravityCompat.START);
+             return;
          }
+
+
+
 
 
     }
@@ -238,6 +249,76 @@ public class MainActivity extends AppCompatActivity
                 return false;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void backExit() {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(mContext.getResources().getString(R.string.are_you_sure))
+                .setContentText(mContext.getResources().getString(R.string.are_you_exit))
+                .setConfirmText(mContext.getResources().getString(R.string.yes))
+                .setCancelText(mContext.getResources().getString(R.string.no))
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        finish();
+                    }
+                })
+                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+
+
+    }
+
+    private void logout() {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(mContext.getResources().getString(R.string.are_you_sure))
+                .setContentText(mContext.getResources().getString(R.string.are_you_sure_logout))
+                .setConfirmText(mContext.getResources().getString(R.string.yes))
+                .setCancelText(mContext.getResources().getString(R.string.no))
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        startActivity(new Intent(mContext,LoginActivity.class));
+                        finish();
+                    }
+                })
+                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean isPop = pop();
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (!isPop) {
+            backExit();
+        }
+    }
+
+    private boolean pop() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+           // tvMainToolbarTitle.setText(mContext.getResources().getString(R.string.dashboard));
+            getSupportFragmentManager().popBackStackImmediate();
+            return true;
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStackImmediate();
+            return true;
         }
         return false;
     }

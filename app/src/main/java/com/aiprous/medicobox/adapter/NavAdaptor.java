@@ -15,12 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.model.NavItemClicked;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import medicobox.aiprous.com.medicobox.R;
+
 
 /**
  * Created by Mankesh71 on 27-01-2017.

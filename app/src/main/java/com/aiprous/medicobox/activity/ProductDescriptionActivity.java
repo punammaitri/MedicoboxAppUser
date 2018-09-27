@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.fragment.HomeFragment;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 public class ProductDescriptionActivity extends AppCompatActivity {
 

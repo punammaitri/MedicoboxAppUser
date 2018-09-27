@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "medicobox.aiprous.com.medicobox"
+        applicationId "com.aiprous.medicobox"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -47,6 +51,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //mutidex
     implementation 'com.android.support:multidex:1.0.1'
-
+    // for sweet alert dialog
+    implementation 'com.github.f0ris.sweetalert:library:1.5.6'
 
 }

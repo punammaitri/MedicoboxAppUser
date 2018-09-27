@@ -10,11 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.MainActivity;
+import com.aiprous.medicobox.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import medicobox.aiprous.com.medicobox.R;
+
 
 public class SignUpActivity extends AppCompatActivity {
 

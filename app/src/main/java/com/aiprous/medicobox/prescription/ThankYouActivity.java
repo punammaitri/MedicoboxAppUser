@@ -3,7 +3,8 @@ package com.aiprous.medicobox.prescription;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import medicobox.aiprous.com.medicobox.R;
+import com.aiprous.medicobox.R;
+
 
 public class ThankYouActivity extends AppCompatActivity {
 

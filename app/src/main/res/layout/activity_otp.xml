@@ -111,6 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/height_20"
+                android:layout_marginLeft="@dimen/height_30"
+                android:layout_marginRight="@dimen/height_30"
                 android:background="@drawable/custom_btn_bg"
                 android:text="Proceed"
                 android:textAllCaps="true"
