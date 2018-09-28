@@ -6,11 +6,11 @@ import android.os.Bundle;
 import com.aiprous.medicobox.R;
 
 
-public class FillDeliveryAddressActivity extends AppCompatActivity {
+public class EditAddressActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fill_delivery_address);
+        setContentView(R.layout.activity_edit_address);
     }
 }

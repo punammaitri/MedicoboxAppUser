@@ -44,8 +44,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:maxLines="1"
+                        android:buttonTint="@color/coloryellow"
                         android:singleLine="true"
-                        android:text="  Oder everything as per prescription"
+                        android:text="Oder everything as per prescription"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold" />
 
@@ -53,7 +54,7 @@
                         android:id="@+id/linear_order_everything"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="@dimen/height_35"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -81,8 +82,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_20"
                         android:maxLines="1"
+                        android:buttonTint="@color/coloryellow"
                         android:singleLine="true"
-                        android:text="  Let me specify medicine/quantity"
+                        android:text="Let me specify medicine/quantity"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold" />
 
@@ -90,7 +92,7 @@
                         android:id="@+id/linear_specify_medicine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="35dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -119,8 +121,9 @@
                         android:layout_marginBottom="@dimen/height_15"
                         android:layout_marginTop="@dimen/height_20"
                         android:maxLines="1"
+                        android:buttonTint="@color/coloryellow"
                         android:singleLine="true"
-                        android:text="  Call me for details"
+                        android:text="Call me for details"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold" />
 
@@ -175,16 +178,16 @@
                     android:background="@drawable/arrow_yellow" />
 
 
-                <ImageView
-                    android:id="@+id/img_attachment"
-                    android:layout_width="@dimen/height_100"
-                    android:layout_height="@dimen/height_100"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rc_medicine_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_below="@+id/txtViewAttached"
                     android:layout_marginBottom="@dimen/height_10"
-                    android:layout_marginLeft="@dimen/height_12"
-                    android:layout_marginTop="@dimen/height_15"
-                    android:background="@drawable/bottle"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/height_10"
+                    android:layout_marginRight="@dimen/height_10"
+                    android:layout_marginTop="@dimen/height_15" />
             </RelativeLayout>
 
         </LinearLayout>

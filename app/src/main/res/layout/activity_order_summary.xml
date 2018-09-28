@@ -193,16 +193,17 @@
                             android:background="@drawable/arrow_yellow" />
 
 
-                        <ImageView
-                            android:id="@+id/img_attachment"
-                            android:layout_width="@dimen/height_100"
-                            android:layout_height="@dimen/height_100"
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rc_medicine_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
                             android:layout_below="@+id/txtViewAttached"
                             android:layout_marginBottom="@dimen/height_10"
-                            android:layout_marginLeft="@dimen/height_12"
-                            android:layout_marginTop="@dimen/height_15"
-                            android:background="@drawable/bottle"
-                            android:visibility="gone" />
+                            android:visibility="gone"
+                            android:layout_marginLeft="@dimen/height_10"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:layout_marginTop="@dimen/height_15" />
+
                     </RelativeLayout>
 
                 </LinearLayout>

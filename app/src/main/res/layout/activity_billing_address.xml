@@ -23,8 +23,19 @@
             android:layout_marginTop="@dimen/height_10"
             android:orientation="vertical">
 
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/coloryellow"
+                android:text="Set as billing address"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
                 android:theme="@style/TextLabel">
 
@@ -157,6 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="@dimen/height_8"
                 android:weightSum="3">
 
                 <RadioButton
@@ -165,6 +177,7 @@
                     android:layout_weight="1"
                     android:checked="true"
                     android:text="Home"
+                    android:buttonTint="@color/coloryellow"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -173,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Office"
+                    android:buttonTint="@color/coloryellow"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -181,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Other"
+                    android:buttonTint="@color/coloryellow"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
