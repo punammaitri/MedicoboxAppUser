@@ -18,7 +18,7 @@ import butterknife.OnClick;
 
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity  {
 
     @BindView(R.id.btn_signup)
     Button btn_signup;

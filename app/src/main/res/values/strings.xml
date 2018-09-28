@@ -40,4 +40,5 @@
     <string name="are_you_sure_logout">You want to logout?</string>
     <string name="loading">Loading…</string>
     <string name="error_server">Something wrong at server, please try again later.</string>
+    <string name="address">Flat No 104,A wing,\n Green Olive Apartments, \n Hinjawadi \n Pune-411057  \n Maharashtra \n India</string>
 </resources>

@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.ForgotPasswordActivity;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
@@ -44,6 +45,7 @@ import com.aiprous.medicobox.model.NavItemClicked;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -321,6 +323,12 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         return false;
+    }
+
+    @OnClick(R.id.rlayout_cart)
+    public void onClickCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
 }
