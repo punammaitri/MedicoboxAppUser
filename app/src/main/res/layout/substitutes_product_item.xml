@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="DUVADILAN 10 mg Tablets 50's"
                 android:textStyle="bold"
+                android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/colorPrimary"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -31,6 +32,7 @@
                 android:id="@+id/tv_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="DUVADILAN 10 mg Tablets 50's" />
 
         </LinearLayout>
@@ -40,6 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Rs50"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_weight="0.2"
             android:gravity="center|right"
             android:textColor="@color/colorblack"

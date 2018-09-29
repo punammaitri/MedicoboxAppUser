@@ -30,6 +30,7 @@
                 android:layout_weight="1"
                 android:buttonTint="@color/coloryellow"
                 android:checked="true"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Set as billing address"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
@@ -45,6 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
                     android:text="Akshay Shinde" />
@@ -59,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone*"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -73,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Flat Number,Building Name*"
                     android:imeOptions="actionNext"
+                    android:fontFamily="@font/open_sans_regular"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
@@ -85,6 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Street /Road Name"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -98,6 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Landmark"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -111,6 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Pincode*"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -124,6 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="State"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -137,6 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionDone"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -155,6 +164,7 @@
                     android:buttonTint="@color/coloryellow"
                     android:checked="true"
                     android:text="Home"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -164,6 +174,7 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/coloryellow"
                     android:text="Office"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -173,6 +184,7 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/coloryellow"
                     android:text="Other"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -189,6 +201,7 @@
                 android:layout_marginTop="@dimen/height_10"
                 android:background="@drawable/custom_btn_bg"
                 android:text="Save"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAllCaps="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white" />

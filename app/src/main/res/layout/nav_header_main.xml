@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:fontFamily="@font/open_sans_regular"
         android:text="Punam Maitri"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="punam.maitri1@gmail.com"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"/>
 

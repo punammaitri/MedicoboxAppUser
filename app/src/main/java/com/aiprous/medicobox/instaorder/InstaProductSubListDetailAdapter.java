@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        holder.txt_tab_name.setText(mSubListArray.get(position).medicineName);
+        holder.cb_tab_name.setText(mSubListArray.get(position).medicineName);
         holder.tv_value.setText(mSubListArray.get(position).price);
 
         holder.img_Info.setOnClickListener(new View.OnClickListener() {
@@ -87,8 +88,8 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.txt_tab_name)
-        TextView txt_tab_name;
+        @BindView(R.id.cb_tab_name)
+        CheckBox cb_tab_name;
         @BindView(R.id.tv_value)
         TextView tv_value;
         @BindView(R.id.img_Info)

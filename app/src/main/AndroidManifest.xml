@@ -112,6 +112,7 @@
             android:name=".activity.PaymentDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
     </application>
 
 </manifest>

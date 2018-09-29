@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/height_15"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginRight="@dimen/height_15"
                 android:layout_marginTop="@dimen/height_15"
                 android:gravity="center|start"
@@ -43,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter name"
+                    android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionDone" />
 
             </android.support.design.widget.TextInputLayout>
@@ -63,6 +65,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/height_25"
                     android:layout_toLeftOf="@+id/txtCancel"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="Save"
                     android:textAllCaps="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -76,6 +79,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="Cancel"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textAllCaps="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorPrimary"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -59,6 +60,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/height_15"
                             android:text="Take"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textColor="@color/colorblack"
                             android:textSize="17sp" />
 
@@ -68,6 +70,7 @@
                             android:layout_below="@+id/txtTake"
                             android:layout_centerHorizontal="true"
                             android:text="Photo"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textColor="@color/colorblack"
                             android:textSize="17sp" />
 
@@ -106,6 +109,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/height_15"
                             android:text="Choose"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textColor="@color/colorblack"
                             android:textSize="17sp" />
 
@@ -115,6 +119,7 @@
                             android:layout_below="@+id/txtChooseGallery"
                             android:layout_centerHorizontal="true"
                             android:singleLine="true"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="from Gallery"
                             android:textColor="@color/colorblack"
                             android:textSize="17sp" />
@@ -154,6 +159,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/height_15"
                             android:text="My"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textColor="@color/colorblack"
                             android:textSize="17sp" />
 
@@ -163,6 +169,7 @@
                             android:layout_below="@+id/txtMyPrescription"
                             android:layout_centerHorizontal="true"
                             android:maxLines="1"
+                            android:fontFamily="@font/open_sans_regular"
                             android:singleLine="true"
                             android:text="Prescriptions"
                             android:textColor="@color/colorblack"
@@ -177,19 +184,19 @@
                 android:id="@+id/txtAttach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/height_10"
+                android:layout_marginLeft="@dimen/height_13"
                 android:layout_marginTop="@dimen/height_10"
                 android:text="Attached Prescriptions"
                 android:textAllCaps="true"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textColor="@color/colorblack" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_medicine_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/height_10"
-                android:layout_marginLeft="@dimen/height_10"
                 android:layout_marginRight="@dimen/height_10"
                 android:layout_marginTop="@dimen/height_10"
                 android:visibility="visible" />
@@ -216,6 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/height_5"
                         android:layout_marginTop="@dimen/height_8"
+                        android:fontFamily="@font/open_sans_regular"
                         android:text="Are you ordering for yourself?"
                         android:textColor="@color/colorblack"
                         android:textSize="14dp"
@@ -228,13 +236,15 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginRight="@dimen/height_3"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true">
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/coloryellow"
                             android:text="Yes"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textStyle="bold" />
 
@@ -244,6 +254,7 @@
                             android:buttonTint="@color/coloryellow"
                             android:checked="true"
                             android:text="No"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textStyle="bold" />
                     </RadioGroup>
@@ -253,13 +264,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtOrderingHeading"
-                        android:layout_marginTop="@dimen/height_10"
+                        android:layout_marginTop="@dimen/height_7"
                         android:theme="@style/TextLabel">
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Patient's Name"
+                            android:fontFamily="@font/open_sans_regular"
                             android:imeOptions="actionNext"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
@@ -269,7 +281,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/edt_patient_name"
                         android:layout_marginBottom="@dimen/height_5"
-                        android:layout_marginTop="@dimen/height_5"
+                        android:layout_marginTop="@dimen/height_4"
                         android:theme="@style/TextLabel">
 
                         <EditText
@@ -277,6 +289,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Additional comments"
                             android:imeOptions="actionNext"
+                            android:fontFamily="@font/open_sans_regular"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -312,6 +325,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_5"
                             android:text="Valid Prescription Guide"
+                            android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <ImageView
@@ -349,6 +363,7 @@
         android:layout_marginTop="@dimen/height_20"
         android:background="@drawable/custom_btn_bg"
         android:text="Continue"
+        android:fontFamily="@font/open_sans_regular"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white" />

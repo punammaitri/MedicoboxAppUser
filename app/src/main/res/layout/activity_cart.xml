@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".activity.CartActivity">
 
-    <include layout="@layout/custom_toolbar"
-        android:id="@+id/layout_custom_toolbar"/>
+    <include
+        android:id="@+id/layout_custom_toolbar"
+        layout="@layout/custom_toolbar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_custom_toolbar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,22 +26,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cart"
-                android:textColor="@color/colorblack"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
                 android:layout_marginLeft="@dimen/height_10"
-                />
+                android:text="Cart"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#fff"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_4"
                 app:cardElevation="@dimen/height_4"
-                >
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,6 +52,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+                        android:fontFamily="@font/open_sans_regular"
                         android:hint="Enter Coupon Code"
                         app:backgroundTint="@color/coloryellow" />
 
@@ -59,42 +61,45 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
                         android:text="APPLY"
-                        android:textColor="@color/coloryellow"/>
+                        android:fontFamily="@font/open_sans_regular"
+                        android:textColor="@color/coloryellow" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Items"
-                android:textColor="@color/colorblack"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
                 android:layout_marginLeft="@dimen/height_4"
                 android:layout_marginTop="@dimen/height_10"
-                />
+                android:text="Items"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#fff"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_4"
-                app:cardElevation="@dimen/height_4">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rc_cart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                app:cardElevation="@dimen/height_4"
+                app:cardUseCompatPadding="true">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rc_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </android.support.v7.widget.CardView>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/height_10"
                 android:layout_marginLeft="@dimen/height_30"
                 android:layout_marginRight="@dimen/height_30"
-                android:layout_marginBottom="@dimen/height_10"
-                android:layout_gravity="center"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
                 android:background="@drawable/custom_btn_bg"
                 android:text="Upload Prescription"
@@ -104,15 +109,14 @@
                 android:textStyle="bold" />
 
 
-
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#fff"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_4"
-                app:cardElevation="@dimen/height_4">
+                app:cardElevation="@dimen/height_4"
+                app:cardUseCompatPadding="true">
 
 
                 <LinearLayout
@@ -129,97 +133,104 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
                             android:text="M.R.P Total"
-                            android:layout_weight="0.6"
-                            android:textColor="@color/colorblack"
-                            />
+                            android:fontFamily="@font/open_sans_regular"
+                            android:textColor="@color/colorblack" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:gravity="end"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="Rs350"
-                            android:layout_weight="0.4"
-                            android:gravity="end"
-                            android:textColor="@color/colorblack"
-                            />
+                            android:textColor="@color/colorblack" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="1"
-                        android:layout_marginTop="@dimen/height_10">
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="Price Discount"
-                            android:layout_weight="0.6"
-                            android:textColor="@color/colorblack"
-                            />
+                            android:textColor="@color/colorblack" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:gravity="end"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="-Rs30"
-                            android:layout_weight="0.4"
-                            android:gravity="end"
-                            android:textColor="@color/colorblack"
-                            />
+                            android:textColor="@color/colorblack" />
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="1"
-                        android:layout_marginTop="@dimen/height_10">
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="Shipping Charges"
-                            android:layout_weight="0.4"
-                            android:textColor="@color/colorblack"
-                            />
+                            android:textColor="@color/colorblack" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="As per delivery address"
                             android:layout_weight="0.6"
                             android:gravity="end"
-                            android:textColor="@color/colorblack"
-                            />
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="As per delivery address"
+                            android:textColor="@color/colorblack" />
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="1"
-                        android:layout_marginTop="@dimen/height_10">
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="To be paid"
                             android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="To be paid"
                             android:textColor="@color/colorblack"
-                            android:textStyle="bold"
-                            />
+                            android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Rs350.0"
                             android:layout_weight="0.4"
                             android:gravity="end"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Rs350.0"
                             android:textColor="@color/colorblack"
-                            android:textStyle="bold"
-                            />
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/height_10"
-                        android:background="@color/colorlightlightGray"/>
+                        android:background="@color/colorlightlightGray" />
 
 
                     <LinearLayout
@@ -231,17 +242,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="As per delivery address"
-                            android:textColor="@color/colorblack"
-                            android:layout_marginRight="@dimen/height_10"/>
+                            android:textColor="@color/colorblack" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="Rs30.0"
                             android:textColor="@color/colorblack"
-                            android:textStyle="bold"
-                            />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -252,32 +264,29 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Free shapping for orders above Rs500"
-                android:textColor="@color/colorblack"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_marginLeft="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
-                />
+                android:text="Free shapping for orders above Rs500"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack" />
 
             <Button
                 android:id="@+id/btn_continue_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/height_20"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginLeft="@dimen/height_30"
                 android:layout_marginRight="@dimen/height_30"
-                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/height_20"
                 android:background="@drawable/custom_btn_bg"
                 android:text="Continue"
                 android:textAllCaps="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/height_20"/>
-
-
-
-
+                android:textStyle="bold" />
 
 
         </LinearLayout>

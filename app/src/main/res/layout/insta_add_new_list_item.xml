@@ -29,6 +29,7 @@
                 android:layout_weight="0.9"
                 android:layout_marginLeft="@dimen/height_8"
                 android:maxLines="2"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Diabetes"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorred" />
@@ -72,6 +73,7 @@
                     android:id="@+id/btn_add_to_cart"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginTop="@dimen/height_5"
                     android:layout_weight="0.45"
                     android:layout_marginLeft="@dimen/height_8"
@@ -89,6 +91,7 @@
                     android:id="@+id/btn_order_checkout"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginLeft="@dimen/height_5"
                     android:layout_marginTop="@dimen/height_5"
                     android:layout_weight="0.45"
@@ -129,22 +132,14 @@
             <CheckBox
                 android:id="@+id/checkbox"
                 android:layout_marginLeft="@dimen/height_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/txt_tab_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/height_5"
-                android:layout_toRightOf="@+id/checkbox"
                 android:text="Select all"
                 android:textAllCaps="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/coloryellow"
-                android:textStyle="bold" />
-
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

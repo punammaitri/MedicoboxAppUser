@@ -4,111 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ListActivity"
+    android:background="@color/colorlightlightlightGray"
     android:orientation="vertical"
-    android:background="@color/colorlightlightlightGray">
+    tools:context=".activity.ListActivity">
 
-    <include layout="@layout/custom_toolbar"
-        android:id="@+id/rlayout_list_toolbar"/>
-
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       android:layout_below="@+id/rlayout_list_toolbar"
-       android:layout_above="@+id/llayout_sort">
+    <include
+        android:id="@+id/rlayout_list_toolbar"
+        layout="@layout/custom_toolbar" />
 
 
-       <TextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="Diabetes Care"
-           android:textAppearance="?android:attr/textAppearanceMedium"
-           android:textStyle="bold"
-           android:padding="@dimen/height_10"
-           android:textColor="@color/colorblack"/>
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/rc_medicine_list"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-       </android.support.v7.widget.RecyclerView>
-   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llayout_sort"
+        android:layout_below="@+id/rlayout_list_toolbar"
+        android:orientation="vertical">
 
 
-
-
-        <LinearLayout
-            android:id="@+id/llayout_sort"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/height_15"
+            android:fontFamily="@font/open_sans_regular"
+            android:padding="@dimen/height_10"
+            android:text="Diabetes Care"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rc_medicine_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llayout_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/height_15"
+        android:layout_marginLeft="@dimen/height_20"
+        android:layout_marginRight="@dimen/height_20"
+        android:layout_marginTop="@dimen/height_15"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/height_20"
             android:layout_marginRight="@dimen/height_20"
-            android:layout_marginBottom="@dimen/height_15">
+            android:layout_weight="0.5"
+            android:background="@drawable/custom_btn_bg_white"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:clickable="true"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginLeft="@dimen/height_20"
-                android:layout_marginRight="@dimen/height_20"
-                android:background="@drawable/custom_btn_bg_white">
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/sort" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/sort" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:text="Sort by"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:clickable="true"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginLeft="@dimen/height_20"
-                android:layout_marginRight="@dimen/height_20"
-                android:background="@drawable/custom_btn_bg_white">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/filter" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:text="Filter"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="Sort by"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/height_20"
+            android:layout_marginRight="@dimen/height_20"
+            android:layout_weight="0.5"
+            android:background="@drawable/custom_btn_bg_white"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/filter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="Filter"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

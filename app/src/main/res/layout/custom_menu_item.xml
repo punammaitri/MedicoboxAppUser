@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:maxLines="1"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="abc"
                 android:layout_marginStart="@dimen/height_10"
                 android:textAppearance="?android:attr/textAppearanceSmall"

@@ -53,6 +53,7 @@
                     android:layout_toRightOf="@+id/img_file"
                     android:layout_weight="0.55"
                     android:gravity="center"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="Order with Prescription"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold"/>
@@ -70,6 +71,7 @@
                         android:layout_height="match_parent"
                         android:text="Upload"
                         android:gravity="center"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorwhite"
                         android:background="@drawable/custom_btn_bg"/>
                 </RelativeLayout>
@@ -111,6 +113,7 @@
                         android:layout_below="@+id/rl_medicines"
                         android:gravity="center"
                         android:text="MEDICINES"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
@@ -120,6 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_medicines"
                         android:gravity="center"
+                        android:fontFamily="@font/open_sans_regular"
                         android:singleLine="true"
                         android:text="1,00,000+ Medicines"
                         android:textColor="@color/coloryellow" />
@@ -152,6 +156,7 @@
                         android:layout_below="@+id/rlayout_lab_tests"
                         android:gravity="center"
                         android:text="LAB TESTS"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
@@ -161,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_lab_test"
                         android:gravity="center"
+                        android:fontFamily="@font/open_sans_regular"
                         android:singleLine="true"
                         android:text="Free sample Collection"
                         android:textColor="@color/coloryellow" />
@@ -203,6 +209,7 @@
                         android:layout_below="@+id/rlayout_quick_order"
                         android:gravity="center"
                         android:singleLine="true"
+                        android:fontFamily="@font/open_sans_regular"
                         android:text="INSTA ORDERS"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorPrimary"
@@ -213,6 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_quick_order"
                         android:gravity="center"
+                        android:fontFamily="@font/open_sans_regular"
                         android:text="65,000+ Products"
                         android:textColor="@color/coloryellow" />
                 </RelativeLayout>
@@ -244,6 +252,7 @@
                         android:layout_below="@+id/rlayout_econsultation"
                         android:gravity="center"
                         android:singleLine="true"
+                        android:fontFamily="@font/open_sans_regular"
                         android:text="E-CONSULTATION"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorPrimary"
@@ -254,6 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_econsultation"
                         android:gravity="center"
+                        android:fontFamily="@font/open_sans_regular"
                         android:singleLine="true"
                         android:text="Chat for Free"
                         android:textColor="@color/coloryellow" />
@@ -264,6 +274,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="FEATURED PRODUCTS"
                android:textColor="@color/colorblack"/>
 

@@ -34,6 +34,7 @@
             android:layout_marginTop="@dimen/height_15"
             android:gravity="center"
             android:text="Thank You!"
+            android:fontFamily="@font/open_sans_regular"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
@@ -47,6 +48,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/height_8"
             android:gravity="center"
+            android:fontFamily="@font/open_sans_regular"
             android:text="Order Placed"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorPrimary"
@@ -60,10 +62,11 @@
             android:layout_below="@+id/txt_order_placed"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/height_15"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_marginTop="@dimen/height_16"
             android:gravity="center"
             android:text="@string/thank_you_text_desc"
-            android:textSize="17sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -71,10 +74,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_thank_you_desc"
             android:layout_marginLeft="@dimen/height_15"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_marginTop="@dimen/height_10"
             android:gravity="center"
             android:text="@string/thank_you_note"
-            android:textSize="17sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

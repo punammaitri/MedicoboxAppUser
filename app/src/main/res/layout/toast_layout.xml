@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/height_8"
+        android:fontFamily="@font/open_sans_regular"
         android:padding="@dimen/height_8"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/colorwhite" />

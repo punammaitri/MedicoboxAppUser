@@ -30,7 +30,7 @@
             <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="@dimen/height_50"
-                android:layout_height="@dimen/height_130"
+                android:layout_height="120dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/bottle" />
         </RelativeLayout>
@@ -41,6 +41,7 @@
             android:layout_height="match_parent"
             android:text="Flexi-Tip Digital Thermometer"
             android:gravity="center"
+            android:fontFamily="@font/open_sans_regular"
             android:textColor="@color/colorblack"
             android:textStyle="bold"
             android:layout_marginTop="@dimen/height_10"/>
@@ -55,6 +56,7 @@
             <TextView
                 android:id="@+id/tv_product_mrp"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="match_parent"
                 android:text="Rs123" />
 
@@ -63,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="30% OFF"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginLeft="@dimen/height_10"
                 android:textColor="@color/colorgreen"
                 />
@@ -75,6 +78,7 @@
             android:layout_height="match_parent"
             android:text="Rs123"
             android:gravity="center"
+            android:fontFamily="@font/open_sans_regular"
             android:textColor="@color/colorblack"
             android:textStyle="bold"
             android:layout_marginTop="@dimen/height_5"/>

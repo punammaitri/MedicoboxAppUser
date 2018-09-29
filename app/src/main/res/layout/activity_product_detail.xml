@@ -33,6 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Combiflam Icy Hot Fast Pain Relief Gel"
                 android:textColor="@color/colorPrimary"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -55,6 +56,7 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_marginTop="@dimen/height_10"
+             android:fontFamily="@font/open_sans_regular"
              android:text="Sanofi India Ltd"
              android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -67,6 +69,7 @@
             <TextView
                 android:id="@+id/tv_product_mrp"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_marginRight="@dimen/height_10"/>
@@ -76,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold"
                 android:layout_marginRight="@dimen/height_10"/>
@@ -83,12 +87,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="(per unit)"
                 android:layout_marginRight="@dimen/height_10"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="In Stock"
                 android:layout_marginRight="@dimen/height_10"
                 android:textColor="@color/colorgreen"/>
@@ -98,6 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
             android:text="10% OFF"
             android:layout_marginTop="@dimen/height_10"
             android:textColor="@android:color/holo_red_dark"
@@ -141,6 +148,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="Quantity"
+               android:fontFamily="@font/open_sans_regular"
                android:layout_marginRight="@dimen/height_10"
                android:textColor="@color/colorblack"
                android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -151,6 +159,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="-"
+               android:fontFamily="@font/open_sans_regular"
                android:textSize="15sp"
                android:background="@drawable/rounded_textview"
                android:textColor="@color/colorblack"
@@ -164,6 +173,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="1"
+                android:fontFamily="@font/open_sans_regular"
                android:layout_marginRight="@dimen/height_10"
                android:textAppearance="?android:attr/textAppearanceLarge"
                android:textColor="@color/colorblack"
@@ -175,6 +185,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="+"
+               android:fontFamily="@font/open_sans_regular"
                android:textSize="15sp"
                android:background="@drawable/rounded_textview"
                android:textColor="@color/colorblack"
@@ -200,6 +211,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_weight="0.77"
                 android:text="Delivery between Sep 10th-11th -445002"
                 android:textColor="@color/colorblack"
@@ -207,6 +219,7 @@
 
             <TextView
                 android:layout_width="0dp"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="match_parent"
                 android:layout_weight="0.23"
                 android:text="CHANGE"
@@ -236,6 +249,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_height="wrap_content"
                     android:text="Product Review"
                     android:textColor="@color/colorblack"
@@ -250,6 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5.0"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         android:textStyle="bold"
                         android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -272,6 +287,7 @@
                         android:layout_height="wrap_content"
                         android:text="9 review (s)"
                         android:layout_marginLeft="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textStyle="bold"
                         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -333,6 +349,7 @@
                     android:text="Product Details"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </LinearLayout>
@@ -361,6 +378,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="People Also Viewed "
+            android:fontFamily="@font/open_sans_regular"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
             android:textColor="@color/colorblack"
@@ -383,6 +401,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.77"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="More Products From Herbolalab India Pvt Ltd"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold"/>
@@ -391,6 +410,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.23"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="MORE"
                 android:gravity="end"
                 android:textStyle="bold"
@@ -406,6 +426,7 @@
             android:layout_marginTop="@dimen/height_10"
             android:layout_marginBottom="@dimen/height_20"
             android:text="Add to cart"
+            android:fontFamily="@font/open_sans_regular"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"

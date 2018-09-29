@@ -21,12 +21,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_8"
+            android:layout_marginLeft="@dimen/height_5"
             android:layout_marginTop="@dimen/height_8"
             android:padding="@dimen/height_8"
+            android:fontFamily="@font/open_sans_regular"
             android:text="Choose Delivery Address"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorblack"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -36,10 +37,11 @@
             android:layout_marginRight="@dimen/height_10"
             android:layout_marginTop="@dimen/height_8"
             android:padding="@dimen/height_8"
+            android:fontFamily="@font/open_sans_regular"
             android:text="+ Add new"
             android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorblack"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 
@@ -60,6 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/height_8"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginTop="@dimen/height_8"
         android:background="@drawable/custom_btn_bg"
         android:paddingLeft="@dimen/height_70"

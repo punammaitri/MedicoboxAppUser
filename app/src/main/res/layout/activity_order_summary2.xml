@@ -24,6 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
             android:text="Order Summary"
             android:textColor="@color/colorblack"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Items"
+            android:fontFamily="@font/open_sans_regular"
             android:textColor="@color/colorblack"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="bold"
@@ -79,6 +81,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="View Attached Prescriptions(1)"
                     android:textColor="@color/colorblack"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -124,6 +127,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="M.R.P Total"
+                        android:fontFamily="@font/open_sans_regular"
                         android:layout_weight="0.6"
                         android:textColor="@color/colorblack"
                         />
@@ -132,6 +136,7 @@
                         android:layout_height="wrap_content"
                         android:text="Rs350"
                         android:layout_weight="0.4"
+                        android:fontFamily="@font/open_sans_regular"
                         android:gravity="end"
                         android:textColor="@color/colorblack"
                         />
@@ -147,6 +152,7 @@
                         android:layout_height="wrap_content"
                         android:text="Price Discount"
                         android:layout_weight="0.6"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         />
                     <TextView
@@ -154,6 +160,7 @@
                         android:layout_height="wrap_content"
                         android:text="-Rs30"
                         android:layout_weight="0.4"
+                        android:fontFamily="@font/open_sans_regular"
                         android:gravity="end"
                         android:textColor="@color/colorblack"
                         />
@@ -171,6 +178,7 @@
                         android:layout_height="wrap_content"
                         android:text="Shipping Charges"
                         android:layout_weight="0.4"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         />
                     <TextView
@@ -179,6 +187,7 @@
                         android:text="As per delivery address"
                         android:layout_weight="0.6"
                         android:gravity="end"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         />
 
@@ -195,6 +204,7 @@
                         android:layout_height="wrap_content"
                         android:text="To be paid"
                         android:layout_weight="0.6"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         android:textStyle="bold"
                         />
@@ -202,6 +212,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rs350.0"
+                        android:fontFamily="@font/open_sans_regular"
                         android:layout_weight="0.4"
                         android:gravity="end"
                         android:textColor="@color/colorblack"
@@ -226,6 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="As per delivery address"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         android:layout_marginRight="@dimen/height_10"/>
 
@@ -233,6 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rs30.0"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -242,6 +255,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
             android:text="Free shipping for orders above Rs500"
             android:layout_marginTop="@dimen/height_10"
             android:layout_marginLeft="@dimen/height_10"/>
@@ -261,6 +275,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Billing Address"
                 android:textColor="@color/colorblack"/>
@@ -271,6 +286,7 @@
                 android:layout_weight="0.2"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="EDIT"
+                android:fontFamily="@font/open_sans_regular"
                 android:gravity="end"
                 android:textStyle="bold"
                 android:textColor="@color/colorblack"/>
@@ -294,11 +310,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Shreya Saran"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="@string/address"
                     android:layout_marginTop="@dimen/height_10"/>
 
@@ -306,6 +324,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="+91 8833748362"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorblack"
                     android:layout_marginTop="@dimen/height_10"/>
 
@@ -325,6 +344,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Delivery Address"
                 android:textColor="@color/colorblack"/>
@@ -335,6 +355,7 @@
                 android:layout_weight="0.3"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="CHANGE"
+                android:fontFamily="@font/open_sans_regular"
                 android:gravity="end"
                 android:textStyle="bold"
                 android:textColor="@color/colorblack"/>
@@ -358,11 +379,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Shreya Saran"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="@string/address"
                     android:layout_marginTop="@dimen/height_10"/>
 
@@ -370,6 +393,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Special instructions"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorblack"
                     android:layout_marginTop="@dimen/height_10"/>
 

@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="PRODUCT DETAILS"
             android:gravity="center"
+            android:fontFamily="@font/open_sans_regular"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
             android:textColor="@color/colorblack"/>
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_marginTop="@dimen/height_10"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorblack"
@@ -39,6 +41,7 @@
 
         <TextView
             android:layout_width="match_parent"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_height="wrap_content"
             android:text="Comblfam Icy Hot Fast Pain Relief Spray contains Combiflam Icy Hot Fast Pain Relief Spray contains Diclofenac  Diethylamin 1.16% w/w(equivalent to Diclofenac Sodium-1% w/w). "
             android:layout_marginTop="@dimen/height_10"
@@ -55,6 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="FORMULATION"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
@@ -64,6 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Balm"
                 android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -86,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="MANUFACTURER"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"/>
@@ -95,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="False"
+                android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
@@ -116,6 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="PACKAGING"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"/>
@@ -124,6 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Bottle"
                 android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -147,6 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="SIZE"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"/>
@@ -156,6 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="NA"
+                android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
@@ -180,6 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="DIRECTION"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"/>
 
@@ -188,6 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="NA"
+                android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/colorlightblack"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
@@ -195,6 +208,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
             android:text="People Also Viewed "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"

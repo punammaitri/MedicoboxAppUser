@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/height_8"
                 android:layout_marginTop="@dimen/height_6"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Shreya Saran"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
@@ -52,36 +53,9 @@
             android:id="@+id/txtAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_marginLeft="@dimen/height_30"
-            android:text="Flat No 104, A Wing,"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_30"
-            android:text="Green Olive Apartments,"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_30"
-            android:text="Hinjwadi"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_30"
-            android:text="Pune - 411057"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_30"
-            android:text="Maharashtra"
+            android:text="@string/address"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -89,15 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/height_5"
             android:layout_marginLeft="@dimen/height_30"
-            android:text="India"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/height_5"
-            android:layout_marginLeft="@dimen/height_30"
+            android:fontFamily="@font/open_sans_regular"
             android:layout_marginTop="@dimen/height_5"
             android:text="+91 8833748362"
             android:textAppearance="?android:attr/textAppearanceMedium"

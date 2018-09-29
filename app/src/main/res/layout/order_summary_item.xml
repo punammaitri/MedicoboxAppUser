@@ -19,6 +19,7 @@
             <TextView
                 android:id="@+id/tv_item_name"
                 android:layout_width="0dp"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:text="Horicks Lite Badam Jar 450 gm"
@@ -34,10 +35,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MRP"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginRight="@dimen/height_10"/>
                 <TextView
                     android:id="@+id/tv_mrp_price"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_height="wrap_content"
                     android:text="Rs235.0"
                     android:layout_toRightOf="@+id/tv_mrp"/>
@@ -57,6 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Box of 450 gm powder" />
 
 
@@ -66,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
                     android:text="Rs235.0"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textStyle="bold"
                     android:textColor="@color/colorblack"
                     android:textAppearance="?android:attr/textAppearanceLarge"

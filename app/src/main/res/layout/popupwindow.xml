@@ -42,6 +42,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/height_13"
                 android:text="Edit List"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary" />
 
@@ -78,6 +79,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/height_13"
                 android:text="Add Item"
+                android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary" />
 

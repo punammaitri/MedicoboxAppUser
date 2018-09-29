@@ -41,6 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
+                        android:fontFamily="@font/open_sans_regular"
                         android:buttonTint="@color/coloryellow"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -56,6 +57,7 @@
                         android:visibility="gone">
 
                         <TextView
+                            android:fontFamily="@font/open_sans_regular"
                             android:id="@+id/txt_duration_of_dose"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -67,6 +69,7 @@
                             android:id="@+id/txt_duration_example"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_regular"
                             android:layout_marginTop="@dimen/height_12"
                             android:text="e.g. 60"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -78,6 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_20"
+                        android:fontFamily="@font/open_sans_regular"
                         android:buttonTint="@color/coloryellow"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -97,6 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_15"
+                            android:fontFamily="@font/open_sans_regular"
                             android:text="Medicine(s) name,quantity/duration"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -104,6 +109,7 @@
                             android:id="@+id/txt_specify_meds"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_regular"
                             android:layout_marginTop="@dimen/height_12"
                             android:text="e.g. Crocin,2 Strips"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -116,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/height_15"
                         android:layout_marginTop="@dimen/height_20"
+                        android:fontFamily="@font/open_sans_regular"
                         android:buttonTint="@color/coloryellow"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -159,6 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/height_5"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginTop="@dimen/height_10"
                     android:text="View Attached Prescriptions(1)"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -196,6 +204,7 @@
         android:layout_height="@dimen/height_45"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/height_20"
+        android:fontFamily="@font/open_sans_regular"
         android:layout_marginLeft="@dimen/height_30"
         android:layout_marginRight="@dimen/height_30"
         android:background="@drawable/custom_btn_bg"

@@ -78,6 +78,7 @@
         android:layout_height="20dp"
         android:layout_marginLeft="@dimen/height_27"
         android:layout_marginTop="@dimen/height_4"
+        android:fontFamily="@font/open_sans_regular"
         android:background="@drawable/border_circle"
         android:gravity="center"
         android:text="0"

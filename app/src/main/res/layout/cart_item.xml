@@ -20,6 +20,7 @@
                 android:id="@+id/tv_item_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_weight="0.9"
                 android:text="Horicks Lite Badam Jar 450 gm"/>
 
@@ -42,6 +43,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="box of 450 gm powder"
+             android:fontFamily="@font/open_sans_regular"
               android:layout_marginTop="@dimen/height_10"/>
 
         <LinearLayout
@@ -52,11 +54,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MRP"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
                 android:layout_marginRight="@dimen/height_10"/>
             <TextView
                 android:id="@+id/tv_mrp_price"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="wrap_content"
                 android:text="Rs150"
                 android:layout_marginTop="@dimen/height_10"/>
@@ -74,6 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Rs150"
                 android:gravity="center|left"
                 android:textStyle="bold"
@@ -93,6 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textSize="15sp"
                     android:background="@drawable/rounded_textview"
                     android:textColor="@color/colorblack"
@@ -105,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
+                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginRight="@dimen/height_10"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/colorblack"
@@ -116,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+"
+                    android:fontFamily="@font/open_sans_regular"
                     android:textSize="15sp"
                     android:background="@drawable/rounded_textview"
                     android:textColor="@color/colorblack"

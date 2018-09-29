@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
                 android:text="Enter OTP"/>
 
@@ -60,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/height_5"
                     android:inputType="number"
+                    android:fontFamily="@font/open_sans_regular"
                     android:maxLength="1"
                     android:gravity="center"
                     android:padding="@dimen/height_2"
@@ -74,6 +76,7 @@
                     android:layout_marginRight="@dimen/height_5"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:fontFamily="@font/open_sans_regular"
                     android:padding="@dimen/height_2"
                     android:gravity="center"
                     android:imeOptions="actionNext"
@@ -86,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/height_5"
                     android:inputType="number"
+                    android:fontFamily="@font/open_sans_regular"
                     android:maxLength="1"
                     android:gravity="center"
                     android:padding="@dimen/height_2"
@@ -98,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="1"
+                    android:fontFamily="@font/open_sans_regular"
                     android:gravity="center"
                     android:padding="@dimen/height_2"
                     android:background="@drawable/edittext_background_gray"/>
@@ -111,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/height_20"
+                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginLeft="@dimen/height_30"
                 android:layout_marginRight="@dimen/height_30"
                 android:background="@drawable/custom_btn_bg"
@@ -126,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Resend OTP"/>
 
 
