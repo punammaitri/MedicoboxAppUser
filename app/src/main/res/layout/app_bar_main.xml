@@ -60,6 +60,7 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/rlayout_cart"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
