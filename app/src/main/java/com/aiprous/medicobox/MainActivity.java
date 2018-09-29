@@ -92,7 +92,9 @@ public class MainActivity extends AppCompatActivity
           Window window = this.getWindow();
           window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
           window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-          window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+          }
 
           homeFragment = new HomeFragment(this);
           setDrawerToggle();
@@ -161,7 +163,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void navItemClicked(String name, int position) {
 
-
        /* if (!isNetworkAvailable(mContext)) {
             CustomProgressDialog.getInstance().showDialog(mContext, Constant.Network_Error, Constant.ERROR_TYPE);
             return;*/
@@ -173,16 +174,9 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().popBackStackImmediate();
                 }
             }
-            //tvMainToolbarTitle.setText(mContext.getResources().getString(R.string.txt_home));
             addFragment();
-           // BaseActivity.FirebaseAnalytics(mContext, "Home", "Navigation Menu to Home");
             return;
-        }
-       /* else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))){
-             drawerLayout.closeDrawer(GravityCompat.START);
-             return;
-         }*/
-         else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
+        } /*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
         {
             startActivity(new Intent(mContext, ProductDetailActivity.class));
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -201,16 +195,11 @@ public class MainActivity extends AppCompatActivity
              startActivity(new Intent(mContext, ProductDescriptionActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))){
+         }*/else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))){
              logout();
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
          }
-
-
-
-
-
     }
 
     // set data into navigation view
@@ -325,10 +314,10 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
-    @OnClick(R.id.rlayout_cart)
+   /* @OnClick(R.id.rlayout_cart)
     public void onClickCart()
     {
         startActivity(new Intent(this,CartActivity.class));
     }
-
+*/
 }

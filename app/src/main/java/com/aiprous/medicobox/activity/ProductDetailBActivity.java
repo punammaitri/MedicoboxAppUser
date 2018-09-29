@@ -2,6 +2,7 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -76,7 +77,9 @@ public class ProductDetailBActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
         //set spinner
         //Creating the ArrayAdapter instance having the value list
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,mValue);
