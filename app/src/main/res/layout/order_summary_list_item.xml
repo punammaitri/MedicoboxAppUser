@@ -11,6 +11,6 @@
         android:layout_width="@dimen/height_100"
         android:layout_height="@dimen/height_100"
         android:layout_gravity="center"
-        android:background="@drawable/bottle" />
+        android:background="@drawable/capsules_home" />
 
 </LinearLayout>

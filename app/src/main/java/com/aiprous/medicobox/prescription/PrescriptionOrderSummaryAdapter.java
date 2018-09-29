@@ -16,13 +16,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class UploadPrescriptionOptionAdapter extends RecyclerView.Adapter<UploadPrescriptionOptionAdapter.ViewHolder> {
+public class PrescriptionOrderSummaryAdapter extends RecyclerView.Adapter<PrescriptionOrderSummaryAdapter.ViewHolder> {
 
 
-    private ArrayList<UploadPrescriptionOptionActivity.ListModel> mDataArrayList;
+    private ArrayList<PrescriptionOrderSummaryActivity.ListModel> mDataArrayList;
     private Context mContext;
 
-    public UploadPrescriptionOptionAdapter(Context mContext, ArrayList<UploadPrescriptionOptionActivity.ListModel> mDataArrayList) {
+    public PrescriptionOrderSummaryAdapter(Context mContext, ArrayList<PrescriptionOrderSummaryActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }

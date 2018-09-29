@@ -1,6 +1,8 @@
 package com.aiprous.medicobox.prescription;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,13 +20,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
-public class OrderSummaryActivity extends AppCompatActivity {
+public class PrescriptionUploadActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
     RecyclerView rc_medicine_list;
-    ArrayList<OrderSummaryActivity.ListModel> mlistModelsArray = new ArrayList<>();
+    ArrayList<PrescriptionUploadActivity.ListModel> mlistModelsArray = new ArrayList<>();
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -32,7 +33,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_summary);
+        setContentView(R.layout.activity_upload_prescription);
         ButterKnife.bind(this);
         init();
     }
@@ -40,23 +41,23 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private void init() {
 
         searchview_medicine.setFocusable(false);
-        searchview_medicine.setQueryHint("Search Lists");
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
         //add static data into List array list
-        mlistModelsArray.add(new OrderSummaryActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new PrescriptionUploadActivity.ListModel(R.drawable.capsules_home, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new PrescriptionUploadActivity.ListModel(R.drawable.capsules_home, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new OrderSummaryAdapter(mContext, mlistModelsArray));
-
+        rc_medicine_list.setAdapter(new PrescriptionUploadAdapter(mContext, mlistModelsArray));
     }
 
 
@@ -65,6 +66,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
         finish();
     }
 
+    @OnClick(R.id.btnContinue)
+    public void ButtonContinue() {
+        startActivity(new Intent(this, PrescriptionUploadOptionActivity.class));
+    }
 
     public class ListModel {
         int image;

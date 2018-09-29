@@ -16,13 +16,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class UploadPrescriptionAdapter extends RecyclerView.Adapter<UploadPrescriptionAdapter.ViewHolder> {
+public class PrescriptionUploadAdapter extends RecyclerView.Adapter<PrescriptionUploadAdapter.ViewHolder> {
 
 
-    private ArrayList<UploadPrescriptionActivity.ListModel> mDataArrayList;
+    private ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList;
     private Context mContext;
 
-    public UploadPrescriptionAdapter(Context mContext, ArrayList<UploadPrescriptionActivity.ListModel> mDataArrayList) {
+    public PrescriptionUploadAdapter(Context mContext, ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -38,7 +38,7 @@ public class UploadPrescriptionAdapter extends RecyclerView.Adapter<UploadPrescr
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        holder.imgOption.setImageResource(mDataArrayList.get(position).getImage());
+        //holder.imgOption.setImageResource(mDataArrayList.get(position).getImage());
     }
 
     @Override

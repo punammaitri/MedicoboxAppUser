@@ -1,18 +1,16 @@
 package com.aiprous.medicobox.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.aiprous.medicobox.MainActivity;
@@ -20,6 +18,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
+import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -43,6 +42,8 @@ public class HomeFragment extends Fragment {
     RecyclerView rc_product;
     @BindView(R.id.relInstaOrder)
     RelativeLayout relInstaOrder;
+    @BindView(R.id.btn_upload)
+    Button btn_upload;
     View view;
     ArrayList<Integer> sliderimages=new ArrayList<>();
     ArrayList<Integer> sliderimagesCall=new ArrayList<>();
@@ -156,6 +157,13 @@ public class HomeFragment extends Fragment {
         startActivity(new Intent(getActivity(), InstaProductDetailActivity.class));
 
     }
+
+    @OnClick(R.id.btn_upload)
+    public void onViewUploadPresc() {
+        startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
+
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

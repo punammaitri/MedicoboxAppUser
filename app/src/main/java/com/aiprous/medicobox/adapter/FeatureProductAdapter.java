@@ -1,6 +1,5 @@
 package com.aiprous.medicobox.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -15,12 +14,7 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.fragment.HomeFragment;
-import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
-import com.aiprous.medicobox.prescription.ChooseDeliveryAddressActivity;
-import com.aiprous.medicobox.prescription.OrderSummaryActivity;
-import com.aiprous.medicobox.prescription.UploadPrescriptionActivity;
-import com.aiprous.medicobox.prescription.UploadPrescriptionOptionActivity;
 
 import java.util.ArrayList;
 
@@ -62,7 +56,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.cardRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, InstaAddNewListActivity.class));
+                mContext.startActivity(new Intent(mContext, InstaProductDetailActivity.class));
                 //((Activity)mContext).finish();
             }
         });

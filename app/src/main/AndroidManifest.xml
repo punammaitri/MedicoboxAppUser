@@ -73,19 +73,19 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".prescription.BillingAddressActivity"
+            android:name=".prescription.PrescriptionBillingAddressActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".prescription.ChooseDeliveryAddressActivity"
+            android:name=".prescription.PrescriptionChooseDeliveryAddressActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".prescription.EditAddressActivity"
+            android:name=".prescription.PrescriptionEditAddressActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".prescription.OrderSummaryActivity"
+            android:name=".prescription.PrescriptionOrderSummaryActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -93,11 +93,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".prescription.UploadPrescriptionActivity"
+            android:name=".prescription.PrescriptionUploadActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".prescription.UploadPrescriptionOptionActivity"
+            android:name=".prescription.PrescriptionUploadOptionActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity

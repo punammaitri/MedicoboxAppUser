@@ -4,23 +4,19 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.instaorder.InstaProductSubListDetailAdapter;
 
 import java.util.ArrayList;
 
@@ -28,13 +24,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ChooseDeliveryAddressAdapter extends RecyclerView.Adapter<ChooseDeliveryAddressAdapter.ViewHolder> {
+public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapter<PrescriptionChooseDeliveryAddressAdapter.ViewHolder> {
 
 
-    private ArrayList<ChooseDeliveryAddressActivity.ListModel> mDataArrayList;
+    private ArrayList<PrescriptionChooseDeliveryAddressActivity.ListModel> mDataArrayList;
     private Context mContext;
 
-    public ChooseDeliveryAddressAdapter(Context mContext, ArrayList<ChooseDeliveryAddressActivity.ListModel> mDataArrayList) {
+    public PrescriptionChooseDeliveryAddressAdapter(Context mContext, ArrayList<PrescriptionChooseDeliveryAddressActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }

@@ -23,20 +23,10 @@
             android:layout_marginTop="@dimen/height_10"
             android:orientation="vertical">
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/coloryellow"
-                android:text="Set as billing address"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
-
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:theme="@style/TextLabel">
 
                 <EditText
@@ -44,11 +34,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Name"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:text="Akshay  Shinde"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true"
+                    android:text="Akshay Shinde" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -61,10 +48,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Phone*"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -77,10 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Flat Number,Building Name*"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -93,10 +74,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Street /Road Name"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -109,10 +87,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Landmark"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -125,10 +100,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Pincode*"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -141,10 +113,7 @@
                     android:layout_height="wrap_content"
                     android:hint="State"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -156,28 +125,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
+                    android:imeOptions="actionDone"
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
-
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/height_8"
+                android:orientation="horizontal"
                 android:weightSum="3">
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:buttonTint="@color/coloryellow"
                     android:checked="true"
                     android:text="Home"
-                    android:buttonTint="@color/coloryellow"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -185,8 +150,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:buttonTint="@color/coloryellow"
                     android:text="Office"
-                    android:buttonTint="@color/coloryellow"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
@@ -194,8 +159,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Other"
                     android:buttonTint="@color/coloryellow"
+                    android:text="Other"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 

@@ -31,10 +31,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/height_4"
-                    android:layout_marginLeft="@dimen/height_4"
-                    android:layout_marginRight="@dimen/height_4"
-                    android:layout_marginTop="@dimen/height_4"
+                    android:layout_margin="@dimen/height_4"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_10">
@@ -43,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/height_4">
+                        android:padding="@dimen/height_3">
 
 
                         <ImageView
@@ -62,8 +59,8 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/height_15"
                             android:text="Take"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorblack" />
+                            android:textColor="@color/colorblack"
+                            android:textSize="17sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -71,8 +68,8 @@
                             android:layout_below="@+id/txtTake"
                             android:layout_centerHorizontal="true"
                             android:text="Photo"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorblack"  />
+                            android:textColor="@color/colorblack"
+                            android:textSize="17sp" />
 
 
                     </RelativeLayout>
@@ -81,10 +78,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/height_4"
-                    android:layout_marginLeft="@dimen/height_4"
-                    android:layout_marginRight="@dimen/height_4"
-                    android:layout_marginTop="@dimen/height_4"
+                    android:layout_margin="@dimen/height_4"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_10">
@@ -93,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/height_4">
+                        android:padding="@dimen/height_3">
 
 
                         <ImageView
@@ -112,8 +106,8 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/height_15"
                             android:text="Choose"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorblack" />
+                            android:textColor="@color/colorblack"
+                            android:textSize="17sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -122,8 +116,8 @@
                             android:layout_centerHorizontal="true"
                             android:singleLine="true"
                             android:text="from Gallery"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorblack" />
+                            android:textColor="@color/colorblack"
+                            android:textSize="17sp" />
 
 
                     </RelativeLayout>
@@ -132,10 +126,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/height_4"
-                    android:layout_marginLeft="@dimen/height_4"
-                    android:layout_marginRight="@dimen/height_4"
-                    android:layout_marginTop="@dimen/height_4"
+                    android:layout_margin="@dimen/height_4"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_10">
@@ -144,7 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="@dimen/height_4">
+                        android:padding="@dimen/height_3">
 
 
                         <ImageView
@@ -163,8 +154,8 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/height_15"
                             android:text="My"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorblack" />
+                            android:textColor="@color/colorblack"
+                            android:textSize="17sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -174,8 +165,8 @@
                             android:maxLines="1"
                             android:singleLine="true"
                             android:text="Prescriptions"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/colorblack"  />
+                            android:textColor="@color/colorblack"
+                            android:textSize="16sp" />
 
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
@@ -193,15 +184,14 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold" />
 
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_medicine_list"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/height_10"
                 android:layout_marginLeft="@dimen/height_10"
                 android:layout_marginRight="@dimen/height_10"
-                android:layout_marginTop="@dimen/height_15"
+                android:layout_marginTop="@dimen/height_10"
                 android:visibility="visible" />
 
             <android.support.v7.widget.CardView
@@ -227,8 +217,8 @@
                         android:layout_marginLeft="@dimen/height_5"
                         android:layout_marginTop="@dimen/height_8"
                         android:text="Are you ordering for yourself?"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorblack"
+                        android:textSize="14dp"
                         android:textStyle="bold" />
 
 
@@ -258,32 +248,37 @@
                             android:textStyle="bold" />
                     </RadioGroup>
 
-
-                    <EditText
+                    <android.support.design.widget.TextInputLayout
                         android:id="@+id/edt_patient_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtOrderingHeading"
                         android:layout_marginTop="@dimen/height_10"
-                        android:hint="Patient's Name"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/height_8"
-                        android:singleLine="true"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:theme="@style/TextLabel">
 
-                    <EditText
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Patient's Name"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/edt_patient_name"
-                        android:hint="Additional comments"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:paddingLeft="@dimen/height_8"
-                        android:singleLine="true"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:layout_marginBottom="@dimen/height_5"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:theme="@style/TextLabel">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Additional comments"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -316,7 +311,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_5"
-                            android:text="View Attached Prescriptions(1)"
+                            android:text="Valid Prescription Guide"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <ImageView
@@ -331,10 +326,10 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/height_10"
                             android:layout_below="@+id/txtViewAttached"
-                            android:scaleType="fitXY"
-                            android:background="@drawable/valid_prescription_guide" />
+                            android:layout_marginTop="@dimen/height_10"
+                            android:background="@drawable/valid_prescription_guide"
+                            android:scaleType="fitXY" />
                     </RelativeLayout>
 
                 </LinearLayout>

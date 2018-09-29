@@ -1,6 +1,8 @@
 package com.aiprous.medicobox.prescription;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class UploadPrescriptionOptionActivity extends AppCompatActivity {
+public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
@@ -49,9 +51,11 @@ public class UploadPrescriptionOptionActivity extends AppCompatActivity {
     RadioButton mRadioButtonCallMe;
     @BindView(R.id.btnContinue)
     Button btnContinue;
+    @BindView(R.id.img_attach_arrow)
+    ImageView img_attach_arrow;
 
     RecyclerView rc_medicine_list;
-    ArrayList<UploadPrescriptionOptionActivity.ListModel> mlistModelsArray = new ArrayList<>();
+    ArrayList<PrescriptionUploadOptionActivity.ListModel> mlistModelsArray = new ArrayList<>();
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -66,25 +70,26 @@ public class UploadPrescriptionOptionActivity extends AppCompatActivity {
 
     private void init() {
         searchview_medicine.setFocusable(false);
-        searchview_medicine.setQueryHint("Search Lists");
+
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
         //add static data into List array list
-        mlistModelsArray.add(new UploadPrescriptionOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new UploadPrescriptionOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new UploadPrescriptionOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new UploadPrescriptionOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new PrescriptionUploadOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new PrescriptionUploadOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new PrescriptionUploadOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new PrescriptionUploadOptionActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new UploadPrescriptionOptionAdapter(mContext, mlistModelsArray));
+        rc_medicine_list.setAdapter(new PrescriptionUploadOptionAdapter(mContext, mlistModelsArray));
     }
 
     @OnClick({R.id.rb_order_everything, R.id.rb_specify_medicine, R.id.rb_call_me, R.id.rlayout_back_button, R.id.btnContinue})
@@ -106,6 +111,7 @@ public class UploadPrescriptionOptionActivity extends AppCompatActivity {
                 rc_medicine_list.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnContinue:
+                startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));
                 break;
             case R.id.rlayout_back_button:
                 finish();

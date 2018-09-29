@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 
 public class APIConstant {
 
-
     @NonNull
     public static final String SERVER_URL = "http://staging.medicobox.com";
 

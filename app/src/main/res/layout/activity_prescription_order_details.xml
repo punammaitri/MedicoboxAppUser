@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <include
         android:id="@+id/layout_custom_toolbar"
         layout="@layout/custom_toolbar" />
@@ -30,9 +29,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/height_4"
-                android:layout_marginTop="@dimen/height_12">
+                android:layout_margin="@dimen/height_5"
+                android:layout_height="wrap_content">
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -43,12 +41,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
-                        android:maxLines="1"
                         android:buttonTint="@color/coloryellow"
+                        android:maxLines="1"
                         android:singleLine="true"
                         android:text="Oder everything as per prescription"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold" />
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <LinearLayout
                         android:id="@+id/linear_order_everything"
@@ -81,12 +78,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_20"
-                        android:maxLines="1"
                         android:buttonTint="@color/coloryellow"
+                        android:maxLines="1"
                         android:singleLine="true"
                         android:text="Let me specify medicine/quantity"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold" />
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <LinearLayout
                         android:id="@+id/linear_specify_medicine"
@@ -120,12 +116,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/height_15"
                         android:layout_marginTop="@dimen/height_20"
-                        android:maxLines="1"
                         android:buttonTint="@color/coloryellow"
+                        android:maxLines="1"
                         android:singleLine="true"
                         android:text="Call me for details"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textStyle="bold" />
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </RadioGroup>
 
@@ -169,6 +164,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <ImageView
+                    android:id="@+id/img_attach_arrow"
                     android:layout_width="@dimen/height_20"
                     android:layout_height="@dimen/height_20"
                     android:layout_alignParentEnd="true"
@@ -184,10 +180,10 @@
                     android:layout_height="100dp"
                     android:layout_below="@+id/txtViewAttached"
                     android:layout_marginBottom="@dimen/height_10"
-                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/height_10"
                     android:layout_marginRight="@dimen/height_10"
-                    android:layout_marginTop="@dimen/height_15" />
+                    android:layout_marginTop="@dimen/height_15"
+                    android:visibility="gone" />
             </RelativeLayout>
 
         </LinearLayout>

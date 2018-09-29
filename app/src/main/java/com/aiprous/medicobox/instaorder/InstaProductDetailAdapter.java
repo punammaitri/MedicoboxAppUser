@@ -52,6 +52,7 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
         holder.tvPrice.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
         holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
         holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

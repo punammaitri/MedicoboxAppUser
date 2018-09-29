@@ -45,7 +45,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/height_35"
                 android:layout_marginRight="@dimen/height_10"
-                android:background="@drawable/plus" />
+                android:background="@drawable/dot_vertical" />
         </RelativeLayout>
 
         <TextView

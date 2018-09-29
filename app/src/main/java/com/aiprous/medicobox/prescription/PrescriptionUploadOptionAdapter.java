@@ -1,20 +1,12 @@
 package com.aiprous.medicobox.prescription;
 
 import android.content.Context;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 
@@ -24,13 +16,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapter.ViewHolder> {
+public class PrescriptionUploadOptionAdapter extends RecyclerView.Adapter<PrescriptionUploadOptionAdapter.ViewHolder> {
 
 
-    private ArrayList<OrderSummaryActivity.ListModel> mDataArrayList;
+    private ArrayList<PrescriptionUploadOptionActivity.ListModel> mDataArrayList;
     private Context mContext;
 
-    public OrderSummaryAdapter(Context mContext, ArrayList<OrderSummaryActivity.ListModel> mDataArrayList) {
+    public PrescriptionUploadOptionAdapter(Context mContext, ArrayList<PrescriptionUploadOptionActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
