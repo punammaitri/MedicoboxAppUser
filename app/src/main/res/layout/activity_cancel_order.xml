@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CancelOrderActivity"
+    android:background="@color/color_gray_bg">
+
+    <include
+        android:id="@+id/rlayout_list_toolbar"
+        layout="@layout/custom_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlayout_list_toolbar"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/height_20"
+        android:layout_marginLeft="@dimen/height_20">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel Order"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_above="@+id/view_line_order"/>
+        <View
+            android:id="@+id/view_line_order"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/height_10"
+            android:layout_marginLeft="@dimen/height_45"
+            android:layout_marginRight="@dimen/height_45"
+            android:background="@color/colorblack"
+            android:layout_above="@+id/tv_order_id"/>
+
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order ID: MB12838492829"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/height_10"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_above="@+id/tv_are_you_sure"/>
+
+
+        <TextView
+            android:id="@+id/tv_are_you_sure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you sure you want to\n cancel this order?"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/height_10"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_centerInParent="true"/>
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/height_20"
+            android:layout_marginRight="@dimen/height_20"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_regular"
+            android:layout_marginTop="@dimen/height_20"
+            android:background="@drawable/custom_btn_bg"
+            android:text="Confirm"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_below="@+id/tv_are_you_sure"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

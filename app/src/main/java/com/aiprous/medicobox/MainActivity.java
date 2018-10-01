@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -25,19 +24,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.aiprous.medicobox.activity.CancelOrderActivity;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.activity.ForgotPasswordActivity;
-import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.activity.EditProfileActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
+import com.aiprous.medicobox.activity.MyAccountActivity;
+import com.aiprous.medicobox.activity.MyOrdersActivity;
+import com.aiprous.medicobox.activity.NotificationActivity;
+import com.aiprous.medicobox.activity.OrderDetailsActivity;
 import com.aiprous.medicobox.activity.ProductDescriptionActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
-import com.aiprous.medicobox.activity.SetPasswordActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
@@ -176,26 +176,30 @@ public class MainActivity extends AppCompatActivity
             }
             addFragment();
             return;
-        } /*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
+        } else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
         {
-            startActivity(new Intent(mContext, ProductDetailActivity.class));
+            startActivity(new Intent(mContext, MyAccountActivity.class));
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
-        } else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
+        } /*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
          {
              startActivity(new Intent(this, ProductDetailBActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification)))
+         }*/else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
          {
-             startActivity(new Intent(this, ListActivity.class));
+             startActivity(new Intent(this, CancelOrderActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
          }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))){
-             startActivity(new Intent(mContext, ProductDescriptionActivity.class));
+             startActivity(new Intent(mContext, MyOrdersActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
-         }*/else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))){
+         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))){
+             startActivity(new Intent(mContext, NotificationActivity.class));
+             drawerLayout.closeDrawer(GravityCompat.START);
+             return;
+         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))){
              logout();
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
@@ -314,10 +318,11 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
-   /* @OnClick(R.id.rlayout_cart)
+    @OnClick(R.id.rlayout_cart)
     public void onClickCart()
     {
-        startActivity(new Intent(this,CartActivity.class));
+       // startActivity(new Intent(this,CartActivity.class));
+        startActivity(new Intent(this,OrderDetailsActivity.class));
     }
-*/
+
 }
