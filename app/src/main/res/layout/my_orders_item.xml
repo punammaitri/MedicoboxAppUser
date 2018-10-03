@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview_my_orders"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/height_5"
     android:layout_marginLeft="@dimen/height_5"
     android:layout_marginRight="@dimen/height_5"
     android:layout_marginTop="@dimen/height_3"
-    app:cardCornerRadius="@dimen/height_4"
+    app:cardCornerRadius="@dimen/height_8"
     app:cardElevation="@dimen/height_4">
 
 
@@ -70,7 +71,7 @@
             android:id="@+id/tv_deliver_order_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorgreen"
+            android:textColor="@color/colorblack"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Delivered"
             android:textStyle="bold"

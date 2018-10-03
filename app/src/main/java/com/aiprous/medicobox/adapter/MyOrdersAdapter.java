@@ -1,7 +1,9 @@
 package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.CancelOrderActivity;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
+import com.aiprous.medicobox.activity.OrderDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -38,12 +42,43 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
 
         holder.tv_order_id.setText("Order ID: "+myOrdersArrayList.get(position).getOrderId());
         holder.tv_order_date.setText("Order Date:"+myOrdersArrayList.get(position).getOrder_date());
         holder.tv_order_price.setText(mContext.getResources().getString(R.string.Rs)+myOrdersArrayList.get(position).getOrder_price());
+
+        if(myOrdersArrayList.get(position).getDeliverystatus().equals("0"))
+        {
+            holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.colorgreen));
+            holder.tv_deliver_order_status.setText("Delivered");
+
+
+        }else if(myOrdersArrayList.get(position).getDeliverystatus().equals("1")){
+            holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.coloryellow));
+            holder.tv_deliver_order_status.setText("Intransit");
+
+        }else {
+
+            holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.colorred));
+            holder.tv_deliver_order_status.setText("Cancelled");
+        }
+        holder.cardview_my_orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext,OrderDetailsActivity.class));
+            }
+        });
+        holder.tv_deliver_order_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myOrdersArrayList.get(position).getDeliverystatus().equals("2"))
+                {
+                    mContext.startActivity(new Intent(mContext,CancelOrderActivity.class));
+                }
+            }
+        });
 
 
     }
@@ -64,6 +99,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
         TextView tv_order_price;
         @BindView(R.id.tv_deliver_order_status)
         TextView tv_deliver_order_status;
+        @BindView(R.id.cardview_my_orders)
+        CardView cardview_my_orders;
 
 
 

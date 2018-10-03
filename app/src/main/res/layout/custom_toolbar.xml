@@ -61,6 +61,8 @@
         android:clickable="true"
         app:iconifiedByDefault="false"
         app:queryHint="Search Medicine"
+        android:queryBackground="@android:color/transparent"
+        app:queryBackground="@android:color/transparent"
 
         />
 

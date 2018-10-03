@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/height_5"
+    android:layout_marginLeft="@dimen/height_4"
+    android:layout_marginRight="@dimen/height_4"
+    android:layout_marginTop="@dimen/height_3"
+    app:cardCornerRadius="@dimen/height_8"
+    app:cardElevation="@dimen/height_8">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llMain"
+        android:orientation="horizontal"
+        android:padding="6dp"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.23"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="@dimen/height_50"
+                android:layout_height="@dimen/height_50"
+                android:src="@drawable/bottle" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.77"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_medicine_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/img_wishlist_icon"
+                android:maxLines="2"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="abc"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/img_wishlist_icon"
+                android:layout_width="@dimen/height_25"
+                android:layout_height="@dimen/height_25"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/heart_active" />
+
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_medicine_name"
+                android:layout_marginTop="@dimen/height_3"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Bottle of 60 tablet"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+            <LinearLayout
+                android:id="@+id/llayout_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_3"
+                android:layout_below="@+id/tv_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_mrp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MRP"/>
+                <TextView
+                    android:id="@+id/tv_mrp_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Rs151"
+                    android:layout_marginLeft="@dimen/height_10"
+                    android:layout_marginRight="@dimen/height_10"/>
+                <TextView
+                    android:id="@+id/tv_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10%OFF"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/colorred"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llayout_price"
+                android:layout_marginTop="@dimen/height_3"
+                android:layout_toLeftOf="@+id/txt_add_to_insta_list"
+                android:gravity="center|start"
+                android:text="Rs135"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_add_to_insta_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llayout_price"
+                android:layout_marginBottom="@dimen/height_5"
+                android:layout_marginTop="@dimen/height_3"
+                android:fontFamily="@font/open_sans_regular"
+                android:gravity="center|start"
+                android:text="ADD To Insta list"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
