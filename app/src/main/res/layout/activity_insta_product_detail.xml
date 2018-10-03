@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorlightlightlightGray"
+    android:background="@color/color_gray_bg"
     android:orientation="vertical"
     tools:context="com.aiprous.medicobox.instaorder.InstaProductDetailActivity">
 
@@ -46,6 +46,8 @@
             android:clickable="true"
             android:iconifiedByDefault="false"
             app:iconifiedByDefault="false"
+            android:queryBackground="@android:color/transparent"
+            app:queryBackground="@android:color/transparent"
             app:queryHint="Search Medicines to add" />
 
 

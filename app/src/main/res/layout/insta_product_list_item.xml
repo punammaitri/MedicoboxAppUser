@@ -96,7 +96,7 @@
                     android:id="@+id/tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10%OFF"
+                    android:text="10% OFF"
                     android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorred"/>
 

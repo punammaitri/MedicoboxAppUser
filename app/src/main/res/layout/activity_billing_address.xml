@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/color_gray_bg"
     android:layout_height="match_parent">
 
     <include
@@ -11,8 +12,8 @@
         android:id="@+id/linearLayoutMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_gray_bg"
         android:layout_below="@+id/layout_custom_toolbar"
-        android:background="@color/colorwhite"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
