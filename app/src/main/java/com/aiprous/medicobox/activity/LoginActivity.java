@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private AccessTokenTracker accessTokenTracker;
+    private AccessToken accessToken;
     private String mfacebookFlag = "facebook";
     private String mgmailFlag = "gmail";
     private String mfacebookusername;
@@ -168,139 +169,105 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             }
         });
+
+        accessToken = AccessToken.getCurrentAccessToken();
         callbackManager = CallbackManager.Factory.create();
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            }
-        };
+
         profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
             }
         };
-        accessTokenTracker.startTracking();
-        profileTracker.startTracking();
 
         ////////////set the permissions for facebook/////////////////////
         btnfblogin.setReadPermissions(Arrays.asList("public_profile", "email", "user_friends"));
 
-        //////loginresult has access token of facebook user///////////////
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+
+                if (currentAccessToken == null) {
+                    Toast.makeText(LoginActivity.this, "User logged out successfully", Toast.LENGTH_SHORT).show();
+                    //rlProfileArea.setVisibility(View.GONE);
+                }
+            }
+        };
+
+        if (accessToken != null) {
+            getProfileData();
+        } else {
+            //rlProfileArea.setVisibility(View.GONE);
+        }
+
+        // Callback registration
         btnfblogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // graphRequest(loginResult.getAccessToken());
+                getProfileData();
             }
 
             @Override
             public void onCancel() {
+                // App code
+                Log.d(TAG, "User cancel login");
             }
 
             @Override
-            public void onError(FacebookException error) {
+            public void onError(FacebookException exception) {
+                // App code
+                Log.d(TAG, "Problem for login");
             }
         });
+
     }
 
-   /* ////////////////////////////////////Facebook Graph Request/////////////////////////////////////
-    public void graphRequest(AccessToken token) {
-        GraphRequest request = GraphRequest.newMeRequest(token,
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Application code
-                        Log.e("JsonFbREsponse:", "" + object.toString());
-                        ResponseFBJSON lResponse = new ResponseFBJSON();
-                        try {
-                            JSONObject jsonObject = new JSONObject(object.toString());
-                            lResponse = new Gson().fromJson(jsonObject.toString(), lResponse.getClass());
-
+    public void getProfileData() {
+        try {
+            accessToken = AccessToken.getCurrentAccessToken();
+            //rlProfileArea.setVisibility(View.VISIBLE);
+            GraphRequest request = GraphRequest.newMeRequest(
+                    accessToken,
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+                            Log.d(TAG, "Graph Object :" + object);
                             try {
-                                int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
-                                Uri profilePictureUri = Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize, dimensionPixelSize);
-                                //facebookProfile_url = "http://graph.facebook.com/" + Profile.getCurrentProfile().getId() + "/picture?type=large";
-                                //facebookProfile_url = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 300, 300);
-
-                                if (profilePictureUri != null) {
-                                    facebookProfile_url = profilePictureUri;
+                                String name = object.getString("name");
+                                if (!name.isEmpty()) {
+                                    Toast.makeText(LoginActivity.this, "Login with facebook is successfully", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 } else {
-                                    facebookProfile_url = Uri.parse("R.drawable.profileimage");
+                                    Toast.makeText(LoginActivity.this, "Login with facebook is failed", Toast.LENGTH_SHORT).show();
                                 }
-
-                                String lfirst_name = lResponse.first_name;
-                                String llast_name = lResponse.last_name;
-                                mfacebookusername = lfirst_name;
-                                mfacebookUserLastname = llast_name;
-                            } catch (Resources.NotFoundException e) {
+                                Log.d(TAG, "Name :" + name);
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            if (object.length() == 5) {
-                                //To maintain logout state
-                                LoginManager.getInstance().logOut();
-                                //if email is not available
-                                Toast.makeText(LoginActivity.this, "You can't have Email-id to access facebook", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(intent);
-                            } else {
-                                String lEmail = lResponse.email;
-                                //callSocialMedia(lEmail, "social_media", getFirebaseToken, mfacebookusername, mfacebookusername, mfacebookUserLastname, String.valueOf(facebookProfile_url), "facebook");
-                                LoginManager.getInstance().logOut();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,first_name,last_name,link,email");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }*/
-
-    public void printhashkey() {
-        PackageInfo info;
-        try {
-            info = getPackageManager().getPackageInfo("com.aiprous.medicobox", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                //String something = new String(Base64.encodeBytes(md.digest()));
-                Log.e("hash key", something);
-            }
-        } catch (PackageManager.NameNotFoundException e1) {
-            Log.e("name not found", e1.toString());
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("no such an algorithm", e.toString());
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,link,birthday,gender,email");
+            request.setParameters(parameters);
+            request.executeAsync();
         } catch (Exception e) {
-            Log.e("exception", e.toString());
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        printhashkey();
-        super.onResume();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        } else if (REQUEST_LOCATION == requestCode) {
-            //Intent i = getIntent();
         } else {
             ///////// activityresult for facebook/////////
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
-
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -330,8 +297,38 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    public void printhashkey() {
+        PackageInfo info;
+        try {
+            info = getPackageManager().getPackageInfo("com.aiprous.medicobox", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                //String something = new String(Base64.encodeBytes(md.digest()));
+                Log.e("hash key", something);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("name not found", e1.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("no such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("exception", e.toString());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        printhashkey();
+        super.onResume();
+    }
+
+
     private void updateUI(boolean isLogin) {
         if (isLogin) {
+            Toast.makeText(this, "Login With Gmail is successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
             //callSocialMedia(lLoginwithGooglegmailId, "social_media", getFirebaseToken, googleUsername, googleUsername, googleLastname, gmailProfileUrl, "gmail");
         }
     }

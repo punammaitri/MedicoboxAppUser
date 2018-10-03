@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "933962831921",
+    "firebase_url": "https://medico-217009.firebaseio.com",
+    "project_id": "medico-217009",
+    "storage_bucket": "medico-217009.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933962831921:android:c288737cdb48caec",
+        "android_client_info": {
+          "package_name": "com.aiprous.medicobox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933962831921-eg3skg8pfu5rr0ov18hoch8tmcfsp34c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aiprous.medicobox",
+            "certificate_hash": "bad584a8b1952ca640a20230db64e1befa3302d2"
+          }
+        },
+        {
+          "client_id": "933962831921-9spncpasheqqdu566saj82tqkmpreeks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aiprous.medicobox",
+            "certificate_hash": "7b4aed89a7f8413e2ee4245ca604938d9d76e7ac"
+          }
+        },
+        {
+          "client_id": "933962831921-44ltstgn3n9d3t3hhqcle3clj2qm3m33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVKFYmYHcnG_BSxsxUNAEc-RrOKVaIzVA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933962831921-44ltstgn3n9d3t3hhqcle3clj2qm3m33.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "933962831921-69lur6r05vu1hdlvqbdm18nn50epasf9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aiprous.MedicoBox"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
