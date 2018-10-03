@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.activity.OrderTrackingActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
@@ -160,7 +161,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.btn_upload)
     public void onViewUploadPresc() {
-        startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
+        startActivity(new Intent(getActivity(), OrderTrackingActivity.class));
 
     }
 

@@ -25,6 +25,7 @@
     <string name="txt_medicines">Medicines</string>
     <string name="txt_lab_test">Lab Test</string>
     <string name="rs_symbol">\u20B968.60</string>
+    <string name="rs_symbol_thirty">\u20B9350.00</string>
     <string name="rs_symbol_with_tablet_name">( \u20B96.860/Tablet SR )</string>
     <string name="order_checkout">Order &amp; Checkout</string>
     <string name="text_suppliment">This supplement is used to prevent or treat a lack of viatamin E in the body. A low body level of vitamin E is rare. Most people who eat a normal diet do not need extra vitamin E.</string>
@@ -41,4 +42,6 @@
     <string name="loading">Loading…</string>
     <string name="error_server">Something wrong at server, please try again later.</string>
     <string name="address"> Flat No 104,A wing,\nGreen Olive Apartments, \nHinjawadi \nPune-411057  \nMaharashtra \nIndia</string>
+    <string name="title_activity_order_tracking">Map</string>
+    <string name="sub_id"><u>1732938344</u></string>
 </resources>

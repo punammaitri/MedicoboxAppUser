@@ -1,4 +1,4 @@
-package com.aiprous.medicobox.instaorder;
+package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-
-import org.w3c.dom.Text;
+import com.aiprous.medicobox.activity.OrderTrackingActivity;
+import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 
 import java.util.ArrayList;
 
@@ -22,14 +22,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdapter.ViewHolder> {
 
-public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProductDetailAdapter.ViewHolder> {
-
-
-    private ArrayList<InstaProductDetailActivity.ListModel> mDataArrayList;
+    private ArrayList<OrderTrackingActivity.ListModel> mDataArrayList;
     private Context mContext;
 
-    public InstaProductDetailAdapter(Context mContext, ArrayList<InstaProductDetailActivity.ListModel> mDataArrayList) {
+    public OrderTrackingAdapter(Context mContext, ArrayList<OrderTrackingActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -38,7 +36,7 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.insta_product_list_item, parent, false);
+                .inflate(R.layout.track_order_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -46,12 +44,7 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
         holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
-        holder.tvMedicineName.setText(mDataArrayList.get(position).getMedicineName());
-        holder.tvContent.setText(mDataArrayList.get(position).getValue());
-       // holder.tvMrp.setText(mContext.getResources().getString(R.string.mrp_rs) + mDataArrayList.get(position).getMrp() + "  " + mDataArrayList.get(position).getDiscount() + "OFF");
-        holder.tvPrice.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
-        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
-        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tvProductName.setText(mDataArrayList.get(position).getMedicineName());
 
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,25 +61,17 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.llMain)
-        LinearLayout llMain;
+
         @BindView(R.id.img_product)
         ImageView imgProduct;
-        @BindView(R.id.tv_medicine_name)
-        TextView tvMedicineName;
-        @BindView(R.id.img_wishlist_icon)
-        ImageView imgWishlistIcon;
-        @BindView(R.id.tv_content)
-        TextView tvContent;
-        @BindView(R.id.tv_mrp)
-        TextView tvMrp;
-        @BindView(R.id.tv_price)
-        TextView tvPrice;
-        @BindView(R.id.txt_add_to_insta_list)
-        TextView txtAddToInstaList;
-        @BindView(R.id.tv_mrp_price)
-        TextView tv_mrp_price;
-
+        @BindView(R.id.tv_product_name)
+        TextView tvProductName;
+        @BindView(R.id.txt_tracking_id)
+        TextView txtTrackingId;
+        @BindView(R.id.txt_sub_id)
+        TextView txtSubId;
+        @BindView(R.id.llMain)
+        LinearLayout llMain;
 
         ViewHolder(@NonNull View view) {
             super(view);
