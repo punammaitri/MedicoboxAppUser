@@ -93,9 +93,9 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
         //add static data into List array list
-        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.ic_menu_manage, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.ic_menu_manage, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.ic_menu_manage, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.bottle, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.bottle, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.bottle, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -108,6 +108,12 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     public void cancelOrder()
     {
         startActivity(new Intent(this,CancelOrderActivity.class));
+    }
+
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressDetail()
+    {
+        finish();
     }
 
     public class ListModel {
