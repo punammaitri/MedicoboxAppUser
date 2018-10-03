@@ -18,6 +18,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.OrderTrackingActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
+import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -155,13 +156,13 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.relInstaOrder)
     public void onViewInstaOrderClicked() {
-        startActivity(new Intent(getActivity(), InstaProductDetailActivity.class));
+        startActivity(new Intent(getActivity(), InstaAddNewListActivity.class));
 
     }
 
     @OnClick(R.id.btn_upload)
     public void onViewUploadPresc() {
-        startActivity(new Intent(getActivity(), OrderTrackingActivity.class));
+        startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
 
     }
 

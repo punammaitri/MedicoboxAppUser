@@ -341,7 +341,7 @@
                             android:layout_weight="0.6"
                             android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="As per delivery address"
+                            android:text="0"
                             />
 
 
@@ -361,7 +361,7 @@
                             android:text="Amount Paid"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                         <TextView
                             android:id="@+id/tv_amount_paid"
@@ -372,7 +372,7 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Rs350.0"
                             android:textColor="@color/colorblack"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -423,9 +423,9 @@
                 android:background="@drawable/custom_btn_bg"
                 android:text="Track Order "
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold"/>
 
 
 

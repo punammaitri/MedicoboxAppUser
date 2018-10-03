@@ -47,7 +47,7 @@
                 android:maxLines="2"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="abc"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
                 android:gravity="center|start"
                 android:text="Rs135"
                 android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
                 android:gravity="center|start"
                 android:text="ADD To Insta list"
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 

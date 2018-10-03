@@ -299,6 +299,7 @@
 
 
     <Button
+        android:id="@+id/tv_place_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/height_30"
@@ -310,8 +311,8 @@
         android:background="@drawable/custom_btn_bg"
         android:text="Place Order"
         android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
         android:textStyle="bold"
+        android:textSize="@dimen/height_16"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

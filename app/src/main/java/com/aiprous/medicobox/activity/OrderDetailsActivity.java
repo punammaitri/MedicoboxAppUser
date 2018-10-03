@@ -92,7 +92,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.btn_track_order)
     public void trackOrder()
     {
-        startActivity(new Intent(this,OrderPlacedActivity.class));
+        startActivity(new Intent(this,OrderTrackingActivity.class));
     }
 
     public static class ProductModel{

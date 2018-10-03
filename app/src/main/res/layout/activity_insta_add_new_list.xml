@@ -53,7 +53,8 @@
         android:paddingRight="@dimen/height_70"
         android:text="New Insta list"
         android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/height_16"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

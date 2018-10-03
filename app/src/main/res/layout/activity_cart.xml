@@ -109,7 +109,7 @@
                 android:background="@drawable/custom_btn_bg"
                 android:text="Upload Prescription"
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/height_16"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
@@ -295,7 +295,7 @@
                 android:background="@drawable/custom_btn_bg"
                 android:text="Continue"
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/height_16"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 

@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -60,6 +61,12 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     public void BackPressDetail()
     {
         finish();
+    }
+
+    @OnClick(R.id.tv_place_order)
+    public void placeOrder()
+    {
+        startActivity(new Intent(this,OrderPlacedActivity.class));
     }
 
 }

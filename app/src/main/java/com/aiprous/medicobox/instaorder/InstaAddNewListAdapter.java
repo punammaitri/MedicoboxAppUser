@@ -2,6 +2,7 @@ package com.aiprous.medicobox.instaorder;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -132,6 +133,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         mLinearAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext,InstaProductDetailActivity.class));
                 popup.dismiss();
             }
         });

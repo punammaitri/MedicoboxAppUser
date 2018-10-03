@@ -215,6 +215,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/tv_change_delivery_address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
