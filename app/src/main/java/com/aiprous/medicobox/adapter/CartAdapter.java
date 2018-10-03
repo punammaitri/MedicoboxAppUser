@@ -55,8 +55,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
      holder.tv_medicine_contains.setText(mCartArrayList.get(position).getContains());
      holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
      holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-     holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
+     holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
 
+
+     if(position==getItemCount()-1)
+     {
+         holder.view_cart_item.setVisibility(View.GONE);
+     }
 
 
     }
@@ -78,6 +83,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         TextView tv_mrp_price;
         @BindView(R.id.tv_price)
         TextView tv_price;
+        @BindView(R.id.view_cart_item)
+        View view_cart_item;
 
 
 

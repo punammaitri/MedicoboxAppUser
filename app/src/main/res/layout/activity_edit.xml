@@ -120,11 +120,11 @@
     </android.support.v4.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btn_sign_up"
+        android:id="@+id/btn_save_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/height_20"
-        android:layout_marginRight="@dimen/height_20"
+        android:layout_marginLeft="@dimen/height_40"
+        android:layout_marginRight="@dimen/height_40"
         android:layout_marginBottom="@dimen/height_20"
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans_regular"

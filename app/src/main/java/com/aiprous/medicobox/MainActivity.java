@@ -35,6 +35,7 @@ import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
 import com.aiprous.medicobox.activity.OrderDetailsActivity;
+import com.aiprous.medicobox.activity.OrderPlacedActivity;
 import com.aiprous.medicobox.activity.ProductDescriptionActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -181,14 +182,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(mContext, MyAccountActivity.class));
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
-        } /*else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
+        } else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
          {
-             startActivity(new Intent(this, ProductDetailBActivity.class));
-             drawerLayout.closeDrawer(GravityCompat.START);
-             return;
-         }*/else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
-         {
-             startActivity(new Intent(this, CancelOrderActivity.class));
+             startActivity(new Intent(this, CartActivity.class));
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
          }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))){
@@ -322,7 +318,8 @@ public class MainActivity extends AppCompatActivity
     public void onClickCart()
     {
        // startActivity(new Intent(this,CartActivity.class));
-        startActivity(new Intent(this,OrderDetailsActivity.class));
+        // startActivity(new Intent(this,OrderDetailsActivity.class));
+       // startActivity(new Intent(this,OrderPlacedActivity.class));
     }
 
 }

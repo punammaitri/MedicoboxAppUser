@@ -22,17 +22,20 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
                 android:layout_weight="0.9"
-                android:text="Horicks Lite Badam Jar 450 gm"/>
+                android:text="Horicks Lite Badam Jar 450 gm"
+                android:textStyle="bold"
+                android:textColor="@color/colorblack"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                >
+                android:layout_weight="0.1">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/delete"/>
+                    android:src="@drawable/delete"
+                    android:layout_alignParentEnd="true"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -82,6 +85,7 @@
                 android:text="Rs150"
                 android:gravity="center|left"
                 android:textStyle="bold"
+                android:textColor="@color/colorblack"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
@@ -89,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                 android:gravity="end">
+                android:gravity="right">
 
 
 
@@ -128,13 +132,13 @@
                     android:background="@drawable/rounded_textview"
                     android:textColor="@color/colorblack"
                     android:gravity="center"
-                    android:layout_marginRight="@dimen/height_10"
                     android:layout_toRightOf="@+id/tv_value"/>
 
             </RelativeLayout>
         </LinearLayout>
 
         <View
+            android:id="@+id/view_cart_item"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/height_10"

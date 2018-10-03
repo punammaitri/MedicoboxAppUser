@@ -51,7 +51,7 @@
             app:cardBackgroundColor="#fff"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_4"
+            app:cardCornerRadius="@dimen/height_8"
             app:cardElevation="@dimen/height_4">
 
             <LinearLayout
@@ -148,7 +148,7 @@
             app:cardBackgroundColor="#fff"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_4"
+            app:cardCornerRadius="@dimen/height_8"
             app:cardElevation="@dimen/height_4">
 
 
