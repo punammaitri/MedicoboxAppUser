@@ -102,8 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/height_10"
-                android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginRight="@dimen/height_30"
+                android:layout_marginLeft="@dimen/height_40"
+                android:layout_marginRight="@dimen/height_40"
                 android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
                 android:background="@drawable/custom_btn_bg"
@@ -144,6 +144,7 @@
                             android:textColor="@color/colorblack" />
 
                         <TextView
+                            android:id="@+id/tv_mrp_total"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
@@ -168,6 +169,7 @@
                             android:textColor="@color/colorblack" />
 
                         <TextView
+                            android:id="@+id/tv_price_discount"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
@@ -221,6 +223,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_to_be_paid"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
@@ -253,6 +256,7 @@
                             android:textColor="@color/colorblack" />
 
                         <TextView
+                            android:id="@+id/tv_total_saving"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
@@ -267,14 +271,16 @@
 
 
             <TextView
+                android:id="@+id/tv_shipping_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
-                android:text="Free shapping for orders above Rs500"
+                android:text="Free shipping for orders above Rs500"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack" />
+                android:textColor="@color/colorblack"
+                android:textStyle="italic"/>
 
             <Button
                 android:id="@+id/btn_continue_cart"
@@ -283,8 +289,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/height_20"
                 android:fontFamily="@font/open_sans_regular"
-                android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginRight="@dimen/height_30"
+                android:layout_marginLeft="@dimen/height_40"
+                android:layout_marginRight="@dimen/height_40"
                 android:layout_marginTop="@dimen/height_20"
                 android:background="@drawable/custom_btn_bg"
                 android:text="Continue"

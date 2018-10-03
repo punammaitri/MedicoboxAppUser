@@ -47,6 +47,11 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
     holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+orderSummaryArrayList.get(position).getProduct_price());
 
+    if(position==getItemCount()-1)
+    {
+        holder.view_order_summary.setVisibility(View.GONE);
+    }
+
 
     }
 
@@ -67,6 +72,8 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
        TextView tv_medicine_contains;
        @BindView(R.id.tv_price)
        TextView tv_price;
+       @BindView(R.id.view_order_summary)
+       View view_order_summary;
 
 
 

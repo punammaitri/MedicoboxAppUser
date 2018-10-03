@@ -45,8 +45,9 @@
                 android:layout_height="wrap_content"
                 android:text="Horicks Lite Badam Jar 450 gm"
                 android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorblack"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_item_contains"
@@ -71,11 +72,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="MRP Rs 235"
-                android:gravity="bottom|center|left"/>
+                android:gravity="bottom|center|right"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:layout_gravity="right">
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -85,7 +88,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:textStyle="bold"
                     android:textColor="@color/colorblack"
-                    android:gravity="bottom|center|left" />
+                    android:gravity="bottom|right"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderDetailsAdapter;
@@ -25,6 +26,15 @@ public class OrderPlacedActivity extends AppCompatActivity {
     SearchView searchview_medicine;
     @BindView(R.id.rc_order_placed)
     RecyclerView rc_order_placed;
+    @BindView(R.id.tv_mrp_total)
+    TextView tv_mrp_total;
+    @BindView(R.id.tv_price_discount)
+    TextView tv_price_discount;
+    @BindView(R.id.tv_amount_paid)
+    TextView tv_amount_paid;
+    @BindView(R.id.tv_total_saved)
+    TextView tv_total_saved;
+
     private Context mContext=this;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<OrderDetailsActivity.ProductModel> mproductArrayList=new ArrayList<>();
@@ -47,6 +57,15 @@ public class OrderPlacedActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
+
+        //set text default
+
+
+        tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs)+"350.0");
+        tv_price_discount.setText("-"+mContext.getResources().getString(R.string.Rs)+"30");
+        tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs)+"350.0");
+        tv_total_saved.setText(mContext.getResources().getString(R.string.Rs)+"30.0");
+
 
         mproductArrayList.add(new OrderDetailsActivity.ProductModel("Horicks Lite Badam Jar 450 gm","235","box of 450 gm powder","200"));
         mproductArrayList.add(new OrderDetailsActivity.ProductModel("Horicks Lite Badam Jar 450 gm","235","box of 450 gm powder","200"));

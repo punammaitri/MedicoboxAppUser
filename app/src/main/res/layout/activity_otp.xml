@@ -22,8 +22,8 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:src="@drawable/applogo"
-               android:layout_marginLeft="@dimen/height_30"
-               android:layout_marginRight="@dimen/height_30"
+               android:layout_marginLeft="@dimen/height_50"
+               android:layout_marginRight="@dimen/height_50"
                android:layout_gravity="center"/>
 
        </LinearLayout>
@@ -33,8 +33,8 @@
             android:layout_height="0dp"
             android:layout_weight="0.7"
             android:orientation="vertical"
-            android:layout_marginRight="@dimen/height_20"
-            android:layout_marginLeft="@dimen/height_20">
+            android:layout_marginRight="@dimen/height_30"
+            android:layout_marginLeft="@dimen/height_30">
 
 
             <TextView
@@ -42,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:fontFamily="@font/open_sans_regular"
-                android:layout_marginTop="@dimen/height_10"
                 android:text="Enter OTP"/>
 
 

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.CartAdapter;
@@ -29,6 +30,16 @@ public class CartActivity extends AppCompatActivity {
     SearchView searchview_medicine;
     @BindView(R.id.rc_cart)
     RecyclerView rc_cart;
+    @BindView(R.id.tv_mrp_total)
+    TextView tv_mrp_total;
+    @BindView(R.id.tv_price_discount)
+    TextView tv_price_discount;
+    @BindView(R.id.tv_to_be_paid)
+    TextView tv_to_be_paid;
+    @BindView(R.id.tv_total_saving)
+    TextView tv_total_saving;
+    @BindView(R.id.tv_shipping_note)
+    TextView tv_shipping_note;
     ArrayList<CartActivity.CartModel> cartModelArrayList=new ArrayList<>();
     private Context mcontext=this;
     @Override
@@ -55,6 +66,15 @@ public class CartActivity extends AppCompatActivity {
         cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm",235,200,"box of 450 gm powder"));
         cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm",235,200,"box of 450 gm powder"));
         cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm",235,200,"box of 450 gm powder"));
+
+        //set text
+        tv_mrp_total.setText(mcontext.getResources().getString(R.string.Rs)+" 350.0");
+        tv_price_discount.setText("-"+mcontext.getResources().getString(R.string.Rs)+" 30.0");
+        tv_to_be_paid.setText(mcontext.getResources().getString(R.string.Rs)+" 350.0");
+        tv_total_saving.setText(mcontext.getResources().getString(R.string.Rs)+" 30.0");
+        tv_shipping_note.setText("Free shipping for orders above "+mcontext.getResources().getString(R.string.Rs)+"500");
+
+
 
         rc_cart.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
         rc_cart.setHasFixedSize(true);

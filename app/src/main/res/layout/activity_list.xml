@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorlightlightlightGray"
+    android:background="@color/color_gray_bg"
     android:orientation="vertical"
     tools:context=".activity.ListActivity">
 
     <include
         android:id="@+id/rlayout_list_toolbar"
         layout="@layout/custom_toolbar" />
+
+
 
 
     <LinearLayout

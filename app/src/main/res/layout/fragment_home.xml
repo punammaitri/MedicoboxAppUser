@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment"
-    android:background="@color/colorlightlightlightGray"
-    android:focusableInTouchMode="true">
+    android:background="@color/color_gray_bg"
+    android:focusableInTouchMode="true"
+    >
 
    <android.support.v4.widget.NestedScrollView
        android:layout_width="match_parent"
@@ -56,19 +57,21 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Order with Prescription"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <RelativeLayout
                     android:id="@+id/rlayout_upload"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.35"
-                    android:gravity="end">
+                    android:gravity="end"
+                    android:layout_gravity="center">
 
                     <Button
                         android:id="@+id/btn_upload"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/height_35"
                         android:text="Upload"
                         android:gravity="center"
                         android:fontFamily="@font/open_sans_regular"
@@ -114,7 +117,7 @@
                         android:gravity="center"
                         android:text="MEDICINES"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
 
@@ -157,7 +160,7 @@
                         android:gravity="center"
                         android:text="LAB TESTS"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
 
@@ -211,7 +214,7 @@
                         android:singleLine="true"
                         android:fontFamily="@font/open_sans_regular"
                         android:text="INSTA ORDERS"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
 
@@ -254,7 +257,7 @@
                         android:singleLine="true"
                         android:fontFamily="@font/open_sans_regular"
                         android:text="E-CONSULTATION"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
 
@@ -276,7 +279,9 @@
                 android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="FEATURED PRODUCTS"
-               android:textColor="@color/colorblack"/>
+               android:textColor="@color/colorblack"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_product"

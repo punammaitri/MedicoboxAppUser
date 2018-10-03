@@ -8,7 +8,8 @@
     android:layout_marginRight="@dimen/height_5"
     android:layout_marginBottom="@dimen/height_5"
     app:cardCornerRadius="@dimen/height_8"
-    app:cardElevation="@dimen/height_8">
+    app:cardElevation="@dimen/height_8"
+    android:background="@color/color_gray_bg">
 
 
     <LinearLayout
@@ -45,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="abc"
                 android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"
                 android:textColor="@color/colorblack"/>
             <TextView
@@ -90,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rs135"
                 android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"
                 android:textColor="@color/colorblack"/>
 
@@ -121,7 +122,9 @@
                     android:textStyle="bold"
                     android:textColor="@color/colorblack"
                     android:gravity="bottom|center"
-                    android:layout_marginBottom="@dimen/height_5"/>
+                    android:layout_marginBottom="@dimen/height_5"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
 
 
             </RelativeLayout>

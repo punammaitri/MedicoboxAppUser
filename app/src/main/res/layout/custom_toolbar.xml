@@ -30,8 +30,8 @@
     android:layout_toRightOf="@+id/rlayout_back_button">
 
     <ImageView
-        android:layout_width="@dimen/height_35"
-        android:layout_height="@dimen/height_35"
+        android:layout_width="@dimen/height_30"
+        android:layout_height="@dimen/height_30"
         android:src="@drawable/plus"
         android:layout_marginLeft="@dimen/height_10" />
 </RelativeLayout>
@@ -52,7 +52,7 @@
     <android.support.v7.widget.SearchView
         android:id="@+id/searchview_medicine"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_40"
+        android:layout_height="@dimen/height_35"
         android:layout_toLeftOf="@+id/rlayout_cart"
         android:layout_toRightOf="@+id/rlayout_plus"
         android:background="@drawable/custom_btn_bg_white"

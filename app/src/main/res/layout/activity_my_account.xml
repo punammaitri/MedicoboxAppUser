@@ -49,7 +49,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:fontFamily="@font/open_sans_regular"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textStyle="bold"
                     android:text="Profile"
                     android:textColor="@color/colorblack"/>
 
@@ -58,7 +59,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="EDIT"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"
@@ -138,7 +139,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:fontFamily="@font/open_sans_regular"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textStyle="bold"
                     android:text="Billing Address"
                     android:textColor="@color/colorblack"/>
 
@@ -146,7 +148,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="EDIT"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"
@@ -207,15 +209,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:fontFamily="@font/open_sans_regular"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Delivery Address"
-                    android:textColor="@color/colorblack"/>
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="CHANGE"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"

@@ -47,7 +47,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -118,6 +119,7 @@
                             android:layout_marginTop="@dimen/height_10"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="DELIVERY ADDRESS"
+                            android:textStyle="bold"
                             android:textColor="@color/colorblack" />
 
                         <TextView
@@ -156,6 +158,7 @@
                             android:layout_marginTop="@dimen/height_10"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="BILLING ADDRESS"
+                            android:textStyle="bold"
                             android:textColor="@color/colorblack" />
 
                         <TextView
@@ -229,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.9"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="View Attached Prescriptions(1)"
+                        android:text="View Attached Prescriptions (1)"
                         android:textColor="@color/colorblack"
                         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -265,7 +268,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/height_7">
+                    android:padding="@dimen/height_10">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -278,7 +281,7 @@
                             android:layout_weight="0.6"
                             android:text="M.R.P Total"
                             android:fontFamily="@font/open_sans_regular"
-                            android:textColor="@color/colorblack" />
+                            />
 
                         <TextView
                             android:id="@+id/tv_mrp_total"
@@ -288,7 +291,7 @@
                             android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Rs350"
-                            android:textColor="@color/colorblack" />
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -303,7 +306,7 @@
                             android:layout_weight="0.6"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Price Discount"
-                            android:textColor="@color/colorblack" />
+                             />
 
                         <TextView
                             android:id="@+id/tv_price_discount"
@@ -313,7 +316,7 @@
                             android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="-Rs30"
-                            android:textColor="@color/colorblack" />
+                            />
 
 
                     </LinearLayout>
@@ -330,7 +333,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Shipping Charges"
-                            android:textColor="@color/colorblack" />
+                             />
 
                         <TextView
                             android:layout_width="0dp"
@@ -339,7 +342,7 @@
                             android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="As per delivery address"
-                            android:textColor="@color/colorblack" />
+                            />
 
 
                     </LinearLayout>
@@ -357,7 +360,8 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Amount Paid"
                             android:textColor="@color/colorblack"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <TextView
                             android:id="@+id/tv_amount_paid"
@@ -368,6 +372,7 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Rs350.0"
                             android:textColor="@color/colorblack"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textStyle="bold" />
                     </LinearLayout>
 
