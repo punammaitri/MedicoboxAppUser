@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.prescription;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -31,22 +32,22 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
-    @BindView(R.id.rb_order_everything)
-    RadioButton mRadioButtonOrderEverything;
     @BindView(R.id.txt_duration_of_dose)
     TextView txtDurationOfDose;
     @BindView(R.id.txt_duration_example)
     TextView txtDurationExample;
     @BindView(R.id.linear_order_everything)
     LinearLayout linearOrderEverything;
-    @BindView(R.id.rb_specify_medicine)
-    RadioButton mRadioButtonSpecifyMedicine;
     @BindView(R.id.txt_specify_medicine)
     TextView txtSpecifyMedicine;
     @BindView(R.id.txt_specify_meds)
     TextView txtSpecifyMeds;
     @BindView(R.id.linear_specify_medicine)
     LinearLayout linearSpecifyMedicine;
+    @BindView(R.id.rb_order_everything)
+    RadioButton mRadioButtonOrderEverything;
+    @BindView(R.id.rb_specify_medicine)
+    RadioButton mRadioButtonSpecifyMedicine;
     @BindView(R.id.rb_call_me)
     RadioButton mRadioButtonCallMe;
     @BindView(R.id.btnContinue)
@@ -70,7 +71,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
     private void init() {
         searchview_medicine.setFocusable(false);
-
+        img_attach_arrow.setImageResource(R.drawable.arrow_yellow);
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -99,16 +100,19 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 linearOrderEverything.setVisibility(View.VISIBLE);
                 rc_medicine_list.setVisibility(View.GONE);
                 linearSpecifyMedicine.setVisibility(View.GONE);
+                img_attach_arrow.setImageResource(R.drawable.arrow_yellow);
                 break;
             case R.id.rb_specify_medicine:
                 linearSpecifyMedicine.setVisibility(View.VISIBLE);
                 linearOrderEverything.setVisibility(View.GONE);
                 rc_medicine_list.setVisibility(View.GONE);
+                img_attach_arrow.setImageResource(R.drawable.arrow_yellow);
                 break;
             case R.id.rb_call_me:
                 linearSpecifyMedicine.setVisibility(View.GONE);
                 linearOrderEverything.setVisibility(View.GONE);
                 rc_medicine_list.setVisibility(View.VISIBLE);
+                img_attach_arrow.setImageResource(R.drawable.arrow_yellow_up);
                 break;
             case R.id.btnContinue:
                 startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));

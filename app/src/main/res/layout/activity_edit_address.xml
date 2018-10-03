@@ -28,12 +28,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-2dp"
                 android:layout_weight="1"
-                android:buttonTint="@color/coloryellow"
                 android:checked="true"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Set as billing address"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@color/colorPrimary"
+                android:theme="@style/MyRadioButton"
+                android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 
             <android.support.design.widget.TextInputLayout
@@ -161,32 +161,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/coloryellow"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/colorblack"
                     android:checked="true"
                     android:text="Home"
                     android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/coloryellow"
                     android:text="Office"
                     android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:theme="@style/MyRadioButton"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorblack" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/coloryellow"
                     android:text="Other"
                     android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/colorblack" />
 
             </RadioGroup>
 

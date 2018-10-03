@@ -36,6 +36,7 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
+                    android:textStyle="bold"
                     android:text="Akshay Shinde" />
             </android.support.design.widget.TextInputLayout>
 
@@ -148,32 +149,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/coloryellow"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/colorblack"
                     android:checked="true"
                     android:fontFamily="@font/open_sans_regular"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Home"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                  />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_regular"
-                    android:buttonTint="@color/coloryellow"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/colorblack"
                     android:text="Office"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                   />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_regular"
-                    android:buttonTint="@color/coloryellow"
+                    android:theme="@style/MyRadioButton"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorblack"
                     android:text="Other"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    />
 
             </RadioGroup>
 

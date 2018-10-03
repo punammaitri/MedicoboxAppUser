@@ -190,7 +190,8 @@
                 android:textAllCaps="true"
                 android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack" />
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_medicine_list"
@@ -242,7 +243,8 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/coloryellow"
+                            android:theme="@style/MyRadioButton"
+                            android:textColor="@color/colorblack"
                             android:text="Yes"
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -251,7 +253,8 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/coloryellow"
+                            android:theme="@style/MyRadioButton"
+                            android:textColor="@color/colorblack"
                             android:checked="true"
                             android:text="No"
                             android:fontFamily="@font/open_sans_regular"
@@ -324,9 +327,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_5"
+                            android:textColor="@color/colorblack"
                             android:text="Valid Prescription Guide"
                             android:fontFamily="@font/open_sans_regular"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textStyle="bold"
+                            android:textSize="14dp" />
 
                         <ImageView
                             android:layout_width="@dimen/height_20"
@@ -337,15 +342,13 @@
                             android:layout_marginTop="@dimen/height_8"
                             android:background="@drawable/arrow_yellow" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtViewAttached"
-                            android:layout_marginTop="@dimen/height_10"
-                            android:background="@drawable/valid_prescription_guide"
-                            android:scaleType="fitXY" />
                     </RelativeLayout>
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/valid_prescription_guide"
+                        android:scaleType="fitXY" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

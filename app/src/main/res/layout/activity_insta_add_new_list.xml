@@ -29,7 +29,7 @@
             android:layout_marginLeft="@dimen/height_8"
             android:text="Insta Orders"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorblack"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
