@@ -225,7 +225,8 @@
         android:background="@drawable/custom_btn_bg"
         android:text="Continue"
         android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/height_16"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
 

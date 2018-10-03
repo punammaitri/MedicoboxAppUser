@@ -68,7 +68,7 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_8"
                 android:gravity="center"
-                android:text="Your chosen Payment Mode PayTM"
+                android:text="Your chosen Payment Mode: PayTM"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -270,7 +270,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="To be Paid"
+                            android:text="To be paid"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold"
                             android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -384,7 +384,7 @@
                 android:background="@drawable/custom_btn_bg"
                 android:text="Go to my orders"
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/height_16"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 

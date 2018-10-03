@@ -434,7 +434,7 @@
             android:text="Add to cart"
             android:fontFamily="@font/open_sans_regular"
             android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="@dimen/height_16"
             android:textColor="@android:color/white"
             android:background="@color/colorPrimary"
             android:textStyle="bold" />

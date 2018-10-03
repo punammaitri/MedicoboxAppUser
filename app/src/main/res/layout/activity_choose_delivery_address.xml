@@ -31,6 +31,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_add_new"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -67,7 +68,8 @@
         android:paddingRight="@dimen/height_70"
         android:text="Continue"
         android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/height_16"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

@@ -46,7 +46,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
 
 
         holder.tv_order_id.setText("Order ID: "+myOrdersArrayList.get(position).getOrderId());
-        holder.tv_order_date.setText("Order Date:"+myOrdersArrayList.get(position).getOrder_date());
+        holder.tv_order_date.setText("Order Date: "+myOrdersArrayList.get(position).getOrder_date());
         holder.tv_order_price.setText(mContext.getResources().getString(R.string.Rs)+myOrdersArrayList.get(position).getOrder_price());
 
         if(myOrdersArrayList.get(position).getDeliverystatus().equals("0"))
@@ -70,15 +70,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
                 mContext.startActivity(new Intent(mContext,OrderDetailsActivity.class));
             }
         });
-        holder.tv_deliver_order_status.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(myOrdersArrayList.get(position).getDeliverystatus().equals("2"))
-                {
-                    mContext.startActivity(new Intent(mContext,CancelOrderActivity.class));
-                }
-            }
-        });
+
 
 
     }

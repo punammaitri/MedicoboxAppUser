@@ -391,7 +391,7 @@
                             android:layout_marginTop="@dimen/height_8" />
 
                         <Button
-                            android:id="@+id/btnConfirmOrder"
+                            android:id="@+id/btn_Cancel_Order"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_45"
                             android:layout_marginBottom="@dimen/height_20"
@@ -401,7 +401,8 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Cancel Order"
                             android:textAllCaps="true"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="@dimen/height_16"
+                            android:textStyle="bold"
                             android:textColor="@android:color/white" />
 
                     </LinearLayout>

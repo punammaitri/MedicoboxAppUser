@@ -2,6 +2,7 @@ package com.aiprous.medicobox.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderTrackingActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -101,6 +103,11 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         rc_medicine_list.setAdapter(new OrderTrackingAdapter(mContext, mlistModelsArray));
 
 
+    }
+    @OnClick(R.id.btn_Cancel_Order)
+    public void cancelOrder()
+    {
+        startActivity(new Intent(this,CancelOrderActivity.class));
     }
 
     public class ListModel {

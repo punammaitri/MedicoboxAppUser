@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,5 +49,10 @@ public class MyAccountActivity extends AppCompatActivity {
     public void BackPressDetail()
     {
         finish();
+    }
+    @OnClick(R.id.tv_change_delivery_address)
+    public void ChangeDeliveryAddress()
+    {
+        startActivity(new Intent(this,PrescriptionChooseDeliveryAddressActivity.class));
     }
 }

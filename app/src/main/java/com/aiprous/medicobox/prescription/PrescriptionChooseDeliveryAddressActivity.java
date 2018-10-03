@@ -63,6 +63,11 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
         rc_medicine_list.setAdapter(new PrescriptionChooseDeliveryAddressAdapter(mContext, mlistModelsArray));
 
     }
+    @OnClick(R.id.tv_add_new)
+    public void addNew()
+    {
+        startActivity(new Intent(this,PrescriptionEditAddressActivity.class));
+    }
 
 
     @OnClick(R.id.rlayout_back_button)
@@ -72,7 +77,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
 
     @OnClick(R.id.btn_insta_list)
     public void ButtonInstaList() {
-        startActivity(new Intent(this, PrescriptionEditAddressActivity.class));
+        startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
     }
 
 
