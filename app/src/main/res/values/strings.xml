@@ -40,5 +40,5 @@
     <string name="are_you_sure_logout">You want to logout?</string>
     <string name="loading">Loading…</string>
     <string name="error_server">Something wrong at server, please try again later.</string>
-    <string name="address"> Flat No 104,A wing,\nGreen Olive Apartments, \nHinjawadi \nPune-411057  \nMaharashtra \nIndia</string>
+    <string name="address"> Flat No 104, A wing, \nGreen Olive Apartments, \nHinjawadi \nPune-411057  \nMaharashtra \nIndia</string>
 </resources>

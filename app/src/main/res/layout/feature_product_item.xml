@@ -44,6 +44,7 @@
             android:fontFamily="@font/open_sans_regular"
             android:textColor="@color/colorblack"
             android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_marginTop="@dimen/height_10"/>
 
         <LinearLayout
@@ -81,6 +82,7 @@
             android:fontFamily="@font/open_sans_regular"
             android:textColor="@color/colorblack"
             android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_marginTop="@dimen/height_5"/>
 
 

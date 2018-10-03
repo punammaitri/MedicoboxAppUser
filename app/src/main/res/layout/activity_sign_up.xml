@@ -20,8 +20,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/height_25"
             android:layout_marginBottom="@dimen/height_25"
-            android:layout_marginRight="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_20"
+            android:layout_marginLeft="@dimen/height_20"
             android:contentDescription="@null"
             android:scaleType="centerInside"
             android:src="@drawable/applogo"
@@ -89,8 +89,8 @@
                android:id="@+id/btn_sign_up"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginLeft="@dimen/height_20"
-               android:layout_marginRight="@dimen/height_20"
+               android:layout_marginLeft="@dimen/height_30"
+               android:layout_marginRight="@dimen/height_30"
                android:layout_gravity="center"
                android:fontFamily="@font/open_sans_regular"
                android:layout_marginTop="@dimen/height_10"
@@ -113,7 +113,7 @@
                    android:layout_height="wrap_content"
                    android:text="Already have an account? "
                    android:fontFamily="@font/open_sans_regular"
-                   android:textAppearance="?android:attr/textAppearanceMedium"/>
+                   android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                <TextView
                    android:id="@+id/tv_sign_in_here"
@@ -123,7 +123,7 @@
                    android:fontFamily="@font/open_sans_regular"
                    android:textColor="@color/colorPrimary"
                    android:textStyle="bold"
-                   android:textAppearance="?android:attr/textAppearanceMedium"/>
+                   android:textAppearance="?android:attr/textAppearanceSmall"/>
            </LinearLayout>
 
            <LinearLayout

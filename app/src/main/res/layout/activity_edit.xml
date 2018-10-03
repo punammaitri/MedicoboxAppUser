@@ -34,7 +34,23 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="First Name"
+                    android:hint="First name"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:inputType="text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last name"
                     android:fontFamily="@font/open_sans_regular"
                     android:inputType="text"/>
 
@@ -49,22 +65,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Last Name"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:inputType="text"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
-                android:layout_marginTop="@dimen/height_10">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Mobile Number"
+                    android:hint="Mobile number"
                     android:fontFamily="@font/open_sans_regular"
                     android:inputType="number"/>
 
@@ -79,7 +80,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email Id"
+                    android:hint="Email ID"
                     android:fontFamily="@font/open_sans_regular"
                     android:inputType="textEmailAddress"/>
 
@@ -132,7 +133,7 @@
         android:background="@drawable/custom_btn_bg"
         android:text="Save"
         android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/height_16"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:layout_alignParentBottom="true" />

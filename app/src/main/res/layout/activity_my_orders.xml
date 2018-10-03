@@ -45,7 +45,9 @@
             android:clickable="true"
             android:iconifiedByDefault="false"
             app:iconifiedByDefault="false"
-            app:queryHint="Enter your order ID" />
+            app:queryHint="Enter your order ID"
+            android:queryBackground="@android:color/transparent"
+            app:queryBackground="@android:color/transparent"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_my_order_list"

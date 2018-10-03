@@ -56,7 +56,8 @@
           <android.support.v7.widget.RecyclerView
               android:id="@+id/rc_order_summary"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"
+              android:padding="@dimen/height_10"/>
         </android.support.v7.widget.CardView>
 
 
@@ -82,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:fontFamily="@font/open_sans_regular"
-                    android:text="View Attached Prescriptions(1)"
+                    android:text="View Attached Prescriptions (1)"
                     android:textColor="@color/colorblack"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
@@ -129,16 +130,15 @@
                         android:text="M.R.P Total"
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_weight="0.6"
-                        android:textColor="@color/colorblack"
                         />
                     <TextView
+                        android:id="@+id/tv_mrp_total"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rs350"
                         android:layout_weight="0.4"
                         android:fontFamily="@font/open_sans_regular"
                         android:gravity="end"
-                        android:textColor="@color/colorblack"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -153,16 +153,15 @@
                         android:text="Price Discount"
                         android:layout_weight="0.6"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorblack"
                         />
                     <TextView
+                        android:id="@+id/tv_price_discount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="-Rs30"
                         android:layout_weight="0.4"
                         android:fontFamily="@font/open_sans_regular"
                         android:gravity="end"
-                        android:textColor="@color/colorblack"
                         />
 
 
@@ -179,7 +178,6 @@
                         android:text="Shipping Charges"
                         android:layout_weight="0.4"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorblack"
                         />
                     <TextView
                         android:layout_width="0dp"
@@ -188,7 +186,6 @@
                         android:layout_weight="0.6"
                         android:gravity="end"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorblack"
                         />
 
 
@@ -209,6 +206,7 @@
                         android:textStyle="bold"
                         />
                     <TextView
+                        android:id="@+id/tv_to_be_paid"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Rs350.0"
@@ -236,29 +234,31 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="As per delivery address"
+                        android:text="Total Savings"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorblack"
                         android:layout_marginRight="@dimen/height_10"/>
 
                     <TextView
+                        android:id="@+id/tv_total_savings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rs30.0"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorblack"
+                        android:textColor="@color/colorgreen"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <TextView
+            android:id="@+id/tv_free_shipping_note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
             android:text="Free shipping for orders above Rs500"
             android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"/>
+            android:layout_marginLeft="@dimen/height_10"
+            android:textStyle="italic"/>
 
 
         <LinearLayout
@@ -277,6 +277,7 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Billing Address"
+                android:textStyle="bold"
                 android:textColor="@color/colorblack"/>
 
             <TextView
@@ -346,7 +347,8 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Delivery Address"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/colorblack"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -388,6 +390,15 @@
                     android:text="@string/address"
                     android:layout_marginTop="@dimen/height_10"/>
 
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="+91 8833748362"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textColor="@color/colorblack"
+                    android:layout_marginTop="@dimen/height_10"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -395,6 +406,13 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:textColor="@color/colorblack"
                     android:layout_marginTop="@dimen/height_10"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/height_5"
+                    android:background="@color/colorlightlightGray"/>
+
+
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -402,9 +420,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Additional charges shipping might be applicable"
+            android:text="Additional shipping charges might be applicable"
             android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"/>
+            android:layout_marginLeft="@dimen/height_10"
+            android:textStyle="italic"/>
 
 
 

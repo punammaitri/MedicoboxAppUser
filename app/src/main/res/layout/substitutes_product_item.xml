@@ -26,7 +26,7 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/open_sans_regular"
                 android:textColor="@color/colorPrimary"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
                 android:id="@+id/tv_company_name"
@@ -47,7 +47,7 @@
             android:gravity="center|right"
             android:textColor="@color/colorblack"
             android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     </LinearLayout>
 

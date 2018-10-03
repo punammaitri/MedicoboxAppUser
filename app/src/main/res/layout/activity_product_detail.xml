@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorwhite"
     tools:context="com.aiprous.medicobox.activity.ProductDetailActivity"
     >
 
@@ -36,7 +37,7 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Combiflam Icy Hot Fast Pain Relief Gel"
                 android:textColor="@color/colorPrimary"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"/>
 
             <RelativeLayout
@@ -151,7 +152,8 @@
                android:fontFamily="@font/open_sans_regular"
                android:layout_marginRight="@dimen/height_10"
                android:textColor="@color/colorblack"
-               android:textAppearance="?android:attr/textAppearanceMedium"/>
+               android:textAppearance="?android:attr/textAppearanceMedium"
+               android:textStyle="bold"/>
 
 
            <TextView
@@ -215,6 +217,7 @@
                 android:layout_weight="0.77"
                 android:text="Delivery between Sep 10th-11th -445002"
                 android:textColor="@color/colorblack"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"/>
 
             <TextView
@@ -225,7 +228,8 @@
                 android:text="CHANGE"
                 android:gravity="end"
                 android:textStyle="bold"
-                android:textColor="@color/coloryellow"/>
+                android:textColor="@color/coloryellow"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
         </LinearLayout>
 
         <View
@@ -404,7 +408,8 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:text="More Products From Herbolalab India Pvt Ltd"
                 android:textColor="@color/colorblack"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -414,7 +419,8 @@
                 android:text="MORE"
                 android:gravity="end"
                 android:textStyle="bold"
-                android:textColor="@color/coloryellow"/>
+                android:textColor="@color/coloryellow"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
         </LinearLayout>
 
 
@@ -428,7 +434,7 @@
             android:text="Add to cart"
             android:fontFamily="@font/open_sans_regular"
             android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white"
             android:background="@color/colorPrimary"
             android:textStyle="bold" />

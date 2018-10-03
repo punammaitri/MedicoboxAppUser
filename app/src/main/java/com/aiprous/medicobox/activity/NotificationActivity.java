@@ -49,8 +49,8 @@ public class NotificationActivity extends AppCompatActivity {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-        notificationArrayList.add(new NotificationModel("You've successfully placed order (MB011838448382)!","29/09/2018","2:30pm"));
-        notificationArrayList.add(new NotificationModel("You've successfully placed order (MB011838448382)!","29/09/2018","2:30pm"));
+        notificationArrayList.add(new NotificationModel("You've successfully placed your order (MB011838448382)!","29/09/2018","2:30pm"));
+        notificationArrayList.add(new NotificationModel("You've successfully placed your order (MB011838448382)!","29/09/2018","2:30pm"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_notification.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
