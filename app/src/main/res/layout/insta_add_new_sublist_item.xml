@@ -15,15 +15,15 @@
             android:fontFamily="@font/open_sans_regular"
             android:layout_marginLeft="-4dp"
             android:text="Tab Evion 400mg"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorblack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         
         <ImageView
             android:id="@+id/img_Info"
-            android:layout_width="@dimen/height_25"
-            android:layout_height="@dimen/height_25"
+            android:layout_width="@dimen/height_23"
+            android:layout_height="@dimen/height_23"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/height_8"
             android:layout_toRightOf="@+id/cb_tab_name"
@@ -82,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="@dimen/height_40"
-        android:layout_marginTop="@dimen/height_5"
+        android:layout_marginLeft="@dimen/height_30"
+        android:layout_marginTop="@dimen/height_6"
         android:background="@color/colorblack"/>
 
 </LinearLayout>

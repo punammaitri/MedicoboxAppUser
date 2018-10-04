@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Shreya Saran"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold"
                     android:theme="@style/MyRadioButton" />
@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/imgOption"
-                android:layout_width="@dimen/height_22"
-                android:layout_height="@dimen/height_22"
+                android:layout_width="@dimen/height_20"
+                android:layout_height="@dimen/height_20"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
@@ -62,7 +62,7 @@
             android:layout_marginLeft="@dimen/height_30"
             android:fontFamily="@font/open_sans_regular"
             android:text="@string/address"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_marginTop="@dimen/height_5"
             android:fontFamily="@font/open_sans_regular"
             android:text="+91 8833748362"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

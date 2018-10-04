@@ -193,11 +193,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         };
 
-        if (accessToken != null) {
+       /* if (accessToken != null) {
             getProfileData();
         } else {
             //rlProfileArea.setVisibility(View.GONE);
-        }
+        }*/
 
         // Callback registration
         btnfblogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

@@ -23,7 +23,7 @@
             android:fontFamily="@font/open_sans_regular"
             android:padding="@dimen/height_8"
             android:text="Order Tracking"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
@@ -63,7 +63,6 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/height_5"
                     android:background="@drawable/border_for_track_order_button"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/colorwhite" />
@@ -249,7 +248,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:text="Order ID:"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
 
@@ -261,7 +260,7 @@
                                 android:layout_toRightOf="@+id/txtOrderId"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:text="MB1828394839281"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
 
@@ -280,7 +279,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:text="Order Date:"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textStyle="bold" />
 
 
@@ -291,7 +290,7 @@
                                 android:layout_toRightOf="@+id/txtOrderDate"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:text="28/9/2018"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -300,7 +299,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:text="@string/rs_symbol_thirty"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
 
@@ -314,7 +313,7 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:paddingTop="@dimen/height_5"
                             android:text="Intransit"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/coloryellow"
                             android:textStyle="bold" />
 
@@ -335,7 +334,7 @@
                             android:paddingTop="@dimen/height_5"
                             android:text="Delivery Address"
                             android:textAllCaps="true"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
 
@@ -348,7 +347,7 @@
                             android:paddingLeft="@dimen/height_10"
                             android:paddingTop="@dimen/height_5"
                             android:text="Shreya Saran"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
 
@@ -361,7 +360,7 @@
                             android:paddingLeft="@dimen/height_10"
                             android:paddingTop="@dimen/height_5"
                             android:text="@string/address"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <View
                             android:layout_width="match_parent"
@@ -381,7 +380,7 @@
                             android:text="Ordered items"
                             android:textAllCaps="true"
                             android:textStyle="bold"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack" />
 
                         <android.support.v7.widget.RecyclerView

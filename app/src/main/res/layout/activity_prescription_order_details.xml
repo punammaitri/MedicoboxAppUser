@@ -48,7 +48,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:text="Order everything as per prescription"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <LinearLayout
                         android:id="@+id/linear_order_everything"
@@ -63,9 +63,9 @@
                             android:id="@+id/txt_duration_of_dose"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/height_15"
+                            android:layout_marginTop="@dimen/height_13"
                             android:text="Duration of dosage in days"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <View
                             android:layout_width="match_parent"
@@ -78,9 +78,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
-                            android:layout_marginTop="@dimen/height_12"
+                            android:layout_marginTop="@dimen/height_10"
                             android:text="e.g. 60"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     </LinearLayout>
 
@@ -95,7 +95,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:text="Let me specify medicines/quantity"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <LinearLayout
                         android:id="@+id/linear_specify_medicine"
@@ -109,10 +109,10 @@
                             android:id="@+id/txt_specify_medicine"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/height_15"
+                            android:layout_marginTop="@dimen/height_13"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Medicine(s) name, quantity/duration"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <View
                             android:layout_width="match_parent"
@@ -125,9 +125,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
-                            android:layout_marginTop="@dimen/height_12"
+                            android:layout_marginTop="@dimen/height_10"
                             android:text="e.g. Crocin, 2 Strips"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     </LinearLayout>
 
@@ -143,7 +143,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:text="Call me for details"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </RadioGroup>
 
@@ -185,7 +185,7 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:layout_marginTop="@dimen/height_10"
                     android:text="View Attached Prescriptions (1)"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <ImageView
                     android:id="@+id/img_attach_arrow"

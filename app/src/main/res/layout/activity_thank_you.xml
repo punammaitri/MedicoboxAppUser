@@ -23,7 +23,7 @@
             android:layout_height="@dimen/height_70"
             android:scaleType="fitXY"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/height_40"
+            android:layout_marginTop="32dp"
             android:background="@drawable/check" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_thank_you"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/height_15"
+            android:layout_marginTop="@dimen/height_12"
             android:gravity="center"
             android:text="Thank You!"
             android:fontFamily="@font/open_sans_regular"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_thank_you"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/height_8"
+            android:layout_marginTop="@dimen/height_5"
             android:gravity="center"
             android:fontFamily="@font/open_sans_regular"
             android:text="Order Placed"
@@ -64,10 +64,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/height_15"
             android:fontFamily="@font/open_sans_regular"
-            android:layout_marginTop="@dimen/height_16"
+            android:layout_marginTop="@dimen/height_13"
             android:gravity="center"
             android:text="@string/thank_you_text_desc"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -76,10 +76,10 @@
             android:layout_below="@+id/txt_thank_you_desc"
             android:layout_marginLeft="@dimen/height_15"
             android:fontFamily="@font/open_sans_regular"
-            android:layout_marginTop="@dimen/height_10"
+            android:layout_marginTop="7.5dp"
             android:gravity="center"
             android:text="@string/thank_you_note"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

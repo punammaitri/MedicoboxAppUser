@@ -64,7 +64,7 @@
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_6"
                         android:text="Shreya Saran"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_4"
                         android:text="@string/address"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                     <TextView
@@ -86,7 +86,7 @@
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_5"
                         android:text="+91 8833748362"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary" />
 
 
@@ -96,7 +96,7 @@
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginLeft="@dimen/height_15"
                         android:text="Special Instructions"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <View
                         android:layout_width="match_parent"
@@ -156,7 +156,8 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="View Attached Prescriptions(1)"
                             android:textColor="@color/colorblack"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <ImageView
                             android:layout_width="@dimen/height_20"
@@ -171,7 +172,7 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rc_medicine_list"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/txtViewAttached"
                             android:layout_marginBottom="@dimen/height_10"
                             android:layout_marginLeft="@dimen/height_10"
