@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CartActivity">
+    tools:context=".activity.CartActivity"
+    android:background="@color/color_gray_bg">
 
     <include
         android:id="@+id/layout_custom_toolbar"

@@ -269,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtOrderingHeading"
                         android:layout_marginTop="@dimen/height_5"
-                        android:theme="@style/TextLabel">
+                        app:hintTextAppearance="@style/TextLabel">
 
                         <EditText
                             android:layout_width="match_parent"
@@ -286,7 +286,7 @@
                         android:layout_below="@+id/edt_patient_name"
                         android:layout_marginBottom="@dimen/height_5"
                         android:layout_marginTop="@dimen/height_1"
-                        android:theme="@style/TextLabel">
+                        app:hintTextAppearance="@style/TextLabel">
 
                         <EditText
                             android:layout_width="match_parent"

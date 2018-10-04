@@ -28,7 +28,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
+                app:hintTextAppearance="@style/TextLabel"
                 android:layout_marginTop="@dimen/height_10">
 
                 <EditText
@@ -44,7 +44,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
+                app:hintTextAppearance="@style/TextLabel"
                 android:layout_marginTop="@dimen/height_10">
 
                 <EditText
@@ -59,7 +59,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
+                app:hintTextAppearance="@style/TextLabel"
                 android:layout_marginTop="@dimen/height_10">
 
                 <EditText
@@ -74,7 +74,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
+                app:hintTextAppearance="@style/TextLabel"
                 android:layout_marginTop="@dimen/height_10">
 
                 <EditText
@@ -90,7 +90,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
+                app:hintTextAppearance="@style/TextLabel"
                 android:layout_marginTop="@dimen/height_10">
 
                 <EditText
@@ -106,7 +106,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
+                app:hintTextAppearance="@style/TextLabel"
                 android:layout_marginTop="@dimen/height_10">
 
                 <EditText

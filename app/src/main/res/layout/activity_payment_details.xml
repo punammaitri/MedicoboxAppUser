@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PaymentDetailsActivity">
+    tools:context=".activity.PaymentDetailsActivity"
+    android:background="@color/color_gray_bg">
 
 
     <include layout="@layout/custom_toolbar"
