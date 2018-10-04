@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderPlacedActivity extends AppCompatActivity {
 
@@ -77,5 +79,10 @@ public class OrderPlacedActivity extends AppCompatActivity {
         rc_order_placed.setHasFixedSize(true);
         rc_order_placed.setAdapter(new OrderDetailsAdapter(mContext, mproductArrayList));
 
+    }
+    @OnClick(R.id.btn_my_orders)
+    public void myOrders()
+    {
+        startActivity(new Intent(this,MyOrdersActivity.class));
     }
 }

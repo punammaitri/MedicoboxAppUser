@@ -2,6 +2,7 @@ package com.aiprous.medicobox.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.model.NavItemClicked;
 
 import butterknife.BindView;
@@ -59,7 +61,8 @@ public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.Vi
             public void onClick(View v) {
                 if (position==0)
                 {
-                    Toast.makeText(mContext, "Medicine", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mContext, "Medicine", Toast.LENGTH_SHORT).show();
+                    mContext.startActivity(new Intent(mContext,MyOrdersActivity.class));
 
                 }else {
                     Toast.makeText(mContext, "Test Lab", Toast.LENGTH_SHORT).show();

@@ -190,8 +190,8 @@ public class MainActivity extends AppCompatActivity
              drawerLayout.closeDrawer(GravityCompat.START);
              return;
          }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))){
-             startActivity(new Intent(mContext, MyOrdersActivity.class));
-             drawerLayout.closeDrawer(GravityCompat.START);
+             //startActivity(new Intent(mContext, MyOrdersActivity.class));
+             //drawerLayout.closeDrawer(GravityCompat.START);
              return;
          }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))){
              startActivity(new Intent(mContext, NotificationActivity.class));
