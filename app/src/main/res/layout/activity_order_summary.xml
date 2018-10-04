@@ -59,7 +59,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/height_8"
+                        android:layout_marginBottom="@dimen/height_2"
                         android:layout_marginLeft="@dimen/height_15"
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_6"

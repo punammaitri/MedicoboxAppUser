@@ -44,4 +44,10 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     public void ButtonSave() {
         startActivity(new Intent(this, PrescriptionBillingAddressActivity.class));
     }
+
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressSDescription() {
+        finish();
+    }
+
 }

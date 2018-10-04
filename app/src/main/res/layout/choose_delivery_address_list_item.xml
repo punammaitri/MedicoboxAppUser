@@ -27,7 +27,7 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/height_8"
+                android:layout_marginBottom="@dimen/height_3"
                 android:layout_marginTop="@dimen/height_6">
 
                 <RadioButton

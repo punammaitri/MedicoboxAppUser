@@ -65,9 +65,9 @@ public class InstaProductDetailActivity extends AppCompatActivity {
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_medicine_list.setHasFixedSize(true);
         rc_medicine_list.setAdapter(new InstaProductDetailAdapter(mContext, mlistModelsArray));
-
-
     }
+
+
     @OnClick(R.id.rlayout_back_button)
     public void BackPressSDescription()
     {

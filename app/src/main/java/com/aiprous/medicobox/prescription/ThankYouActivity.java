@@ -12,6 +12,7 @@ import com.aiprous.medicobox.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ThankYouActivity extends AppCompatActivity {
@@ -24,6 +25,11 @@ public class ThankYouActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thank_you);
         ButterKnife.bind(this);
         init();
+    }
+
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressSDescription() {
+        finish();
     }
 
     private void init() {
