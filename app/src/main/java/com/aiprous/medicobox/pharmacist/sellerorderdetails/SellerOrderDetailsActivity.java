@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.pharmacist.sellerorderdetails.invoice.SellerInvoiceFragment;
@@ -21,19 +22,22 @@ import com.aiprous.medicobox.pharmacist.sellerorderdetails.shipment.SellerShipme
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SellerOrderDetailsActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.txtTitle)
+    TextView mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_order_details);
         ButterKnife.bind(this);
+
+        mTitle.setText("Order Details");
 
         //set status bar color
         Window window = this.getWindow();
@@ -42,11 +46,6 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setContentInsetStartWithNavigation(0);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -100,6 +99,12 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+
+    @OnClick(R.id.rlayout_back_button)
+    public void BackButton() {
+        finish();
     }
 
     @Override

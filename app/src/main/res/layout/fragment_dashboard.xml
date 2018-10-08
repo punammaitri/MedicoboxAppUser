@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gray_bg"
+    android:orientation="vertical"
+    tools:context="com.aiprous.medicobox.instaorder.InstaProductDetailActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_gray_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtLatestOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_7"
+                android:layout_marginTop="@dimen/height_5"
+                android:fontFamily="@font/open_sans_regular"
+                android:padding="@dimen/height_8"
+                android:text="Sales stat"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_4"
+                android:layout_marginRight="@dimen/height_4"
+                android:layout_marginBottom="@dimen/height_4"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_4"
+                android:layout_marginRight="@dimen/height_4"
+                android:layout_marginBottom="@dimen/height_4"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtTotalPayable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:gravity="center"
+                                android:text="Total Payout"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtTotalPayable"
+                                android:layout_marginTop="@dimen/height_6"
+                                android:layout_marginBottom="@dimen/height_8"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:gravity="center"
+                                android:text="@string/rs_symbol_thousand"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@android:color/black" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtRemainingAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:gravity="center"
+                                android:text="Remaining Amount"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtRemainingAmount"
+                                android:layout_marginTop="@dimen/height_6"
+                                android:layout_marginBottom="@dimen/height_8"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:gravity="center"
+                                android:text="@string/rs_symbol_thousand"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@android:color/black" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="@color/coloryellow" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_12"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
+                        android:text="Lifetime Sales"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:layout_marginBottom="@dimen/height_8"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
+                        android:text="@string/rs_symbol_thousand"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_4"
+                android:layout_marginRight="@dimen/height_4"
+                android:layout_marginBottom="@dimen/height_4"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="@dimen/height_70"
+                        android:layout_height="@dimen/height_70"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/height_12"
+                        android:background="@drawable/cart"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:layout_marginBottom="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
+                        android:text="latest orders"
+                        android:textAllCaps="true"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/txtSellingProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_7"
+                android:layout_marginTop="@dimen/height_5"
+                android:fontFamily="@font/open_sans_regular"
+                android:padding="@dimen/height_8"
+                android:text="Top selling products"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/height_4"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_10">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rec_dashboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

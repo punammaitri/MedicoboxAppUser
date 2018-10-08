@@ -25,8 +25,12 @@
     <string name="txt_medicines">Medicines</string>
     <string name="txt_lab_test">Lab Test</string>
     <string name="rs_symbol">\u20B968.60</string>
+    <string name="rs_symbol_thousand">\u20B92000.60</string>
     <string name="rs_symbol_seller">\u20B9278.00</string>
     <string name="rs_symbol_total">\u20B9108.00</string>
+    <string name="rs_symbol_eight">\u20B98.00</string>
+    <string name="rs_symbol_ten">\u20B910.00</string>
+    <string name="rs_symbol_zero">\u20B90.00</string>
     <string name="rs_symbol_thirty">\u20B9350.00</string>
     <string name="rs_symbol_with_tablet_name">( \u20B96.860/Tablet SR )</string>
     <string name="order_checkout">Order &amp; Checkout</string>

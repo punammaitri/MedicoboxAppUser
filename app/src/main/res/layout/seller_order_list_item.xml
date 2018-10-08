@@ -99,7 +99,7 @@
                 android:text="Shreya Saran"
                 android:textColor="@color/colorblack"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                />
 
         </LinearLayout>
 
@@ -141,7 +141,7 @@
                 android:text="29/9/2018"
                 android:textColor="@color/colorblack"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                 />
 
         </LinearLayout>
 

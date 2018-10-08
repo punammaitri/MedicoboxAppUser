@@ -25,15 +25,28 @@
 
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_5"
+            android:layout_marginRight="@dimen/height_5"
+            android:layout_toLeftOf="@+id/txtQty"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Qty:"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
             android:id="@+id/txtQty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/height_5"
             android:layout_marginRight="@dimen/height_8"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Qty: 2"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
 
         <TextView

@@ -43,6 +43,7 @@ import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
+import com.aiprous.medicobox.pharmacist.dashboard.DashboardFragment;
 
 
 import butterknife.BindView;
@@ -63,12 +64,13 @@ public class MainActivity extends AppCompatActivity
     FrameLayout layoutContainer;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-   // @BindView(R.id.tvMainToolbarTitle)
-   //TextView tvMainToolbarTitle;
+    // @BindView(R.id.tvMainToolbarTitle)
+    //TextView tvMainToolbarTitle;
     private final String TAG = MainActivity.class.getSimpleName();
     private Unbinder unbinder;
     public static DrawerLayout drawerLayout;
     private HomeFragment homeFragment;
+    private DashboardFragment dashboardFragment;
     private ActionBarDrawerToggle mDrawerToggle;
     private Context mContext = this;
     public static Toolbar toolbarMain;
@@ -77,49 +79,50 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-      protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_main);
-         unbinder = ButterKnife.bind(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        unbinder = ButterKnife.bind(this);
 
-       toolbarMain = findViewById(R.id.toolbarMain);
-       toolbarMain.setContentInsetStartWithNavigation(0);
-         drawerLayout = findViewById(R.id.drawerLayout);
-         init();
+        toolbarMain = findViewById(R.id.toolbarMain);
+        toolbarMain.setContentInsetStartWithNavigation(0);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        init();
+    }
+
+    private void init() {
+
+        //set status bar color
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-      private void init() {
+       // homeFragment = new HomeFragment(this);
+        dashboardFragment = new DashboardFragment(this);
+        setDrawerToggle();
+        addFragment();
+    }
 
-          //set status bar color
-          Window window = this.getWindow();
-          window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-          window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-              window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-          }
-
-          homeFragment = new HomeFragment(this);
-          setDrawerToggle();
-          addFragment();
-        }
-
-        @Override
-        protected void onResume() {
-          super.onResume();
-            navigationItem(true);
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigationItem(true);
+    }
 
 
     public void addFragment() {
         //optionMenu.setVisibility(View.VISIBLE);
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.layout_container, homeFragment, "TagName");
+        mFragmentTransaction.replace(R.id.layout_container, dashboardFragment, "TagName");
         mFragmentTransaction.commit();
     }
 
     private void setDrawerToggle() {
-       rvForNavigation = (RecyclerView) navView.findViewById(R.id.rvForNavigation);
+        rvForNavigation = (RecyclerView) navView.findViewById(R.id.rvForNavigation);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rvForNavigation.setLayoutManager(layoutManager);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbarMain,
@@ -134,7 +137,6 @@ public class MainActivity extends AppCompatActivity
                 super.onDrawerOpened(drawerView);
                 hideKeyboard(mContext, drawerView);
             }
-
 
 
             @Override
@@ -168,8 +170,8 @@ public class MainActivity extends AppCompatActivity
        /* if (!isNetworkAvailable(mContext)) {
             CustomProgressDialog.getInstance().showDialog(mContext, Constant.Network_Error, Constant.ERROR_TYPE);
             return;*/
-         if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
-             drawerLayout.closeDrawer(GravityCompat.START);
+        if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
+            drawerLayout.closeDrawer(GravityCompat.START);
             int fragCount = getSupportFragmentManager().getBackStackEntryCount();
             if (fragCount > 0) {
                 for (int i = 0; i < fragCount; i++) {
@@ -178,30 +180,27 @@ public class MainActivity extends AppCompatActivity
             }
             addFragment();
             return;
-        }
-        else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account)))
-        {
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account))) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
-        } else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart)))
-         {
-             startActivity(new Intent(this, CartActivity.class));
-             drawerLayout.closeDrawer(GravityCompat.START);
-             return;
-         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))){
-             //startActivity(new Intent(mContext, MyOrdersActivity.class));
-             //drawerLayout.closeDrawer(GravityCompat.START);
-             return;
-         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))){
-             startActivity(new Intent(mContext, NotificationActivity.class));
-             drawerLayout.closeDrawer(GravityCompat.START);
-             return;
-         }else if(name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))){
-             logout();
-             drawerLayout.closeDrawer(GravityCompat.START);
-             return;
-         }
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
+            startActivity(new Intent(this, CartActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
+            //startActivity(new Intent(mContext, MyOrdersActivity.class));
+            //drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
+            startActivity(new Intent(mContext, NotificationActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
+            logout();
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
     }
 
     // set data into navigation view
@@ -209,23 +208,23 @@ public class MainActivity extends AppCompatActivity
         String title[];
         int icon[];
 
-            title = new String[]{
-                    mContext.getResources().getString(R.string.txt_home),
-                    mContext.getResources().getString(R.string.txt_orders),
-                    mContext.getResources().getString(R.string.txt_account),
-                    mContext.getResources().getString(R.string.txt_cart),
-                    mContext.getResources().getString(R.string.txt_notification),
-                   mContext.getResources().getString(R.string.txt_settings),
-                    mContext.getResources().getString(R.string.txt_logout)};
+        title = new String[]{
+                mContext.getResources().getString(R.string.txt_home),
+                mContext.getResources().getString(R.string.txt_orders),
+                mContext.getResources().getString(R.string.txt_account),
+                mContext.getResources().getString(R.string.txt_cart),
+                mContext.getResources().getString(R.string.txt_notification),
+                mContext.getResources().getString(R.string.txt_settings),
+                mContext.getResources().getString(R.string.txt_logout)};
 
-            icon = new int[]{
-                    R.drawable.home,
-                    R.drawable.box,
-                    R.drawable.user,
-                    R.drawable.cart,
-                    R.drawable.bell,
-                    R.drawable.settings,
-                    R.drawable.logout,};
+        icon = new int[]{
+                R.drawable.home,
+                R.drawable.box,
+                R.drawable.user,
+                R.drawable.cart,
+                R.drawable.bell,
+                R.drawable.settings,
+                R.drawable.logout,};
 
         navAdaptor = new NavAdaptor(mContext, this, title, icon);
         rvForNavigation.setAdapter(navAdaptor);
@@ -280,7 +279,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                        startActivity(new Intent(mContext,LoginActivity.class));
+                        startActivity(new Intent(mContext, LoginActivity.class));
                         finish();
                     }
                 })
@@ -306,7 +305,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean pop() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-           // tvMainToolbarTitle.setText(mContext.getResources().getString(R.string.dashboard));
+            // tvMainToolbarTitle.setText(mContext.getResources().getString(R.string.dashboard));
             getSupportFragmentManager().popBackStackImmediate();
             return true;
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -317,11 +316,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.rlayout_cart)
-    public void onClickCart()
-    {
-       // startActivity(new Intent(this,CartActivity.class));
+    public void onClickCart() {
+        // startActivity(new Intent(this,CartActivity.class));
         // startActivity(new Intent(this,OrderDetailsActivity.class));
-       // startActivity(new Intent(this,OrderPlacedActivity.class));
+        // startActivity(new Intent(this,OrderPlacedActivity.class));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.aiprous.medicobox.pharmacist.sellerorderdetails.itemorder;
+package com.aiprous.medicobox.pharmacist.dashboard;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
+import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderSubListAdapter;
 import com.aiprous.medicobox.pharmacist.sellerorderdetails.SellerOrderDetailsActivity;
 
 import java.util.ArrayList;
@@ -21,16 +23,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SellerItemOrderListAdapter extends RecyclerView.Adapter<SellerItemOrderListAdapter.ViewHolder> {
+public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
 
-    private ArrayList<SellerItemOrderFragment.ListModel> mDataArrayList;
-    private ArrayList<SellerItemOrderFragment.SubListModel> mSubListModelArray;
+    private ArrayList<DashboardFragment.SubListModel> mSubListModelArray;
     private Context mContext;
     private PopupWindow window;
 
-    public SellerItemOrderListAdapter(Context mContext, ArrayList<SellerItemOrderFragment.ListModel> mDataArrayList, ArrayList<SellerItemOrderFragment.SubListModel> mSubListModel) {
+    public DashboardAdapter(Context mContext, ArrayList<DashboardFragment.SubListModel> mSubListModel) {
         this.mContext = mContext;
-        this.mDataArrayList = mDataArrayList;
         this.mSubListModelArray = mSubListModel;
     }
 
@@ -38,28 +38,25 @@ public class SellerItemOrderListAdapter extends RecyclerView.Adapter<SellerItemO
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_seller_item_order_list_item, parent, false);
+                .inflate(R.layout.dashboard_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-
-        holder.rc_subList.setLayoutManager(new LinearLayoutManager(mContext));
-        holder.rc_subList.setAdapter(new SellerItemOrderSubListAdapter(mContext, mSubListModelArray));
-
+        //holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
+        holder.tv_medicine_name.setText(mSubListModelArray.get(position).getProduct_name());
     }
 
     @Override
     public int getItemCount() {
-        return (mDataArrayList == null) ? 0 : mDataArrayList.size();
+        return (mSubListModelArray == null) ? 0 : mSubListModelArray.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-
-        @BindView(R.id.SubList)
-        RecyclerView rc_subList;
+        @BindView(R.id.tv_medicine_name)
+        TextView tv_medicine_name;
 
         ViewHolder(@NonNull View view) {
             super(view);

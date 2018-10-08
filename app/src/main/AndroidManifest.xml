@@ -200,7 +200,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".pharmacist.PharmacistSignUpActivity" />
         <activity android:name=".deliveryboy.AddDeliveryBoyActivity" />
-
         <activity
             android:name=".pharmacist.sellerorder.SellerOrderActivity"
             android:screenOrientation="portrait"

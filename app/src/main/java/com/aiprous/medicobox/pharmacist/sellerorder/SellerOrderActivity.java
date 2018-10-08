@@ -65,6 +65,7 @@ public class SellerOrderActivity extends AppCompatActivity {
         //add static data into Sub List array list
         mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
         mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
+        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_seller_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

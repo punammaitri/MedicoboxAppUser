@@ -22,7 +22,6 @@ public class SellerItemOrderFragment extends Fragment {
     RecyclerView rec_sellerItemOrder;
 
     ArrayList<SellerItemOrderFragment.ListModel> mlistModelsArray = new ArrayList<>();
-    ArrayList<SellerItemOrderFragment.SubListModel> mSubListModelsArray = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
 
 
@@ -37,18 +36,13 @@ public class SellerItemOrderFragment extends Fragment {
 
     private void init() {
         //add static data into List array list
-        mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "12233232323"));
-        mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "12233232323"));
-        mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "12233232323"));
-
-        //add static data into Sub List array list
-        mSubListModelsArray.add(new SellerItemOrderFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
-        mSubListModelsArray.add(new SellerItemOrderFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
+        mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
+        mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
 
         layoutManager = new LinearLayoutManager(getActivity());
         rec_sellerItemOrder.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rec_sellerItemOrder.setHasFixedSize(true);
-        rec_sellerItemOrder.setAdapter(new SellerItemOrderListAdapter(getActivity(), mlistModelsArray, mSubListModelsArray));
+        rec_sellerItemOrder.setAdapter(new SellerItemOrderAdapter(getActivity(), mlistModelsArray));
     }
 
     public class ListModel {
@@ -78,29 +72,4 @@ public class SellerItemOrderFragment extends Fragment {
 
     }
 
-    public class SubListModel {
-        int image;
-        String product_name;
-
-        public SubListModel(int image, String product_name) {
-            this.image = image;
-            this.product_name = product_name;
-        }
-
-        public int getImage() {
-            return image;
-        }
-
-        public void setImage(int image) {
-            this.image = image;
-        }
-
-        public String getProduct_name() {
-            return product_name;
-        }
-
-        public void setProduct_name(String product_name) {
-            this.product_name = product_name;
-        }
-    }
 }
