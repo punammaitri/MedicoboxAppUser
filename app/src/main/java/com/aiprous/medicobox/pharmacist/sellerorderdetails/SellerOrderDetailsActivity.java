@@ -1,25 +1,23 @@
-package com.aiprous.medicobox.pharmacist.sellerorder;
+package com.aiprous.medicobox.pharmacist.sellerorderdetails;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.pharmacist.sellerorderdetails.invoice.SellerInvoiceFragment;
+import com.aiprous.medicobox.pharmacist.sellerorderdetails.itemorder.SellerItemOrderFragment;
+import com.aiprous.medicobox.pharmacist.sellerorderdetails.shipment.SellerShipmentFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +34,14 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_order_details);
         ButterKnife.bind(this);
+
+        //set status bar color
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,16 +67,16 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
             //Returning the current tabs
             switch (position) {
                 case 0:
-                    CurrentFragment currentFragment = new CurrentFragment();
-                    return currentFragment;
+                    SellerItemOrderFragment sellerItemOrderFragment = new SellerItemOrderFragment();
+                    return sellerItemOrderFragment;
 
                 case 1:
-                    PastFragment pastFragment = new PastFragment();
-                    return pastFragment;
+                    SellerInvoiceFragment sellerInvoiceFragment = new SellerInvoiceFragment();
+                    return sellerInvoiceFragment;
 
                 case 2:
-                    CancelFragment cancelFragment = new CancelFragment();
-                    return cancelFragment;
+                    SellerShipmentFragment sellerShipmentFragment = new SellerShipmentFragment();
+                    return sellerShipmentFragment;
 
                 default:
                     return null;
@@ -86,11 +92,11 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Current";
+                    return "ITEMS ORDERED";
                 case 1:
-                    return "Past";
+                    return "INVOICE";
                 case 2:
-                    return "Cancel";
+                    return "SHIPMENTS";
             }
             return null;
         }

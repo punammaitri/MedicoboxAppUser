@@ -1,4 +1,4 @@
-package com.aiprous.medicobox.pharmacist.sellerorderdetails;
+package com.aiprous.medicobox.pharmacist.sellerorderdetails.itemorder;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
 
 import java.util.ArrayList;
 

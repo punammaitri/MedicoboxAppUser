@@ -53,8 +53,16 @@
 
     <style name="MyRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorGray</item>
-        <item name="android:colorControlActivated" tools:targetApi="lollipop">@color/coloryellow</item>
-        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/coloryellow</item>
+        <item name="android:colorControlActivated" tools:targetApi="lollipop">@color/coloryellow
+        </item>
+        <item name="android:colorControlHighlight" tools:targetApi="lollipop">@color/coloryellow
+        </item>
         <item name="android:textColorPrimaryDisableOnly">#00838f</item>
     </style>
+
+    <style name="ToolbarBackArrowStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/colorblack</item>
+    </style>
+
 </resources>

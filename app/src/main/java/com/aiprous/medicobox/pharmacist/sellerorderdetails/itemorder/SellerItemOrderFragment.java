@@ -1,7 +1,5 @@
-package com.aiprous.medicobox.pharmacist.sellerorderdetails;
+package com.aiprous.medicobox.pharmacist.sellerorderdetails.itemorder;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,17 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
-import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderListAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class SellerItemOrderFragment extends Fragment {
 
-    RecyclerView rc_seller_list;
+    @BindView(R.id.rec_sellerItemOrder)
+    RecyclerView rec_sellerItemOrder;
+
     ArrayList<SellerItemOrderFragment.ListModel> mlistModelsArray = new ArrayList<>();
     ArrayList<SellerItemOrderFragment.SubListModel> mSubListModelsArray = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
@@ -32,15 +31,11 @@ public class SellerItemOrderFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_item_order, container, false);
         ButterKnife.bind(this, view);
-        init(view);
+        init();
         return view;
     }
 
-    private void init(View view) {
-
-
-        rc_seller_list = view.findViewById(R.id.rc_seller_list);
-
+    private void init() {
         //add static data into List array list
         mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "12233232323"));
         mlistModelsArray.add(new SellerItemOrderFragment.ListModel(R.drawable.ic_menu_manage, "12233232323"));
@@ -51,9 +46,9 @@ public class SellerItemOrderFragment extends Fragment {
         mSubListModelsArray.add(new SellerItemOrderFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
 
         layoutManager = new LinearLayoutManager(getActivity());
-        rc_seller_list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rc_seller_list.setHasFixedSize(true);
-        rc_seller_list.setAdapter(new SellerItemOrderListAdapter(getActivity(), mlistModelsArray, mSubListModelsArray));
+        rec_sellerItemOrder.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rec_sellerItemOrder.setHasFixedSize(true);
+        rec_sellerItemOrder.setAdapter(new SellerItemOrderListAdapter(getActivity(), mlistModelsArray, mSubListModelsArray));
     }
 
     public class ListModel {
