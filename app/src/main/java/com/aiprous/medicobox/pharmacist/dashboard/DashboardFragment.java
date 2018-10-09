@@ -2,6 +2,7 @@ package com.aiprous.medicobox.pharmacist.dashboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,13 @@ import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
 import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderListAdapter;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -26,6 +34,9 @@ public class DashboardFragment extends Fragment {
 
     @BindView(R.id.rec_dashboard)
     RecyclerView rec_dashboard;
+    @BindView(R.id.chart)
+     BarChart mChart;
+
     ArrayList<DashboardFragment.SubListModel> mSubListModelsArray = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
     private MainActivity mainActivity;
@@ -57,6 +68,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void init() {
+
         //add static data into Sub List array list
         mSubListModelsArray.add(new DashboardFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
         mSubListModelsArray.add(new DashboardFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
@@ -66,6 +78,35 @@ public class DashboardFragment extends Fragment {
         rec_dashboard.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rec_dashboard.setHasFixedSize(true);
         rec_dashboard.setAdapter(new DashboardAdapter(getActivity(), mSubListModelsArray));
+
+        BarData data = new BarData(getXAxisValues(), getDataSet());
+        mChart.setData(data);
+
+        mChart.setDescription("");
+        mChart.animateXY(2000, 2000);
+        mChart.getXAxis().setEnabled(true);
+        mChart.setDrawValueAboveBar(false);
+        mChart.getAxisLeft().setEnabled(false);
+        mChart.getAxisRight().setEnabled(false);
+        mChart.getAxisLeft().setDrawGridLines(false);
+
+        //for X axis
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawGridLines(false);
+
+        //for Y axis
+        YAxis yAxis = mChart.getAxisLeft();
+        yAxis.setDrawGridLines(false);
+        yAxis.setDrawAxisLine(false);
+        yAxis.setTextColor(R.color.textColor);
+
+        mChart.setDrawGridBackground(false);
+
+        mChart.getLegend().setEnabled(false);
+        mChart.invalidate();
+
     }
 
     public class SubListModel {
@@ -101,5 +142,44 @@ public class DashboardFragment extends Fragment {
 
     private void onFragmentTrans(Fragment framgent) {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_home, framgent).commit();
+    }
+
+    private ArrayList<BarDataSet> getDataSet() {
+        ArrayList<BarDataSet> dataSets = null;
+
+        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+        BarEntry v1e1 = new BarEntry(90.0f, 0);
+        valueSet1.add(v1e1);
+        BarEntry v1e2 = new BarEntry(50.0f, 1);
+        valueSet1.add(v1e2);
+        BarEntry v1e3 = new BarEntry(80.0f, 2);
+        valueSet1.add(v1e3);
+        BarEntry v1e4 = new BarEntry(70.0f, 3);
+        valueSet1.add(v1e4);
+        BarEntry v1e5 = new BarEntry(50.0f, 4);
+        valueSet1.add(v1e5);
+        BarEntry v1e6 = new BarEntry(85.0f, 5);
+        valueSet1.add(v1e6);
+        BarEntry v1e7 = new BarEntry(30.0f, 6);
+        valueSet1.add(v1e7);
+
+        BarDataSet barDataSet2 = new BarDataSet(valueSet1, "");
+        barDataSet2.setColor(Color.rgb(31, 44, 76));
+
+        dataSets = new ArrayList<>();
+        dataSets.add(barDataSet2);
+        return dataSets;
+    }
+
+    private ArrayList<String> getXAxisValues() {
+        ArrayList<String> xAxis = new ArrayList<>();
+        xAxis.add("MON");
+        xAxis.add("TUE");
+        xAxis.add("WED");
+        xAxis.add("THU");
+        xAxis.add("FRI");
+        xAxis.add("SAT");
+        xAxis.add("SUN");
+        return xAxis;
     }
 }

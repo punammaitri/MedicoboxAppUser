@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.aiprous.medicobox"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -60,6 +60,9 @@ dependencies {
     // for sweet alert dialog
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
 
+    //bar chart
+    //implementation 'com.github.PhilJay:MPAndroidChart-Realm:v2.0.2@aar'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.0.9'
     implementation 'com.squareup.okhttp:okhttp:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     testImplementation 'junit:junit:4.12'
