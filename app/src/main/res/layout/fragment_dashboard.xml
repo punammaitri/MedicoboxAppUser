@@ -6,46 +6,48 @@
     android:layout_height="match_parent"
     android:background="@color/color_gray_bg"
     android:orientation="vertical"
-    tools:context="com.aiprous.medicobox.instaorder.InstaProductDetailActivity">
+    tools:context="com.aiprous.deliveryboy.instaorder.InstaProductDetailActivity">
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtLatestOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/height_8"
+            android:layout_marginTop="@dimen/height_5"
+            android:layout_marginRight="@dimen/height_8"
+            android:fontFamily="@font/open_sans_regular"
+            android:padding="@dimen/height_8"
+            android:text="Sales"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_gray_bg"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtLatestOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/height_7"
-                android:layout_marginTop="@dimen/height_5"
-                android:fontFamily="@font/open_sans_regular"
-                android:padding="@dimen/height_8"
-                android:text="Sales stat"
-                android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="1">
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/height_8"
+                android:layout_marginRight="@dimen/height_8"
+                android:layout_weight="0.45"
+                android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="@dimen/height_4"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/height_4"
-                    android:layout_marginRight="@dimen/height_4"
                     android:layout_marginBottom="@dimen/height_4"
-                    android:layout_weight="0.4"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_10">
 
@@ -56,10 +58,10 @@
 
                         <com.github.mikephil.charting.charts.BarChart
                             android:id="@+id/chart"
-                            android:layout_above="@+id/llHeader"
                             android:layout_width="match_parent"
-                            android:layout_marginBottom="@dimen/height_5"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:layout_above="@+id/llHeader"
+                            android:layout_marginBottom="@dimen/height_5" />
 
                         <LinearLayout
                             android:id="@+id/llHeader"
@@ -70,228 +72,232 @@
 
                             <Button
                                 android:layout_width="match_parent"
-                                android:background="@drawable/custom_btn_bg_yellow"
                                 android:layout_height="35dp"
                                 android:layout_marginRight="@dimen/height_3"
-                                android:textColor="@android:color/white"
                                 android:layout_weight="1"
-                                android:text="yearly" />
-
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:textColor="@android:color/white"
                                 android:background="@drawable/custom_btn_bg_yellow"
-                                android:layout_weight="1"
-                                android:text="monthly" />
+                                android:text="yearly"
+                                android:textColor="@android:color/white" />
 
                             <Button
                                 android:layout_width="match_parent"
                                 android:layout_height="35dp"
                                 android:layout_weight="1"
+                                android:background="@drawable/custom_btn_bg_yellow"
+                                android:text="monthly"
+                                android:textColor="@android:color/white" />
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
                                 android:layout_marginLeft="@dimen/height_3"
-                                android:textColor="@android:color/white"
+                                android:layout_weight="1"
                                 android:background="@drawable/custom_btn_bg"
-                                android:text="weekly" />
+                                android:text="weekly"
+                                android:textColor="@android:color/white" />
                         </LinearLayout>
 
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
 
-                <LinearLayout
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.55"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtTodayOrder"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/height_8"
+                    android:layout_marginTop="@dimen/height_5"
+                    android:layout_marginRight="@dimen/height_8"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:padding="@dimen/height_8"
+                    android:text="Today's Orders"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
 
-                    <android.support.v7.widget.CardView
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/height_8"
+                    android:layout_marginTop="@dimen/height_4"
+                    android:layout_marginRight="@dimen/height_8"
+                    android:layout_marginBottom="@dimen/height_4"
+                    app:cardCornerRadius="@dimen/height_8"
+                    app:cardElevation="@dimen/height_10">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/height_4"
-                        android:layout_marginTop="@dimen/height_4"
-                        android:layout_marginRight="@dimen/height_4"
-                        android:layout_marginBottom="@dimen/height_4"
-                        app:cardCornerRadius="@dimen/height_8"
-                        app:cardElevation="@dimen/height_10">
+                        android:orientation="vertical">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:id="@+id/relPendingOrder"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:weightSum="1">
+                            android:layout_height="wrap_content">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="1">
-
-                                <RelativeLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="0.5"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/txtTotalPayable"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/height_15"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="Total Payout"
-                                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@+id/txtTotalPayable"
-                                        android:layout_marginTop="@dimen/height_6"
-                                        android:layout_marginBottom="@dimen/height_8"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="@string/rs_symbol_thousand"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@android:color/black" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="0.5"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/txtRemainingAmount"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/height_15"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="Remaining Amount"
-                                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@+id/txtRemainingAmount"
-                                        android:layout_marginTop="@dimen/height_6"
-                                        android:layout_marginBottom="@dimen/height_8"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="@string/rs_symbol_thousand"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@android:color/black" />
-                                </RelativeLayout>
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.3dp"
-                                android:background="@color/coloryellow" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/height_12"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:gravity="center"
-                                android:text="Lifetime Sales"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                            <ImageView
+                                android:id="@+id/img_pending_order"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_20"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:background="@drawable/bottle" />
 
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/height_5"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_10"
+                                android:layout_marginTop="@dimen/height_6"
                                 android:layout_marginBottom="@dimen/height_8"
+                                android:layout_toEndOf="@+id/img_pending_order"
+                                android:layout_toRightOf="@+id/img_pending_order"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:gravity="center"
-                                android:text="@string/rs_symbol_thousand"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="@android:color/black" />
-
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/height_4"
-                        android:layout_marginTop="@dimen/height_4"
-                        android:layout_marginRight="@dimen/height_4"
-                        android:layout_marginBottom="@dimen/height_4"
-                        app:cardCornerRadius="@dimen/height_8"
-                        app:cardElevation="@dimen/height_10">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:weightSum="1">
-
-                            <TextView
-                                android:layout_width="@dimen/height_70"
-                                android:layout_height="@dimen/height_70"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/height_12"
-                                android:background="@drawable/cart"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/height_10"
-                                android:layout_marginBottom="@dimen/height_10"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:gravity="center"
-                                android:text="latest orders"
-                                android:textAllCaps="true"
+                                android:text="Pending Orders (20)"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@android:color/black"
                                 android:textStyle="bold" />
 
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:layout_marginRight="@dimen/height_20"
+                                android:background="@drawable/ic_arrow_right_yellow" />
 
-                    <TextView
-                        android:id="@+id/txtSellingProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/height_7"
-                        android:layout_marginTop="@dimen/height_5"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:padding="@dimen/height_8"
-                        android:text="Top selling products"
-                        android:textAllCaps="true"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
+                        </RelativeLayout>
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/height_4"
-                        app:cardCornerRadius="@dimen/height_8"
-                        app:cardElevation="@dimen/height_10">
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rec_dashboard"
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </android.support.v7.widget.CardView>
+                            android:layout_height="0.3dp"
+                            android:background="@color/coloryellow" />
 
-                </LinearLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+                                android:id="@+id/img_processing_order"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_20"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:background="@drawable/bottle" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_10"
+                                android:layout_marginTop="@dimen/height_6"
+                                android:layout_marginBottom="@dimen/height_8"
+                                android:layout_toEndOf="@+id/img_processing_order"
+                                android:layout_toRightOf="@+id/img_processing_order"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:text="Processing Orders (20)"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_20"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:layout_marginRight="@dimen/height_20"
+                                android:background="@drawable/ic_arrow_right_yellow" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:background="@color/coloryellow" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/img_completed_order"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginLeft="@dimen/height_20"
+                                android:layout_marginTop="7dp"
+                                android:background="@drawable/bottle" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_10"
+                                android:layout_marginTop="@dimen/height_6"
+                                android:layout_marginBottom="@dimen/height_8"
+                                android:layout_toEndOf="@+id/img_completed_order"
+                                android:layout_toRightOf="@+id/img_completed_order"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:text="Completed Orders (20)"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@android:color/black"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_20"
+                                android:layout_marginTop="@dimen/height_15"
+                                android:layout_marginRight="@dimen/height_20"
+                                android:background="@drawable/ic_arrow_right_yellow" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/txtDeliveryBoyStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/height_8"
+                    android:layout_marginTop="@dimen/height_5"
+                    android:layout_marginRight="@dimen/height_8"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:padding="@dimen/height_8"
+                    android:text="Delivery Boy Status"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+                .
             </LinearLayout>
-
         </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </RelativeLayout>

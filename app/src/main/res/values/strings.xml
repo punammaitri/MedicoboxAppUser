@@ -1,44 +1,18 @@
 <resources>
-    <string name="app_name">Medicobox</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="app_name">Delivery Boy</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
-    <string name="terms_and_Condition"><u>Terms and Conditions</u></string>
-    <string name="Rs">\u20B9</string>
-    <string name="mrp_rs">MRP \u20B9</string>
-
-    <string name="txt_home">Home</string>
+    <string name="txt_home">Dashboard</string>
     <string name="txt_orders">Orders</string>
-    <string name="txt_account">Account</string>
-    <string name="txt_cart">Cart</string>
-    <string name="txt_notification">Notifications</string>
-    <string name="txt_settings">Settings</string>
+    <string name="txt_profile">Profile</string>
     <string name="txt_logout">Logout</string>
-    <string name="txt_medicines">Medicines</string>
-    <string name="txt_lab_test">Lab Test</string>
-    <string name="rs_symbol">\u20B968.60</string>
-    <string name="rs_symbol_thousand">\u20B92000.60</string>
+    <string name="rs_symbol_amount">Amount \u20B9350.00 (2 items)</string>
     <string name="rs_symbol_seller">\u20B9278.00</string>
     <string name="rs_symbol_total">\u20B9108.00</string>
-    <string name="rs_symbol_eight">\u20B98.00</string>
-    <string name="rs_symbol_ten">\u20B910.00</string>
-    <string name="rs_symbol_zero">\u20B90.00</string>
     <string name="rs_symbol_thirty">\u20B9350.00</string>
-    <string name="rs_symbol_with_tablet_name">( \u20B96.860/Tablet SR )</string>
-    <string name="order_checkout">Order &amp; Checkout</string>
-    <string name="text_suppliment">This supplement is used to prevent or treat a lack of viatamin E in the body. A low body level of vitamin E is rare. Most people who eat a normal diet do not need extra vitamin E.</string>
-    <string name="tabSubname"><u>Isoxsuprine 10mg</u></string>
-    <string name="mrp_rupees">MRP \u20B150  10%OFF</string>
-    <string name="thank_you_text_desc">Your \'prescription(s)\' has been uploaded successfully. We have emailed you as well as sent as SMS  to your  registered  mobile number to confirm the receipt of your prescription.</string>
-    <string name="thank_you_note">Note: As soon as your prescription(s)  has been validated by our qualified pharmacist,we will SMS and also send you an email including  a link with the item(s) you want, so that you can conveniently complete your order.</string>
 
     <string name="are_you_sure">Are you sure</string>
     <string name="are_you_exit">You want to exit?</string>
@@ -49,9 +23,6 @@
     <string name="error_server">Something wrong at server, please try again later.</string>
     <string name="address"> Flat No 104, A wing, \nGreen Olive Apartments, \nHinjawadi \nPune-411057  \nMaharashtra \nIndia</string>
 
-    <string name="title_activity_order_tracking">Map</string>
     <string name="sub_id"><u>1732938344</u></string>
     <string name="facebook_app_id">250490452280914</string>
-    <string name="title_activity_seller_order_details">SellerOrderDetailsActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
