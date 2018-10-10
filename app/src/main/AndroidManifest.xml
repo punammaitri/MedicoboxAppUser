@@ -4,10 +4,13 @@
     package="com.aiprous.medicobox">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -22,6 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
         <activity
             android:name=".activity.SplashActivity"
@@ -29,6 +33,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.aiprous.medicobox.activity.SplashActivity" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -200,7 +205,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".pharmacist.PharmacistSignUpActivity" />
         <activity android:name=".deliveryboy.AddDeliveryBoyActivity" />
-
         <activity
             android:name=".pharmacist.sellerorder.SellerOrderActivity"
             android:screenOrientation="portrait"
@@ -212,6 +216,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".pharmacist.sellertransactions.SellerTransactionActivity" />
+        <activity android:name=".pharmacist.sellertransactions.SellerTransactionDetailsActivity" />
+        <activity android:name=".pharmacist.product_list.PharmacistProductListActivity"></activity>
     </application>
 
 </manifest>

@@ -43,6 +43,7 @@ import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
+import com.aiprous.medicobox.pharmacist.pharmacist_sidemenu.PharmacistSideMenuAdaptor;
 
 
 import butterknife.BindView;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     public static Toolbar toolbarMain;
     private RecyclerView rvForNavigation;
     private NavAdaptor navAdaptor;
+    private PharmacistSideMenuAdaptor mPharmacistSideMenuAdaptor;
 
 
     @Override
@@ -106,7 +108,10 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onResume() {
           super.onResume();
-            navigationItem(true);
+            //user
+             navigationItem(true);
+            //pharmacist side menu
+             //navigationItemPharmacist(true);
         }
 
 
@@ -204,7 +209,7 @@ public class MainActivity extends AppCompatActivity
          }
     }
 
-    // set data into navigation view
+    // set data into navigation view for User
     private void navigationItem(boolean isBasic) {
         String title[];
         int icon[];
@@ -229,6 +234,35 @@ public class MainActivity extends AppCompatActivity
 
         navAdaptor = new NavAdaptor(mContext, this, title, icon);
         rvForNavigation.setAdapter(navAdaptor);
+    }
+
+    // set data into navigation view for pharmacist
+    private void navigationItemPharmacist(boolean isBasic) {
+        String title[];
+        int icon[];
+
+        title = new String[]{
+                mContext.getResources().getString(R.string.menu_dashboard),
+                mContext.getResources().getString(R.string.menu_orders),
+                mContext.getResources().getString(R.string.menu_profile),
+                mContext.getResources().getString(R.string.menu_products),
+                mContext.getResources().getString(R.string.menu_notification),
+                mContext.getResources().getString(R.string.menu_add_delivery_boy),
+                mContext.getResources().getString(R.string.menu_transactions),
+                mContext.getResources().getString(R.string.txt_logout)};
+
+        icon = new int[]{
+                R.drawable.home,
+                R.drawable.home,
+                R.drawable.user,
+                R.drawable.cart,
+                R.drawable.home,
+                R.drawable.settings,
+                R.drawable.home,
+                R.drawable.logout,};
+
+        mPharmacistSideMenuAdaptor = new PharmacistSideMenuAdaptor(mContext, this, title, icon);
+        rvForNavigation.setAdapter(mPharmacistSideMenuAdaptor);
     }
 
     //---Function to check network connection---//

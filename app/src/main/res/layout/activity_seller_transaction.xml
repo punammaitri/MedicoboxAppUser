@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gray_bg"
+    tools:context=".pharmacist.sellertransactions.SellerTransactionActivity">
+
+    <include
+        android:id="@+id/toolbar_seller_transactions"
+        layout="@layout/custom_pharmacist_toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/height_10"
+        android:layout_marginRight="@dimen/height_10"
+        android:layout_below="@+id/toolbar_seller_transactions">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="TRANSACTION LIST"
+            android:textColor="@color/colorblack"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/height_10"
+            android:layout_marginLeft="@dimen/height_10"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_seller_transactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                />
+
+    </LinearLayout>
+</RelativeLayout>

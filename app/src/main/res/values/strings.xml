@@ -50,4 +50,16 @@
     <string name="facebook_app_id">250490452280914</string>
     <string name="title_activity_seller_order_details">SellerOrderDetailsActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- <side menu items of pharmacist>-->
+
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_orders">Orders</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_products">Products</string>
+    <string name="menu_notification">Notifications</string>
+    <string name="menu_add_delivery_boy">Add Delivery Boy</string>
+    <string name="menu_transactions">Transactions</string>
+    <string name="menu_logout">logout</string>
+
 </resources>

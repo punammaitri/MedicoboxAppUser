@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
@@ -13,7 +14,7 @@ import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

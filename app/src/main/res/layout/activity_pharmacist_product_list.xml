@@ -4,43 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_bg"
-    android:orientation="vertical"
-    tools:context="com.aiprous.medicobox.instaorder.InstaProductDetailActivity">
+    tools:context=".pharmacist.product_list.PharmacistProductListActivity">
 
     <include
         android:id="@+id/rlayout_list_toolbar"
         layout="@layout/custom_pharmacist_toolbar" />
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rlayout_list_toolbar"
-        android:background="@color/color_gray_bg"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/height_10"
+        android:layout_marginRight="@dimen/height_10"
+        android:layout_below="@+id/rlayout_list_toolbar">
 
         <TextView
-            android:id="@+id/txtLatestOrder"
+            android:id="@+id/txt_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/height_7"
             android:layout_marginTop="@dimen/height_5"
             android:fontFamily="@font/open_sans_regular"
             android:padding="@dimen/height_8"
-            android:text="Latest Orders"
+            android:text="PRODUCTS"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"
+            android:layout_below="@+id/rlayout_list_toolbar"/>
+
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rc_seller_list"
+            android:id="@+id/rc_product_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtLatestOrder"
-            android:layout_marginTop="@dimen/height_4" />
+            android:layout_below="@+id/txt_products"
+            android:layout_marginTop="@dimen/height_10" />
 
-
-    </RelativeLayout>
-
+    </LinearLayout>
 </RelativeLayout>
