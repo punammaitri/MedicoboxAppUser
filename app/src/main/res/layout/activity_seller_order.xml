@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/rlayout_list_toolbar"
-        layout="@layout/custom_pharmacist_toolbar" />
+        layout="@layout/custom_toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:text="Latest Orders"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
@@ -39,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtLatestOrder"
             android:layout_marginTop="@dimen/height_4" />
-
 
     </RelativeLayout>
 

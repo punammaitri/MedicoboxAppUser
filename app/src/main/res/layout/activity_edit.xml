@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_bg"
-    tools:context=".activity.EditProfileActivity">
+    tools:context=".activity.EditProfileActivity"
+    android:background="@color/color_gray_bg">
+
 
     <include
         android:id="@+id/layout_custom_toolbar"
-        layout="@layout/custom_default_toolbar" />
+        layout="@layout/custom_toolbar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -19,71 +20,69 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/height_20"
             android:layout_marginLeft="@dimen/height_20"
             android:layout_marginTop="@dimen/height_20"
-            android:layout_marginRight="@dimen/height_20"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
                     android:hint="First name"
+                    android:fontFamily="@font/open_sans_regular"
                     android:inputType="text"
-                    android:text="Prakash Pawar"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
                     android:hint="Last name"
-                    android:inputType="text" />
+                    android:fontFamily="@font/open_sans_regular"
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
                     android:hint="Mobile number"
-                    android:inputType="number" />
+                    android:fontFamily="@font/open_sans_regular"
+                    android:inputType="number"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
                     android:hint="Email ID"
-                    android:inputType="textEmailAddress" />
+                    android:fontFamily="@font/open_sans_regular"
+                    android:inputType="textEmailAddress"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -91,15 +90,15 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
                     android:hint="Gender"
-                    android:inputType="text" />
+                    android:fontFamily="@font/open_sans_regular"
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -107,15 +106,15 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:layout_marginTop="@dimen/height_10">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="DOB"
                     android:fontFamily="@font/open_sans_regular"
-                    android:hint="Vehicle"
-                    android:inputType="text" />
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -125,17 +124,17 @@
         android:id="@+id/btn_save_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
         android:layout_marginLeft="@dimen/height_40"
-        android:layout_marginTop="@dimen/height_10"
         android:layout_marginRight="@dimen/height_40"
         android:layout_marginBottom="@dimen/height_20"
-        android:background="@drawable/custom_btn_bg"
+        android:layout_gravity="center"
         android:fontFamily="@font/open_sans_regular"
+        android:layout_marginTop="@dimen/height_10"
+        android:background="@drawable/custom_btn_bg"
         android:text="Save"
         android:textAllCaps="true"
-        android:textColor="@android:color/white"
         android:textSize="@dimen/height_16"
-        android:textStyle="bold" />
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

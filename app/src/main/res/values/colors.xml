@@ -8,15 +8,25 @@
     <color name="colorwhite">#FFFFFF</color>
     <color name="coloryellow">#fbc525</color>
     <color name="colorlightlightlightGray">#f2f2f2</color>
+    <color name="colorlightlightGray">#dfdfdf</color>
     <color name="colorlightGray">#b8b8b8</color>
     <color name="colorGray">#8c8c8c</color>
+    <color name="colorlightlightblack">#505050</color>
+    <color name="colorlightblack">#252525</color>
     <color name="colorblack">#000000</color>
+    <color name="colorgreen">#8dc63f</color>
+    <color name="colorpink">#ed145b</color>
     <color name="colorred">#d40000</color>
+    <color name="colororange">#ff3b00</color>
     <color name="color_gray_bg">#d7e0e7</color>
 
 
     //temp color
+    <color name="colorfaintblack">#924a3f3a</color>
+    <color name="colorbutton">#FB641B</color>
     <color name="textColor">#4E4E4E</color>
+    <color name="divider_bg">#969696</color>
+    <color name="color_whitist">#BDBDBD</color>
 
 
     //color code for pharmacist
