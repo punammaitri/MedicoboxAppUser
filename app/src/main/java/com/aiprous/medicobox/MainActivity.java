@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView rvForNavigation;
     private NavAdaptor navAdaptor;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

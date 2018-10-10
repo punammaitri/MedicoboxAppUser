@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:11.0.4'
     implementation 'com.google.android.gms:play-services-places:11.0.4'
     implementation 'com.google.android.gms:play-services-auth:11.0.4'
+    implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
     //slider
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.nineoldandroids:library:2.4.0'

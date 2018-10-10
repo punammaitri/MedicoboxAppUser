@@ -1,12 +1,17 @@
 package com.aiprous.medicobox.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -18,26 +23,32 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.ahmadrosid.lib.drawroutemap.DrawMarker;
+import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.OrderDetailsAdapter;
 import com.aiprous.medicobox.adapter.OrderTrackingAdapter;
-import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
-import com.aiprous.medicobox.instaorder.InstaAddNewListAdapter;
+import com.aiprous.medicobox.api.AppUtils;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,18 +59,24 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
 
+
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private String mDropAddress = "Khamgaon";
+    private LatLng mDropLatLng;
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
     RecyclerView rc_medicine_list;
     ArrayList<OrderTrackingActivity.ListModel> mlistModelsArray = new ArrayList<>();
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
+    ArrayList<LatLng> MarkerPoints;
+    private String mCurrentAddress;
+    private LatLng mCurrentLatLng;
 
 
     @Override
@@ -81,6 +98,7 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
 
     private void init() {
 
+        MarkerPoints = new ArrayList<>();
         searchview_medicine.setFocusable(false);
         //set status bar color
         Window window = this.getWindow();
@@ -102,17 +120,76 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         rc_medicine_list.setHasFixedSize(true);
         rc_medicine_list.setAdapter(new OrderTrackingAdapter(mContext, mlistModelsArray));
 
+        if (checkPlayServices()) {
+            if (!AppUtils.isLocationEnabled(this)) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle(R.string.location_service);
+                dialog.setMessage(R.string.location_service_message);
+                dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                });
+                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+                dialog.show();
+            }
+        } else {
+            Toast.makeText(this, "Location not supported in this device", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    /*********************************Checking GooglePlayServices**************************/
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted. Do the contacts-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        mMap.setMyLocationEnabled(true);
+                    }
+                } else {
+                    // Permission denied, Disable the functionality that depends on this permission.
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
+
     @OnClick(R.id.btn_Cancel_Order)
-    public void cancelOrder()
-    {
-        startActivity(new Intent(this,CancelOrderActivity.class));
+    public void cancelOrder() {
+        startActivity(new Intent(this, CancelOrderActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)
-    public void BackPressDetail()
-    {
+    public void BackPressDetail() {
         finish();
     }
 
@@ -185,7 +262,7 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -195,12 +272,12 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
     }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -220,9 +297,8 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, OrderTrackingActivity.this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-
     }
 
     @Override
@@ -238,33 +314,78 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
             mCurrLocationMarker.remove();
         }
 
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        //get latlng from address
+        mDropLatLng = getLocationFromAddress(this, mDropAddress);
 
-        //move map camera
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        //get current address from latlng
+        mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mCurrentAddress = getAddressFromLatLng(this, location.getLatitude(), location.getLongitude());
+
+        //Mark pickup and drop on map
+        markPickUpandDropOnMap(mCurrentLatLng, mCurrentAddress);
+        markPickUpandDropOnMap(mDropLatLng, mDropAddress);
 
         //stop location updates
         if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, OrderTrackingActivity.this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
-
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    private String getAddressFromLatLng(Context context, double latitude, double longitude) {
+        String strAdd = null;
+        try {
+            Geocoder geocoder;
+            List<Address> addresses;
+            strAdd = "";
+            geocoder = new Geocoder(context, Locale.getDefault());
 
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                String address = addresses.get(0).getAddressLine(0);
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+                strAdd = address + " " + city;
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return strAdd;
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission(){
+
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -272,11 +393,6 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
             // Asking user if explanation is needed
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
                 //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -295,37 +411,55 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted. Do the
-                    // contacts-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
-                    }
-
-                } else {
-
-                    // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other permissions this app might request.
-            // You can add here other case statements according to your requirement.
+    public void markPickUpandDropOnMap(LatLng point, String address) {
+        // Already two locations
+        if (MarkerPoints.size() > 1) {
+            MarkerPoints.clear();
+            mMap.clear();
         }
+
+        // Adding new item to the ArrayList
+        MarkerPoints.add(point);
+
+        // Creating MarkerOptions
+        MarkerOptions options = new MarkerOptions();
+
+        // Setting the position of the marker
+        options.position(point);
+
+
+        DrawRouteMaps.getInstance(this)
+                .draw(point, mDropLatLng, mMap);
+
+
+        if (MarkerPoints.size() == 1) {
+            DrawMarker.getInstance(this).draw(mMap, point, R.drawable.marker_a, "" + address);
+            LatLngBounds bounds = new LatLngBounds.Builder()
+                    .include(point)
+                    .include(mDropLatLng).build();
+            Point displaySize = new Point();
+            getWindowManager().getDefaultDisplay().getSize(displaySize);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+            //options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(address);
+        } else if (MarkerPoints.size() == 2) {
+            DrawMarker.getInstance(this).draw(mMap, mDropLatLng, R.drawable.marker_b, "" + address);
+            LatLngBounds bounds = new LatLngBounds.Builder()
+                    .include(point)
+                    .include(mDropLatLng).build();
+            Point displaySize = new Point();
+            getWindowManager().getDefaultDisplay().getSize(displaySize);
+
+            //move map camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+            //options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)).title(address);
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 }

@@ -54,4 +54,7 @@
     <string name="facebook_app_id">250490452280914</string>
     <string name="title_activity_seller_order_details">SellerOrderDetailsActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="location_service">Location Service is OFF</string>
+    <string name="location_service_message">Can\'t determine your location.\nYour current location not determine</string>
+
 </resources>
