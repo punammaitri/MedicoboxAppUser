@@ -25,12 +25,8 @@
     <string name="txt_medicines">Medicines</string>
     <string name="txt_lab_test">Lab Test</string>
     <string name="rs_symbol">\u20B968.60</string>
-    <string name="rs_symbol_thousand">\u20B92000.60</string>
     <string name="rs_symbol_seller">\u20B9278.00</string>
     <string name="rs_symbol_total">\u20B9108.00</string>
-    <string name="rs_symbol_eight">\u20B98.00</string>
-    <string name="rs_symbol_ten">\u20B910.00</string>
-    <string name="rs_symbol_zero">\u20B90.00</string>
     <string name="rs_symbol_thirty">\u20B9350.00</string>
     <string name="rs_symbol_with_tablet_name">( \u20B96.860/Tablet SR )</string>
     <string name="order_checkout">Order &amp; Checkout</string>
@@ -54,4 +50,16 @@
     <string name="facebook_app_id">250490452280914</string>
     <string name="title_activity_seller_order_details">SellerOrderDetailsActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- <side menu items of pharmacist>-->
+
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_orders">Orders</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_products">Products</string>
+    <string name="menu_notification">Notifications</string>
+    <string name="menu_add_delivery_boy">Add Delivery Boy</string>
+    <string name="menu_transactions">Transactions</string>
+    <string name="menu_logout">logout</string>
+
 </resources>

@@ -33,6 +33,9 @@ import com.aiprous.medicobox.R;
 
 import com.aiprous.medicobox.deliveryboy.AddDeliveryBoyActivity;
 import com.aiprous.medicobox.pharmacist.PharmacistSignUpActivity;
+
+import com.aiprous.medicobox.pharmacist.product_list.PharmacistProductListActivity;
+import com.aiprous.medicobox.pharmacist.sellertransactions.SellerTransactionActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -395,8 +398,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @OnClick(R.id.tv_sign_up_here)
     public void onCLickSignUpHere() {
        // startActivity(new Intent(this, SignUpActivity.class));
-        startActivity(new Intent(this, PharmacistSignUpActivity.class));
+        //startActivity(new Intent(this, PharmacistSignUpActivity.class));
         //startActivity(new Intent(this, AddDeliveryBoyActivity.class));
+       // startActivity(new Intent(this, SellerTransactionActivity.class));
+        startActivity(new Intent(this, PharmacistProductListActivity.class));
+
         finish();
     }
 
