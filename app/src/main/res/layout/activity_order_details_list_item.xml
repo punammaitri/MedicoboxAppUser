@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/height_3"
+    android:layout_marginBottom="@dimen/height_5"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.18"
+            android:gravity="center|start">
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="@dimen/height_50"
+                android:layout_height="@dimen/height_50"
+                android:src="@drawable/bottle" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.82"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtMrp"
+                android:fontFamily="@font/open_sans_regular"
+                android:maxLines="2"
+                android:text="abc"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtMrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txt_mrp"
+                android:layout_marginRight="@dimen/height_8"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="MRP"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+            <TextView
+                android:id="@+id/txt_mrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/height_8"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="@string/rs_symbol_seller"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_product_name"
+                android:layout_marginTop="@dimen/height_5"
+                android:layout_marginBottom="@dimen/height_6"
+                android:fontFamily="@font/open_sans_regular"
+                android:maxLines="2"
+                android:text="box of 450 gm powder"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/txt_sub_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_product_name"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/height_5"
+                android:layout_marginRight="@dimen/height_8"
+                android:layout_marginBottom="@dimen/height_6"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="@string/rs_symbol_total"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginTop="@dimen/height_6"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorblack" />
+</LinearLayout>
