@@ -1,28 +1,27 @@
 package com.aiprous.medicobox.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.Resources;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +29,14 @@ import android.widget.Toast;
 import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
-
-import com.aiprous.medicobox.deliveryboy.AddDeliveryBoyActivity;
+import com.aiprous.medicobox.login.LoginModel;
+import com.aiprous.medicobox.login.LoginServiceProvider;
 import com.aiprous.medicobox.pharmacist.PharmacistSignUpActivity;
+import com.aiprous.medicobox.utils.APICallback;
+import com.aiprous.medicobox.utils.BaseServiceResponseModel;
+import com.aiprous.medicobox.utils.Constant;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.aiprous.medicobox.utils.PrintUtil;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -45,7 +49,6 @@ import com.facebook.LoggingBehavior;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -54,30 +57,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
+import static com.aiprous.medicobox.utils.BaseActivity.showToast;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener, android.location.LocationListener {
+        View.OnClickListener, LocationListener {
 
     @BindView(R.id.btn_signup)
     Button btn_signup;
@@ -87,6 +85,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     TextView tv_sign_up_here;
 
     Uri facebookProfile_url;
+    @BindView(R.id.edt_mobile_email)
+    EditText edtMobileEmail;
+    @BindView(R.id.edt_password)
+    EditText edtPassword;
     private String gmailProfileUrl;
     private GoogleApiClient googleApiClient;
     final static int REQUEST_LOCATION = 199;
@@ -113,6 +115,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     LoginButton btnfblogin;
     LinearLayout fb_login_layout;
     LinearLayout goglayout;
+    CustomProgressDialog mAlert;
+
+    LoginServiceProvider loginServiceProvider;
 
     //@BindView(R.id.btn_sign_in_withotp)
     //Button btn_sign_in_withotp;
@@ -146,6 +151,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
+
+        mAlert = CustomProgressDialog.getInstance();
+
+        loginServiceProvider = new LoginServiceProvider(this);
 
         btnfblogin = (LoginButton) findViewById(R.id.btnfblogin);
         goglayout = (LinearLayout) findViewById(R.id.goglayout);
@@ -270,6 +279,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -330,7 +340,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void updateUI(boolean isLogin) {
         if (isLogin) {
             Toast.makeText(this, "Login With Gmail is successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             //callSocialMedia(lLoginwithGooglegmailId, "social_media", getFirebaseToken, googleUsername, googleUsername, googleLastname, gmailProfileUrl, "gmail");
         }
     }
@@ -380,11 +390,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         return false;
     }
 
-    @OnClick(R.id.btn_signup)
-    public void onClickSignUp() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
 
     @OnClick(R.id.tv_forgot_password)
     public void onClickPassword() {
@@ -394,8 +399,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.tv_sign_up_here)
     public void onCLickSignUpHere() {
-       // startActivity(new Intent(this, SignUpActivity.class));
-        startActivity(new Intent(this, PharmacistSignUpActivity.class));
+        // startActivity(new Intent(this, SignUpActivity.class));
+        startActivity(new Intent(this, SignUpActivity.class));
         //startActivity(new Intent(this, AddDeliveryBoyActivity.class));
         finish();
     }
@@ -429,5 +434,69 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @OnClick(R.id.btn_signup)
+    public void onViewClicked() {
+        String lEmail = edtMobileEmail.getText().toString().trim();
+        String lPass = edtPassword.getText().toString().trim();
+
+        if (lEmail.length() > 0 && lPass.length() > 0) {
+            AttemptLogin(lEmail, lPass);
+        } else if (lEmail.length() == 0) {
+            showToast(this, getResources().getString(R.string.error_email));
+        } else if (lPass.length() == 0) {
+            showToast(this, getResources().getString(R.string.error_pass));
+        }
+    }
+
+    private void AttemptLogin(String lEmail, String lPass) {
+        if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mAlert.onShowProgressDialog(this, true);
+
+        loginServiceProvider.loginData(lEmail, lPass, new APICallback() {
+            @Override
+            public <T> void onSuccess(T serviceResponse) {
+                try {
+                    int Status = (((LoginModel) serviceResponse).getStatus());
+
+                    String message = ((LoginModel) serviceResponse).getMessage();
+                    //ArrayList<FeatureModel.Data> mArrHospitalNames = ((FeatureModel) serviceResponse).getData();
+
+                    if (Status == 200) {
+
+                        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        mAlert.onShowToastNotification(LoginActivity.this, message);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    mAlert.onShowProgressDialog(LoginActivity.this, false);
+                }
+            }
+
+            @Override
+            public <T> void onFailure(T apiErrorModel, T extras) {
+                try {
+
+                    if (apiErrorModel != null) {
+                        PrintUtil.showToast(LoginActivity.this, ((BaseServiceResponseModel) apiErrorModel).getMessage());
+                    } else {
+                        PrintUtil.showNetworkAvailableToast(LoginActivity.this);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    PrintUtil.showNetworkAvailableToast(LoginActivity.this);
+                } finally {
+                    mAlert.onShowProgressDialog(LoginActivity.this, false);
+                }
+            }
+        });
     }
 }

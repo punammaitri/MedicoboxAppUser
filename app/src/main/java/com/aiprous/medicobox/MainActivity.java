@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-       // homeFragment = new HomeFragment(this);
-        dashboardFragment = new DashboardFragment(this);
+        homeFragment = new HomeFragment(this);
+        //dashboardFragment = new DashboardFragment(this);
         setDrawerToggle();
         addFragment();
     }
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity
         //optionMenu.setVisibility(View.VISIBLE);
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.layout_container, dashboardFragment, "TagName");
+        mFragmentTransaction.replace(R.id.layout_container, homeFragment, "TagName");
         mFragmentTransaction.commit();
     }
 

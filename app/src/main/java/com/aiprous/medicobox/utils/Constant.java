@@ -1,22 +1,10 @@
 package com.aiprous.medicobox.utils;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-
 
 public class Constant {
-    //google Api
-    @NonNull
-    public static String SERVER_GOOGLE = "https://maps.googleapis.com/";
-    public static final String Network_Error = "Network is not available. Establish network connection.";
-    public static final String SOME_THING_WENT_WRONG = "Oops! Something went wrong!";
 
-    /*Sweet alert*/
-    public static final int ERROR_TYPE = 1;
-    public static final int SUCCESS_TYPE = 2;
-    public static final int WARNING_TYPE = 3;
-    public static final int PROGRESS_TYPE = 5;
-
-
-
+    public static String SERVER_URL = "http://user8.itsindev.com/medibox/index.php/rest/V1/";
+    //Response Status Code
+    public static final int SUCCESS_CODE = 200;
 }
+

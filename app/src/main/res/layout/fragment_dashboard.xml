@@ -32,264 +32,256 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_marginLeft="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_4"
+                android:layout_marginRight="@dimen/height_4"
+                android:layout_marginBottom="@dimen/height_4"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_10">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/height_10">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart"
+                        android:layout_above="@+id/llHeader"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="@dimen/height_5"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:id="@+id/llHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_btn_bg_yellow"
+                            android:text="yearly"
+                            android:textColor="@android:color/white" />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:layout_weight="1"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:background="@drawable/custom_btn_bg_yellow"
+                            android:text="monthly"
+                            android:textColor="@android:color/white" />
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="@dimen/height_10"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_btn_bg"
+                            android:text="weekly"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="1">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/height_4"
                     android:layout_marginTop="@dimen/height_4"
                     android:layout_marginRight="@dimen/height_4"
                     android:layout_marginBottom="@dimen/height_4"
-                    android:layout_weight="0.4"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_10">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/height_10">
-
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/chart"
-                            android:layout_above="@+id/llHeader"
-                            android:layout_width="match_parent"
-                            android:layout_marginBottom="@dimen/height_5"
-                            android:layout_height="match_parent"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
                         <LinearLayout
-                            android:id="@+id/llHeader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="1">
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:background="@drawable/custom_btn_bg_yellow"
-                                android:layout_height="35dp"
-                                android:layout_marginRight="@dimen/height_3"
-                                android:textColor="@android:color/white"
-                                android:layout_weight="1"
-                                android:text="yearly" />
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:orientation="horizontal">
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:textColor="@android:color/white"
-                                android:background="@drawable/custom_btn_bg_yellow"
-                                android:layout_weight="1"
-                                android:text="monthly" />
+                                <TextView
+                                    android:id="@+id/txtTotalPayable"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/height_15"
+                                    android:fontFamily="@font/open_sans_regular"
+                                    android:gravity="center"
+                                    android:text="Total Payout"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_weight="1"
-                                android:layout_marginLeft="@dimen/height_3"
-                                android:textColor="@android:color/white"
-                                android:background="@drawable/custom_btn_bg"
-                                android:text="weekly" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/txtTotalPayable"
+                                    android:layout_marginTop="@dimen/height_6"
+                                    android:layout_marginBottom="@dimen/height_8"
+                                    android:fontFamily="@font/open_sans_regular"
+                                    android:gravity="center"
+                                    android:text="@string/rs_symbol_thousand"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@android:color/black" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/txtRemainingAmount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/height_15"
+                                    android:fontFamily="@font/open_sans_regular"
+                                    android:gravity="center"
+                                    android:text="Remaining Amount"
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/txtRemainingAmount"
+                                    android:layout_marginTop="@dimen/height_6"
+                                    android:layout_marginBottom="@dimen/height_8"
+                                    android:fontFamily="@font/open_sans_regular"
+                                    android:gravity="center"
+                                    android:text="@string/rs_symbol_thousand"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="@android:color/black" />
+                            </RelativeLayout>
                         </LinearLayout>
 
-                    </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:background="@color/coloryellow" />
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/height_12"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="center"
+                            android:text="Lifetime Sales"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/height_5"
+                            android:layout_marginBottom="@dimen/height_8"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="center"
+                            android:text="@string/rs_symbol_thousand"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@android:color/black" />
+
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <LinearLayout
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/height_4"
+                    android:layout_marginTop="@dimen/height_4"
+                    android:layout_marginRight="@dimen/height_4"
+                    android:layout_marginBottom="@dimen/height_4"
+                    app:cardCornerRadius="@dimen/height_8"
+                    app:cardElevation="@dimen/height_10">
 
-
-                    <android.support.v7.widget.CardView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/height_4"
-                        android:layout_marginTop="@dimen/height_4"
-                        android:layout_marginRight="@dimen/height_4"
-                        android:layout_marginBottom="@dimen/height_4"
-                        app:cardCornerRadius="@dimen/height_8"
-                        app:cardElevation="@dimen/height_10">
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-                        <LinearLayout
+                        <TextView
+                            android:layout_width="@dimen/height_70"
+                            android:layout_height="@dimen/height_70"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/height_12"
+                            android:background="@drawable/shopping_bag"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:weightSum="1">
+                            android:layout_marginTop="@dimen/height_10"
+                            android:layout_marginBottom="@dimen/height_10"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="center"
+                            android:text="latest orders"
+                            android:textAllCaps="true"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="1">
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                                <RelativeLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="0.5"
-                                    android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txtSellingProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/height_7"
+                    android:layout_marginTop="@dimen/height_5"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:padding="@dimen/height_8"
+                    android:text="Top selling products"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
-                                    <TextView
-                                        android:id="@+id/txtTotalPayable"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/height_15"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="Total Payout"
-                                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/height_4"
+                    app:cardCornerRadius="@dimen/height_8"
+                    app:cardElevation="@dimen/height_10">
 
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@+id/txtTotalPayable"
-                                        android:layout_marginTop="@dimen/height_6"
-                                        android:layout_marginBottom="@dimen/height_8"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="@string/rs_symbol_thousand"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@android:color/black" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="0.5"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/txtRemainingAmount"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/height_15"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="Remaining Amount"
-                                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@+id/txtRemainingAmount"
-                                        android:layout_marginTop="@dimen/height_6"
-                                        android:layout_marginBottom="@dimen/height_8"
-                                        android:fontFamily="@font/open_sans_regular"
-                                        android:gravity="center"
-                                        android:text="@string/rs_symbol_thousand"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@android:color/black" />
-                                </RelativeLayout>
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.3dp"
-                                android:background="@color/coloryellow" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/height_12"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:gravity="center"
-                                android:text="Lifetime Sales"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/height_5"
-                                android:layout_marginBottom="@dimen/height_8"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:gravity="center"
-                                android:text="@string/rs_symbol_thousand"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="@android:color/black" />
-
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-
-                    <android.support.v7.widget.CardView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_dashboard"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/height_4"
-                        android:layout_marginTop="@dimen/height_4"
-                        android:layout_marginRight="@dimen/height_4"
-                        android:layout_marginBottom="@dimen/height_4"
-                        app:cardCornerRadius="@dimen/height_8"
-                        app:cardElevation="@dimen/height_10">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:weightSum="1">
-
-                            <TextView
-                                android:layout_width="@dimen/height_70"
-                                android:layout_height="@dimen/height_70"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/height_12"
-                                android:background="@drawable/cart"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/height_10"
-                                android:layout_marginBottom="@dimen/height_10"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:gravity="center"
-                                android:text="latest orders"
-                                android:textAllCaps="true"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@android:color/black"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/txtSellingProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/height_7"
-                        android:layout_marginTop="@dimen/height_5"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:padding="@dimen/height_8"
-                        android:text="Top selling products"
-                        android:textAllCaps="true"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/height_4"
-                        app:cardCornerRadius="@dimen/height_8"
-                        app:cardElevation="@dimen/height_10">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rec_dashboard"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
+                        android:layout_height="wrap_content" />
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
+
 
         </LinearLayout>
 

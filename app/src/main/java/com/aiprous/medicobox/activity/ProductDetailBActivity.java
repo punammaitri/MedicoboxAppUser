@@ -37,8 +37,6 @@ import butterknife.OnClick;
 
 public class ProductDetailBActivity extends AppCompatActivity {
 
-
-
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
     @BindView(R.id.viewPager)

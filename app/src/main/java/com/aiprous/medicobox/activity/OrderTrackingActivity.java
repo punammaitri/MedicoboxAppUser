@@ -27,7 +27,7 @@ import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderTrackingAdapter;
-import com.aiprous.medicobox.api.AppUtils;
+import com.aiprous.medicobox.utils.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -121,7 +121,7 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         rc_medicine_list.setAdapter(new OrderTrackingAdapter(mContext, mlistModelsArray));
 
         if (checkPlayServices()) {
-            if (!AppUtils.isLocationEnabled(this)) {
+            if (!BaseActivity.isLocationEnabled(this)) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setTitle(R.string.location_service);
                 dialog.setMessage(R.string.location_service_message);

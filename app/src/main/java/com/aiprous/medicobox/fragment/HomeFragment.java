@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
@@ -21,18 +23,32 @@ import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 
 
 public class HomeFragment extends Fragment {
@@ -47,10 +63,10 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.btn_upload)
     Button btn_upload;
     View view;
-    ArrayList<Integer> sliderimages=new ArrayList<>();
-    ArrayList<Integer> sliderimagesCall=new ArrayList<>();
+    ArrayList<Integer> sliderimages = new ArrayList<>();
+    ArrayList<Integer> sliderimagesCall = new ArrayList<>();
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
-    ArrayList<HomeFragment.Product> mlistModelsArray=new ArrayList<>();
+    ArrayList<HomeFragment.Product> mlistModelsArray = new ArrayList<>();
     private MainActivity mainActivity;
 
     private OnFragmentInteractionListener mListener;
@@ -65,19 +81,27 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    // URL of object to be parsed
+    String JsonURL = "http://user8.itsindev.com/medibox/featured-products.php";
+    // This string will hold the results
+    String data = "";
+    // Defining the Volley request queue that handles the URL request concurrently
+    RequestQueue requestQueue;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this,view);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, view);
         init();
         return view;
     }
@@ -91,11 +115,11 @@ public class HomeFragment extends Fragment {
 
 
         //add static data
-        mlistModelsArray.add(new Product(R.drawable.bottle,"ABC","150","30%","135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle,"ABC","150","30%","135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle,"ABC","150","30%","135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle,"ABC","150","30%","135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle,"ABC","150","30%","135"));
+        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
+        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
+        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
+        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
+        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
 
 
         //set adapter
@@ -145,13 +169,59 @@ public class HomeFragment extends Fragment {
 
             slider_contactus.addSlider(textSliderView);
         }
-    }
-    @OnClick(R.id.rlayout_medicines)
-    public void onClickMedicines()
-    {
-        startActivity(new Intent(getActivity(),ListActivity.class));
+
+        requestQueue = Volley.newRequestQueue(getActivity());
+
+        // Creating the JsonObjectRequest class called obreq, passing required parameters:
+        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject obj = response.getJSONObject("colorObject");
+                            // Retrieves the string labeled "colorName" and "description" from
+                            //the response JSON Object
+                            //and converts them into javascript objects
+                            String color = obj.getString("colorName");
+                            String desc = obj.getString("description");
+
+                            // Adds strings from object to the "data" string
+                            data += "Color Name: " + color +
+                                    "nDescription : " + desc;
+
+                            // Adds the data string to the TextView "results"
+                            //results.setText(data);
+                        }
+                        // Try and catch are included to handle any errors due to JSON
+                        catch (JSONException e) {
+                            // If an error occurs, this prints the error to the log
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                    }
+                }
+        );
+        // Adds the JSON object request "obreq" to the request queue
+        requestQueue.add(obreq);
     }
 
+    @OnClick(R.id.rlayout_medicines)
+    public void onClickMedicines() {
+        startActivity(new Intent(getActivity(), ListActivity.class));
+    }
 
 
     @OnClick(R.id.relInstaOrder)
@@ -176,7 +246,7 @@ public class HomeFragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_home, framgent).commit();
     }
 
-    public static class Product{
+    public static class Product {
         int product_image;
         String product_name;
         String product_mrp;

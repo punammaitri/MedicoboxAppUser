@@ -56,5 +56,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="location_service">Location Service is OFF</string>
     <string name="location_service_message">Can\'t determine your location.\nYour current location not determine</string>
+    <string name="error_email">Please provide Email.</string>
+    <string name="error_pass">Please provide Password.</string>
+    <string name="error_user_pass">Please provide Email and Password.</string>
+    <string name="error_internet">Please check your internet connection.</string>
 
 </resources>
