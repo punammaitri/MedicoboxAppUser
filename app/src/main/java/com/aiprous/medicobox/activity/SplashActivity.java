@@ -2,15 +2,16 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.application.MedicoboxApp;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -46,9 +47,15 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    Intent lIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(lIntent);
-                    finish();
+                    if (MedicoboxApp.onGetId().isEmpty() && MedicoboxApp.onGetFirstName().isEmpty()) {
+                        Intent lIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(lIntent);
+                        finish();
+                    } else {
+                        Intent lIntent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(lIntent);
+                        finish();
+                    }
                 }
             }
         }, 2000);

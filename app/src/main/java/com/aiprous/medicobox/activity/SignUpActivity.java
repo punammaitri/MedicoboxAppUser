@@ -1,10 +1,12 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,26 +16,29 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.login.LoginModel;
-import com.aiprous.medicobox.register.RegisterServiceProvider;
-import com.aiprous.medicobox.utils.APICallback;
+import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.register.RegisterModel;
+import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
-import com.aiprous.medicobox.utils.BaseServiceResponseModel;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.PrintUtil;
+import com.aiprous.medicobox.utils.IRetrofit;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
-import static com.aiprous.medicobox.utils.BaseActivity.showToast;
+import static com.aiprous.medicobox.utils.BaseActivity.passwordValidation;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -42,7 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
     Button btn_sign_up;
     @BindView(R.id.tv_sign_in_here)
     TextView tv_sign_in_here;
-    RegisterServiceProvider registerServiceProvider;
     CustomProgressDialog mAlert;
     @BindView(R.id.edt_name)
     EditText edtName;
@@ -52,8 +56,9 @@ public class SignUpActivity extends AppCompatActivity {
     EditText edtEmail;
     @BindView(R.id.edt_password)
     EditText edtPassword;
-    private JSONObject requestJson;
     public ArrayList<String> mTempArray = new ArrayList<String>();
+    Context mContext = this;
+    private RegisterModel detailModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
         mAlert = CustomProgressDialog.getInstance();
-        registerServiceProvider = new RegisterServiceProvider(this);
-        requestJson = new JSONObject();
     }
 
     @OnClick(R.id.btn_sign_up)
@@ -84,82 +87,90 @@ public class SignUpActivity extends AppCompatActivity {
         String lEmail = edtEmail.getText().toString().trim();
         String lPass = edtPassword.getText().toString().trim();
 
-        if (lEmail.length() > 0 && lPass.length() > 0) {
+        String emailPattern = "[A-Za-z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-            try {
-                // We add the object to the main object
-                JSONObject jsonAdd = new JSONObject();
-                jsonAdd.put("email", "peterss8@mitash.com");
-                jsonAdd.put("firstname", "Peter");
-                jsonAdd.put("lastname", "s");
-                jsonAdd.put("store_id", 0);
 
-                requestJson.put("customer", jsonAdd);
-                requestJson.put("password", "Peter.s@888");
+        if (edtName.getText().length() <= 2) {
+            edtName.setError("Name must be greater than 2 character");
+        } else if (edtMobile.getText().length() <= 9) {
+            edtMobile.setError("Mobile number must be greater 10 digit");
+        } else if (!lEmail.matches(emailPattern)) {
+            edtEmail.setError("Invalid email address");
+        } else if (passwordValidation(mContext, lPass, edtPassword)) {
+            JsonObject jsonObject = new JsonObject();
+            JsonObject payerReg = new JsonObject();
+            payerReg.addProperty("email", lEmail);
+            payerReg.addProperty("firstname", lName);
+            payerReg.addProperty("lastname", lName);
+            payerReg.addProperty("store_id", 0);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            AttemptToRegister(requestJson);
-        } else if (lEmail.length() > 0) {
-            showToast(this, getResources().getString(R.string.error_email));
-        } else if (lPass.length() > 0) {
-            showToast(this, getResources().getString(R.string.error_pass));
-        } else {
-            showToast(this, getResources().getString(R.string.error_user_pass));
+            //Add Json Object
+            jsonObject.add("customer", payerReg);
+            jsonObject.addProperty("password", lPass);
+            AttemptToRegister(jsonObject);
         }
-
     }
 
-    private void AttemptToRegister(JSONObject requestJson) {
+    private void AttemptToRegister(JsonObject jsonObject) {
         mAlert.onShowProgressDialog(this, true);
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
             return;
         }
-        BaseActivity.printLog("json : ", requestJson.toString());
+        BaseActivity.printLog("response-json : ", jsonObject.toString());
 
-        registerServiceProvider.signUpData(requestJson.toString(), new APICallback() {
-            @Override
-            public <T> void onSuccess(T serviceResponse) {
-                try {
-                    int Status = (((LoginModel) serviceResponse).getStatus());
-                    String message = ((LoginModel) serviceResponse).getMessage();
-                    //ArrayList<FeatureModel.Data> mArrHospitalNames = ((FeatureModel) serviceResponse).getData();
-                    if (Status == 200) {
-                        Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                        mAlert.onShowProgressDialog(SignUpActivity.this, false);
-                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                        finish();
-                    } else {
-                        mAlert.onShowToastNotification(SignUpActivity.this, message);
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/index.php/rest/V1/");
+            Call<JsonObject> call = jsonPostService.userRegistration(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
 
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    try {
+                        if (response.body() != null) {
+                            if (response.code() == 400) {
+                                mAlert.onShowProgressDialog(SignUpActivity.this, false);
+                            } else if (response.code() == 200) {
+
+                                String getId = (response.body().get("id").getAsString());
+                                String getFirstname = (response.body().get("firstname").getAsString());
+                                String getLastname = (response.body().get("lastname").getAsString());
+                                String getEmail = (response.body().get("email").getAsString());
+
+                                BaseActivity.printLog("response-success : ", response.body().toString());
+                                mAlert.onShowProgressDialog(SignUpActivity.this, false);
+                                startActivity(new Intent(SignUpActivity.this, MainActivity.class)
+                                        .putExtra("id", "" + getId)
+                                        .putExtra("firstname", "" + getFirstname)
+                                        .putExtra("lastname", "" + getLastname)
+                                        .putExtra("email", "" + getEmail));
+
+                               MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
+
+
+                                //String mAllData= String.valueOf(response.body());
+                           /* Gson gson = new Gson();
+                            RegisterModel mRegistermodel = gson.fromJson(response.body(), RegisterModel.class);
+                            Log.e("jj", "" + mRegistermodel.getAddresses());*/
+
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
                     mAlert.onShowProgressDialog(SignUpActivity.this, false);
                 }
-            }
-
-            @Override
-            public <T> void onFailure(T apiErrorModel, T extras) {
-                try {
-
-                    if (apiErrorModel != null) {
-                        PrintUtil.showToast(SignUpActivity.this, ((BaseServiceResponseModel) apiErrorModel).getMessage());
-                    } else {
-                        PrintUtil.showNetworkAvailableToast(SignUpActivity.this);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    PrintUtil.showNetworkAvailableToast(SignUpActivity.this);
-                } finally {
-                    mAlert.onShowProgressDialog(SignUpActivity.this, false);
-                }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.tv_sign_in_here)

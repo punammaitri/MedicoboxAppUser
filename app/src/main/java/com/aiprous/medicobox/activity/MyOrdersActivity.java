@@ -2,9 +2,9 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -13,7 +13,6 @@ import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
-import com.aiprous.medicobox.adapter.NotificationAdapter;
 
 import java.util.ArrayList;
 

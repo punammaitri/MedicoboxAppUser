@@ -1,10 +1,7 @@
 package com.aiprous.medicobox.application;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.aiprous.medicobox.R;
@@ -27,20 +24,34 @@ public class MedicoboxApp extends MultiDexApplication {
         return mContext;
     }
 
-    public static void onSetStarForFifthScreen(float q21, float q22) {
-        SharedPreferences.Editor lEditor = mSharedPreferences.edit();
-        lEditor.putFloat("Q21", q21);
-        lEditor.putFloat("Q22", q22);
+    public static void onSaveLoginDetail(String id, String firstname, String lastname, String mobile_number, String email) {
 
-        lEditor.commit();
+        SharedPreferences.Editor edt = mSharedPreferences.edit();
+        edt.putString("ID", id);
+        edt.putString("FIRSTNAME", firstname);
+        edt.putString("LASTNAME", lastname);
+        edt.putString("MOBILENO", mobile_number);
+        edt.putString("EMAIL", email);
+        edt.commit();
     }
 
-
-    public static Float onGetQ21Star() {
-        return mSharedPreferences.getFloat("Q21", 0);
+    public static String onGetId() {
+        return mSharedPreferences.getString("ID", "");
     }
 
-    public static Float onGetQ22Star() {
-        return mSharedPreferences.getFloat("Q22", 0);
+    public static String onGetFirstName() {
+        return mSharedPreferences.getString("FIRSTNAME", "");
+    }
+
+    public static String onGetLastName() {
+        return mSharedPreferences.getString("LASTNAME", "");
+    }
+
+    public static String onGetMobileNo() {
+        return mSharedPreferences.getString("MOBILENO", "");
+    }
+
+    public static String onGetEmail() {
+        return mSharedPreferences.getString("EMAIL", "");
     }
 }

@@ -13,42 +13,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
-import com.aiprous.medicobox.activity.OrderTrackingActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
-import com.aiprous.medicobox.instaorder.InstaProductDetailActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.aiprous.medicobox.utils.APIService;
+import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.aiprous.medicobox.utils.IRetrofit;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class HomeFragment extends Fragment {
@@ -68,7 +63,8 @@ public class HomeFragment extends Fragment {
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
     ArrayList<HomeFragment.Product> mlistModelsArray = new ArrayList<>();
     private MainActivity mainActivity;
-
+    CustomProgressDialog mAlert;
+    ArrayList<String> mRegisterModels = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
 
     public HomeFragment() {
@@ -84,17 +80,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
-    // URL of object to be parsed
-    String JsonURL = "http://user8.itsindev.com/medibox/featured-products.php";
-    // This string will hold the results
-    String data = "";
-    // Defining the Volley request queue that handles the URL request concurrently
-    RequestQueue requestQueue;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -170,52 +156,60 @@ public class HomeFragment extends Fragment {
             slider_contactus.addSlider(textSliderView);
         }
 
-        requestQueue = Volley.newRequestQueue(getActivity());
+        mAlert = CustomProgressDialog.getInstance();
 
-        // Creating the JsonObjectRequest class called obreq, passing required parameters:
-        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
-                // The third parameter Listener overrides the method onResponse() and passes
-                //JSONObject as a parameter
-                new Response.Listener<JSONObject>() {
+    }
 
-                    // Takes the response from the JSON request
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONObject obj = response.getJSONObject("colorObject");
-                            // Retrieves the string labeled "colorName" and "description" from
-                            //the response JSON Object
-                            //and converts them into javascript objects
-                            String color = obj.getString("colorName");
-                            String desc = obj.getString("description");
+    private void AttemptToGetProduct() {
+        mAlert.onShowProgressDialog(getActivity(), true);
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                            // Adds strings from object to the "data" string
-                            data += "Color Name: " + color +
-                                    "nDescription : " + desc;
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/");
+            Call<JsonArray> call = jsonPostService.getProductList();
+            call.enqueue(new Callback<JsonArray>() {
 
-                            // Adds the data string to the TextView "results"
-                            //results.setText(data);
+                @Override
+                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+
+                    try {
+                        if (response.body() != null) {
+                            if (response.code() == 400) {
+                                mAlert.onShowProgressDialog(getActivity(), false);
+                            } else if (response.code() == 200) {
+                                JsonArray entries = (JsonArray) new JsonParser().parse(response.body().toString());
+
+                                if (entries != null) {
+                                    for (int i = 0; i < entries.size(); i++) {
+                                        String title = ((JsonObject) entries.get(0)).get("name").getAsString();
+                                        mRegisterModels.add(title);
+                                        Log.e("title", "" + title);
+                                    }
+                                }
+
+                                //String getId = (response.body().get("id").getAsString());
+                                mAlert.onShowProgressDialog(getActivity(), false);
+                                BaseActivity.printLog("response-success : ", response.body().toString());
+                            }
                         }
-                        // Try and catch are included to handle any errors due to JSON
-                        catch (JSONException e) {
-                            // If an error occurs, this prints the error to the log
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                // The final parameter overrides the method onErrorResponse() and passes VolleyError
-                //as a parameter
-                new Response.ErrorListener() {
-                    @Override
-                    // Handles errors that occur due to Volley
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", "Error");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-        );
-        // Adds the JSON object request "obreq" to the request queue
-        requestQueue.add(obreq);
+
+                @Override
+                public void onFailure(Call<JsonArray> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
+                    mAlert.onShowProgressDialog(getActivity(), false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.rlayout_medicines)
@@ -302,4 +296,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AttemptToGetProduct();
+    }
 }

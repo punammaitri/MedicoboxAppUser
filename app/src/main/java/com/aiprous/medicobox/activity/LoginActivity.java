@@ -29,14 +29,11 @@ import android.widget.Toast;
 import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.login.LoginModel;
-import com.aiprous.medicobox.login.LoginServiceProvider;
-import com.aiprous.medicobox.pharmacist.PharmacistSignUpActivity;
-import com.aiprous.medicobox.utils.APICallback;
-import com.aiprous.medicobox.utils.BaseServiceResponseModel;
-import com.aiprous.medicobox.utils.Constant;
+import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.utils.APIService;
+import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.PrintUtil;
+import com.aiprous.medicobox.utils.IRetrofit;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -57,18 +54,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.showToast;
@@ -116,8 +117,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     LinearLayout fb_login_layout;
     LinearLayout goglayout;
     CustomProgressDialog mAlert;
-
-    LoginServiceProvider loginServiceProvider;
+    private String lEmail;
+    private String lPass;
 
     //@BindView(R.id.btn_sign_in_withotp)
     //Button btn_sign_in_withotp;
@@ -153,8 +154,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
         mAlert = CustomProgressDialog.getInstance();
-
-        loginServiceProvider = new LoginServiceProvider(this);
 
         btnfblogin = (LoginButton) findViewById(R.id.btnfblogin);
         goglayout = (LinearLayout) findViewById(R.id.goglayout);
@@ -438,11 +437,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.btn_signup)
     public void onViewClicked() {
-        String lEmail = edtMobileEmail.getText().toString().trim();
-        String lPass = edtPassword.getText().toString().trim();
+        lEmail = edtMobileEmail.getText().toString().trim();
+        lPass = edtPassword.getText().toString().trim();
 
         if (lEmail.length() > 0 && lPass.length() > 0) {
-            AttemptLogin(lEmail, lPass);
+            JsonObject jsonObject = new JsonObject();
+            //Add Json Object
+            jsonObject.addProperty("username", lEmail);
+            jsonObject.addProperty("password", lPass);
+            AttemptLogin(jsonObject, lEmail, lPass);
         } else if (lEmail.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
@@ -450,53 +453,45 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void AttemptLogin(String lEmail, String lPass) {
+    private void AttemptLogin(JsonObject jsonObject, final String lEmail, String lPass) {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
             return;
         }
         mAlert.onShowProgressDialog(this, true);
 
-        loginServiceProvider.loginData(lEmail, lPass, new APICallback() {
-            @Override
-            public <T> void onSuccess(T serviceResponse) {
-                try {
-                    int Status = (((LoginModel) serviceResponse).getStatus());
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/index.php/rest/V1/integration/customer/");
+            Call<JsonPrimitive> call = jsonPostService.userLogin(jsonObject);
+            call.enqueue(new Callback<JsonPrimitive>() {
 
-                    String message = ((LoginModel) serviceResponse).getMessage();
-                    //ArrayList<FeatureModel.Data> mArrHospitalNames = ((FeatureModel) serviceResponse).getData();
+                @Override
+                public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
+                    if (response.code() == 401) {
+                        mAlert.onShowProgressDialog(LoginActivity.this, false);
+                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                    } else if (response.code() == 200) {
 
-                    if (Status == 200) {
+                        //String getId = (response.body().get("id").getAsString());
+                        //String getFirstname = (response.body().get("firstname").getAsString());
 
-                        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        mAlert.onShowToastNotification(LoginActivity.this, message);
-
+                        BaseActivity.printLog("response-success : ", response.body().toString());
+                        mAlert.onShowProgressDialog(LoginActivity.this, false);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                .putExtra("email", "" + lEmail));
+                        MedicoboxApp.onSaveLoginDetail("", "", "", "", lEmail);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
+                }
+
+                @Override
+                public void onFailure(Call<JsonPrimitive> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
                     mAlert.onShowProgressDialog(LoginActivity.this, false);
                 }
-            }
-
-            @Override
-            public <T> void onFailure(T apiErrorModel, T extras) {
-                try {
-
-                    if (apiErrorModel != null) {
-                        PrintUtil.showToast(LoginActivity.this, ((BaseServiceResponseModel) apiErrorModel).getMessage());
-                    } else {
-                        PrintUtil.showNetworkAvailableToast(LoginActivity.this);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    PrintUtil.showNetworkAvailableToast(LoginActivity.this);
-                } finally {
-                    mAlert.onShowProgressDialog(LoginActivity.this, false);
-                }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

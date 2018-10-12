@@ -9,42 +9,34 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.aiprous.medicobox.activity.CancelOrderActivity;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.activity.EditProfileActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
-import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
-import com.aiprous.medicobox.activity.OrderDetailsActivity;
-import com.aiprous.medicobox.activity.OrderPlacedActivity;
-import com.aiprous.medicobox.activity.OrderTrackingActivity;
-import com.aiprous.medicobox.activity.ProductDescriptionActivity;
-import com.aiprous.medicobox.activity.ProductDetailActivity;
-import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
 import com.aiprous.medicobox.pharmacist.dashboard.DashboardFragment;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +68,10 @@ public class MainActivity extends AppCompatActivity
     public static Toolbar toolbarMain;
     private RecyclerView rvForNavigation;
     private NavAdaptor navAdaptor;
+    @BindView(R.id.txtUserName)
+    TextView txtUserName;
+    @BindView(R.id.txtEmail)
+    TextView txtEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +118,11 @@ public class MainActivity extends AppCompatActivity
 
     private void setDrawerToggle() {
         rvForNavigation = (RecyclerView) navView.findViewById(R.id.rvForNavigation);
+        View header = navView.getHeaderView(0);
+
+        txtUserName.setText(MedicoboxApp.onGetFirstName());
+        txtEmail.setText(MedicoboxApp.onGetEmail());
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rvForNavigation.setLayoutManager(layoutManager);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbarMain,
@@ -279,6 +280,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                         startActivity(new Intent(mContext, LoginActivity.class));
+                        MedicoboxApp.onSaveLoginDetail("", "", "", "", "");
                         finish();
                     }
                 })

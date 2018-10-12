@@ -20,85 +20,118 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.aiprous.medicobox.R;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("ALL")
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
-	private static final boolean DEBUG_ENABLE = true;
-	private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final boolean DEBUG_ENABLE = true;
+    private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setTitle(getResources().getString(R.string.app_name));
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(getResources().getString(R.string.app_name));
     }
 
-	public static void printLog(String tag, String message)
-	{
-		if(DEBUG_ENABLE)
-		{
-			Log.d(tag, message);
-		}
-	}
+    public static void printLog(String tag, String message) {
+        if (DEBUG_ENABLE) {
+            Log.d(tag, message);
+        }
+    }
 
-	public void printError(String tag, String message, Exception e)
-	{
-		if(DEBUG_ENABLE)
-		{
-			Log.e(tag, message, e);
-		}
-	}
+    public void printError(String tag, String message, Exception e) {
+        if (DEBUG_ENABLE) {
+            Log.e(tag, message, e);
+        }
+    }
 
-	public static void hideKeyboard(@NonNull Context context, @Nullable View view) {
-		// Check if no view has focus:
-		//View view = context.get
-		if (view != null) {
-			InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-			inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-		}
-	}
+    public static void hideKeyboard(@NonNull Context context, @Nullable View view) {
+        // Check if no view has focus:
+        //View view = context.get
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
-	/* check email id is valid or not */
-	public boolean isValidEmailId(EditText editText) {
-		String text = editText.getText().toString().trim();
-		if (!Pattern.matches(EMAIL_REGEX, text)) {
-			editText.requestFocus();
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /* check email id is valid or not */
+    public boolean isValidEmailId(EditText editText) {
+        String text = editText.getText().toString().trim();
+        if (!Pattern.matches(EMAIL_REGEX, text)) {
+            editText.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-	/* show toast message to user */
-	public static void showToast(Context context, String message) {
-		View inflatedView = View.inflate(context, R.layout.toast_layout, null);
-		Toast myToast = new Toast(context);
-		TextView textView = inflatedView.findViewById(R.id.textView);
-		textView.setText(message);
-		myToast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, Constant.SUCCESS_CODE);
-		myToast.setDuration(Toast.LENGTH_SHORT);
-		myToast.setView(inflatedView);
-		myToast.show();
-	}
+    /* show toast message to user */
+    public static void showToast(Context context, String message) {
+        View inflatedView = View.inflate(context, R.layout.toast_layout, null);
+        Toast myToast = new Toast(context);
+        TextView textView = inflatedView.findViewById(R.id.textView);
+        textView.setText(message);
+        myToast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, Constant.SUCCESS_CODE);
+        myToast.setDuration(Toast.LENGTH_SHORT);
+        myToast.setView(inflatedView);
+        myToast.show();
+    }
 
-	//---Function to check network connection---//
-	public static boolean isNetworkAvailable(@NonNull Context context) {
-		try {
-			ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-			if (networkInfo != null && networkInfo.isConnectedOrConnecting() && networkInfo.isAvailable()) {
-				return true;
-			} else
-				return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+    /*password validator*/
+    public static boolean passwordValidation(Context mContext, String password, EditText edtPassword) {
+        boolean valid = true;
+        String upperCaseChars = "(.*[A-Z].*)";
+        String lowerCaseChars = "(.*[a-z].*)";
+        String numbers = "(.*[0-9].*)";
+        String specialChars = "(.*[,~,!,@,#,$,^,&,*,(,),-,_,=,+,[,{,],},|,;,:,<,>,/,?].*$)";
+
+        if (password.length() <= 7) {
+            edtPassword.setError("Password should be more than 7 characters.");
+            valid = false;
+        } else if (!password.matches(upperCaseChars)) {
+            edtPassword.setError("Password should contain atleast one upper case letter");
+            valid = false;
+        } else if (!password.matches(lowerCaseChars)) {
+            edtPassword.setError("Password should contain atleast one lower case letter");
+            valid = false;
+        } else if (!password.matches(numbers)) {
+            edtPassword.setError("Password should contain atleast one number.");
+            valid = false;
+        } else if (!password.matches(specialChars)) {
+            edtPassword.setError("Password should contain atleast one special character");
+            valid = false;
+        }
+        return valid;
+    }
+
+    /*Password Validate*/
+    public static boolean isValidPassword(final String password) {
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    //---Function to check network connection---//
+    public static boolean isNetworkAvailable(@NonNull Context context) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnectedOrConnecting() && networkInfo.isAvailable()) {
+                return true;
+            } else
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public static boolean hasLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
@@ -121,5 +154,5 @@ public class BaseActivity extends AppCompatActivity {
             return !TextUtils.isEmpty(locationProviders);
         }
     }
- }
+}
 

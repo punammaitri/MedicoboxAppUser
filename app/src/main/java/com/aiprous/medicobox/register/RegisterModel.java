@@ -1,129 +1,159 @@
 package com.aiprous.medicobox.register;
 
-import com.aiprous.medicobox.utils.BaseServiceResponseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class RegisterModel extends BaseServiceResponseModel {
+public abstract class RegisterModel {
 
     @Expose
-    @SerializedName("data")
-    private ArrayList<Data> data;
+    @SerializedName("extension_attributes")
+    public Extension_attributes Extension_attributes;
+    @Expose
+    @SerializedName("disable_auto_group_change")
+    public int Disable_auto_group_change;
+    @Expose
+    @SerializedName("addresses")
+    public ArrayList<String> Addresses;
+    @Expose
+    @SerializedName("website_id")
+    public int Website_id;
+    @Expose
+    @SerializedName("store_id")
+    public int Store_id;
+    @Expose
+    @SerializedName("lastname")
+    public String Lastname;
+    @Expose
+    @SerializedName("firstname")
+    public String Firstname;
+    @Expose
+    @SerializedName("email")
+    public String Email;
+    @Expose
+    @SerializedName("created_in")
+    public String Created_in;
+    @Expose
+    @SerializedName("updated_at")
+    public String Updated_at;
+    @Expose
+    @SerializedName("created_at")
+    public String Created_at;
+    @Expose
+    @SerializedName("group_id")
+    public int Group_id;
+    @Expose
+    @SerializedName("id")
+    public int Id;
 
-    public ArrayList<Data> getData() {
-        return data;
+    public static class Extension_attributes {
+        @Expose
+        @SerializedName("is_subscribed")
+        public boolean Is_subscribed;
     }
 
-    public void setData(ArrayList<Data> data) {
-        this.data = data;
+    public RegisterModel.Extension_attributes getExtension_attributes() {
+        return Extension_attributes;
     }
 
-    public static class Data {
-        @Expose
-        @SerializedName("updated_at")
-        private String updated_at;
-        @Expose
-        @SerializedName("created_at")
-        private String created_at;
-        @Expose
-        @SerializedName("address")
-        private String address;
-        @Expose
-        @SerializedName("mobile_number")
-        private String mobile_number;
-        @Expose
-        @SerializedName("password")
-        private String password;
-        @Expose
-        @SerializedName("user_name")
-        private String user_name;
-        @Expose
-        @SerializedName("user_role")
-        private String user_role;
-        @Expose
-        @SerializedName("name")
-        private String name;
-        @Expose
-        @SerializedName("id")
-        private String id;
+    public void setExtension_attributes(RegisterModel.Extension_attributes extension_attributes) {
+        Extension_attributes = extension_attributes;
+    }
 
-        public String getUpdated_at() {
-            return updated_at;
-        }
+    public int getDisable_auto_group_change() {
+        return Disable_auto_group_change;
+    }
 
-        public void setUpdated_at(String updated_at) {
-            this.updated_at = updated_at;
-        }
+    public void setDisable_auto_group_change(int disable_auto_group_change) {
+        Disable_auto_group_change = disable_auto_group_change;
+    }
 
-        public String getCreated_at() {
-            return created_at;
-        }
+    public ArrayList<String> getAddresses() {
+        return Addresses;
+    }
 
-        public void setCreated_at(String created_at) {
-            this.created_at = created_at;
-        }
+    public void setAddresses(ArrayList<String> addresses) {
+        Addresses = addresses;
+    }
 
-        public String getAddress() {
-            return address;
-        }
+    public int getWebsite_id() {
+        return Website_id;
+    }
 
-        public void setAddress(String address) {
-            this.address = address;
-        }
+    public void setWebsite_id(int website_id) {
+        Website_id = website_id;
+    }
 
-        public String getMobile_number() {
-            return mobile_number;
-        }
+    public int getStore_id() {
+        return Store_id;
+    }
 
-        public void setMobile_number(String mobile_number) {
-            this.mobile_number = mobile_number;
-        }
+    public void setStore_id(int store_id) {
+        Store_id = store_id;
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    public String getLastname() {
+        return Lastname;
+    }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public void setLastname(String lastname) {
+        Lastname = lastname;
+    }
 
-        public String getUser_name() {
-            return user_name;
-        }
+    public String getFirstname() {
+        return Firstname;
+    }
 
-        public void setUser_name(String user_name) {
-            this.user_name = user_name;
-        }
+    public void setFirstname(String firstname) {
+        Firstname = firstname;
+    }
 
-        public String getUser_role() {
-            return user_role;
-        }
+    public String getEmail() {
+        return Email;
+    }
 
-        public void setUser_role(String user_role) {
-            this.user_role = user_role;
-        }
+    public void setEmail(String email) {
+        Email = email;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public String getCreated_in() {
+        return Created_in;
+    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+    public void setCreated_in(String created_in) {
+        Created_in = created_in;
+    }
 
-        public String getId() {
-            return id;
-        }
+    public String getUpdated_at() {
+        return Updated_at;
+    }
 
-        public void setId(String id) {
-            this.id = id;
-        }
+    public void setUpdated_at(String updated_at) {
+        Updated_at = updated_at;
+    }
 
-        @Override
-        public String toString() {
-            return name;
-        }
+    public String getCreated_at() {
+        return Created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        Created_at = created_at;
+    }
+
+    public int getGroup_id() {
+        return Group_id;
+    }
+
+    public void setGroup_id(int group_id) {
+        Group_id = group_id;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }
