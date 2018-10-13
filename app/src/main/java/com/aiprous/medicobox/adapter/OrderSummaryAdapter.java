@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.OrderSummaryActivity;
 
 import java.util.ArrayList;

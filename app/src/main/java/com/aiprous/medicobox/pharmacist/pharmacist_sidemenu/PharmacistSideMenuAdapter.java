@@ -1,11 +1,9 @@
-package com.aiprous.medicobox.adapter;
+package com.aiprous.medicobox.pharmacist.pharmacist_sidemenu;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,32 +11,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.MyOrdersActivity;
+import com.aiprous.medicobox.adapter.NavSubItemAdaptor;
 import com.aiprous.medicobox.model.NavItemClicked;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.aiprous.medicobox.MainActivity.drawerLayout;
-
-
-/**
- * Created by Mankesh71 on 27-01-2017.
- */
-@SuppressWarnings("ALL")
-public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.ViewHolder> {
+public class PharmacistSideMenuAdapter extends RecyclerView.Adapter<PharmacistSideMenuAdapter.ViewHolder> {
 
     private String mNavTitles[];
     private int mIcons[];
     private Context mContext;
     private NavItemClicked navItemClicked;
+    private NavSubItemAdaptor navSubItemAdaptor;
 
-    public NavSubItemAdaptor(Context mContext, NavAdaptor navItemClicked, String[] Titles, int[] Icons) {
+    public PharmacistSideMenuAdapter(Context mContext, NavItemClicked navItemClicked, String Titles[], int Icons[]) {
         this.mContext = mContext;
-      //  this.navItemClicked = navItemClicked;
+        this.navItemClicked = navItemClicked;
         mNavTitles = Titles;
         mIcons = Icons;
     }
@@ -46,30 +37,17 @@ public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_sub_menu_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_menu_item, parent, false);
         return new ViewHolder(v);
     }
 
     @SuppressLint("InflateParams")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
+
         holder.tvForMenuItem.setText(mNavTitles[holder.getAdapterPosition()]);
         holder.ivForMenuItem.setImageResource(mIcons[position]);
-        holder.llSubNavItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (position==0)
-                {
-                   // Toast.makeText(mContext, "Medicine", Toast.LENGTH_SHORT).show();
-                    mContext.startActivity(new Intent(mContext,MyOrdersActivity.class));
-
-                }else {
-                    Toast.makeText(mContext, "Test Lab", Toast.LENGTH_SHORT).show();
-                }
-                drawerLayout.closeDrawer(GravityCompat.START);
-               // rvSubMenuNavigation.setVisibility(View.INVISIBLE);
-            }
-        });
 
         holder.ivForMenuItem.setBackgroundColor(Color.TRANSPARENT);
     }
@@ -89,14 +67,12 @@ public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.Vi
         TextView tvForMenuItem;
         @BindView(R.id.ivForMenuItem)
         ImageView ivForMenuItem;
-        @BindView(R.id.llSubNavItem)
-        LinearLayout llSubNavItem;
-       // @BindView(R.id.viewForDivider)
-      //  View viewForDivider;
-        @BindView(R.id.cart_badge)
-        TextView cartBadge;
-       // @BindView(R.id.cardViewMain)
-       // CardView cardView;
+        @BindView(R.id.llForNavItem)
+        LinearLayout llForNavItem;
+        @BindView(R.id.tv_arrow)
+        TextView tv_arrow;
+        @BindView(R.id.rvSubMenuNavigation)
+        RecyclerView rvSubMenuNavigation;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

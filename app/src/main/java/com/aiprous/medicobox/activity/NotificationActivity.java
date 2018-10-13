@@ -1,19 +1,15 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.adapter.NotificationAdapter;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -27,9 +23,10 @@ public class NotificationActivity extends AppCompatActivity {
     SearchView searchview_medicine;
     @BindView(R.id.rc_notification)
     RecyclerView rc_notification;
-    private Context mContext=this;
-    ArrayList<NotificationModel> notificationArrayList=new ArrayList<>();
+    private Context mContext = this;
+    ArrayList<NotificationModel> notificationArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,28 +38,25 @@ public class NotificationActivity extends AppCompatActivity {
     private void init() {
         searchview_medicine.setFocusable(false);
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
-        notificationArrayList.add(new NotificationModel("You've successfully placed your order (MB011838448382)!","29/09/2018","2:30pm"));
-        notificationArrayList.add(new NotificationModel("You've successfully placed your order (MB011838448382)!","29/09/2018","2:30pm"));
+        notificationArrayList.add(new NotificationModel("You've successfully placed your order (MB011838448382)!", "29/09/2018", "2:30pm"));
+        notificationArrayList.add(new NotificationModel("You've successfully placed your order (MB011838448382)!", "29/09/2018", "2:30pm"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_notification.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_notification.setHasFixedSize(true);
         rc_notification.setAdapter(new NotificationAdapter(mContext, notificationArrayList));
     }
+
     @OnClick(R.id.rlayout_back_button)
-    public void BackPressDetail()
-    {
+    public void BackPressDetail() {
         finish();
     }
-    public class NotificationModel{
+
+    public class NotificationModel {
         String notfication_text;
         String dob;
         String time;

@@ -2,7 +2,6 @@ package com.aiprous.medicobox.instaorder;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 
 public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<InstaProductSubListDetailAdapter.ViewHolder> {

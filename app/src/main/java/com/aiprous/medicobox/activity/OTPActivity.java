@@ -1,19 +1,16 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +30,6 @@ public class OTPActivity extends AppCompatActivity {
     @BindView(R.id.edt_four)
     EditText edt_four;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,19 +39,14 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
-
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         edt_one.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                if (s.length() ==1) {
+                if (s.length() == 1) {
                     edt_two.requestFocus();
                 }
 
@@ -110,8 +100,7 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_otp_proceed)
-    public void onClickOtpProceesd()
-    {
+    public void onClickOtpProceesd() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

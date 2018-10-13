@@ -2,13 +2,9 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,13 +18,9 @@ import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.aiprous.medicobox.utils.IRetrofit;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,13 +61,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
         mAlert = CustomProgressDialog.getInstance();
     }
 
@@ -147,7 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         .putExtra("lastname", "" + getLastname)
                                         .putExtra("email", "" + getEmail));
 
-                               MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
+                                MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
 
 
                                 //String mAllData= String.valueOf(response.body());

@@ -3,6 +3,7 @@ package com.aiprous.medicobox.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
+import com.aiprous.medicobox.register.RegisterModel;
 import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -64,7 +66,7 @@ public class HomeFragment extends Fragment {
     ArrayList<HomeFragment.Product> mlistModelsArray = new ArrayList<>();
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
-    ArrayList<String> mRegisterModels = new ArrayList<String>();
+    ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
     private OnFragmentInteractionListener mListener;
 
     public HomeFragment() {
@@ -99,19 +101,15 @@ public class HomeFragment extends Fragment {
         sliderimagesCall.add(R.drawable.contactus);
         sliderimagesCall.add(R.drawable.bannerimage);
 
-
-        //add static data
+       /* //add static data
         mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
         mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
         mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
         mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
         mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
 
+*/
 
-        //set adapter
-        rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        rc_product.setHasFixedSize(true);
-        rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mlistModelsArray));
 
         //show slider images
         for (int i = 0; i < sliderimages.size(); i++) {
@@ -161,7 +159,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void AttemptToGetProduct() {
-        mAlert.onShowProgressDialog(getActivity(), true);
         if (!isNetworkAvailable(getActivity())) {
             Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
             return;
@@ -178,22 +175,35 @@ public class HomeFragment extends Fragment {
 
                     try {
                         if (response.body() != null) {
-                            if (response.code() == 400) {
-                                mAlert.onShowProgressDialog(getActivity(), false);
-                            } else if (response.code() == 200) {
-                                JsonArray entries = (JsonArray) new JsonParser().parse(response.body().toString());
 
+                            if (response.code() == 200) {
+
+                                JsonArray entries = (JsonArray) new JsonParser().parse(response.body().toString());
                                 if (entries != null) {
+                                    mRegisterModels.clear();
                                     for (int i = 0; i < entries.size(); i++) {
-                                        String title = ((JsonObject) entries.get(0)).get("name").getAsString();
-                                        mRegisterModels.add(title);
-                                        Log.e("title", "" + title);
+                                        String image = ((JsonObject) entries.get(i)).get("image").getAsString();
+                                        String name = ((JsonObject) entries.get(i)).get("name").getAsString();
+                                        String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
+                                        String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
+
+                                        RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
+                                        registerModel.setImage(image);
+                                        registerModel.setName(name);
+                                        registerModel.setMin_price(min_price);
+                                        registerModel.setMax_price(max_price);
+                                        mRegisterModels.add(registerModel);
                                     }
                                 }
 
-                                //String getId = (response.body().get("id").getAsString());
                                 mAlert.onShowProgressDialog(getActivity(), false);
+                                //set adapter
+                                rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                                rc_product.setHasFixedSize(true);
+                                rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
                                 BaseActivity.printLog("response-success : ", response.body().toString());
+                            } else if (response.code() == 400) {
+                                mAlert.onShowProgressDialog(getActivity(), false);
                             }
                         }
                     } catch (Exception e) {
@@ -300,6 +310,86 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        AttemptToGetProduct();
+        new GetAllProduct().execute();
+    }
+
+
+    class GetAllProduct extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            mAlert.onShowProgressDialog(getActivity(), true);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            mAlert.onShowProgressDialog(getActivity(), false);
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                AttemptToGetBannerImages();
+                AttemptToGetProduct();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private void AttemptToGetBannerImages() {
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/API/");
+            Call<JsonObject> call = jsonPostService.getBannerList();
+            call.enqueue(new Callback<JsonObject>() {
+
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    try {
+                        if (response.body() != null) {
+
+                            if (response.code() == 200) {
+                                JsonObject entries = (JsonObject) new JsonParser().parse(response.body().toString());
+
+                                /*if (entries != null) {
+                                    for (int i = 0; i < entries.size(); i++) {
+                                        String title = entries.get("response").getAsJsonArray().get(i).getAsString();
+                                        mRegisterModels.add(title);
+                                        Log.e("response", "" + title);
+                                    }
+                                }*/
+
+                                //JsonElement getAllImages = response.body().get("response");
+                                //String getId = (response.body().get("id").getAsString());
+                                mAlert.onShowProgressDialog(getActivity(), false);
+                                BaseActivity.printLog("response-success : ", response.body().toString());
+                            } else if (response.code() == 400) {
+                                mAlert.onShowProgressDialog(getActivity(), false);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
+                    mAlert.onShowProgressDialog(getActivity(), false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

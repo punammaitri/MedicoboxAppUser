@@ -1,17 +1,14 @@
 package com.aiprous.medicobox.instaorder;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -43,13 +40,9 @@ public class InstaProductDetailActivity extends AppCompatActivity {
     private void init() {
         searchview_medicine.setFocusable(false);
         searchview_sub_medicine.setFocusable(false);
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
@@ -69,8 +62,7 @@ public class InstaProductDetailActivity extends AppCompatActivity {
 
 
     @OnClick(R.id.rlayout_back_button)
-    public void BackPressSDescription()
-    {
+    public void BackPressSDescription() {
         finish();
     }
 

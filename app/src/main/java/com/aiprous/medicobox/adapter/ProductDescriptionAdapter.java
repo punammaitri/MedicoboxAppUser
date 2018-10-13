@@ -14,10 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.pharmacist.sellertransaction.SellerTransactionActivity;
-import com.aiprous.medicobox.register.RegisterModel;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,11 +23,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAdapter.ViewHolder> {
-    private ArrayList<RegisterModel> mDataArrayList;
+public class ProductDescriptionAdapter extends RecyclerView.Adapter<ProductDescriptionAdapter.ViewHolder> {
+    private ArrayList<HomeFragment.Product> mDataArrayList;
     private Context mContext;
 
-    public FeatureProductAdapter(Context mContext, ArrayList<RegisterModel> mDataArrayList) {
+    public ProductDescriptionAdapter(Context mContext, ArrayList<HomeFragment.Product> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -49,18 +47,14 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        //holder.img_product.setImageResource(mDataArrayList.get(position).getProduct_image());
-        holder.tv_medicine_name.setText(mDataArrayList.get(position).getName());
-        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMin_price());
+        holder.img_product.setImageResource(mDataArrayList.get(position).getProduct_image());
+        holder.tv_medicine_name.setText(mDataArrayList.get(position).getProduct_name());
+        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getProduct_price());
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMax_price());
+        /*holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount() + "off");
+        holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getProduct_price());*/
 
-
-        //holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount() + "off");
-
-
-       /*
-        //Use Picasso to load image
+       /* //Use Picasso to load image
         Picasso.with(mContext)
                 .load()
                 .into(holder.img_product, new Callback() {

@@ -1,22 +1,14 @@
 package com.aiprous.medicobox.pharmacist.sellerorder;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
-import com.aiprous.medicobox.instaorder.InstaAddNewListAdapter;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -47,13 +39,9 @@ public class SellerOrderActivity extends AppCompatActivity {
 
         searchview_medicine.setFocusable(false);
         searchview_medicine.setQueryHint("Search Orders");
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         rc_seller_list = findViewById(R.id.rc_seller_list);
 

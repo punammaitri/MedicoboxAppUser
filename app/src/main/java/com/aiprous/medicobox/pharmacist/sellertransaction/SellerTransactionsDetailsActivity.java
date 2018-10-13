@@ -1,9 +1,9 @@
-package com.aiprous.medicobox.pharmacist;
+package com.aiprous.medicobox.pharmacist.sellertransaction;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,14 +14,15 @@ import com.aiprous.medicobox.utils.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PharmacistSignUpActivity extends AppCompatActivity {
+public class SellerTransactionsDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pharmacist_sign_up);
+        setContentView(R.layout.activity_seller_transactions_details);
         ButterKnife.bind(this);
         init();
     }

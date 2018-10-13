@@ -18,8 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -145,13 +143,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void init() {
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         mAlert = CustomProgressDialog.getInstance();
 
@@ -468,19 +462,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 @Override
                 public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
-                    if (response.code() == 401) {
-                        mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                    } else if (response.code() == 200) {
 
+                    if (response.code() == 200) {
                         //String getId = (response.body().get("id").getAsString());
-                        //String getFirstname = (response.body().get("firstname").getAsString());
 
                         BaseActivity.printLog("response-success : ", response.body().toString());
                         mAlert.onShowProgressDialog(LoginActivity.this, false);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                 .putExtra("email", "" + lEmail));
                         MedicoboxApp.onSaveLoginDetail("", "", "", "", lEmail);
+                    } else if (response.code() == 401) {
+                        mAlert.onShowProgressDialog(LoginActivity.this, false);
+                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
                     }
                 }
 

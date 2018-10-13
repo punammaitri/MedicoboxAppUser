@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.CancelOrderActivity;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
-import com.aiprous.medicobox.activity.NotificationActivity;
 import com.aiprous.medicobox.activity.OrderDetailsActivity;
 
 import java.util.ArrayList;

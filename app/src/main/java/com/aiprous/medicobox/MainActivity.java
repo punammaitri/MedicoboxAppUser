@@ -37,6 +37,8 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
 import com.aiprous.medicobox.pharmacist.dashboard.DashboardFragment;
+import com.aiprous.medicobox.pharmacist.pharmacist_sidemenu.PharmacistSideMenuAdapter;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     TextView txtUserName;
     @BindView(R.id.txtEmail)
     TextView txtEmail;
+    PharmacistSideMenuAdapter mPharmacistSideMenuAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +90,9 @@ public class MainActivity extends AppCompatActivity
 
     private void init() {
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         homeFragment = new HomeFragment(this);
         //dashboardFragment = new DashboardFragment(this);
@@ -104,7 +103,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        navigationItem(true);
+        //navigationItem(true);
+        navigationItemPharmacist(true);
     }
 
 
@@ -228,6 +228,34 @@ public class MainActivity extends AppCompatActivity
 
         navAdaptor = new NavAdaptor(mContext, this, title, icon);
         rvForNavigation.setAdapter(navAdaptor);
+    }
+
+    private void navigationItemPharmacist(boolean isBasic) {
+        String title[];
+        int icon[];
+
+        title = new String[]{
+                mContext.getResources().getString(R.string.menu_dashboard),
+                mContext.getResources().getString(R.string.menu_orders),
+                mContext.getResources().getString(R.string.menu_profile),
+                mContext.getResources().getString(R.string.menu_products),
+                mContext.getResources().getString(R.string.menu_notification),
+                mContext.getResources().getString(R.string.menu_add_delivery_boy),
+                mContext.getResources().getString(R.string.menu_transactions),
+                mContext.getResources().getString(R.string.txt_logout)};
+
+        icon = new int[]{
+                R.drawable.home,
+                R.drawable.home,
+                R.drawable.user,
+                R.drawable.cart,
+                R.drawable.home,
+                R.drawable.settings,
+                R.drawable.home,
+                R.drawable.logout,};
+
+        mPharmacistSideMenuAdaptor = new PharmacistSideMenuAdapter(mContext, this, title, icon);
+        rvForNavigation.setAdapter(mPharmacistSideMenuAdaptor);
     }
 
     //---Function to check network connection---//

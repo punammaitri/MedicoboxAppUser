@@ -1,18 +1,15 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -28,9 +25,9 @@ public class MyOrdersActivity extends AppCompatActivity {
     SearchView searchview_order_id;
     @BindView(R.id.rc_my_order_list)
     RecyclerView rc_my_order_list;
-    ArrayList<MyOrdersModel> myOrdersArrayList=new ArrayList<>();
+    ArrayList<MyOrdersModel> myOrdersArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
-    private Context mContext=this;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +41,13 @@ public class MyOrdersActivity extends AppCompatActivity {
         searchview_medicine.setFocusable(false);
         searchview_order_id.setFocusable(false);
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
-        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281","29/09/2018","280.00","0"));
-        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281","29/09/2018","280.00","1"));
-        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281","29/09/2018","280.00","2"));
-
-
+        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281", "29/09/2018", "280.00", "0"));
+        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281", "29/09/2018", "280.00", "1"));
+        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281", "29/09/2018", "280.00", "2"));
 
 
         layoutManager = new LinearLayoutManager(mContext);
@@ -65,12 +56,13 @@ public class MyOrdersActivity extends AppCompatActivity {
         rc_my_order_list.setAdapter(new MyOrdersAdapter(mContext, myOrdersArrayList));
 
     }
+
     @OnClick(R.id.rlayout_back_button)
-    public void BackPressDetail()
-    {
+    public void BackPressDetail() {
         finish();
     }
-    public class MyOrdersModel{
+
+    public class MyOrdersModel {
         String orderId;
         String order_date;
         String order_price;

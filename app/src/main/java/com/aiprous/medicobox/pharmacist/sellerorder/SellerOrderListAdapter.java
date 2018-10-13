@@ -13,7 +13,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.instaorder.InstaProductSubListDetailAdapter;
 import com.aiprous.medicobox.pharmacist.sellerorderdetails.SellerOrderDetailsActivity;
 
 import java.util.ArrayList;

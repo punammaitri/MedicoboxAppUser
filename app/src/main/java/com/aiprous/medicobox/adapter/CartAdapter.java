@@ -2,26 +2,15 @@ package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
-import com.aiprous.medicobox.instaorder.InstaProductSubListDetailAdapter;
 
 import java.util.ArrayList;
 

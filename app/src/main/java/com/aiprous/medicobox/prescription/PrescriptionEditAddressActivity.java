@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,13 +33,9 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private void init() {
         searchview_medicine.setFocusable(false);
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
     }
     @OnClick(R.id.btn_save)
     public void ButtonSave() {

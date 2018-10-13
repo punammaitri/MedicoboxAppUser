@@ -1,24 +1,21 @@
 package com.aiprous.medicobox.pharmacist.sellerorderdetails;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.pharmacist.sellerorderdetails.invoice.SellerInvoiceFragment;
 import com.aiprous.medicobox.pharmacist.sellerorderdetails.itemorder.SellerItemOrderFragment;
 import com.aiprous.medicobox.pharmacist.sellerorderdetails.shipment.SellerShipmentFragment;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +27,8 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     @BindView(R.id.txtTitle)
     TextView mTitle;
+    @BindView(R.id.rlayout_cart)
+    TextView rlayout_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +37,10 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mTitle.setText("Order Details");
-
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        rlayout_cart.setVisibility(View.VISIBLE);
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);

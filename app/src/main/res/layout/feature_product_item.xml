@@ -5,87 +5,97 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardRating"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/height_10"
         app:cardBackgroundColor="#fff"
         app:cardElevation="@dimen/height_2"
-        android:id="@+id/cardRating"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardUseCompatPadding="true"
-        android:padding="@dimen/height_10">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/img_product"
-                android:layout_width="@dimen/height_50"
-                android:layout_height="120dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/bottle" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_product_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Flexi-Tip Digital Thermometer"
-            android:gravity="center"
-            android:fontFamily="@font/open_sans_regular"
-            android:textColor="@color/colorblack"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginTop="@dimen/height_10"/>
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/height_10">
-            <TextView
-                android:id="@+id/tv_product_mrp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/open_sans_regular"
-                android:layout_height="match_parent"
-                android:text="Rs123" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_product"
+                    android:layout_width="@dimen/height_60"
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bottle" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_product_discount"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_product_name"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="30% OFF"
+                android:layout_marginTop="@dimen/height_6"
                 android:fontFamily="@font/open_sans_regular"
-                android:layout_marginLeft="@dimen/height_10"
-                android:textColor="@color/colorgreen"
-                />
+                android:gravity="center"
+                android:maxLines="2"
+                android:minHeight="@dimen/height_45"
+                android:text="Flexi "
+                android:ellipsize="end"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/height_6"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_product_mrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Rs123" />
+
+                <TextView
+                    android:id="@+id/tv_product_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/height_10"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="30% OFF"
+                    android:textColor="@color/colorgreen" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_product_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/height_5"
+                android:fontFamily="@font/open_sans_regular"
+                android:gravity="center"
+                android:text="Rs123"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tv_product_price"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Rs123"
-            android:gravity="center"
-            android:fontFamily="@font/open_sans_regular"
-            android:textColor="@color/colorblack"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginTop="@dimen/height_5"/>
-
-
-    </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

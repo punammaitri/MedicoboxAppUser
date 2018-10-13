@@ -2,20 +2,16 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.adapter.OrderDetailsAdapter;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -39,10 +35,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
     TextView tv_total_saved;
     @BindView(R.id.tv_total_product_price)
     TextView tv_total_product_price;
-    private Context mContext=this;
+    private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
 
-    ArrayList<ProductModel> mproductArrayList=new ArrayList<>();
+    ArrayList<ProductModel> mproductArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,28 +51,22 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private void init() {
         searchview_medicine.setFocusable(false);
 
-        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm","235","box of 450 gm powder","200"));
-        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm","235","box of 450 gm powder","200"));
-        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm","235","box of 450 gm powder","200"));
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
+        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
+        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
+        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
 
         //set text default
 
-        tv_total_product_price.setText(mContext.getResources().getString(R.string.Rs)+"350.0");
-        tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs)+"350.0");
-        tv_price_discount.setText("-"+mContext.getResources().getString(R.string.Rs)+"30");
-        tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs)+"350.0");
-        tv_total_saved.setText(mContext.getResources().getString(R.string.Rs)+"30.0");
-
-
+        tv_total_product_price.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
+        tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
+        tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + "30");
+        tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
+        tv_total_saved.setText(mContext.getResources().getString(R.string.Rs) + "30.0");
 
 
         layoutManager = new LinearLayoutManager(mContext);
@@ -85,17 +76,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.rlayout_back_button)
-    public void BackPressDetail()
-    {
+    public void BackPressDetail() {
         finish();
     }
+
     @OnClick(R.id.btn_track_order)
-    public void trackOrder()
-    {
-        startActivity(new Intent(this,OrderTrackingActivity.class));
+    public void trackOrder() {
+        startActivity(new Intent(this, OrderTrackingActivity.class));
     }
 
-    public static class ProductModel{
+    public static class ProductModel {
         String medicine_name;
         String mrp_price;
         String item_contains;

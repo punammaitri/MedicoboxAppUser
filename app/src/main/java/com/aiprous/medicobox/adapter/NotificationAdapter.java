@@ -1,7 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
 
 import java.util.ArrayList;

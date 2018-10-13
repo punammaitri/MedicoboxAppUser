@@ -32,7 +32,17 @@ public interface IRetrofit {
     @POST("token")
     Call<JsonPrimitive> userLogin(@Body JsonObject jsonObject);
 
+    @POST("isEmailAvailable")
+    Call<JsonPrimitive> emailAvailable(@Body JsonObject jsonObject);
+
+    @POST("activate")
+    Call<JsonObject> keyConfirmation(@Body JsonObject jsonObject);
+
     //for getting product
     @GET("featured-products.php")
     Call<JsonArray> getProductList();
+
+    //for getting product
+    @GET("home-banners.php")
+    Call<JsonObject> getBannerList();
 }

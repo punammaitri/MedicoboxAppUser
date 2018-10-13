@@ -1,17 +1,15 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -26,13 +24,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
     }
 
     @Override
@@ -47,7 +42,7 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    if (MedicoboxApp.onGetId().isEmpty() && MedicoboxApp.onGetFirstName().isEmpty()) {
+                    if (MedicoboxApp.onGetEmail().isEmpty()) {
                         Intent lIntent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(lIntent);
                         finish();

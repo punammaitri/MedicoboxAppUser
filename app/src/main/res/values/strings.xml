@@ -61,4 +61,15 @@
     <string name="error_user_pass">Please provide Email and Password.</string>
     <string name="error_internet">Please check your internet connection.</string>
 
+
+    <!-- <side menu items of pharmacist>-->
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_orders">Orders</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_products">Products</string>
+    <string name="menu_notification">Notifications</string>
+    <string name="menu_add_delivery_boy">Add Delivery Boy</string>
+    <string name="menu_transactions">Transactions</string>
+    <string name="menu_logout">logout</string>
+    <string name="notification_opt">Opt in to get notifications about best deals and promotions</string>
 </resources>

@@ -2,20 +2,16 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.OrderSummaryAdapter;
+import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -41,8 +37,9 @@ public class OrderSummaryActivity extends AppCompatActivity {
     TextView tv_free_shipping_note;
 
 
-    ArrayList<OrderSummaryModel> orderSummaryArrayList=new ArrayList<>();
-    private Context mcontext=this;
+    ArrayList<OrderSummaryModel> orderSummaryArrayList = new ArrayList<>();
+    private Context mcontext = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,45 +52,39 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         searchview_medicine.setFocusable(false);
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         //set Text
-
-        tv_mrp_total.setText(mcontext.getResources().getString(R.string.Rs)+" 350.0");
-        tv_price_discount.setText("-"+mcontext.getResources().getString(R.string.Rs)+" 30.0");
-        tv_to_be_paid.setText(mcontext.getResources().getString(R.string.Rs)+" 350.0");
-        tv_total_savings.setText(mcontext.getResources().getString(R.string.Rs)+" 30.0");
-        tv_free_shipping_note.setText("Free shipping for orders above "+mcontext.getResources().getString(R.string.Rs)+"500");
-
+        tv_mrp_total.setText(mcontext.getResources().getString(R.string.Rs) + " 350.0");
+        tv_price_discount.setText("-" + mcontext.getResources().getString(R.string.Rs) + " 30.0");
+        tv_to_be_paid.setText(mcontext.getResources().getString(R.string.Rs) + " 350.0");
+        tv_total_savings.setText(mcontext.getResources().getString(R.string.Rs) + " 30.0");
+        tv_free_shipping_note.setText("Free shipping for orders above " + mcontext.getResources().getString(R.string.Rs) + "500");
 
 
-        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm","box of 450 gm powder",235,200));
-        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm","box of 450 gm powder",235,200));
-        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm","box of 450 gm powder",235,200));
-        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm","box of 450 gm powder",235,200));
+        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm", "box of 450 gm powder", 235, 200));
+        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm", "box of 450 gm powder", 235, 200));
+        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm", "box of 450 gm powder", 235, 200));
+        orderSummaryArrayList.add(new OrderSummaryModel("Horicks Lite BadamJar 450 gm", "box of 450 gm powder", 235, 200));
 
         rc_order_summary.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
         rc_order_summary.setHasFixedSize(true);
         rc_order_summary.setAdapter(new OrderSummaryAdapter(mcontext, orderSummaryArrayList));
     }
+
     @OnClick(R.id.rlayout_back_button)
-    public void BackPressDetail()
-    {
+    public void BackPressDetail() {
         finish();
     }
 
     @OnClick(R.id.btn_confirm_order)
-    public void confirmOrder()
-    {
-        startActivity(new Intent(this,PaymentDetailsActivity.class));
+    public void confirmOrder() {
+        startActivity(new Intent(this, PaymentDetailsActivity.class));
     }
-    public class OrderSummaryModel{
+
+    public class OrderSummaryModel {
         String productName;
         String productcontains;
         int product_mrp;
