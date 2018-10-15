@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -28,7 +29,7 @@ public class SellerOrderDetailsActivity extends AppCompatActivity {
     @BindView(R.id.txtTitle)
     TextView mTitle;
     @BindView(R.id.rlayout_cart)
-    TextView rlayout_cart;
+    RelativeLayout rlayout_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

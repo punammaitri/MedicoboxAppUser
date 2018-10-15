@@ -1,44 +1,45 @@
 package com.aiprous.medicobox.pharmacist.dashboard;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
-import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderListAdapter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DashboardFragment extends Fragment {
 
     @BindView(R.id.rec_dashboard)
     RecyclerView rec_dashboard;
     @BindView(R.id.chart)
-     BarChart mChart;
+    BarChart mChart;
 
-    ArrayList<DashboardFragment.SubListModel> mSubListModelsArray = new ArrayList<>();
+    ArrayList<SubListModel> mSubListModelsArray = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
+    @BindView(R.id.linearLatestOrder)
+    LinearLayout linearLatestOrder;
     private MainActivity mainActivity;
 
     private OnFragmentInteractionListener mListener;
@@ -70,9 +71,9 @@ public class DashboardFragment extends Fragment {
     private void init() {
 
         //add static data into Sub List array list
-        mSubListModelsArray.add(new DashboardFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
-        mSubListModelsArray.add(new DashboardFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
-        mSubListModelsArray.add(new DashboardFragment.SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
+        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
+        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
+        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Horlicks Lite Badam Jar 450 gm"));
 
         layoutManager = new LinearLayoutManager(getActivity());
         rec_dashboard.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -96,17 +97,25 @@ public class DashboardFragment extends Fragment {
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(false);
 
+        XAxis xLabels = mChart.getXAxis();
+        xLabels.setTextColor(R.color.colorlightlightlightGray);
+
         //for Y axis
         YAxis yAxis = mChart.getAxisLeft();
         yAxis.setDrawGridLines(false);
         yAxis.setDrawAxisLine(false);
-        yAxis.setTextColor(R.color.textColor);
 
         mChart.setDrawGridBackground(false);
 
         mChart.getLegend().setEnabled(false);
         mChart.invalidate();
 
+    }
+
+    @OnClick(R.id.linearLatestOrder)
+    public void onViewClicked() {
+
+        startActivity(new Intent(getActivity(), SellerOrderActivity.class));
     }
 
     public class SubListModel {
@@ -165,6 +174,7 @@ public class DashboardFragment extends Fragment {
 
         BarDataSet barDataSet2 = new BarDataSet(valueSet1, "");
         barDataSet2.setColor(Color.rgb(31, 44, 76));
+        barDataSet2.setDrawValues(false);
 
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet2);

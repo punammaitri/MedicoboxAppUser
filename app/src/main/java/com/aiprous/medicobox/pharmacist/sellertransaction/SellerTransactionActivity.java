@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SellerTransactionActivity extends AppCompatActivity {
     @BindView(R.id.searchview_medicine)
@@ -58,6 +59,11 @@ public class SellerTransactionActivity extends AppCompatActivity {
         rc_seller_transactions.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
         rc_seller_transactions.setHasFixedSize(true);
         rc_seller_transactions.setAdapter(new SellerTransactionsAdapter(mcontext, transactionArraylist));
+    }
+
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressSDescription() {
+        finish();
     }
 
     public static class SellerTransactionModel {

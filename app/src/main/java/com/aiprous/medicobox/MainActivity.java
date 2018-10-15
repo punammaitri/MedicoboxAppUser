@@ -12,7 +12,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,8 +20,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -34,10 +31,14 @@ import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.deliveryboy.AddDeliveryBoyActivity;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
 import com.aiprous.medicobox.pharmacist.dashboard.DashboardFragment;
 import com.aiprous.medicobox.pharmacist.pharmacist_sidemenu.PharmacistSideMenuAdapter;
+import com.aiprous.medicobox.pharmacist.productlist.PharmacistProductListActivity;
+import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
+import com.aiprous.medicobox.pharmacist.sellertransaction.SellerTransactionActivity;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.txtEmail)
     TextView txtEmail;
     PharmacistSideMenuAdapter mPharmacistSideMenuAdaptor;
+    private int flag = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +96,8 @@ public class MainActivity extends AppCompatActivity
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        homeFragment = new HomeFragment(this);
-        //dashboardFragment = new DashboardFragment(this);
+        //homeFragment = new HomeFragment(this);
+        dashboardFragment = new DashboardFragment(this);
         setDrawerToggle();
         addFragment();
     }
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         //optionMenu.setVisibility(View.VISIBLE);
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.layout_container, homeFragment, "TagName");
+        mFragmentTransaction.replace(R.id.layout_container, dashboardFragment, "TagName");
         mFragmentTransaction.commit();
     }
 
@@ -170,36 +172,80 @@ public class MainActivity extends AppCompatActivity
        /* if (!isNetworkAvailable(mContext)) {
             CustomProgressDialog.getInstance().showDialog(mContext, Constant.Network_Error, Constant.ERROR_TYPE);
             return;*/
-        if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-            int fragCount = getSupportFragmentManager().getBackStackEntryCount();
-            if (fragCount > 0) {
-                for (int i = 0; i < fragCount; i++) {
-                    getSupportFragmentManager().popBackStackImmediate();
+
+        if (flag == 1) {
+            if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                int fragCount = getSupportFragmentManager().getBackStackEntryCount();
+                if (fragCount > 0) {
+                    for (int i = 0; i < fragCount; i++) {
+                        getSupportFragmentManager().popBackStackImmediate();
+                    }
                 }
+                addFragment();
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account))) {
+                startActivity(new Intent(mContext, MyAccountActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
+                startActivity(new Intent(this, CartActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
+                //startActivity(new Intent(mContext, MyOrdersActivity.class));
+                //drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
+                startActivity(new Intent(mContext, NotificationActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
+                logout();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
             }
-            addFragment();
-            return;
-        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account))) {
-            startActivity(new Intent(mContext, MyAccountActivity.class));
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
-            startActivity(new Intent(this, CartActivity.class));
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
-            //startActivity(new Intent(mContext, MyOrdersActivity.class));
-            //drawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
-            startActivity(new Intent(mContext, NotificationActivity.class));
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
-            logout();
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return;
+
+        } else {
+            if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_dashboard))) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                int fragCount = getSupportFragmentManager().getBackStackEntryCount();
+                if (fragCount > 0) {
+                    for (int i = 0; i < fragCount; i++) {
+                        getSupportFragmentManager().popBackStackImmediate();
+                    }
+                }
+                addFragment();
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
+                startActivity(new Intent(mContext, SellerOrderActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_profile))) {
+                //startActivity(new Intent(mContext, SellerOrderActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_products))) {
+                startActivity(new Intent(this, PharmacistProductListActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_notification))) {
+                startActivity(new Intent(this, NotificationActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_add_delivery_boy))) {
+                startActivity(new Intent(mContext, AddDeliveryBoyActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_transactions))) {
+                startActivity(new Intent(mContext, SellerTransactionActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
+                logout();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return;
+            }
         }
     }
 
@@ -246,12 +292,12 @@ public class MainActivity extends AppCompatActivity
 
         icon = new int[]{
                 R.drawable.home,
-                R.drawable.home,
+                R.drawable.box,
                 R.drawable.user,
                 R.drawable.cart,
-                R.drawable.home,
+                R.drawable.bell,
                 R.drawable.settings,
-                R.drawable.home,
+                R.drawable.transaction,
                 R.drawable.logout,};
 
         mPharmacistSideMenuAdaptor = new PharmacistSideMenuAdapter(mContext, this, title, icon);

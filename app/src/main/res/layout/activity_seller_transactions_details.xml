@@ -137,6 +137,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="@dimen/height_8"
                 app:cardElevation="@dimen/height_4"
+                android:layout_marginBottom="@dimen/height_15"
                 android:layout_marginTop="@dimen/height_10">
 
                 <LinearLayout

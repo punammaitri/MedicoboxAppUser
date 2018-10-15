@@ -48,8 +48,14 @@ public class PharmacistSideMenuAdapter extends RecyclerView.Adapter<PharmacistSi
 
         holder.tvForMenuItem.setText(mNavTitles[holder.getAdapterPosition()]);
         holder.ivForMenuItem.setImageResource(mIcons[position]);
-
         holder.ivForMenuItem.setBackgroundColor(Color.TRANSPARENT);
+
+        holder.llForNavItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navItemClicked.navItemClicked(mNavTitles[holder.getAdapterPosition()], holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override

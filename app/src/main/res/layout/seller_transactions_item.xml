@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/height_8"
+    android:layout_marginBottom="@dimen/height_10"
     app:cardElevation="@dimen/height_4"
-    android:layout_marginTop="@dimen/height_5">
+    android:layout_marginTop="@dimen/height_10">
 
 
     <LinearLayout

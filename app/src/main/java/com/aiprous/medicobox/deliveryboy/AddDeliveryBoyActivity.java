@@ -13,6 +13,7 @@ import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AddDeliveryBoyActivity extends AppCompatActivity {
 
@@ -33,5 +34,10 @@ public class AddDeliveryBoyActivity extends AppCompatActivity {
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
+    }
+
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressSDescription() {
+        finish();
     }
 }
