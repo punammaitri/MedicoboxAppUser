@@ -43,21 +43,20 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
 
-        holder.tv_order_id.setText("Order ID: "+myOrdersArrayList.get(position).getOrderId());
-        holder.tv_order_date.setText("Order Date: "+myOrdersArrayList.get(position).getOrder_date());
-        holder.tv_order_price.setText(mContext.getResources().getString(R.string.Rs)+myOrdersArrayList.get(position).getOrder_price());
+        holder.tv_order_id.setText("Order ID: " + myOrdersArrayList.get(position).getOrderId());
+        holder.tv_order_date.setText("Order Date: " + myOrdersArrayList.get(position).getOrder_date());
+        holder.tv_order_price.setText(mContext.getResources().getString(R.string.Rs) + myOrdersArrayList.get(position).getOrder_price());
 
-        if(myOrdersArrayList.get(position).getDeliverystatus().equals("0"))
-        {
+        if (myOrdersArrayList.get(position).getDeliverystatus().equals("0")) {
             holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.colorgreen));
             holder.tv_deliver_order_status.setText("Delivered");
 
 
-        }else if(myOrdersArrayList.get(position).getDeliverystatus().equals("1")){
+        } else if (myOrdersArrayList.get(position).getDeliverystatus().equals("1")) {
             holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.coloryellow));
             holder.tv_deliver_order_status.setText("Intransit");
 
-        }else {
+        } else {
 
             holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.colorred));
             holder.tv_deliver_order_status.setText("Cancelled");
@@ -65,10 +64,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
         holder.cardview_my_orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext,OrderDetailsActivity.class));
+                mContext.startActivity(new Intent(mContext, OrderDetailsActivity.class));
             }
         });
-
 
 
     }
@@ -91,7 +89,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
         TextView tv_deliver_order_status;
         @BindView(R.id.cardview_my_orders)
         CardView cardview_my_orders;
-
 
 
         ViewHolder(@NonNull View view) {

@@ -105,8 +105,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        //navigationItem(true);
-        navigationItemPharmacist(true);
+
+        //navigation drawer for user
+        navigationItem(true);
+
+        //navigation drawer for pharmacist
+        //navigationItemPharmacist(true);
     }
 
 

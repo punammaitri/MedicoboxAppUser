@@ -7,17 +7,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.OrderDetailsAdapter;
+import com.aiprous.medicobox.adapter.ProductListAdapter;
+import com.aiprous.medicobox.model.ProductsModel;
+import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.aiprous.medicobox.utils.IRetrofit;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
@@ -37,8 +54,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
     TextView tv_total_product_price;
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
-
-    ArrayList<ProductModel> mproductArrayList = new ArrayList<>();
+    CustomProgressDialog mAlert;
+    ArrayList<ProductsModel> mProductsModel = new ArrayList<ProductsModel>();
+    ArrayList<ProductModel> mproductArrayList = new ArrayList<ProductModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +67,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+
         searchview_medicine.setFocusable(false);
 
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
-
-        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
-        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
-        mproductArrayList.add(new ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
+        mAlert = CustomProgressDialog.getInstance();
 
 
         //set text default
@@ -68,11 +85,90 @@ public class OrderDetailsActivity extends AppCompatActivity {
         tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
         tv_total_saved.setText(mContext.getResources().getString(R.string.Rs) + "30.0");
 
+    }
 
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_product.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rc_product.setHasFixedSize(true);
-        rc_product.setAdapter(new OrderDetailsAdapter(mContext, mproductArrayList));
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Add Json Object
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("category_id", "38");
+
+        getAllproducts(jsonObject);
+    }
+
+    private void getAllproducts(JsonObject jsonObject) {
+        if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/API/");
+            Call<JsonObject> call = jsonPostService.getProducts(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    try {
+                        if (response.body() != null) {
+                            if (response.code() == 200) {
+                                try {
+                                    JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.body().toString());
+                                    JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                                    JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+
+                                    if (getAllProductList != null) {
+                                        mProductsModel.clear();
+                                        for (int i = 0; i < getAllProductList.length(); i++) {
+                                            String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                            String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                            String title = getAllProductList.getJSONObject(i).get("title").toString();
+                                            String price = getAllProductList.getJSONObject(i).get("price").toString();
+                                            String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
+
+                                            ProductsModel registerModel = new ProductsModel(id, sku, title,price, imageUrl);
+                                            registerModel.setId(id);
+                                            registerModel.setSku(sku);
+                                            registerModel.setTitle(title);
+                                            registerModel.setPrice(price);
+                                            registerModel.setImage_url(imageUrl);
+                                            mProductsModel.add(registerModel);
+                                        }
+                                    }
+
+                                    layoutManager = new LinearLayoutManager(mContext);
+                                    rc_product.setLayoutManager(new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false));
+                                    rc_product.setHasFixedSize(true);
+                                    rc_product.setAdapter(new ProductListAdapter(mContext, mProductsModel));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                mAlert.onShowProgressDialog(OrderDetailsActivity.this, false);
+                                BaseActivity.printLog("response-success : ", response.body().toString());
+                            } else if (response.code() == 400) {
+                                mAlert.onShowProgressDialog(OrderDetailsActivity.this, false);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
+                    mAlert.onShowProgressDialog(OrderDetailsActivity.this, false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.rlayout_back_button)

@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
             android:paddingBottom="@dimen/height_10"
+            android:layout_marginLeft="@dimen/height_4"
             android:paddingTop="@dimen/height_10"
             android:text="My Orders"
             android:textAppearance="?android:attr/textAppearanceMedium"

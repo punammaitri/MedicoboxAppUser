@@ -44,6 +44,18 @@ public interface IRetrofit {
     @GET("featured-products.php")
     Call<JsonArray> getProductList();
 
+    //for getting Categories
+    @GET("categories.php")
+    Call<JsonObject> getCategories();
+
+    //for user registration
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @POST("products.php")
+    Call<JsonObject> getProducts(@Body JsonObject jsonObject);
+
     //for getting product
     @GET("home-banners.php")
     Call<JsonObject> getBannerList();

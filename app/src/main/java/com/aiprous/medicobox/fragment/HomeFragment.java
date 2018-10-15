@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -72,6 +73,8 @@ public class HomeFragment extends Fragment {
     CustomProgressDialog mAlert;
     ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
     ArrayList<BannerModel> mBannerModels = new ArrayList<BannerModel>();
+    ArrayList<String> mTempBannerArray = new ArrayList<String>();
+    ArrayList<String> mCategoryModels = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
     private String mBannerUrl;
 
@@ -107,37 +110,7 @@ public class HomeFragment extends Fragment {
         sliderimagesCall.add(R.drawable.contactus);
         sliderimagesCall.add(R.drawable.bannerimage);
 
-       /* //add static data
-        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
-        mlistModelsArray.add(new Product(R.drawable.bottle, "ABC", "150", "30%", "135"));
 
-*/
-
-
-        //show slider images
-        for (int i = 0; i < sliderimages.size(); i++) {
-            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-            final int imageUrl = sliderimages.get(i);
-            textSliderView.image(imageUrl).setScaleType(BaseSliderView.ScaleType.Fit).empty(R.drawable.bannerimage)
-                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                        @Override
-                        public void onSliderClick(BaseSliderView baseSliderView) {
-                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
-
-                        }
-                    });
-
-            if (sliderimages.size() > 1)
-                sliderAdvertise.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
-            sliderAdvertise.setIndicatorVisibility(mVisibility);
-            sliderAdvertise.setCustomAnimation(new DescriptionAnimation());
-            sliderAdvertise.setDuration(4000);
-
-            sliderAdvertise.addSlider(textSliderView);
-        }
 
         for (int i = 0; i < sliderimagesCall.size(); i++) {
             DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
@@ -152,7 +125,7 @@ public class HomeFragment extends Fragment {
                     });
 
             if (sliderimagesCall.size() > 1)
-                sliderAdvertise.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
+                slider_contactus.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
             slider_contactus.setIndicatorVisibility(mVisibility);
             slider_contactus.setCustomAnimation(new DescriptionAnimation());
             slider_contactus.setDuration(4000);
@@ -219,6 +192,66 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<JsonArray> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
+                    mAlert.onShowProgressDialog(getActivity(), false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void AttemptToGetCategories() {
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/API/");
+            Call<JsonObject> call = jsonPostService.getCategories();
+            call.enqueue(new Callback<JsonObject>() {
+
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    try {
+                        if (response.body() != null) {
+
+                            if (response.code() == 200) {
+
+                                JsonObject entries = (JsonObject) new JsonParser().parse(response.body().toString());
+                                JSONObject object = new JSONObject(entries.toString());
+
+                                JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
+
+                                String mCategoryArrays = getAllObject.toString();
+                                for (int j = 0; j < getAllObject.length(); j++) {
+
+                                }
+
+                               /* for (int j = 0; j < getAllObject.length(); j++) {
+                                    String name = getAllObject.get("name").toString();
+
+                                    CategoryModel mCategory = new CategoryModel(name);
+                                    mCategory.setName(name);
+                                    mCategoryModels.add(mCategory);
+                                }
+*/
+                                mAlert.onShowProgressDialog(getActivity(), false);
+                                BaseActivity.printLog("response-success : ", response.body().toString());
+                            } else if (response.code() == 400) {
+                                mAlert.onShowProgressDialog(getActivity(), false);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e("response-failure", call.toString());
                     mAlert.onShowProgressDialog(getActivity(), false);
                 }
@@ -339,6 +372,7 @@ public class HomeFragment extends Fragment {
             try {
                 AttemptToGetBannerImages();
                 AttemptToGetProduct();
+                AttemptToGetCategories();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -379,6 +413,8 @@ public class HomeFragment extends Fragment {
                                         mBM.setImage_url(mBannerUrl);
                                         mBannerModels.add(mBM);
                                     }
+
+                                    fetchBannerImages();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -406,5 +442,36 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void fetchBannerImages() {
+        //Add all to temp banner array
+        for (int j = 0; j < mBannerModels.size(); j++) {
+            mTempBannerArray.add(mBannerModels.get(j).getImage_url());
+        }
+
+        //show slider images
+        for (int i = 0; i < mTempBannerArray.size(); i++) {
+            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
+            final String imageUrl = mTempBannerArray.get(i).toString();
+            textSliderView.image(imageUrl).setScaleType(BaseSliderView.ScaleType.Fit).empty(R.drawable.bannerimage)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView baseSliderView) {
+                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
+
+                        }
+                    });
+
+            if (mTempBannerArray.size() > 1)
+                sliderAdvertise.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
+            sliderAdvertise.setIndicatorVisibility(mVisibility);
+            sliderAdvertise.setCustomAnimation(new DescriptionAnimation());
+            sliderAdvertise.setDuration(4000);
+
+            sliderAdvertise.addSlider(textSliderView);
+        }
+
     }
 }
