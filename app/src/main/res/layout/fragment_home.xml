@@ -3,21 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HomeFragment"
     android:background="@color/color_gray_bg"
     android:focusableInTouchMode="true"
-    >
+    tools:context=".fragment.HomeFragment">
 
-   <android.support.v4.widget.NestedScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/height_20">
+            android:padding="@dimen/height_10">
 
 
             <LinearLayout
@@ -53,30 +52,30 @@
                     android:layout_toLeftOf="@+id/rlayout_upload"
                     android:layout_toRightOf="@+id/img_file"
                     android:layout_weight="0.55"
-                    android:gravity="center"
                     android:fontFamily="@font/open_sans_regular"
+                    android:gravity="center"
                     android:text="Order with Prescription"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:id="@+id/rlayout_upload"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="0.35"
-                    android:gravity="end"
-                    android:layout_gravity="center">
+                    android:gravity="end">
 
                     <Button
                         android:id="@+id/btn_upload"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_35"
-                        android:text="Upload"
-                        android:gravity="center"
+                        android:background="@drawable/custom_btn_bg"
                         android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorwhite"
-                        android:background="@drawable/custom_btn_bg"/>
+                        android:gravity="center"
+                        android:text="Upload"
+                        android:textColor="@color/colorwhite" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -114,19 +113,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rl_medicines"
+                        android:fontFamily="@font/open_sans_regular"
                         android:gravity="center"
                         android:text="MEDICINES"
-                        android:fontFamily="@font/open_sans_regular"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_medicines"
-                        android:gravity="center"
                         android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
                         android:singleLine="true"
                         android:text="1,00,000+ Medicines"
                         android:textColor="@color/coloryellow" />
@@ -157,19 +156,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rlayout_lab_tests"
+                        android:fontFamily="@font/open_sans_regular"
                         android:gravity="center"
                         android:text="LAB TESTS"
-                        android:fontFamily="@font/open_sans_regular"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_lab_test"
-                        android:gravity="center"
                         android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
                         android:singleLine="true"
                         android:text="Free sample Collection"
                         android:textColor="@color/coloryellow" />
@@ -210,20 +209,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rlayout_quick_order"
+                        android:fontFamily="@font/open_sans_regular"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:fontFamily="@font/open_sans_regular"
                         android:text="INSTA ORDERS"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_quick_order"
-                        android:gravity="center"
                         android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
                         android:text="65,000+ Products"
                         android:textColor="@color/coloryellow" />
                 </RelativeLayout>
@@ -253,20 +252,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rlayout_econsultation"
+                        android:fontFamily="@font/open_sans_regular"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:fontFamily="@font/open_sans_regular"
                         android:text="E-CONSULTATION"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_econsultation"
-                        android:gravity="center"
                         android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
                         android:singleLine="true"
                         android:text="Chat for Free"
                         android:textColor="@color/coloryellow" />
@@ -279,9 +278,9 @@
                 android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="FEATURED PRODUCTS"
-               android:textColor="@color/colorblack"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_product"
@@ -309,5 +308,5 @@
                 android:scaleType="fitXY"
                 android:visibility="visible" />
         </LinearLayout>
-   </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

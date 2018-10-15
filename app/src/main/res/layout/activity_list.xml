@@ -12,9 +12,6 @@
         android:id="@+id/rlayout_list_toolbar"
         layout="@layout/custom_toolbar" />
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,8 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/height_15"
-        android:layout_marginLeft="@dimen/height_20"
-        android:layout_marginRight="@dimen/height_20"
+        android:layout_marginLeft="@dimen/height_15"
+        android:layout_marginRight="@dimen/height_15"
         android:layout_marginTop="@dimen/height_15"
         android:gravity="center"
         android:orientation="horizontal"

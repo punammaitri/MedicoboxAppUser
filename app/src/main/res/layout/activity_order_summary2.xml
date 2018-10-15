@@ -4,449 +4,441 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.OrderSummaryActivity"
-    android:background="@color/color_gray_bg">
+    android:background="@color/color_gray_bg"
+    tools:context=".activity.OrderSummaryActivity">
 
-    <include layout="@layout/custom_toolbar"
-        android:id="@+id/layout_custom_toolbar"/>
+    <include
+        android:id="@+id/layout_custom_toolbar"
+        layout="@layout/custom_toolbar" />
 
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_custom_toolbar">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/height_10"
-        android:layout_marginRight="@dimen/height_10">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_regular"
-            android:text="Order Summary"
-            android:textColor="@color/colorblack"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"/>
+            android:layout_marginLeft="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_10"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Items"
-            android:fontFamily="@font/open_sans_regular"
-            android:textColor="@color/colorblack"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"/>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="#fff"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4"
-            android:layout_marginTop="@dimen/height_10">
-
-          <android.support.v7.widget.RecyclerView
-              android:id="@+id/rc_order_summary"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="@dimen/height_10"/>
-        </android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="#fff"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4"
-            android:layout_marginTop="@dimen/height_10">
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/height_10"
-                android:weightSum="1">
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Order Summary"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Items"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rc_order_summary"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="View Attached Prescriptions (1)"
-                    android:textColor="@color/colorblack"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.1">
-
-                    <ImageView
-                        android:layout_width="@dimen/height_25"
-                        android:layout_height="@dimen/height_25"
-                        android:layout_centerInParent="true"
-                        android:layout_marginRight="@dimen/height_15"
-                        android:src="@drawable/arrow_yellow" />
-
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="#fff"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4">
+                    android:padding="@dimen/height_10" />
+            </android.support.v7.widget.CardView>
 
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/height_10">
+                android:layout_marginTop="@dimen/height_10"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/height_10"
                     android:weightSum="1">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="M.R.P Total"
+                        android:layout_weight="0.9"
                         android:fontFamily="@font/open_sans_regular"
-                        android:layout_weight="0.6"
-                        />
-                    <TextView
-                        android:id="@+id/tv_mrp_total"
+                        android:text="View Attached Prescriptions (1)"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/colorblack" />
+
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Rs350"
-                        android:layout_weight="0.4"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
-                        />
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1">
+
+                        <ImageView
+                            android:layout_width="@dimen/height_25"
+                            android:layout_height="@dimen/height_25"
+                            android:layout_centerInParent="true"
+                            android:layout_marginRight="@dimen/height_15"
+                            android:src="@drawable/arrow_yellow" />
+
+                    </RelativeLayout>
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4">
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:layout_marginTop="@dimen/height_10">
+                    android:orientation="vertical"
+                    android:padding="@dimen/height_10">
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Price Discount"
-                        android:layout_weight="0.6"
-                        android:fontFamily="@font/open_sans_regular"
-                        />
-                    <TextView
-                        android:id="@+id/tv_price_discount"
-                        android:layout_width="0dp"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="M.R.P Total" />
+
+                        <TextView
+                            android:id="@+id/tv_mrp_total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="Rs350" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="-Rs30"
-                        android:layout_weight="0.4"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
-                        />
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Price Discount" />
+
+                        <TextView
+                            android:id="@+id/tv_price_discount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="-Rs30" />
 
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Shipping Charges" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="As per delivery address" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="To be paid"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_to_be_paid"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="Rs350.0"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:background="@color/colorlightlightGray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_20"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Total Savings" />
+
+                        <TextView
+                            android:id="@+id/tv_total_savings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Rs30.0"
+                            android:textColor="@color/colorgreen"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_free_shipping_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Free shipping for orders above Rs500"
+                android:textStyle="italic" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Billing Address"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:gravity="end"
+                    android:text="EDIT"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:layout_marginTop="@dimen/height_10">
+                    android:orientation="vertical"
+                    android:padding="@dimen/height_10">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Shipping Charges"
-                        android:layout_weight="0.4"
                         android:fontFamily="@font/open_sans_regular"
-                        />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="As per delivery address"
-                        android:layout_weight="0.6"
-                        android:gravity="end"
-                        android:fontFamily="@font/open_sans_regular"
-                        />
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:layout_marginTop="@dimen/height_10">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="To be paid"
-                        android:layout_weight="0.6"
-                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Shreya Saran"
                         android:textColor="@color/colorblack"
-                        android:textStyle="bold"
-                        />
-                    <TextView
-                        android:id="@+id/tv_to_be_paid"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Rs350.0"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:layout_weight="0.4"
-                        android:gravity="end"
-                        android:textColor="@color/colorblack"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:background="@color/colorlightlightGray"/>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_20"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Savings"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:layout_marginRight="@dimen/height_10"/>
-
-                    <TextView
-                        android:id="@+id/tv_total_savings"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rs30.0"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:textColor="@color/colorgreen"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="@string/address" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="+91 8833748362"
+                        android:textColor="@color/colorblack" />
+
                 </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_free_shipping_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_regular"
-            android:text="Free shipping for orders above Rs500"
-            android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"
-            android:textStyle="italic"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:layout_marginTop="@dimen/height_10"
-            android:layout_marginRight="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Billing Address"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="EDIT"
-                android:fontFamily="@font/open_sans_regular"
-                android:gravity="end"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="#fff"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/height_10">
+                android:layout_marginTop="@dimen/height_10"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Shreya Saran"
+                    android:layout_weight="0.7"
                     android:fontFamily="@font/open_sans_regular"
+                    android:text="Delivery Address"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="@string/address"
-                    android:layout_marginTop="@dimen/height_10"/>
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="+91 8833748362"
+                    android:layout_weight="0.3"
                     android:fontFamily="@font/open_sans_regular"
+                    android:gravity="end"
+                    android:text="CHANGE"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
-                    android:layout_marginTop="@dimen/height_10"/>
-
+                    android:textStyle="bold" />
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"
-            android:layout_marginRight="@dimen/height_10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Delivery Address"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="CHANGE"
-                android:fontFamily="@font/open_sans_regular"
-                android:gravity="end"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="#fff"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4">
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/height_10">
+                android:layout_marginTop="@dimen/height_10"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Shreya Saran"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/colorblack"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="@string/address"
-                    android:layout_marginTop="@dimen/height_10"/>
+                    android:orientation="vertical"
+                    android:padding="@dimen/height_10">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Shreya Saran"
+                        android:textColor="@color/colorblack"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="@string/address" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="+91 8833748362"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/colorblack"
-                    android:layout_marginTop="@dimen/height_10"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="+91 8833748362"
+                        android:textColor="@color/colorblack" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Special instructions"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textColor="@color/colorblack"
-                    android:layout_marginTop="@dimen/height_10"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/height_5"
-                    android:background="@color/colorlightlightGray"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Special instructions"
+                        android:textColor="@color/colorblack" />
 
-
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Additional shipping charges might be applicable"
-            android:layout_marginTop="@dimen/height_10"
-            android:layout_marginLeft="@dimen/height_10"
-            android:textStyle="italic"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:background="@color/colorlightlightGray" />
 
 
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:text="Additional shipping charges might be applicable"
+                android:textStyle="italic" />
 
 
-        <Button
-            android:id="@+id/btn_confirm_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_30"
-            android:layout_marginRight="@dimen/height_30"
-            android:layout_marginBottom="@dimen/height_20"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/height_20"
-            android:background="@drawable/custom_btn_bg"
-            android:text="Confirm Order"
-            android:textAllCaps="true"
-            android:textSize="@dimen/height_16"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_confirm_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/height_30"
+                android:layout_marginTop="@dimen/height_20"
+                android:layout_marginRight="@dimen/height_30"
+                android:layout_marginBottom="@dimen/height_20"
+                android:background="@drawable/custom_btn_bg"
+                android:text="Confirm Order"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold" />
 
 
-
-    </LinearLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

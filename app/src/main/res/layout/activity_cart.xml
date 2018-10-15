@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CartActivity"
-    android:background="@color/color_gray_bg">
+    android:background="@color/color_gray_bg"
+    tools:context=".activity.CartActivity">
 
     <include
         android:id="@+id/layout_custom_toolbar"
@@ -20,35 +20,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/height_10"
-            android:layout_marginRight="@dimen/height_10"
             android:layout_marginTop="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_10"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/height_10"
-                android:text="Cart"
+                android:layout_marginLeft="@dimen/height_4"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="Cart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/height_5"
                 android:layout_height="wrap_content"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
-                app:cardElevation="@dimen/height_4"
-                app:cardUseCompatPadding="true">
+                app:cardElevation="@dimen/height_4">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:padding="@dimen/height_10">
+                    android:padding="@dimen/height_10"
+                    android:weightSum="1">
 
                     <EditText
                         android:layout_width="0dp"
@@ -56,16 +56,16 @@
                         android:layout_weight="0.8"
                         android:fontFamily="@font/open_sans_regular"
                         android:hint="Enter Coupon Code"
-                        app:backgroundTint="@color/coloryellow"
-                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:backgroundTint="@color/coloryellow" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"
-                        android:text="APPLY"
-                        android:gravity="end"
                         android:fontFamily="@font/open_sans_regular"
+                        android:gravity="end"
+                        android:text="APPLY"
                         android:textColor="@color/coloryellow" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -73,28 +73,28 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/height_4"
                 android:layout_marginTop="@dimen/height_10"
-                android:text="Items"
+                android:layout_marginLeft="@dimen/height_4"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="Items"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/height_5"
                 android:layout_height="wrap_content"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
-                app:cardElevation="@dimen/height_4"
-                app:cardUseCompatPadding="true">
+                app:cardElevation="@dimen/height_4">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rc_cart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/height_10"/>
+                    android:padding="@dimen/height_10" />
             </android.support.v7.widget.CardView>
 
             <Button
@@ -102,16 +102,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/height_10"
                 android:layout_marginLeft="@dimen/height_40"
-                android:layout_marginRight="@dimen/height_40"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_40"
+                android:layout_marginBottom="@dimen/height_10"
                 android:background="@drawable/custom_btn_bg"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Upload Prescription"
                 android:textAllCaps="true"
-                android:textSize="@dimen/height_16"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/height_16"
                 android:textStyle="bold" />
 
 
@@ -121,8 +121,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
-                app:cardElevation="@dimen/height_4"
-                app:cardUseCompatPadding="true">
+                app:cardElevation="@dimen/height_4">
 
 
                 <LinearLayout
@@ -140,8 +139,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
-                            android:text="M.R.P Total"
                             android:fontFamily="@font/open_sans_regular"
+                            android:text="M.R.P Total"
                             android:textColor="@color/colorblack" />
 
                         <TextView
@@ -149,8 +148,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
-                            android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
                             android:text="Rs350"
                             android:textColor="@color/colorblack" />
                     </LinearLayout>
@@ -174,8 +173,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
-                            android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
                             android:text="-Rs30"
                             android:textColor="@color/colorblack" />
 
@@ -200,8 +199,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
-                            android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
                             android:text="As per delivery address"
                             android:textColor="@color/colorblack" />
 
@@ -228,8 +227,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
-                            android:gravity="end"
                             android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
                             android:text="Rs350.0"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
@@ -276,28 +275,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/height_10"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Free shipping for orders above Rs500"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
             <Button
                 android:id="@+id/btn_continue_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/height_20"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginLeft="@dimen/height_40"
-                android:layout_marginRight="@dimen/height_40"
                 android:layout_marginTop="@dimen/height_20"
+                android:layout_marginRight="@dimen/height_40"
+                android:layout_marginBottom="@dimen/height_20"
                 android:background="@drawable/custom_btn_bg"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Continue"
                 android:textAllCaps="true"
-                android:textSize="@dimen/height_16"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/height_16"
                 android:textStyle="bold" />
 
 
