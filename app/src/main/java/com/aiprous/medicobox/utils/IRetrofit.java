@@ -32,9 +32,11 @@ public interface IRetrofit {
     @POST("token")
     Call<JsonPrimitive> userLogin(@Body JsonObject jsonObject);
 
+    //for user email availability
     @POST("isEmailAvailable")
     Call<JsonPrimitive> emailAvailable(@Body JsonObject jsonObject);
 
+    //for user key confirmation
     @POST("activate")
     Call<JsonObject> keyConfirmation(@Body JsonObject jsonObject);
 
