@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.txtEmail)
     TextView txtEmail;
     PharmacistSideMenuAdapter mPharmacistSideMenuAdaptor;
-    private int flag = 2;
+    private int flag = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        //homeFragment = new HomeFragment(this);
-        dashboardFragment = new DashboardFragment(this);
+        homeFragment = new HomeFragment(this);
+        //dashboardFragment = new DashboardFragment(this);
         setDrawerToggle();
         addFragment();
     }
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         //optionMenu.setVisibility(View.VISIBLE);
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.layout_container, dashboardFragment, "TagName");
+        mFragmentTransaction.replace(R.id.layout_container, homeFragment, "TagName");
         mFragmentTransaction.commit();
     }
 

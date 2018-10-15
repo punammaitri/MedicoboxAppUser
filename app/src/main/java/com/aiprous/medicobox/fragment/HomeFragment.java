@@ -36,6 +36,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -67,7 +71,9 @@ public class HomeFragment extends Fragment {
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
     ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
+    ArrayList<BannerModel> mBannerModels = new ArrayList<BannerModel>();
     private OnFragmentInteractionListener mListener;
+    private String mBannerUrl;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -79,7 +85,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    @Override   
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -359,15 +365,24 @@ public class HomeFragment extends Fragment {
                         if (response.body() != null) {
 
                             if (response.code() == 200) {
-                                JsonObject entries = (JsonObject) new JsonParser().parse(response.body().toString());
 
-                                /*if (entries != null) {
-                                    for (int i = 0; i < entries.size(); i++) {
-                                        String title = entries.get("response").getAsJsonArray().get(i).getAsString();
-                                        mRegisterModels.add(title);
-                                        Log.e("response", "" + title);
+                                JsonObject entries = (JsonObject) new JsonParser().parse(response.body().toString());
+                                mBannerModels.clear();
+                                try {
+                                    JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
+                                    JSONArray array = object.getJSONArray("response");//get the array with the key "response"
+
+                                    // Access the element using for loop
+                                    for (int i = 0; i < array.length(); i++) {
+                                        mBannerUrl = array.getString(i);
+                                        BannerModel mBM = new BannerModel(mBannerUrl);
+                                        mBM.setImage_url(mBannerUrl);
+                                        mBannerModels.add(mBM);
                                     }
-                                }*/
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.e("banner array", "" + mBannerModels);
 
                                 //JsonElement getAllImages = response.body().get("response");
                                 //String getId = (response.body().get("id").getAsString());
