@@ -110,8 +110,6 @@ public class HomeFragment extends Fragment {
         sliderimagesCall.add(R.drawable.contactus);
         sliderimagesCall.add(R.drawable.bannerimage);
 
-
-
         for (int i = 0; i < sliderimagesCall.size(); i++) {
             DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
             final int imageUrl = sliderimagesCall.get(i);
@@ -349,6 +347,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        AttemptToGetProduct();
         new GetAllProduct().execute();
     }
 
@@ -371,7 +370,6 @@ public class HomeFragment extends Fragment {
         protected String doInBackground(String... strings) {
             try {
                 AttemptToGetBannerImages();
-                AttemptToGetProduct();
                 AttemptToGetCategories();
             } catch (Exception e) {
                 e.printStackTrace();

@@ -7,6 +7,7 @@ import com.google.gson.JsonPrimitive;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -16,6 +17,14 @@ import retrofit2.http.POST;
 
 public interface IRetrofit {
 
+    //for user login
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @POST("login.php")
+    Call<JsonObject> userLogin(@Body JsonObject jsonObject);
+
     //for user registration
     @Headers({
             "Accept: application/json",
@@ -23,14 +32,6 @@ public interface IRetrofit {
     })
     @POST("customers")
     Call<JsonObject> userRegistration(@Body JsonObject jsonObject);
-
-    //for user login
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
-    @POST("token")
-    Call<JsonPrimitive> userLogin(@Body JsonObject jsonObject);
 
     //for user email availability
     @POST("isEmailAvailable")
@@ -59,4 +60,9 @@ public interface IRetrofit {
     //for getting product
     @GET("home-banners.php")
     Call<JsonObject> getBannerList();
+
+    //for getting login token
+    @GET("me")
+    Call<JsonObject> getAuthorizeToken( @Header("Authorization") String authHeader);
+
 }

@@ -53,7 +53,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -456,16 +455,53 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         try {
             // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/index.php/rest/V1/integration/customer/");
-            Call<JsonPrimitive> call = jsonPostService.userLogin(jsonObject);
-            call.enqueue(new Callback<JsonPrimitive>() {
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "https://user8.itsindev.com/medibox/API/");
+            Call<JsonObject> call = jsonPostService.userLogin(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
 
                 @Override
-                public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                     if (response.code() == 200) {
                         //String getId = (response.body().get("id").getAsString());
+                        mAlert.onShowProgressDialog(LoginActivity.this, false);
+                        CallGetBearerTokenAPi(response.body().get("response").getAsString());
 
+                    } else if (response.code() == 401) {
+                        mAlert.onShowProgressDialog(LoginActivity.this, false);
+                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e("response-failure", call.toString());
+                    mAlert.onShowProgressDialog(LoginActivity.this, false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void CallGetBearerTokenAPi(String bearerToken) {
+
+        if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mAlert.onShowProgressDialog(this, true);
+
+        try {
+            // Using the Retrofit
+            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, " http://user8.itsindev.com/medibox/index.php/rest/V1/customers/");
+            Call<JsonObject> call = jsonPostService.getAuthorizeToken(bearerToken);
+            call.enqueue(new Callback<JsonObject>() {
+
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    if (response.code() == 200) {
                         BaseActivity.printLog("response-success : ", response.body().toString());
                         mAlert.onShowProgressDialog(LoginActivity.this, false);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class)
@@ -478,7 +514,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
 
                 @Override
-                public void onFailure(Call<JsonPrimitive> call, Throwable t) {
+                public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e("response-failure", call.toString());
                     mAlert.onShowProgressDialog(LoginActivity.this, false);
                 }
