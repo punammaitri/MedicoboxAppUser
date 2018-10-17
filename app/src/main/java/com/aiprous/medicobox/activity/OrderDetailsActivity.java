@@ -68,7 +68,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     private void init() {
 
-
         searchview_medicine.setFocusable(false);
 
         //Change status bar color
@@ -76,9 +75,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         baseActivity.changeStatusBarColor(this);
         mAlert = CustomProgressDialog.getInstance();
 
-
         //set text default
-
         tv_total_product_price.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
         tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
         tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + "30");
@@ -94,7 +91,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
         //Add Json Object
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("category_id", "38");
-
         getAllproducts(jsonObject);
     }
 

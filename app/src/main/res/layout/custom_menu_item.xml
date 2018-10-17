@@ -2,80 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/height_5"
-    android:orientation="vertical"
-    android:background="@color/colorlightlightlightGray">
+    android:background="@color/colorlightlightlightGray"
+    android:orientation="vertical">
 
 
+    <LinearLayout
+        android:id="@+id/llForNavItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/height_10"
+        android:layout_marginRight="@dimen/height_10"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center|start"
+        android:minHeight="@dimen/height_50"
+        android:orientation="horizontal">
+        <!--android:padding="@dimen/height_5">-->
 
-        <LinearLayout
-            android:id="@+id/llForNavItem"
+        <ImageView
+            android:id="@+id/ivForMenuItem"
+            android:layout_width="@dimen/height_30"
+            android:layout_height="@dimen/height_30"
+            android:layout_marginStart="@dimen/height_5"
+            android:contentDescription="@null"
+            android:padding="@dimen/height_4" />
+
+        <!-- <View
+             android:id="@+id/viewForDivider"
+             android:layout_width="@dimen/height_1"
+             android:layout_height="@dimen/height_25"
+             android:layout_gravity="center"
+             android:layout_marginEnd="@dimen/height_10"
+             android:layout_marginStart="@dimen/height_5"
+             android:background="@color/divider_bg" />-->
+
+        <TextView
+            android:id="@+id/tvForMenuItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/height_10"
+            android:fontFamily="@font/open_sans_regular"
+            android:maxLines="1"
+            android:text="abc"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start"
-            android:minHeight="@dimen/height_50"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/height_10"
-            android:layout_marginRight="@dimen/height_10">
-            <!--android:padding="@dimen/height_5">-->
-
-            <ImageView
-                android:id="@+id/ivForMenuItem"
-                android:layout_width="@dimen/height_30"
-                android:layout_height="@dimen/height_30"
-                android:layout_marginStart="@dimen/height_5"
-                android:contentDescription="@null"
-                android:padding="@dimen/height_4" />
-
-           <!-- <View
-                android:id="@+id/viewForDivider"
-                android:layout_width="@dimen/height_1"
-                android:layout_height="@dimen/height_25"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/height_10"
-                android:layout_marginStart="@dimen/height_5"
-                android:background="@color/divider_bg" />-->
+            android:layout_gravity="end|center"
+            android:gravity="end">
 
             <TextView
-                android:id="@+id/tvForMenuItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:maxLines="1"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="abc"
-                android:layout_marginStart="@dimen/height_10"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_arrow"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="end|center"
-                android:gravity="end">
+                android:layout_marginLeft="@dimen/height_8"
+                android:layout_marginRight="@dimen/height_8"
+                android:background="@drawable/downarrow"
+                android:padding="3dp"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tv_arrow"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end|center"
-                    android:layout_marginLeft="@dimen/height_8"
-                    android:layout_marginRight="@dimen/height_8"
-                    android:background="@drawable/downarrow"
-                    android:padding="3dp"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
+        </RelativeLayout>
 
 
-            <!--android:textSize="@dimen/text_size_16" />-->
+        <!--android:textSize="@dimen/text_size_16" />-->
 
 
-        </LinearLayout>
+    </LinearLayout>
+
     <View
         android:id="@+id/viewForDivider"
         android:layout_width="match_parent"
@@ -89,5 +88,5 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:paddingBottom="@dimen/height_4"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>

@@ -97,6 +97,10 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
 //            }
 //        }
         holder.ivForMenuItem.setBackgroundColor(Color.TRANSPARENT);
+
+        if (position == 6) {
+            holder.viewForDivider.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -118,12 +122,14 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
         LinearLayout llForNavItem;
         @BindView(R.id.tv_arrow)
         TextView tv_arrow;
-        // @BindView(R.id.viewForDivider)
-        //  View viewForDivider;
+        @BindView(R.id.viewForDivider)
+        View viewForDivider;
         //  @BindView(R.id.cart_badge)
         // TextView cartBadge;
         // @BindView(R.id.cardViewMain)
         // CardView cardView;
+
+
         @BindView(R.id.rvSubMenuNavigation)
         RecyclerView rvSubMenuNavigation;
 
