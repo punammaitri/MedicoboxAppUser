@@ -433,17 +433,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         lEmail = edtMobileEmail.getText().toString().trim();
         lPass = edtPassword.getText().toString().trim();
 
-        if (lEmail.length() > 0 && lPass.length() > 0) {
+       /* if (lEmail.length() > 0 && lPass.length() > 0) {
             JsonObject jsonObject = new JsonObject();
             //Add Json Object
             jsonObject.addProperty("username", lEmail);
             jsonObject.addProperty("password", lPass);
-            AttemptLogin(jsonObject, lEmail, lPass);
+            //AttemptLogin(jsonObject, lEmail, lPass);
         } else if (lEmail.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
             showToast(this, getResources().getString(R.string.error_pass));
         }
+*/
+        startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                .putExtra("email", "" + lEmail));
     }
 
     private void AttemptLogin(JsonObject jsonObject, final String lEmail, String lPass) {
@@ -465,7 +468,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if (response.code() == 200) {
                         //String getId = (response.body().get("id").getAsString());
                         mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        CallGetBearerTokenAPi(response.body().get("response").getAsString());
+                        //CallGetBearerTokenAPi(response.body().get("response").getAsString());
+
+                        BaseActivity.printLog("response-success : ", response.body().toString());
+                        mAlert.onShowProgressDialog(LoginActivity.this, false);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                .putExtra("email", "" + lEmail));
+                        MedicoboxApp.onSaveLoginDetail("", "", "", "", lEmail);
 
                     } else if (response.code() == 401) {
                         mAlert.onShowProgressDialog(LoginActivity.this, false);

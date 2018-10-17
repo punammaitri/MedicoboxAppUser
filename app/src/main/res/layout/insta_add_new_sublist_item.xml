@@ -82,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="@dimen/height_30"
+        android:layout_marginLeft="@dimen/height_25"
         android:layout_marginTop="@dimen/height_6"
-        android:background="@color/colorblack"/>
+        android:background="@color/colorfaintblack"/>
 
 </LinearLayout>

@@ -49,7 +49,8 @@
                 android:text="abc"
                 android:layout_marginStart="@dimen/height_10"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack" />
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -78,9 +79,9 @@
     <View
         android:id="@+id/viewForDivider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_gravity="center"
-        android:background="@color/colorblack" />
+        android:background="@color/colorfaintblack" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvSubMenuNavigation"

@@ -50,8 +50,7 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        if(position==1)
-        {
+        if (position == 1) {
             holder.tv_arrow.setVisibility(View.VISIBLE);
             String title[];
             int icon[];
@@ -66,13 +65,11 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
 
 
             holder.rvSubMenuNavigation.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.rvSubMenuNavigation.setAdapter(new NavSubItemAdaptor(mContext,this,title,icon));
+            holder.rvSubMenuNavigation.setAdapter(new NavSubItemAdaptor(mContext, this, title, icon));
 
-        }
-        else {
+        } else {
             holder.tv_arrow.setVisibility(View.INVISIBLE);
         }
-
 
 
         holder.tvForMenuItem.setText(mNavTitles[holder.getAdapterPosition()]);
@@ -80,14 +77,14 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
         holder.llForNavItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (position == 1) {
+                if (position == 1) {
 
                     if (holder.rvSubMenuNavigation.getVisibility() != View.GONE) {
-                       holder.rvSubMenuNavigation.setVisibility(View.GONE);
-                    }else {
+                        holder.rvSubMenuNavigation.setVisibility(View.GONE);
+                    } else {
                         holder.rvSubMenuNavigation.setVisibility(View.VISIBLE);
                     }
-               }
+                }
                 navItemClicked.navItemClicked(mNavTitles[holder.getAdapterPosition()], holder.getAdapterPosition());
             }
         });
@@ -121,14 +118,15 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
         LinearLayout llForNavItem;
         @BindView(R.id.tv_arrow)
         TextView tv_arrow;
-       // @BindView(R.id.viewForDivider)
-      //  View viewForDivider;
-      //  @BindView(R.id.cart_badge)
-       // TextView cartBadge;
-       // @BindView(R.id.cardViewMain)
-       // CardView cardView;
+        // @BindView(R.id.viewForDivider)
+        //  View viewForDivider;
+        //  @BindView(R.id.cart_badge)
+        // TextView cartBadge;
+        // @BindView(R.id.cardViewMain)
+        // CardView cardView;
         @BindView(R.id.rvSubMenuNavigation)
         RecyclerView rvSubMenuNavigation;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

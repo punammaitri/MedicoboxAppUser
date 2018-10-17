@@ -59,6 +59,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/height_10"
         android:clickable="true"
+
         app:iconifiedByDefault="false"
         app:queryHint="Search Medicine"
         android:queryBackground="@android:color/transparent"

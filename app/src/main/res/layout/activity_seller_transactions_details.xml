@@ -76,15 +76,14 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Amount"
+                            android:text="Amount:"
                             android:layout_marginRight="@dimen/height_10"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Rs200"
-
+                            android:text="@string/rs_symbol_total_two_hundered"
                             android:textColor="@color/colorblack"/>
                     </LinearLayout>
                     <TextView

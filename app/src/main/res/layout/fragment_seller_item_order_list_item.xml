@@ -44,6 +44,7 @@
                 android:layout_marginRight="@dimen/height_8"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="@string/rs_symbol_ten"
+                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 
@@ -66,6 +67,7 @@
                 android:layout_marginRight="@dimen/height_8"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="1"
+                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 
@@ -88,6 +90,7 @@
                 android:layout_marginRight="@dimen/height_8"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="1"
+                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>
@@ -111,6 +114,7 @@
                 android:layout_marginRight="@dimen/height_8"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="1"
+                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
 

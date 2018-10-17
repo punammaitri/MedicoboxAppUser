@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_regular"
         android:gravity="center"
+        android:text="android"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white" />
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:text="android@example.com"
         android:fontFamily="@font/open_sans_regular"
         android:textColor="@android:color/white" />
 

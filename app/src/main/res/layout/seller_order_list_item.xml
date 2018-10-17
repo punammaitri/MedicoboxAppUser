@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/height_5"
-    android:layout_marginTop="@dimen/height_3"
-    android:layout_marginBottom="@dimen/height_5"
+    android:layout_margin="@dimen/height_8"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/height_10"
     app:cardElevation="@dimen/height_8">
@@ -13,14 +11,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/height_15">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/height_4"
-            android:paddingBottom="@dimen/height_4">
+            android:padding="@dimen/height_10">
 
             <TextView
                 android:id="@+id/tv_Order_ID"
@@ -53,10 +49,11 @@
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:layout_marginTop="@dimen/height_6"
-            android:background="@color/colorblack" />
+            android:background="@color/colorfaintblack" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/SubList"
+            android:padding="@dimen/height_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/height_5" />
@@ -65,13 +62,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/height_5"
+            android:layout_marginLeft="@dimen/height_8"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.45"
+                android:layout_weight="0.43"
                 android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:text="Customer Name"
@@ -93,27 +91,26 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.45"
+                android:layout_weight="0.52"
                 android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:text="Shreya Saran"
                 android:textColor="@color/colorblack"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_2"
+            android:layout_marginLeft="@dimen/height_8"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.45"
+                android:layout_weight="0.43"
                 android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:text="Order Date"
@@ -135,27 +132,26 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.45"
+                android:layout_weight="0.52"
                 android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:text="29/9/2018"
                 android:textColor="@color/colorblack"
-                android:textSize="15sp"
-                 />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_2"
+            android:layout_marginLeft="@dimen/height_8"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.45"
+                android:layout_weight="0.43"
                 android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:text="Order Total"
@@ -177,7 +173,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.45"
+                android:layout_weight="0.52"
                 android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:text="@string/rs_symbol_seller"
@@ -191,6 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/height_8"
+            android:padding="@dimen/height_10"
             android:layout_marginBottom="@dimen/height_8">
 
             <Button
@@ -220,11 +217,6 @@
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
-
         </RelativeLayout>
-
-
     </LinearLayout>
-
-
 </android.support.v7.widget.CardView>

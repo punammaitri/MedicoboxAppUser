@@ -130,7 +130,7 @@
                 android:text="ADD To Insta list"
                 android:textAllCaps="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
         </RelativeLayout>

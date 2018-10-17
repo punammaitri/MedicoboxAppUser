@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity
         rvForNavigation = (RecyclerView) navView.findViewById(R.id.rvForNavigation);
         View header = navView.getHeaderView(0);
 
-        txtUserName.setText(MedicoboxApp.onGetFirstName());
-        txtEmail.setText(MedicoboxApp.onGetEmail());
+       /* txtUserName.setText(MedicoboxApp.onGetFirstName());
+        txtEmail.setText(MedicoboxApp.onGetEmail());*/
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rvForNavigation.setLayoutManager(layoutManager);

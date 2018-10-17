@@ -30,7 +30,7 @@
             android:background="@color/coloryellow"
             app:tabIndicatorColor="@color/colorblack"
             app:tabIndicatorHeight="@dimen/height_3"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/colorblack" />
 

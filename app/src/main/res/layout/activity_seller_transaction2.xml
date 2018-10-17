@@ -25,7 +25,7 @@
             android:fontFamily="@font/open_sans_regular"
             android:text="TRANSACTION LIST"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorblack"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
 

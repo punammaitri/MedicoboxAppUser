@@ -64,7 +64,8 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Shipment #000088883388"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"/>
 
 
                         <TextView
@@ -354,6 +355,7 @@
                                 android:layout_weight="0.45"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:maxLines="2"
+                                android:textAlignment="viewEnd"
                                 android:text="Custom Value"
                                 android:textSize="15sp" />
 
@@ -386,6 +388,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.45"
+                                android:textAlignment="viewEnd"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:textSize="15sp" />
 
@@ -420,6 +423,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.45"
                                 android:text="777"
+                                android:textAlignment="viewEnd"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:textSize="15sp" />
 

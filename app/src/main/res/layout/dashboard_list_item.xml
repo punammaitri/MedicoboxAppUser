@@ -10,7 +10,6 @@
         android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/height_4"
         android:layout_marginTop="@dimen/height_3"
         android:layout_marginRight="@dimen/height_4"
         android:layout_marginBottom="@dimen/height_5"
@@ -22,8 +21,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.23"
-            android:gravity="center">
+            android:layout_weight="0.15"
+            android:gravity="center|start">
 
             <ImageView
                 android:id="@+id/img_product"
@@ -35,7 +34,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.77"
+            android:layout_weight="0.85"
             android:orientation="vertical">
 
             <TextView

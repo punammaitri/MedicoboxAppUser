@@ -64,7 +64,8 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Invoice #000088883388"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -621,8 +622,7 @@
                             android:maxLines="2"
                             android:text="@string/rs_symbol_zero"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                             />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -651,8 +651,7 @@
                             android:maxLines="2"
                             android:text="@string/rs_symbol_zero"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                             />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -681,8 +680,7 @@
                             android:maxLines="2"
                             android:text="@string/rs_symbol_eight"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                             />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -743,8 +741,7 @@
                             android:maxLines="2"
                             android:text="@string/rs_symbol_total"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                             />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -773,8 +770,7 @@
                             android:maxLines="2"
                             android:text="@string/rs_symbol_ten"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                            />
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 

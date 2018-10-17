@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Comment Message:Payment for order #88898774"
+            android:text="Comment Message: Payment for order #88898774"
             android:layout_marginTop="@dimen/height_5"/>
 
         <LinearLayout

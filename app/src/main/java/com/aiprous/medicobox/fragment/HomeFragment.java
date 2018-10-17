@@ -348,6 +348,9 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         AttemptToGetProduct();
+        AttemptToGetBannerImages();
+        AttemptToGetCategories();
+
         new GetAllProduct().execute();
     }
 
@@ -369,8 +372,8 @@ public class HomeFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                AttemptToGetBannerImages();
-                AttemptToGetCategories();
+                //AttemptToGetBannerImages();
+                //AttemptToGetCategories();
             } catch (Exception e) {
                 e.printStackTrace();
             }
