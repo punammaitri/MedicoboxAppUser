@@ -27,6 +27,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayList<ListActivity.ListModel> mlistModelsArray = new ArrayList<>();
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
+    private ListAdapter mlistAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +49,59 @@ public class ListActivity extends AppCompatActivity {
 
         //add static data into array list
         mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "xyz", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "pqr", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "aaa", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ccc", "Bottle of 60 tablet", "150", "30%", "135"));
 
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new ListAdapter(mContext, mlistModelsArray));
+        mlistAdapter=new ListAdapter(mContext, mlistModelsArray);
+        rc_medicine_list.setAdapter(mlistAdapter);
+
+        try{
+            searchview_medicine.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchview_medicine.clearFocus();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+
+                    if(mlistModelsArray!=null&&!mlistModelsArray.isEmpty())
+                    {
+                        ArrayList<ListModel> filteredModelList = filter(mlistModelsArray, newText);
+                        mlistAdapter.setFilter(filteredModelList);
+                    }
+
+                    return true;
+                }
+
+                private ArrayList<ListModel> filter(ArrayList<ListModel> models, String query) {
+                    query = query.toLowerCase();
+
+                    final ArrayList<ListModel> filteredModelList = new ArrayList<>();
+
+                    for (ListModel model : models) {
+                        final String text = model.medicineName.toLowerCase();
+                        if (text.contains(query)) {
+                            filteredModelList.add(model);
+                        }
+                    }
+                    return filteredModelList;
+                }
+            });
+
+        }
+        catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @OnClick(R.id.rlayout_back_button)

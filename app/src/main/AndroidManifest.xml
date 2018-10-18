@@ -52,7 +52,7 @@
             android:name=".activity.ListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".activity.ProductDescriptionActivity"
             android:screenOrientation="portrait"

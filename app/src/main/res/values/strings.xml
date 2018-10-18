@@ -73,4 +73,6 @@
     <string name="menu_transactions">Transactions</string>
     <string name="menu_logout">logout</string>
     <string name="notification_opt">Opt in to get notifications about best deals and promotions</string>
+
+    <string name="location_permission">App was not allowed to access Location. Consider granting it Location permission.</string>
 </resources>

@@ -28,6 +28,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     ArrayList<MyOrdersModel> myOrdersArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
     private Context mContext = this;
+    private MyOrdersAdapter mlistAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +46,58 @@ public class MyOrdersActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281", "29/09/2018", "280.00", "0"));
-        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281", "29/09/2018", "280.00", "1"));
-        myOrdersArrayList.add(new MyOrdersModel("MB1828394829281", "29/09/2018", "280.00", "2"));
+        myOrdersArrayList.add(new MyOrdersModel("MB1528394829281", "29/09/2018", "280.00", "0"));
+        myOrdersArrayList.add(new MyOrdersModel("MB1628394829281", "29/09/2018", "280.00", "1"));
+        myOrdersArrayList.add(new MyOrdersModel("MB1728394829281", "29/09/2018", "280.00", "2"));
 
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_my_order_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_my_order_list.setHasFixedSize(true);
-        rc_my_order_list.setAdapter(new MyOrdersAdapter(mContext, myOrdersArrayList));
+        mlistAdapter=new MyOrdersAdapter(mContext, myOrdersArrayList);
+        rc_my_order_list.setAdapter(mlistAdapter);
+
+        try{
+            searchview_order_id.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchview_medicine.clearFocus();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+
+                    if(myOrdersArrayList!=null&&!myOrdersArrayList.isEmpty())
+                    {
+                        ArrayList<MyOrdersModel> filteredModelList = filter(myOrdersArrayList, newText);
+                        mlistAdapter.setFilter(filteredModelList);
+                    }
+
+                    return true;
+                }
+
+                private ArrayList<MyOrdersModel> filter(ArrayList<MyOrdersModel> models, String query) {
+                    query = query.toLowerCase();
+
+                    final ArrayList<MyOrdersModel> filteredModelList = new ArrayList<>();
+
+                    for (MyOrdersModel model : models) {
+                        final String text = model.orderId.toLowerCase();
+                        if (text.contains(query)) {
+                            filteredModelList.add(model);
+                        }
+                    }
+                    return filteredModelList;
+                }
+            });
+
+        }
+        catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
 
     }
 

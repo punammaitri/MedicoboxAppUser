@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -27,6 +28,9 @@ import butterknife.ButterKnife;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<ListActivity.ListModel> mDataArrayList;
     private Context mContext;
+
+    int number_of_item = 1;
+    int setValuePosition = 1;
 
     public ListAdapter(Context mContext, ArrayList<ListActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
@@ -65,7 +69,48 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         });
 
+        holder.rlayout_add.setTag(position);
+        holder.rlayout_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.rlayout_number_of_item.setVisibility(View.VISIBLE);
+                holder.rlayout_add.setVisibility(View.GONE);
+                holder.tv_plus.performClick();
+            }
+        });
 
+        holder.tv_plus.setTag(position);
+        holder.tv_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int lItemIndex = Integer.parseInt("" + v.getTag());
+                setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
+                holder.tv_value.setText("" + setValuePosition);
+            }
+        });
+
+        holder.tv_minus.setTag(position);
+        holder.tv_minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int lItemIndex = Integer.parseInt("" + v.getTag());
+                setValuePosition = Integer.parseInt(holder.tv_value.getText().toString());
+                if (setValuePosition != 0) {
+                    --setValuePosition;
+                    holder.tv_value.setText("" + setValuePosition);
+
+                    if (holder.tv_value.getText().equals("0")) {
+
+                        holder.rlayout_number_of_item.setVisibility(View.GONE);
+                        holder.rlayout_add.setVisibility(View.VISIBLE);
+
+                    }
+                   // AddSingletonTosendAPI();
+                }
+            }
+        });
 
 
     }
@@ -74,6 +119,69 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public int getItemCount() {
         return (mDataArrayList == null) ? 0 : mDataArrayList.size();
     }
+
+   /* private void AddSingletonTosendAPI() {
+        SingletonOptionAddItemtoCart singletonOptionData = SingletonOptionAddItemtoCart.getGsonInstance();
+        ItemModelList = singletonOptionData.getOptionList();
+
+        if (ItemModelList != null && !ItemModelList.isEmpty()) {
+            Iterator<AddToCartOptionDetailModel> iterator = ItemModelList.iterator();
+            foundduplicateItem = false;
+
+            while (iterator.hasNext()) {
+                AddToCartOptionDetailModel tempObj = iterator.next();
+                if (tempObj.getMatnr() != null && mMatnr != null && tempObj.getMatnr().equalsIgnoreCase(mMatnr)) {
+                    tempObj.setPrice("" + total);
+                    tempObj.setQty("" + mQty);
+                    // tempObj.setUrl(image_url);
+                    foundduplicateItem = true;
+                }
+            }
+            if (!foundduplicateItem) {
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mMatnr, munique_id, "" + total, "" + mQty, mName,mUnit,munique_id);
+                md.setMatnr(mMatnr);
+                md.setUnique_ID(munique_id);
+                md.setPrice(String.valueOf(total));
+                md.setQty("" + mQty);
+                md.setName(mName);
+                md.setUnit(mUnit);
+                md.setVendor_id(mVendorId);
+                singletonOptionData.option.add(md);
+            } else if (foundduplicateItem && mQty == 0 && total == 0) {
+
+                for (int i = 0; i < ItemModelList.size(); i++) {
+                    if (ItemModelList.get(i).getQty().equals("0")) {
+                        ItemModelList.remove(i);
+                        if(!SingletonOptionAddItemtoCart.getGsonInstance().getOptionList().isEmpty()){
+                            rlayout_cart.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            rlayout_cart.setVisibility(View.GONE);
+                        }
+                    }
+                }
+                //notifyDataSetChanged();
+            }
+        } else {
+            if (mQty != 0) {
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mMatnr, munique_id, "" + total, "" + mQty, mName,mUnit,mVendorId);
+                md.setMatnr(mMatnr);
+                md.setUnique_ID(munique_id);
+                md.setPrice("" + total);
+                md.setQty("" + mQty);
+                md.setName(mName);
+                md.setUnit(mUnit);
+                md.setVendor_id(mVendorId);
+                singletonOptionData.option.add(md);
+            }
+        }
+
+        String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
+        CustomerSideMenuTabActivity.tv_number_of_item.setText(cart_size + " Items | ");
+        calculateTotalPrice();
+
+
+    }*/
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_medicine)
@@ -92,11 +200,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         TextView tv_discount;
         @BindView(R.id.llayout_listing)
         LinearLayout llayout_listing;
+        @BindView(R.id.rlayout_number_of_item)
+        RelativeLayout rlayout_number_of_item;
+        @BindView(R.id.rlayout_add)
+        RelativeLayout rlayout_add;
+        @BindView(R.id.tv_minus)
+        TextView tv_minus;
+        @BindView(R.id.tv_plus)
+        TextView tv_plus;
+        @BindView(R.id.tv_value)
+        TextView tv_value;
 
 
         ViewHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public void setFilter(ArrayList<ListActivity.ListModel> Models) {
+        mDataArrayList = new ArrayList<>();
+        mDataArrayList.addAll(Models);
+        notifyDataSetChanged();
     }
 }

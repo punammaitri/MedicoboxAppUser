@@ -2,6 +2,7 @@ package com.aiprous.medicobox.application;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.multidex.MultiDexApplication;
 
 import com.aiprous.medicobox.R;
@@ -35,6 +36,7 @@ public class MedicoboxApp extends MultiDexApplication {
         edt.commit();
     }
 
+
     public static String onGetId() {
         return mSharedPreferences.getString("ID", "");
     }
@@ -54,4 +56,28 @@ public class MedicoboxApp extends MultiDexApplication {
     public static String onGetEmail() {
         return mSharedPreferences.getString("EMAIL", "");
     }
+
+
+    public static void onSaveCity(String city) {
+
+        SharedPreferences.Editor edt = mSharedPreferences.edit();
+        edt.putString("CITY", city);
+        edt.commit();
+    }
+
+    public static String onGetCity() {
+        return mSharedPreferences.getString("CITY", "");
+    }
+
+    public static void onSaveLatiLong(String latlong) {
+        SharedPreferences.Editor lEditor = mSharedPreferences.edit();
+        lEditor.putString("LATILONG", latlong);
+        lEditor.commit();
+    }
+
+    @Nullable
+    public static String getLatiLong() {
+        return mSharedPreferences.getString("LATILONG", "");
+    }
+
 }

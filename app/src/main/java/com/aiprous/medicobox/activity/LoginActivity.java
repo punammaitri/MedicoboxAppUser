@@ -73,7 +73,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.showToast;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener, LocationListener {
+        View.OnClickListener {
 
     @BindView(R.id.btn_signup)
     Button btn_signup;
@@ -89,11 +89,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     EditText edtPassword;
     private String gmailProfileUrl;
     private GoogleApiClient googleApiClient;
-    final static int REQUEST_LOCATION = 199;
     private static final int RC_SIGN_IN = 1;
-    private static final int REQUEST_PERMISSIONS = 20;
     private static final String TAG = LoginActivity.class.getSimpleName();
-    LocationManager locationManager;
     boolean GpsStatus;
     private String mgoogleusername;
     private String twitterProfileImageUrl;
@@ -133,10 +130,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-        if (isAboveLollipop()) {
-            if (!checkAppPermission()) requestPermission();
-        }
 
         init();
     }
@@ -359,30 +352,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGoogleApiClient.disconnect();
     }
 
-    private boolean checkAppPermission() {
-        int ACCESS_FINE_LOCATION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-        int ACCESS_COARSE_LOCATION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        int WRITE_EXTERNAL_STORAGE_PERMISSION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int READ_EXTERNAL_STORAGE_PERMISSION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
-        int CAMERA_PERMISSION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
-        int INTERNET_PERMISSION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);
-        int CONTACT_PERMISSION = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS);
-
-        return ACCESS_FINE_LOCATION == PackageManager.PERMISSION_GRANTED && ACCESS_COARSE_LOCATION == PackageManager.PERMISSION_GRANTED && WRITE_EXTERNAL_STORAGE_PERMISSION == PackageManager.PERMISSION_GRANTED && READ_EXTERNAL_STORAGE_PERMISSION == PackageManager.PERMISSION_GRANTED && CAMERA_PERMISSION == PackageManager.PERMISSION_GRANTED && INTERNET_PERMISSION == PackageManager.PERMISSION_GRANTED && CONTACT_PERMISSION == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.INTERNET, Manifest.permission.READ_CONTACTS}, REQUEST_PERMISSIONS);
-    }
-
-    private boolean isAboveLollipop() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return true;
-        }
-        return false;
-    }
-
-
     @OnClick(R.id.tv_forgot_password)
     public void onClickPassword() {
         startActivity(new Intent(this, SetPasswordActivity.class));
@@ -403,25 +372,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         finish();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

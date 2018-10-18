@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.OrderDetailsActivity;
 
@@ -95,5 +96,11 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public void setFilter(ArrayList<MyOrdersActivity.MyOrdersModel> Models) {
+        myOrdersArrayList = new ArrayList<>();
+        myOrdersArrayList.addAll(Models);
+        notifyDataSetChanged();
     }
 }

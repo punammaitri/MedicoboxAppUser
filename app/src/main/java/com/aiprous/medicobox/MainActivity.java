@@ -2,6 +2,8 @@ package com.aiprous.medicobox;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -19,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
@@ -40,6 +43,11 @@ import com.aiprous.medicobox.pharmacist.productlist.PharmacistProductListActivit
 import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
 import com.aiprous.medicobox.pharmacist.sellertransaction.SellerTransactionActivity;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.TrackGPS;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +67,8 @@ public class MainActivity extends AppCompatActivity
     FrameLayout layoutContainer;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.tv_location)
+    TextView tv_location;
     // @BindView(R.id.tvMainToolbarTitle)
     //TextView tvMainToolbarTitle;
     private final String TAG = MainActivity.class.getSimpleName();
@@ -77,6 +87,7 @@ public class MainActivity extends AppCompatActivity
     TextView txtEmail;
     PharmacistSideMenuAdapter mPharmacistSideMenuAdaptor;
     private int flag = 1;
+    TrackGPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +102,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init() {
+
+        //set current location city
+        gps = new TrackGPS(mContext);
+        MedicoboxApp.onSaveLatiLong("" + gps.getLatitude() + "," + gps.getLongitude());
+        getLocationFromLatLong();
 
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
@@ -399,6 +415,32 @@ public class MainActivity extends AppCompatActivity
         // startActivity(new Intent(this,CartActivity.class));
         // startActivity(new Intent(this,OrderDetailsActivity.class));
         // startActivity(new Intent(this,OrderPlacedActivity.class));
+    }
+
+    private void getLocationFromLatLong()
+    {
+        try {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            String[] lLatLong = MedicoboxApp.getLatiLong().split(",");
+            List<Address> addresses = geocoder.getFromLocation(Float.parseFloat(lLatLong[0]), Float.parseFloat(lLatLong[1]), 1);
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String area = addresses.get(0).getSubLocality();
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+            String fullAddress = area + "," + city + "," + state + "," + country + "," + postalCode;
+            tv_location.setText(city);
+            MedicoboxApp.onSaveCity(city);
+            Log.e("Location fetch:", "" + fullAddress);
+            //Toast.makeText(mContext, fullAddress, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Location is not fetch", "");
+        }
     }
 
 }
