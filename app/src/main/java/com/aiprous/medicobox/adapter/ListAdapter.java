@@ -31,6 +31,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     int number_of_item = 1;
     int setValuePosition = 1;
+    private String mMedicineName;
+    private String mPrice;
+
 
     public ListAdapter(Context mContext, ArrayList<ListActivity.ListModel> mDataArrayList) {
         this.mContext = mContext;
@@ -76,6 +79,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 holder.rlayout_number_of_item.setVisibility(View.VISIBLE);
                 holder.rlayout_add.setVisibility(View.GONE);
                 holder.tv_plus.performClick();
+
             }
         });
 
@@ -85,8 +89,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View v) {
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
+                mMedicineName=mDataArrayList.get(lItemIndex).getMedicineName();
+                mPrice=mDataArrayList.get(lItemIndex).getPrice();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 holder.tv_value.setText("" + setValuePosition);
+               // AddSingletonTosendAPI();
             }
         });
 
@@ -100,6 +107,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 if (setValuePosition != 0) {
                     --setValuePosition;
                     holder.tv_value.setText("" + setValuePosition);
+
+                    mMedicineName=mDataArrayList.get(lItemIndex).getMedicineName();
+                    mPrice=mDataArrayList.get(lItemIndex).getPrice();
 
                     if (holder.tv_value.getText().equals("0")) {
 
