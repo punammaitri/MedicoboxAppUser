@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.fragment.HomeFragment;
-import com.aiprous.medicobox.pharmacist.sellertransaction.SellerTransactionActivity;
 
 import java.util.ArrayList;
 
@@ -70,14 +69,6 @@ public class ProductDetailsAdapter extends RecyclerView.Adapter<ProductDetailsAd
                     }
                 });*/
 
-
-        holder.cardRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, SellerTransactionActivity.class));
-                //((Activity)mContext).finish();
-            }
-        });
     }
 
     @Override

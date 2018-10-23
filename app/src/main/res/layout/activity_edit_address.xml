@@ -50,7 +50,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:text="Akshay Shinde" />
+                    android:text="Akshay Shinde"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -64,7 +65,8 @@
                     android:hint="Phone*"
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -75,10 +77,11 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Flat Number,Building Name*"
+                    android:hint="Flat Number, Building Name*"
                     android:imeOptions="actionNext"
                     android:fontFamily="@font/open_sans_regular"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -92,7 +95,9 @@
                     android:hint="Street /Road Name"
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -106,7 +111,8 @@
                     android:hint="Landmark"
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -120,7 +126,8 @@
                     android:hint="Pincode*"
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -134,7 +141,8 @@
                     android:hint="State"
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -148,7 +156,8 @@
                     android:hint="City"
                     android:fontFamily="@font/open_sans_regular"
                     android:imeOptions="actionDone"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <RadioGroup

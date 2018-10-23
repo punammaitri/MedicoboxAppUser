@@ -26,22 +26,20 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
+import com.aiprous.medicobox.activity.SettingActivity;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.application.MedicoboxApp;
-import com.aiprous.medicobox.deliveryboy.AddDeliveryBoyActivity;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
-import com.aiprous.medicobox.pharmacist.dashboard.DashboardFragment;
-import com.aiprous.medicobox.pharmacist.pharmacist_sidemenu.PharmacistSideMenuAdapter;
-import com.aiprous.medicobox.pharmacist.productlist.PharmacistProductListActivity;
-import com.aiprous.medicobox.pharmacist.sellerorder.SellerOrderActivity;
-import com.aiprous.medicobox.pharmacist.sellertransaction.SellerTransactionActivity;
+
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.TrackGPS;
 
@@ -69,13 +67,16 @@ public class MainActivity extends AppCompatActivity
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.tv_location)
     TextView tv_location;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
     // @BindView(R.id.tvMainToolbarTitle)
     //TextView tvMainToolbarTitle;
     private final String TAG = MainActivity.class.getSimpleName();
     private Unbinder unbinder;
     public static DrawerLayout drawerLayout;
     private HomeFragment homeFragment;
-    private DashboardFragment dashboardFragment;
     private ActionBarDrawerToggle mDrawerToggle;
     private Context mContext = this;
     public static Toolbar toolbarMain;
@@ -85,8 +86,6 @@ public class MainActivity extends AppCompatActivity
     TextView txtUserName;
     @BindView(R.id.txtEmail)
     TextView txtEmail;
-    PharmacistSideMenuAdapter mPharmacistSideMenuAdaptor;
-    private int flag = 1;
     TrackGPS gps;
 
     @Override
@@ -113,9 +112,10 @@ public class MainActivity extends AppCompatActivity
         baseActivity.changeStatusBarColor(this);
 
         homeFragment = new HomeFragment(this);
-        //dashboardFragment = new DashboardFragment(this);
         setDrawerToggle();
         addFragment();
+
+
     }
 
     @Override
@@ -127,9 +127,16 @@ public class MainActivity extends AppCompatActivity
 
         //navigation drawer for pharmacist
         //navigationItemPharmacist(true);
+
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            rlayout_cart.setVisibility(View.VISIBLE);
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
     }
-
-
     public void addFragment() {
         //optionMenu.setVisibility(View.VISIBLE);
         FragmentManager mFragmentManager = getSupportFragmentManager();
@@ -193,7 +200,6 @@ public class MainActivity extends AppCompatActivity
             CustomProgressDialog.getInstance().showDialog(mContext, Constant.Network_Error, Constant.ERROR_TYPE);
             return;*/
 
-        if (flag == 1) {
             if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 int fragCount = getSupportFragmentManager().getBackStackEntryCount();
@@ -213,8 +219,8 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return;
             } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
-                //startActivity(new Intent(mContext, MyOrdersActivity.class));
-                //drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(mContext, SettingActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 return;
             } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
                 startActivity(new Intent(mContext, NotificationActivity.class));
@@ -225,48 +231,6 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return;
             }
-
-        } else {
-            if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_dashboard))) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                int fragCount = getSupportFragmentManager().getBackStackEntryCount();
-                if (fragCount > 0) {
-                    for (int i = 0; i < fragCount; i++) {
-                        getSupportFragmentManager().popBackStackImmediate();
-                    }
-                }
-                addFragment();
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
-                startActivity(new Intent(mContext, SellerOrderActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_profile))) {
-                //startActivity(new Intent(mContext, SellerOrderActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_products))) {
-                startActivity(new Intent(this, PharmacistProductListActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_notification))) {
-                startActivity(new Intent(this, NotificationActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_add_delivery_boy))) {
-                startActivity(new Intent(mContext, AddDeliveryBoyActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.menu_transactions))) {
-                startActivity(new Intent(mContext, SellerTransactionActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
-                logout();
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            }
-        }
     }
 
     // set data into navigation view
@@ -296,33 +260,6 @@ public class MainActivity extends AppCompatActivity
         rvForNavigation.setAdapter(navAdaptor);
     }
 
-    private void navigationItemPharmacist(boolean isBasic) {
-        String title[];
-        int icon[];
-
-        title = new String[]{
-                mContext.getResources().getString(R.string.menu_dashboard),
-                mContext.getResources().getString(R.string.menu_orders),
-                mContext.getResources().getString(R.string.menu_profile),
-                mContext.getResources().getString(R.string.menu_products),
-                mContext.getResources().getString(R.string.menu_notification),
-                mContext.getResources().getString(R.string.menu_add_delivery_boy),
-                mContext.getResources().getString(R.string.menu_transactions),
-                mContext.getResources().getString(R.string.txt_logout)};
-
-        icon = new int[]{
-                R.drawable.home,
-                R.drawable.box,
-                R.drawable.user,
-                R.drawable.cart,
-                R.drawable.bell,
-                R.drawable.settings,
-                R.drawable.transaction,
-                R.drawable.logout,};
-
-        mPharmacistSideMenuAdaptor = new PharmacistSideMenuAdapter(mContext, this, title, icon);
-        rvForNavigation.setAdapter(mPharmacistSideMenuAdaptor);
-    }
 
     //---Function to check network connection---//
     public static boolean isNetworkAvailable(@NonNull Context context) {
@@ -412,9 +349,7 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.rlayout_cart)
     public void onClickCart() {
-        // startActivity(new Intent(this,CartActivity.class));
-        // startActivity(new Intent(this,OrderDetailsActivity.class));
-        // startActivity(new Intent(this,OrderPlacedActivity.class));
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     private void getLocationFromLatLong()
@@ -442,5 +377,7 @@ public class MainActivity extends AppCompatActivity
             Log.e("Location is not fetch", "");
         }
     }
+
+
 
 }

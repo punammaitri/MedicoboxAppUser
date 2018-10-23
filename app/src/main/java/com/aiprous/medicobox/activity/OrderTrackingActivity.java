@@ -19,12 +19,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderTrackingAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -66,6 +70,10 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
     RecyclerView rc_medicine_list;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
     ArrayList<OrderTrackingActivity.ListModel> mlistModelsArray = new ArrayList<>();
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -90,6 +98,25 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         ButterKnife.bind(this);
         init();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
+    }
+
 
     private void init() {
 

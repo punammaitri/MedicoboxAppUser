@@ -17,9 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -55,6 +58,10 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     Button btnContinue;
     @BindView(R.id.img_attach_arrow)
     ImageView img_attach_arrow;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
 
     RecyclerView rc_medicine_list;
     ArrayList<PrescriptionUploadOptionActivity.ListModel> mlistModelsArray = new ArrayList<>();
@@ -89,6 +96,22 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rc_medicine_list.setHasFixedSize(true);
         rc_medicine_list.setAdapter(new PrescriptionUploadOptionAdapter(mContext, mlistModelsArray));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     @OnClick({R.id.rb_order_everything, R.id.rb_specify_medicine, R.id.rb_call_me, R.id.rlayout_back_button, R.id.btnContinue})

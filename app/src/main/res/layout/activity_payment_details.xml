@@ -12,304 +12,308 @@
         android:id="@+id/layout_custom_toolbar"
         layout="@layout/custom_toolbar" />
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_custom_toolbar"
-        android:layout_marginLeft="@dimen/height_10"
-        android:layout_marginRight="@dimen/height_10"
-        android:orientation="vertical">
+        android:layout_below="@+id/layout_custom_toolbar">
 
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_10"
-            android:fontFamily="@font/open_sans_regular"
-            android:text="Payment Details"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorblack"
-            android:textStyle="bold" />
+
+            android:layout_marginLeft="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_10"
+            android:orientation="vertical">
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_10"
-            android:fontFamily="@font/open_sans_regular"
-            android:text="Select Payment Mode"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorblack"
-            android:textStyle="bold" />
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="#fff"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4"
-            android:layout_marginTop="@dimen/height_10">
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/height_10">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="PAYTM"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorblack"
-                        android:textStyle="bold" />
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.3">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginRight="@dimen/height_15"
-                            android:src="@drawable/paytm" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Paytm Wallet, Debit/Credit Cards, Net Banking, UPI  " />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:layout_marginBottom="@dimen/height_10"
-                    android:background="@color/colorlightlightGray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="ONLINE PAYMENT"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/colorblack"
-                        android:textStyle="bold" />
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.3">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginRight="@dimen/height_15"
-                            android:src="@drawable/visa" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Wallets, Debit/Cards, Net Banking, UPI" />
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Payment Details"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="#fff"
-            app:cardCornerRadius="@dimen/height_8"
-            app:cardElevation="@dimen/height_4"
-            android:layout_marginTop="@dimen/height_10">
-
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/height_10">
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Select Payment Mode"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1">
+                    android:orientation="vertical"
+                    android:padding="@dimen/height_10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="PAYTM"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginRight="@dimen/height_15"
+                                android:src="@drawable/paytm" />
+                        </RelativeLayout>
+                    </LinearLayout>
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
+                        android:layout_marginTop="@dimen/height_10"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="M.R.P Total" />
+                        android:text="Paytm Wallet, Debit/Credit Cards, Net Banking, UPI  " />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:layout_marginBottom="@dimen/height_10"
+                        android:background="@color/colorlightlightGray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="ONLINE PAYMENT"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginRight="@dimen/height_15"
+                                android:src="@drawable/visa" />
+                        </RelativeLayout>
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_mrp_total"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
+                        android:layout_marginTop="@dimen/height_10"
                         android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
-                        android:text="Rs350" />
+                        android:text="Wallets, Debit/Cards, Net Banking, UPI" />
+
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="Price Discount" />
-
-                    <TextView
-                        android:id="@+id/tv_price_discount"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
-                        android:text="-Rs30" />
+            </android.support.v7.widget.CardView>
 
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="Shipping Charges" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
-                        android:text="As per delivery address" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="To be paid"
-                        android:textColor="@color/colorblack"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_to_be_paid"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
-                        android:text="Rs350.0"
-                        android:textColor="@color/colorblack"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:background="@color/colorlightlightGray" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_10">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/height_20"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="@dimen/height_10">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/height_10"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="Total Savings"
-                        android:textColor="@color/colorblack" />
+                        android:weightSum="1">
 
-                    <TextView
-                        android:id="@+id/tv_total_savings"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="M.R.P Total" />
+
+                        <TextView
+                            android:id="@+id/tv_mrp_total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="Rs350" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="Rs30.0"
-                        android:textColor="@color/colorgreen"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Price Discount" />
+
+                        <TextView
+                            android:id="@+id/tv_price_discount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="-Rs30" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Shipping Charges" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="As per delivery address" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="To be paid"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_to_be_paid"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="end"
+                            android:text="Rs350.0"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:background="@color/colorlightlightGray" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_20"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/height_10"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Total Savings"
+                            android:textColor="@color/colorblack" />
+
+                        <TextView
+                            android:id="@+id/tv_total_savings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Rs30.0"
+                            android:textColor="@color/colorgreen"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
+            <Button
+                android:id="@+id/tv_place_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/height_30"
+                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_30"
+                android:layout_marginBottom="@dimen/height_10"
+                android:background="@drawable/custom_btn_bg"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Place Order"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold" />
 
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/tv_place_order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/height_30"
-        android:layout_marginTop="@dimen/height_20"
-        android:layout_marginRight="@dimen/height_30"
-        android:layout_marginBottom="@dimen/height_20"
-        android:background="@drawable/custom_btn_bg"
-        android:fontFamily="@font/open_sans_regular"
-        android:text="Place Order"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/height_16"
-        android:textStyle="bold" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

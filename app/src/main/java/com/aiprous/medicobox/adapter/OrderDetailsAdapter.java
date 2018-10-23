@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -37,6 +38,8 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
+        holder.tv_medicine_name.setText(mDataArrayList.get(position).getMedicine_name());
+        holder.tv_item_contains.setText(mDataArrayList.get(position).getItem_contains());
         holder.tv_mrp_price.setText("MRP "+mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp_price());
         holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMedicine_price());
         if(position==getItemCount()-1)
@@ -63,6 +66,8 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         TextView tv_price;
         @BindView(R.id.view_order_details)
         View view_order_details;
+        @BindView(R.id.img_medicine)
+        ImageView img_medicine;
 
         ViewHolder(@NonNull View view) {
             super(view);

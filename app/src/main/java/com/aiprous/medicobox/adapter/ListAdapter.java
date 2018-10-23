@@ -17,22 +17,38 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.aiprous.medicobox.activity.ListActivity.rlayout_cart;
+import static com.aiprous.medicobox.activity.ListActivity.tv_cart_size;
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<ListActivity.ListModel> mDataArrayList;
+    private ArrayList<AddToCartOptionDetailModel> ItemModelList;
     private Context mContext;
 
-    int number_of_item = 1;
+    boolean foundduplicateItem;
+
+
     int setValuePosition = 1;
+    int total = 0;
     private String mMedicineName;
+    private String mValue;
+    private String mMrp;
+    private String mdiscount;
     private String mPrice;
+    int mQty;
+    int mImageURL;
+
+
 
 
     public ListAdapter(Context mContext, ArrayList<ListActivity.ListModel> mDataArrayList) {
@@ -88,12 +104,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
+                rlayout_cart.setVisibility(View.VISIBLE);
+
                 int lItemIndex = Integer.parseInt("" + v.getTag());
                 mMedicineName=mDataArrayList.get(lItemIndex).getMedicineName();
+                mValue=mDataArrayList.get(lItemIndex).getValue();
+                mMrp=mDataArrayList.get(lItemIndex).getMrp();
+                mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                 mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                mImageURL=mDataArrayList.get(lItemIndex).getImage();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
+                mQty=setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
-               // AddSingletonTosendAPI();
+                AddItemsToCart();
             }
         });
 
@@ -107,17 +130,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 if (setValuePosition != 0) {
                     --setValuePosition;
                     holder.tv_value.setText("" + setValuePosition);
-
+                    mQty=setValuePosition;
                     mMedicineName=mDataArrayList.get(lItemIndex).getMedicineName();
+                    mValue=mDataArrayList.get(lItemIndex).getValue();
+                    mMrp=mDataArrayList.get(lItemIndex).getMrp();
+                    mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                     mPrice=mDataArrayList.get(lItemIndex).getPrice();
-
+                    mImageURL=mDataArrayList.get(lItemIndex).getImage();
                     if (holder.tv_value.getText().equals("0")) {
 
                         holder.rlayout_number_of_item.setVisibility(View.GONE);
                         holder.rlayout_add.setVisibility(View.VISIBLE);
 
                     }
-                   // AddSingletonTosendAPI();
+                    AddItemsToCart();
                 }
             }
         });
@@ -130,8 +156,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return (mDataArrayList == null) ? 0 : mDataArrayList.size();
     }
 
-   /* private void AddSingletonTosendAPI() {
-        SingletonOptionAddItemtoCart singletonOptionData = SingletonOptionAddItemtoCart.getGsonInstance();
+     private void AddItemsToCart() {
+        SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
         ItemModelList = singletonOptionData.getOptionList();
 
         if (ItemModelList != null && !ItemModelList.isEmpty()) {
@@ -140,29 +166,30 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
             while (iterator.hasNext()) {
                 AddToCartOptionDetailModel tempObj = iterator.next();
-                if (tempObj.getMatnr() != null && mMatnr != null && tempObj.getMatnr().equalsIgnoreCase(mMatnr)) {
-                    tempObj.setPrice("" + total);
+                if (tempObj.getMedicineName() != null && mMedicineName != null && tempObj.getMedicineName().equalsIgnoreCase(mMedicineName)) {
+                  //  tempObj.setPrice("" + total);
                     tempObj.setQty("" + mQty);
                     // tempObj.setUrl(image_url);
                     foundduplicateItem = true;
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mMatnr, munique_id, "" + total, "" + mQty, mName,mUnit,munique_id);
-                md.setMatnr(mMatnr);
-                md.setUnique_ID(munique_id);
-                md.setPrice(String.valueOf(total));
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty);
+                md.setImage(mImageURL);
+                md.setMedicineName(mMedicineName);
+                md.setValue(mValue);
+                md.setMrp(mMrp);
+                md.setDiscount(mdiscount);
+                md.setPrice(mPrice);
                 md.setQty("" + mQty);
-                md.setName(mName);
-                md.setUnit(mUnit);
-                md.setVendor_id(mVendorId);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
                 for (int i = 0; i < ItemModelList.size(); i++) {
                     if (ItemModelList.get(i).getQty().equals("0")) {
                         ItemModelList.remove(i);
-                        if(!SingletonOptionAddItemtoCart.getGsonInstance().getOptionList().isEmpty()){
+                        if(!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()){
+                            //this is for make cart icon visible
                             rlayout_cart.setVisibility(View.VISIBLE);
                         }
                         else {
@@ -170,28 +197,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         }
                     }
                 }
-                //notifyDataSetChanged();
+                notifyDataSetChanged();
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mMatnr, munique_id, "" + total, "" + mQty, mName,mUnit,mVendorId);
-                md.setMatnr(mMatnr);
-                md.setUnique_ID(munique_id);
-                md.setPrice("" + total);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty);
+                md.setImage(mImageURL);
+                md.setMedicineName(mMedicineName);
+                md.setValue(mValue);
+                md.setMrp(mMrp);
+                md.setDiscount(mdiscount);
+                md.setPrice(mPrice);
                 md.setQty("" + mQty);
-                md.setName(mName);
-                md.setUnit(mUnit);
-                md.setVendor_id(mVendorId);
                 singletonOptionData.option.add(md);
             }
         }
 
-        String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
-        CustomerSideMenuTabActivity.tv_number_of_item.setText(cart_size + " Items | ");
-        calculateTotalPrice();
+       String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
+        tv_cart_size.setText(cart_size + " Items | ");
+       // calculateTotalPrice();
 
-
-    }*/
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.img_medicine)

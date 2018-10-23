@@ -67,6 +67,7 @@
                         android:layout_marginRight="@dimen/height_20">
 
                         <TextView
+                            android:id="@+id/tv_cart_size"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginLeft="@dimen/height_27"

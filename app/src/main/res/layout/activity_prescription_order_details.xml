@@ -185,6 +185,7 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:layout_marginTop="@dimen/height_10"
                     android:text="View Attached Prescriptions (1)"
+                    android:textColor="@color/colorblack"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <ImageView

@@ -11,31 +11,37 @@
         <LinearLayout
             android:id="@+id/llayout_listing"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:gravity="center|start"
             android:orientation="horizontal"
-            android:padding="@dimen/height_10">
+            android:padding="@dimen/height_10"
+            android:weightSum="1">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:gravity="left">
 
                 <ImageView
                     android:id="@+id/img_medicine"
                     android:layout_width="@dimen/height_50"
                     android:layout_height="@dimen/height_50"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bottle" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:padding="@dimen/height_10" />
+                    android:padding="@dimen/height_10"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
                 android:layout_marginLeft="@dimen/height_5"
                 android:orientation="vertical">
 
@@ -48,60 +54,56 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/height_5"
-                        android:layout_toLeftOf="@+id/txt_mrp"
                         android:fontFamily="@font/open_sans_regular"
                         android:maxLines="2"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorblack"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_mrp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/height_5"
-                        android:layout_toLeftOf="@+id/tv_mrp_price"
-                        android:singleLine="true"
-                        android:text="MRP Rs" />
-
-                    <TextView
-                        android:id="@+id/tv_mrp_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:singleLine="true" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/tv_item_contains"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/height_5"
                         android:fontFamily="@font/open_sans_regular"
-                        android:maxLines="2"
+                        android:maxLines="1"
+                        android:text="gggggggg"
+                        android:layout_below="@+id/tv_medicine_name"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                    <TextView
-                        android:id="@+id/tv_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:gravity="right"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/colorblack"
-                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:gravity="left"
+                android:layout_marginLeft="@dimen/height_5">
+
+                <TextView
+                    android:id="@+id/tv_mrp_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:singleLine="true"
+                    android:text="ffmmmmm"/>
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:gravity="left"
+                    android:text="djjjj"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/tv_mrp_price"/>
+
+            </RelativeLayout>
         </LinearLayout>
 
         <View

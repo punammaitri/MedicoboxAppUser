@@ -1,14 +1,19 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.ListAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -24,6 +29,8 @@ public class ListActivity extends AppCompatActivity {
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
     RecyclerView rc_medicine_list;
+    public static RelativeLayout rlayout_cart;
+    public static TextView tv_cart_size;
     ArrayList<ListActivity.ListModel> mlistModelsArray = new ArrayList<>();
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -39,6 +46,8 @@ public class ListActivity extends AppCompatActivity {
 
     private void init() {
 
+        rlayout_cart=(RelativeLayout)findViewById(R.id.rlayout_cart);
+        tv_cart_size=(TextView)findViewById(R.id.tv_cart_size);
         searchview_medicine.setFocusable(false);
 
         //Change status bar color
@@ -60,6 +69,8 @@ public class ListActivity extends AppCompatActivity {
         rc_medicine_list.setHasFixedSize(true);
         mlistAdapter=new ListAdapter(mContext, mlistModelsArray);
         rc_medicine_list.setAdapter(mlistAdapter);
+
+
 
         try{
             searchview_medicine.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -102,6 +113,24 @@ public class ListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //set cart value
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+    @OnClick(R.id.rlayout_cart)
+    public void showCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)

@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderSummaryAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -35,6 +38,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
     TextView tv_total_savings;
     @BindView(R.id.tv_free_shipping_note)
     TextView tv_free_shipping_note;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
 
 
     ArrayList<OrderSummaryModel> orderSummaryArrayList = new ArrayList<>();
@@ -72,6 +79,23 @@ public class OrderSummaryActivity extends AppCompatActivity {
         rc_order_summary.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
         rc_order_summary.setHasFixedSize(true);
         rc_order_summary.setAdapter(new OrderSummaryAdapter(mcontext, orderSummaryArrayList));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)

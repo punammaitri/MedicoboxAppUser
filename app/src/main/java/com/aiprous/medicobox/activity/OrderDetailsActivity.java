@@ -8,11 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.ProductListAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.ProductsModel;
 import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -52,6 +55,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
     TextView tv_total_saved;
     @BindView(R.id.tv_total_product_price)
     TextView tv_total_product_price;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     CustomProgressDialog mAlert;
@@ -88,11 +95,26 @@ public class OrderDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
         //Add Json Object
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("category_id", "38");
         getAllproducts(jsonObject);
     }
+
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
+    }
+
 
     private void getAllproducts(JsonObject jsonObject) {
         if (!isNetworkAvailable(this)) {

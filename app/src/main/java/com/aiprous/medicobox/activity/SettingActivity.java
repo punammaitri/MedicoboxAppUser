@@ -2,7 +2,6 @@ package com.aiprous.medicobox.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -10,13 +9,12 @@ import com.aiprous.medicobox.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
 
     @BindView(R.id.txtTitle)
     TextView mTitle;
-    @BindView(R.id.rlayout_cart)
-    TextView rlayout_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,4 +28,10 @@ public class SettingActivity extends AppCompatActivity {
         baseActivity.changeStatusBarColor(this);
 
     }
+
+    @OnClick(R.id.rlayout_back_button)
+    public void onSettingBackPress() {
+        finish();
+    }
+
 }

@@ -6,161 +6,195 @@
     android:layout_height="match_parent"
     tools:context=".activity.SignUpActivity">
 
-    <LinearLayout
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/height_10"
-        android:layout_marginRight="@dimen/height_10"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageViewLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/height_20"
-            android:layout_marginTop="@dimen/height_25"
-            android:layout_marginRight="@dimen/height_20"
-            android:layout_marginBottom="@dimen/height_25"
-            android:contentDescription="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/applogo" />
-
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_10"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel">
-
-                <EditText
-                    android:id="@+id/edt_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:hint="Name"
-                    android:inputType="text" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel">
-
-                <EditText
-                    android:id="@+id/edt_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:hint="Mobile Number"
-                    android:inputType="number" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel">
-
-                <EditText
-                    android:id="@+id/edt_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel">
-
-                <EditText
-                    android:id="@+id/edt_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:hint="Password"
-                    android:inputType="textPassword" />
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/btn_sign_up"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginTop="@dimen/height_10"
-                android:layout_marginRight="@dimen/height_30"
-                android:background="@drawable/custom_btn_bg"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="Sign Up"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/height_16"
-                android:textStyle="bold" />
+                android:layout_marginLeft="@dimen/height_20"
+                android:layout_marginTop="@dimen/height_25"
+                android:layout_marginRight="@dimen/height_20"
+                android:layout_marginBottom="@dimen/height_25"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/applogo" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_20"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Already have an account? "
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    app:hintTextAppearance="@style/TextLabel">
 
-                <TextView
-                    android:id="@+id/tv_sign_in_here"
-                    android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/edt_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="First Name"
+                        android:inputType="text" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edt_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Last Name"
+                        android:inputType="text" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edt_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Mobile"
+                        android:inputType="number" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edt_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Password"
+                        android:inputType="textPassword" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edt_confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/height_30"
+                    android:layout_marginTop="@dimen/height_10"
+                    android:layout_marginRight="@dimen/height_30"
+                    android:background="@drawable/custom_btn_bg"
                     android:fontFamily="@font/open_sans_regular"
-                    android:text="Sign In here"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/colorPrimary"
+                    android:text="Sign Up"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/height_16"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/height_20"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Already have an account? "
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/tv_sign_in_here"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Sign In here"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/height_10"
+                    android:layout_marginBottom="@dimen/height_15"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="By signing up, you agree to our "
+                        android:textSize="11dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="@string/terms_and_Condition"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="11dp"
+                        />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="By signing up, you agree to our "
-                    android:textSize="11dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="@string/terms_and_Condition"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="11dp" />
-            </LinearLayout>
 
         </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-
-    </LinearLayout>
 </RelativeLayout>

@@ -11,7 +11,20 @@
         android:id="@+id/layout_custom_toolbar"
         layout="@layout/custom_toolbar" />
 
+    <TextView
+        android:id="@+id/tv_cart_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:text="No Items Available"
+        android:gravity="center"
+        android:layout_below="@+id/layout_custom_toolbar"
+        android:textColor="@color/colorblack"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone"
+        android:fontFamily="@font/open_sans_regular"/>
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedscroll_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_custom_toolbar">
@@ -279,7 +292,7 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Free shipping for orders above Rs500"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="italic" />
 
             <Button

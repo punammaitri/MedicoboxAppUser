@@ -1,15 +1,19 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.NotificationAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -24,7 +28,10 @@ public class NotificationActivity extends AppCompatActivity {
     SearchView searchview_medicine;
     @BindView(R.id.rc_notification)
     RecyclerView rc_notification;
-
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
     private Context mContext = this;
     ArrayList<NotificationModel> notificationArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
@@ -39,7 +46,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     private void init() {
         searchview_medicine.setFocusable(false);
-        searchview_medicine.setVisibility(View.GONE);
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
@@ -51,6 +57,24 @@ public class NotificationActivity extends AppCompatActivity {
         rc_notification.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_notification.setHasFixedSize(true);
         rc_notification.setAdapter(new NotificationAdapter(mContext, notificationArrayList));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)

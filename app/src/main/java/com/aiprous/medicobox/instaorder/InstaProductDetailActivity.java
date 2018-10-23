@@ -1,13 +1,19 @@
 package com.aiprous.medicobox.instaorder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -24,6 +30,10 @@ public class InstaProductDetailActivity extends AppCompatActivity {
     SearchView searchview_medicine;
     @BindView(R.id.searchview_sub_medicine)
     SearchView searchview_sub_medicine;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
     RecyclerView rc_medicine_list;
     ArrayList<ListModel> mlistModelsArray = new ArrayList<>();
     private Context mContext = this;
@@ -58,6 +68,24 @@ public class InstaProductDetailActivity extends AppCompatActivity {
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_medicine_list.setHasFixedSize(true);
         rc_medicine_list.setAdapter(new InstaProductDetailAdapter(mContext, mlistModelsArray));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
 

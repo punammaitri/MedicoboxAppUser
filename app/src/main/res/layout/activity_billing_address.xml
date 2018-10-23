@@ -37,7 +37,8 @@
                     android:hint="Name"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:text="Akshay Shinde" />
+                    android:text="Akshay Shinde"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -51,7 +52,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Phone*"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -65,7 +67,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Flat Number,Building Name*"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -79,7 +82,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Street /Road Name"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -93,7 +97,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Landmark"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -107,7 +112,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Pincode*"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -121,7 +127,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="State"
                     android:imeOptions="actionNext"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -135,7 +142,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="City"
                     android:imeOptions="actionDone"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <RadioGroup

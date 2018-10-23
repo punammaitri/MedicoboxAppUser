@@ -255,7 +255,8 @@
                 android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Free shipping for orders above Rs500"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:textColor="@color/colorPrimary"/>
 
 
             <LinearLayout
@@ -419,7 +420,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:text="Additional shipping charges might be applicable"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:textColor="@color/colorPrimary"/>
 
 
             <Button

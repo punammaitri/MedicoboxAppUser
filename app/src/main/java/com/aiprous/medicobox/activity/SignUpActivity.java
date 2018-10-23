@@ -40,8 +40,12 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.tv_sign_in_here)
     TextView tv_sign_in_here;
     CustomProgressDialog mAlert;
-    @BindView(R.id.edt_name)
-    EditText edtName;
+    @BindView(R.id.edt_first_name)
+    EditText edt_first_name;
+    @BindView(R.id.edt_last_name)
+    EditText edt_last_name;
+    @BindView(R.id.edt_confirm_password)
+    EditText edt_confirm_password;
     @BindView(R.id.edt_mobile)
     EditText edtMobile;
     @BindView(R.id.edt_email)
@@ -70,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
     @OnClick(R.id.btn_sign_up)
     public void onClickSignUp() {
 
-        String lName = edtName.getText().toString().trim();
+        String lName = edt_first_name.getText().toString().trim();
         String lMobile = edtMobile.getText().toString().trim();
         String lEmail = edtEmail.getText().toString().trim();
         String lPass = edtPassword.getText().toString().trim();
@@ -78,8 +82,8 @@ public class SignUpActivity extends AppCompatActivity {
         String emailPattern = "[A-Za-z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
-        if (edtName.getText().length() <= 2) {
-            edtName.setError("Name must be greater than 2 character");
+        if (edt_first_name.getText().length() <= 2) {
+            edt_first_name.setError("Name must be greater than 2 character");
         } else if (edtMobile.getText().length() <= 9) {
             edtMobile.setError("Mobile number must be greater 10 digit");
         } else if (!lEmail.matches(emailPattern)) {

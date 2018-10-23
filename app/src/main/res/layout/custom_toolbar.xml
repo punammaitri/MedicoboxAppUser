@@ -17,9 +17,8 @@
         android:layout_height="@dimen/height_35"
         android:src="@drawable/backarrow"
         android:padding="@dimen/height_2"
-        android:layout_marginLeft="@dimen/height_20" />
+        android:layout_marginLeft="@dimen/height_15" />
 </RelativeLayout>
-
 
 
 <RelativeLayout
@@ -59,24 +58,22 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/height_10"
         android:clickable="true"
-
         app:iconifiedByDefault="false"
         app:queryHint="Search Medicine"
         android:queryBackground="@android:color/transparent"
         app:queryBackground="@android:color/transparent"
-
-        />
+        android:layout_marginRight="@dimen/height_10" />
 
 <RelativeLayout
     android:id="@+id/rlayout_cart"
-    android:layout_width="50dp"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_gravity="right"
-    android:layout_alignParentEnd="true"
-    android:layout_marginRight="@dimen/height_20"
-    android:layout_alignParentRight="true">
+    android:layout_marginRight="@dimen/height_15"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true">
 
     <TextView
+        android:id="@+id/tv_cart_size"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginLeft="@dimen/height_27"

@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -9,15 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.SubstitutesProductAdapter;
 import com.aiprous.medicobox.adapter.ViewPagerAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -45,6 +49,11 @@ public class ProductDetailBActivity extends AppCompatActivity {
     TextView tv_mrp_price;
     @BindView(R.id.tv_per_tablet_price)
     TextView tv_per_tablet_price;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
+
     ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
     private Context mcontext = this;
     private int dotscount;
@@ -133,6 +142,25 @@ public class ProductDetailBActivity extends AppCompatActivity {
         rv_substitute_product.setAdapter(new SubstitutesProductAdapter(mcontext, substituteProductModelArrayList));
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     public class SubstituteProductModel {

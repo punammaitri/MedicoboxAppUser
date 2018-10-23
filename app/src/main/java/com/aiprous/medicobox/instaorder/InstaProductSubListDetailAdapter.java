@@ -54,6 +54,13 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
             }
         });
 
+        if(position==getItemCount()-1) {
+            holder.view_sublist.setVisibility(View.GONE);
+        }else {
+            holder.view_sublist.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     private void ShowProductInfoAlert(Context mContext) {
@@ -91,6 +98,8 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
         TextView tv_value;
         @BindView(R.id.img_Info)
         ImageView img_Info;
+        @BindView(R.id.view_sublist)
+        View view_sublist;
 
         ViewHolder(@NonNull View view) {
             super(view);

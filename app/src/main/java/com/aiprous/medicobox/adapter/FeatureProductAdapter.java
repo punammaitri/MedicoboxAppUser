@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.pharmacist.sellertransaction.SellerTransactionActivity;
+
 import com.aiprous.medicobox.register.RegisterModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -75,14 +75,6 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
                     }
                 });*/
 
-
-        holder.cardRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, SellerTransactionActivity.class));
-                //((Activity)mContext).finish();
-            }
-        });
     }
 
     @Override

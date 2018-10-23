@@ -1,14 +1,19 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
 import java.util.ArrayList;
@@ -25,6 +30,10 @@ public class MyOrdersActivity extends AppCompatActivity {
     SearchView searchview_order_id;
     @BindView(R.id.rc_my_order_list)
     RecyclerView rc_my_order_list;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
     ArrayList<MyOrdersModel> myOrdersArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
     private Context mContext = this;
@@ -56,6 +65,7 @@ public class MyOrdersActivity extends AppCompatActivity {
         rc_my_order_list.setHasFixedSize(true);
         mlistAdapter=new MyOrdersAdapter(mContext, myOrdersArrayList);
         rc_my_order_list.setAdapter(mlistAdapter);
+
 
         try{
             searchview_order_id.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -97,8 +107,24 @@ public class MyOrdersActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //show cart size
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)

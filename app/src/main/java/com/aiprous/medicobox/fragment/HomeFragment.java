@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -68,7 +67,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Integer> sliderimages = new ArrayList<>();
     ArrayList<Integer> sliderimagesCall = new ArrayList<>();
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
-    ArrayList<HomeFragment.Product> mlistModelsArray = new ArrayList<>();
+    ArrayList<Product> mlistModelsArray = new ArrayList<>();
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
     ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
@@ -259,23 +258,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.rlayout_medicines)
-    public void onClickMedicines() {
-        startActivity(new Intent(getActivity(), ListActivity.class));
-    }
 
-
-    @OnClick(R.id.relInstaOrder)
-    public void onViewInstaOrderClicked() {
-        startActivity(new Intent(getActivity(), InstaAddNewListActivity.class));
-
-    }
-
-    @OnClick(R.id.btn_upload)
-    public void onViewUploadPresc() {
-        startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
-
-    }
 
 
     public interface OnFragmentInteractionListener {
@@ -475,4 +458,25 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
+
+    @OnClick({R.id.btn_upload, R.id.rlayout_medicines, R.id.rlayout_lab_tests, R.id.relInstaOrder, R.id.rlayout_econsultation})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_upload:
+                startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
+                break;
+            case R.id.rlayout_medicines:
+                startActivity(new Intent(getActivity(), ListActivity.class));
+                break;
+            case R.id.rlayout_lab_tests:
+                break;
+            case R.id.relInstaOrder:
+                startActivity(new Intent(getActivity(), InstaAddNewListActivity.class));
+                break;
+            case R.id.rlayout_econsultation:
+                break;
+        }
+    }
+
 }

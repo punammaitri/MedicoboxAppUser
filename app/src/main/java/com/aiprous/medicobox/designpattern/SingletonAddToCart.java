@@ -2,6 +2,7 @@ package com.aiprous.medicobox.designpattern;
 
 
 import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class SingletonAddToCart {
     private static SingletonAddToCart gsonInstance;
-    public ArrayList<ListActivity.ListModel> option = new ArrayList<ListActivity.ListModel>();
+    public ArrayList<AddToCartOptionDetailModel> option = new ArrayList<AddToCartOptionDetailModel>();
 
     public static SingletonAddToCart getGsonInstance() {
         if (gsonInstance == null) {
@@ -21,7 +22,7 @@ public class SingletonAddToCart {
         return gsonInstance;
     }
 
-    public ArrayList<ListActivity.ListModel> getOptionList() {
+    public ArrayList<AddToCartOptionDetailModel> getOptionList() {
         return option;
     }
 
@@ -30,7 +31,7 @@ public class SingletonAddToCart {
     }
 
 
-    public void setOptionlist(ListActivity.ListModel temp) {
+    public void setOptionlist(AddToCartOptionDetailModel temp) {
         option.add(temp);
 
     }

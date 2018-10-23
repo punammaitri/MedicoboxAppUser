@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
 import com.aiprous.medicobox.utils.BaseActivity;
 
@@ -18,6 +22,11 @@ public class MyAccountActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
+    @BindView(R.id.rlayout_cart)
+    RelativeLayout rlayout_cart;
+    @BindView(R.id.tv_cart_size)
+    TextView tv_cart_size;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,23 @@ public class MyAccountActivity extends AppCompatActivity {
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //show cart size
+        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
+        {
+            rlayout_cart.setVisibility(View.GONE);
+        }
+        else {
+            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+    }
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart()
+    {
+        startActivity(new Intent(this,CartActivity.class));
     }
 
     @OnClick(R.id.tv_edit_profile)

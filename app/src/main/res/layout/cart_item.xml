@@ -28,6 +28,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <RelativeLayout
+                android:id="@+id/rlayout_delete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1">
@@ -35,7 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/delete"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -124,6 +126,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_plus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+"
