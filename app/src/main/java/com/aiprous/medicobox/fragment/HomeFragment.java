@@ -27,6 +27,10 @@ import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.aiprous.medicobox.utils.IRetrofit;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -140,7 +144,55 @@ public class HomeFragment extends Fragment {
             return;
         }
 
-        try {
+        mAlert.onShowProgressDialog(getActivity(), true);
+
+        AndroidNetworking.get("http://user8.itsindev.com/medibox/featured-products.php")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // do anything with response
+                        JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
+                        if (entries != null) {
+                            mRegisterModels.clear();
+                            for (int i = 0; i < entries.size(); i++) {
+                                String image = ((JsonObject) entries.get(i)).get("image").getAsString();
+                                String name = ((JsonObject) entries.get(i)).get("name").getAsString();
+                                String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
+                                String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
+
+                                RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
+                                registerModel.setImage(image);
+                                registerModel.setName(name);
+                                registerModel.setMin_price(min_price);
+                                registerModel.setMax_price(max_price);
+                                mRegisterModels.add(registerModel);
+                            }
+                        }
+
+                        mAlert.onShowProgressDialog(getActivity(), false);
+                        //set adapter
+                        rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                        rc_product.setHasFixedSize(true);
+                        rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
+                        BaseActivity.printLog("response-success : ", response.toString());
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        if (error.getErrorCode() != 0) {
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        } else {
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    }
+                });
+
+        /*try {
             // Using the Retrofit
             IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/");
             Call<JsonArray> call = jsonPostService.getProductList();
@@ -195,7 +247,7 @@ public class HomeFragment extends Fragment {
             });
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void AttemptToGetCategories() {
@@ -236,10 +288,10 @@ public class HomeFragment extends Fragment {
                                     mCategoryModels.add(mCategory);
                                 }
 */
-                                mAlert.onShowProgressDialog(getActivity(), false);
+                               // mAlert.onShowProgressDialog(getActivity(), false);
                                 BaseActivity.printLog("response-success : ", response.body().toString());
                             } else if (response.code() == 400) {
-                                mAlert.onShowProgressDialog(getActivity(), false);
+                               // mAlert.onShowProgressDialog(getActivity(), false);
                             }
                         }
                     } catch (Exception e) {
@@ -250,7 +302,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(getActivity(), false);
+                   // mAlert.onShowProgressDialog(getActivity(), false);
                 }
             });
         } catch (Exception e) {
@@ -342,13 +394,13 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            mAlert.onShowProgressDialog(getActivity(), true);
+           // mAlert.onShowProgressDialog(getActivity(), true);
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(String s) {
-            mAlert.onShowProgressDialog(getActivity(), false);
+            //mAlert.onShowProgressDialog(getActivity(), false);
             super.onPostExecute(s);
         }
 
@@ -406,10 +458,10 @@ public class HomeFragment extends Fragment {
 
                                 //JsonElement getAllImages = response.body().get("response");
                                 //String getId = (response.body().get("id").getAsString());
-                                mAlert.onShowProgressDialog(getActivity(), false);
+                                //mAlert.onShowProgressDialog(getActivity(), false);
                                 BaseActivity.printLog("response-success : ", response.body().toString());
                             } else if (response.code() == 400) {
-                                mAlert.onShowProgressDialog(getActivity(), false);
+                                //mAlert.onShowProgressDialog(getActivity(), false);
                             }
                         }
                     } catch (Exception e) {
@@ -420,7 +472,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(getActivity(), false);
+                    //mAlert.onShowProgressDialog(getActivity(), false);
                 }
             });
         } catch (Exception e) {
