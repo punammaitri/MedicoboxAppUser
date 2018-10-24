@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
@@ -13,7 +14,6 @@ import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.aiprous.medicobox.utils.IRetrofit;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +30,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @BindView(R.id.btn_set_password)
     Button btn_set_password;
     CustomProgressDialog mAlert;
+    @BindView(R.id.edt_verification_code)
+    EditText edtVerificationCode;
+    @BindView(R.id.edt_new_password)
+    EditText edtNewPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +78,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         startActivity(new Intent(ForgotPasswordActivity.this, ForgotPasswordActivity.class));
                         finish();
                     } else if (response.code() == 404) {
-                        Toast.makeText(ForgotPasswordActivity.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPasswordActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
                         mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
                     }
                 }
@@ -92,7 +97,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_set_password)
     public void onClickSetPassword() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+
+        String lVerification_code=edtVerificationCode.getText().toString();
+        String lNew_Password=edtNewPassword.getText().toString();
+
+        if(lVerification_code.length()==0) {
+            edtVerificationCode.setError("Please enter verification code");
+        }else if(lNew_Password.length()==0){
+            edtNewPassword.setError("Please enter new password");
+        }else {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
+
+
 }

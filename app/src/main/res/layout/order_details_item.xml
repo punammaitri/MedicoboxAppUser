@@ -41,7 +41,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
+                android:layout_weight="0.55"
                 android:layout_marginLeft="@dimen/height_5"
                 android:orientation="vertical">
 
@@ -78,18 +78,25 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25"
+                android:layout_weight="0.3"
                 android:gravity="left"
                 android:layout_marginLeft="@dimen/height_5">
 
+
+                <TextView
+                    android:id="@+id/tv_mrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="MRP"
+                    />
                 <TextView
                     android:id="@+id/tv_mrp_price"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:singleLine="true"
-                    android:text="ffmmmmm"/>
+                    android:text="123"
+                    android:layout_toRightOf="@+id/tv_mrp"/>
                 <TextView
                     android:id="@+id/tv_price"
                     android:layout_width="match_parent"

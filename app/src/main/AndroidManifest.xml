@@ -198,38 +198,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".pharmacist.sellerorder.SellerOrderActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".pharmacist.sellerorderdetails.SellerOrderDetailsActivity"
-            android:label="Order Details"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".pharmacist.sellertransaction.SellerTransactionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".pharmacist.sellertransaction.SellerTransactionsDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity
-            android:name=".pharmacist.productlist.PharmacistProductListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+
     </application>
 
 </manifest>

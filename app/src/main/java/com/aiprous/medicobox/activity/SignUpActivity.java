@@ -78,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
         String lMobile = edtMobile.getText().toString().trim();
         String lEmail = edtEmail.getText().toString().trim();
         String lPass = edtPassword.getText().toString().trim();
+        String lConfirm_password=edt_confirm_password.getText().toString().trim();
 
         String emailPattern = "[A-Za-z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -88,7 +89,10 @@ public class SignUpActivity extends AppCompatActivity {
             edtMobile.setError("Mobile number must be greater 10 digit");
         } else if (!lEmail.matches(emailPattern)) {
             edtEmail.setError("Invalid email address");
-        } else if (passwordValidation(mContext, lPass, edtPassword)) {
+        }else if(!lPass.equals(lConfirm_password)) {
+            Toast.makeText(mContext, "Password and confirm password should be same", Toast.LENGTH_SHORT).show();
+        }
+        else if (passwordValidation(mContext, lPass, edtPassword)) {
             JsonObject jsonObject = new JsonObject();
             JsonObject payerReg = new JsonObject();
             payerReg.addProperty("email", lEmail);

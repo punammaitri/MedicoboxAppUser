@@ -44,7 +44,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
         holder.tv_item_contains.setText(mDataArrayList.get(position).getSku());
-        holder.tv_mrp_price.setText(mDataArrayList.get(position).getPrice());
+        holder.tv_mrp.setText("MRP ");
+        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
         holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
 
@@ -89,6 +90,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         ProgressBar progress_bar;
         @BindView(R.id.img_medicine)
         ImageView img_medicine;
+        @BindView(R.id.tv_mrp)
+        TextView tv_mrp;
 
 
         ViewHolder(@NonNull View view) {

@@ -15,6 +15,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/rlayout_list_toolbar"
+        android:layout_above="@+id/btn_insta_list"
         android:layout_height="match_parent">
 
         <RelativeLayout
@@ -43,27 +44,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_8" />
 
-            <Button
-                android:id="@+id/btn_insta_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rc_medicine_list"
-                android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginRight="@dimen/height_30"
-                android:layout_marginBottom="@dimen/height_8"
-                android:fontFamily="@font/open_sans_regular"
-                android:layout_marginTop="@dimen/height_8"
-                android:background="@drawable/custom_btn_bg"
-                android:text="New Insta list"
-                android:textAllCaps="true"
-                android:textSize="@dimen/height_16"
-                android:textStyle="bold"
-                android:textColor="@android:color/white" />
 
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-
+    <Button
+        android:id="@+id/btn_insta_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/height_30"
+        android:layout_marginRight="@dimen/height_30"
+        android:layout_marginBottom="@dimen/height_10"
+        android:fontFamily="@font/open_sans_regular"
+        android:layout_marginTop="@dimen/height_8"
+        android:background="@drawable/custom_btn_bg"
+        android:text="New Insta list"
+        android:textAllCaps="true"
+        android:textSize="@dimen/height_16"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

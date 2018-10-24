@@ -31,6 +31,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -46,6 +47,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -61,6 +63,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_mobile_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -76,6 +79,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_email_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -92,6 +96,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -108,6 +113,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -115,11 +121,39 @@
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/edt_confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btn_save_up"
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
