@@ -31,6 +31,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -47,6 +48,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -62,10 +64,11 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_flat_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
-                    android:hint="Flat Number,Building Name*"
+                    android:hint="Flat Number, Building Name*"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -77,10 +80,11 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
-                    android:hint="Street /Road Name"
+                    android:hint="Street / Road Name"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -92,6 +96,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_landmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -107,6 +112,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_pincde"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -122,6 +128,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
@@ -137,6 +144,7 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edt_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"

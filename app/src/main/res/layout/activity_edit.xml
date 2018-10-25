@@ -12,6 +12,7 @@
         layout="@layout/custom_toolbar" />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedscroll_profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_custom_toolbar">
@@ -36,7 +37,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="First name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -52,7 +54,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Last name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +71,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Mobile number"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -84,7 +88,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Email ID"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -101,7 +106,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Gender"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -118,7 +124,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="DOB"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -133,7 +140,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -147,26 +155,30 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Confirm Password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
             </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/height_40"
+                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_40"
+                android:layout_marginBottom="@dimen/height_25"
+                android:background="@drawable/custom_btn_bg"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Save"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/height_40"
-        android:layout_marginTop="@dimen/height_10"
-        android:layout_marginRight="@dimen/height_40"
-        android:layout_marginBottom="@dimen/height_20"
-        android:background="@drawable/custom_btn_bg"
-        android:fontFamily="@font/open_sans_regular"
-        android:text="Save"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/height_16"
-        android:textStyle="bold" />
+
 </RelativeLayout>
