@@ -202,7 +202,7 @@ public class HomeFragment extends Fragment {
                             try {
                                 JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
                                 JSONObject object = new JSONObject(entries.toString());
- 
+
                                 JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
 
                                 String mCategoryArrays = getAllObject.toString();
