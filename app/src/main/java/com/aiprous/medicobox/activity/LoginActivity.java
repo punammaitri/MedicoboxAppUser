@@ -408,7 +408,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            mAlert.onShowProgressDialog(LoginActivity.this, false);
                             try {
                                 CallGetBearerTokenAPi(response.getString("response"));
                             } catch (JSONException e) {
@@ -450,6 +449,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 String getLastname = response.getString("lastname");
                                 String getStoreId = response.getString("store_id");
 
+                                mAlert.onShowProgressDialog(LoginActivity.this, false);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                         .putExtra("email", "" + getEmail));
                                 MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
