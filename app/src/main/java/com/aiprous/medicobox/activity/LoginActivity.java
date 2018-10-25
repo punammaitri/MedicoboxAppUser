@@ -1,19 +1,12 @@
 package com.aiprous.medicobox.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -28,10 +21,12 @@ import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
-import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.IRetrofit;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -52,7 +47,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,10 +58,11 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.GETBEARERTOKEN;
+import static com.aiprous.medicobox.utils.APIConstant.LOGIN;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.showToast;
 
@@ -383,63 +378,54 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         lEmail = edtMobileEmail.getText().toString().trim();
         lPass = edtPassword.getText().toString().trim();
 
-       /* if (lEmail.length() > 0 && lPass.length() > 0) {
-            JsonObject jsonObject = new JsonObject();
-            //Add Json Object
-            jsonObject.addProperty("username", lEmail);
-            jsonObject.addProperty("password", lPass);
-            //AttemptLogin(jsonObject, lEmail, lPass);
+        if (lEmail.length() > 0 && lPass.length() > 0) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("username", lEmail);
+                jsonObject.put("password", lPass);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            AttemptLogin(jsonObject, lEmail, lPass);
         } else if (lEmail.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
-            showToast(this, getResources().getString(R.string.error_pass));
+            //showToast(this, getResources().getString(R.string.error_pass));
         }
-*/
-        startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                .putExtra("email", "" + lEmail));
     }
 
-    private void AttemptLogin(JsonObject jsonObject, final String lEmail, String lPass) {
+    private void AttemptLogin(JSONObject jsonObject, final String lEmail, String lPass) {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mAlert.onShowProgressDialog(this, true);
+        } else {
+            mAlert.onShowProgressDialog(this, true);
+            AndroidNetworking.post(LOGIN)
+                    .addJSONObjectBody(jsonObject) // posting json
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            mAlert.onShowProgressDialog(LoginActivity.this, false);
+                            try {
+                                CallGetBearerTokenAPi(response.getString("response"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-        try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "https://user8.itsindev.com/medibox/API/");
-            Call<JsonObject> call = jsonPostService.userLogin(jsonObject);
-            call.enqueue(new Callback<JsonObject>() {
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                    if (response.code() == 200) {
-                        //String getId = (response.body().get("id").getAsString());
-                        mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        //CallGetBearerTokenAPi(response.body().get("response").getAsString());
-
-                        BaseActivity.printLog("response-success : ", response.body().toString());
-                        mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                .putExtra("email", "" + lEmail));
-                        MedicoboxApp.onSaveLoginDetail("", "", "", "", lEmail);
-
-                    } else if (response.code() == 401) {
-                        mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(LoginActivity.this, false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            mAlert.onShowProgressDialog(LoginActivity.this, false);
+                            Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
     }
 
@@ -447,39 +433,41 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mAlert.onShowProgressDialog(this, true);
+        } else {
+            AndroidNetworking.get(GETBEARERTOKEN)
+                    .addHeaders(Authorization, BEARER + bearerToken)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                String getId = response.getString("id");
+                                String getGroupId = response.getString("group_id");
+                                String getEmail = response.getString("email");
+                                String getFirstname = response.getString("firstname");
+                                String getLastname = response.getString("lastname");
+                                String getStoreId = response.getString("store_id");
 
-        try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, " http://user8.itsindev.com/medibox/index.php/rest/V1/customers/");
-            Call<JsonObject> call = jsonPostService.getAuthorizeToken(bearerToken);
-            call.enqueue(new Callback<JsonObject>() {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                        .putExtra("email", "" + getEmail));
+                                MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
 
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                    if (response.code() == 200) {
-                        BaseActivity.printLog("response-success : ", response.body().toString());
-                        mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                .putExtra("email", "" + lEmail));
-                        MedicoboxApp.onSaveLoginDetail("", "", "", "", lEmail);
-                    } else if (response.code() == 401) {
-                        mAlert.onShowProgressDialog(LoginActivity.this, false);
-                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(LoginActivity.this, false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
     }
 }

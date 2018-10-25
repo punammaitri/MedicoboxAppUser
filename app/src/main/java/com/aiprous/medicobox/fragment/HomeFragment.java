@@ -23,10 +23,8 @@ import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.aiprous.medicobox.register.RegisterModel;
-import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.IRetrofit;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
@@ -50,10 +48,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+import static com.aiprous.medicobox.utils.APIConstant.BANNERAPI;
+import static com.aiprous.medicobox.utils.APIConstant.FEATUREDPRODUCT;
+import static com.aiprous.medicobox.utils.APIConstant.GETCATEGORY;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
@@ -138,94 +136,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void AttemptToGetProduct() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            mAlert.onShowProgressDialog(getActivity(), true);
-
-            AndroidNetworking.get("http://user8.itsindev.com/medibox/featured-products.php")
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONArray(new JSONArrayRequestListener() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            // do anything with response
-                            JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
-                            if (entries != null) {
-                                mRegisterModels.clear();
-                                for (int i = 0; i < entries.size(); i++) {
-                                    String image = ((JsonObject) entries.get(i)).get("image").getAsString();
-                                    String name = ((JsonObject) entries.get(i)).get("name").getAsString();
-                                    String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
-                                    String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
-
-                                    RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
-                                    registerModel.setImage(image);
-                                    registerModel.setName(name);
-                                    registerModel.setMin_price(min_price);
-                                    registerModel.setMax_price(max_price);
-                                    mRegisterModels.add(registerModel);
-                                }
-                            }
-
-                            mAlert.onShowProgressDialog(getActivity(), false);
-                            //set adapter
-                            rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                            rc_product.setHasFixedSize(true);
-                            rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
-                            BaseActivity.printLog("response-success : ", response.toString());
-                        }
-
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
-    }
-
-    private void AttemptToGetCategories() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            AndroidNetworking.get("http://user8.itsindev.com/medibox/API/categories.php")
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
-                                JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
-                                JSONObject object = new JSONObject(entries.toString());
-
-                                JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
-
-                                String mCategoryArrays = getAllObject.toString();
-                                for (int j = 0; j < getAllObject.length(); j++) {
-
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
-    }
-
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -295,33 +205,31 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        AttemptToGetProduct();
-        AttemptToGetBannerImages();
-        AttemptToGetCategories();
-
+        mAlert.onShowProgressDialog(getActivity(), true);
         new GetAllProduct().execute();
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     class GetAllProduct extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
-            // mAlert.onShowProgressDialog(getActivity(), true);
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(String s) {
-            //mAlert.onShowProgressDialog(getActivity(), false);
             super.onPostExecute(s);
         }
 
         @Override
         protected String doInBackground(String... strings) {
             try {
-                //AttemptToGetBannerImages();
-                //AttemptToGetCategories();
+                AttemptToGetFeaturedProduct();
+                AttemptToGetBannerImages();
+                AttemptToGetCategories();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -329,71 +237,158 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void AttemptToGetBannerImages() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/API/");
-            Call<JsonObject> call = jsonPostService.getBannerList();
-            call.enqueue(new Callback<JsonObject>() {
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                    try {
-                        if (response.body() != null) {
-
-                            if (response.code() == 200) {
-
-                                JsonObject entries = (JsonObject) new JsonParser().parse(response.body().toString());
-                                mBannerModels.clear();
-                                try {
-                                    JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
-                                    JSONArray array = object.getJSONArray("response");//get the array with the key "response"
-
-                                    // Access the element using for loop
-                                    for (int i = 0; i < array.length(); i++) {
-                                        mBannerUrl = array.getString(i);
-                                        BannerModel mBM = new BannerModel(mBannerUrl);
-                                        mBM.setImage_url(mBannerUrl);
-                                        mBannerModels.add(mBM);
-                                    }
-
-                                    fetchBannerImages();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                Log.e("banner array", "" + mBannerModels);
-
-                                //JsonElement getAllImages = response.body().get("response");
-                                //String getId = (response.body().get("id").getAsString());
-                                //mAlert.onShowProgressDialog(getActivity(), false);
-                                BaseActivity.printLog("response-success : ", response.body().toString());
-                            } else if (response.code() == 400) {
-                                //mAlert.onShowProgressDialog(getActivity(), false);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                    //mAlert.onShowProgressDialog(getActivity(), false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+    @OnClick({R.id.btn_upload, R.id.rlayout_medicines, R.id.rlayout_lab_tests, R.id.relInstaOrder, R.id.rlayout_econsultation})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_upload:
+                startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
+                break;
+            case R.id.rlayout_medicines:
+                startActivity(new Intent(getActivity(), ListActivity.class));
+                break;
+            case R.id.rlayout_lab_tests:
+                break;
+            case R.id.relInstaOrder:
+                startActivity(new Intent(getActivity(), InstaAddNewListActivity.class));
+                break;
+            case R.id.rlayout_econsultation:
+                break;
         }
     }
 
+    private void AttemptToGetFeaturedProduct() {
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            //mAlert.onShowProgressDialog(getActivity(), true);
 
+            AndroidNetworking.get(FEATUREDPRODUCT)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONArray(new JSONArrayRequestListener() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            // do anything with response
+                            JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
+                            if (entries != null) {
+                                mRegisterModels.clear();
+                                for (int i = 0; i < entries.size(); i++) {
+                                    String image = ((JsonObject) entries.get(i)).get("image").getAsString();
+                                    String name = ((JsonObject) entries.get(i)).get("name").getAsString();
+                                    String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
+                                    String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
+
+                                    RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
+                                    registerModel.setImage(image);
+                                    registerModel.setName(name);
+                                    registerModel.setMin_price(min_price);
+                                    registerModel.setMax_price(max_price);
+                                    mRegisterModels.add(registerModel);
+                                }
+                            }
+
+                            mAlert.onShowProgressDialog(getActivity(), false);
+                            //set adapter
+                            rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                            rc_product.setHasFixedSize(true);
+                            rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
+                            BaseActivity.printLog("response-success : ", response.toString());
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+    private void AttemptToGetCategories() {
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            AndroidNetworking.get(GETCATEGORY)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
+                                JSONObject object = new JSONObject(entries.toString());
+
+                                JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
+
+                                String mCategoryArrays = getAllObject.toString();
+                                for (int j = 0; j < getAllObject.length(); j++) {
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+    private void AttemptToGetBannerImages() {
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            AndroidNetworking.get(BANNERAPI)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
+                            mBannerModels.clear();
+
+                            try {
+                                JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
+                                JSONArray array = object.getJSONArray("response");//get the array with the key "response"
+
+                                // Access the element using for loop
+                                for (int i = 0; i < array.length(); i++) {
+                                    mBannerUrl = array.getString(i);
+                                    BannerModel mBM = new BannerModel(mBannerUrl);
+                                    mBM.setImage_url(mBannerUrl);
+                                    mBannerModels.add(mBM);
+                                }
+
+                                Log.e("banner image array", "" + mBannerModels);
+                                fetchBannerImages();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+    //Fetch Banner images
     public void fetchBannerImages() {
         //Add all to temp banner array
         for (int j = 0; j < mBannerModels.size(); j++) {
@@ -421,27 +416,5 @@ public class HomeFragment extends Fragment {
 
             sliderAdvertise.addSlider(textSliderView);
         }
-
     }
-
-
-    @OnClick({R.id.btn_upload, R.id.rlayout_medicines, R.id.rlayout_lab_tests, R.id.relInstaOrder, R.id.rlayout_econsultation})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_upload:
-                startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
-                break;
-            case R.id.rlayout_medicines:
-                startActivity(new Intent(getActivity(), ListActivity.class));
-                break;
-            case R.id.rlayout_lab_tests:
-                break;
-            case R.id.relInstaOrder:
-                startActivity(new Intent(getActivity(), InstaAddNewListActivity.class));
-                break;
-            case R.id.rlayout_econsultation:
-                break;
-        }
-    }
-
 }

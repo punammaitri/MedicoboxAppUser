@@ -9,19 +9,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.IRetrofit;
-import com.google.gson.JsonObject;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+import static com.aiprous.medicobox.utils.APIConstant.CONFIRMKEY;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
@@ -49,48 +51,44 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
         mAlert = CustomProgressDialog.getInstance();
-        JsonObject jsonObject = new JsonObject();
+
         //Add Json Object
-        jsonObject.addProperty("confirmationKey", "1");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("confirmationKey", "1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         AttemptToConfirmKey(jsonObject);
     }
 
-    private void AttemptToConfirmKey(JsonObject jsonObject) {
+    private void AttemptToConfirmKey(JSONObject jsonObject) {
 
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mAlert.onShowProgressDialog(this, false);
+        } else {
+            AndroidNetworking.post(CONFIRMKEY)
+                    .addJSONObjectBody(jsonObject) // posting json
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
+                        }
 
-        try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/");
-            Call<JsonObject> call = jsonPostService.keyConfirmation(jsonObject);
-            call.enqueue(new Callback<JsonObject>() {
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    if (response.code() == 200) {
-                        BaseActivity.printLog("response-success : ", response.body().toString());
-                        mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
-                        startActivity(new Intent(ForgotPasswordActivity.this, ForgotPasswordActivity.class));
-                        finish();
-                    } else if (response.code() == 404) {
-                        Toast.makeText(ForgotPasswordActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
-                        mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
+                            Toast.makeText(ForgotPasswordActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
     }
 
@@ -98,18 +96,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @OnClick(R.id.btn_set_password)
     public void onClickSetPassword() {
 
-        String lVerification_code=edtVerificationCode.getText().toString();
-        String lNew_Password=edtNewPassword.getText().toString();
+        String lVerification_code = edtVerificationCode.getText().toString();
+        String lNew_Password = edtNewPassword.getText().toString();
 
-        if(lVerification_code.length()==0) {
+        if (lVerification_code.length() == 0) {
             edtVerificationCode.setError("Please enter verification code");
-        }else if(lNew_Password.length()==0){
+        } else if (lNew_Password.length() == 0) {
             edtNewPassword.setError("Please enter new password");
-        }else {
+        } else {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
     }
-
-
 }

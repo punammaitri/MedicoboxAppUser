@@ -14,21 +14,23 @@ import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.register.RegisterModel;
-import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.IRetrofit;
-import com.google.gson.JsonObject;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+import static com.aiprous.medicobox.utils.APIConstant.REGISTER;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.passwordValidation;
 
@@ -78,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
         String lMobile = edtMobile.getText().toString().trim();
         String lEmail = edtEmail.getText().toString().trim();
         String lPass = edtPassword.getText().toString().trim();
-        String lConfirm_password=edt_confirm_password.getText().toString().trim();
+        String lConfirm_password = edt_confirm_password.getText().toString().trim();
 
         String emailPattern = "[A-Za-z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -89,53 +91,49 @@ public class SignUpActivity extends AppCompatActivity {
             edtMobile.setError("Mobile number must be greater 10 digit");
         } else if (!lEmail.matches(emailPattern)) {
             edtEmail.setError("Invalid email address");
-        }else if(!lPass.equals(lConfirm_password)) {
+        } else if (!lPass.equals(lConfirm_password)) {
             Toast.makeText(mContext, "Password and confirm password should be same", Toast.LENGTH_SHORT).show();
-        }
-        else if (passwordValidation(mContext, lPass, edtPassword)) {
-            JsonObject jsonObject = new JsonObject();
-            JsonObject payerReg = new JsonObject();
-            payerReg.addProperty("email", lEmail);
-            payerReg.addProperty("firstname", lName);
-            payerReg.addProperty("lastname", lName);
-            payerReg.addProperty("store_id", 0);
+        } else if (passwordValidation(mContext, lPass, edtPassword)) {
 
-            //Add Json Object
-            jsonObject.add("customer", payerReg);
-            jsonObject.addProperty("password", lPass);
-            AttemptToRegister(jsonObject);
+            try {
+                JSONObject object = new JSONObject();
+                object.put("email", lEmail);
+                object.put("firstname", lName);
+                object.put("lastname", lName);
+                object.put("store_id", 0);
+
+                //Add Json Object
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("customer", object);
+                jsonObject.put("password", lPass);
+
+                AttemptToRegister(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void AttemptToRegister(JsonObject jsonObject) {
+    private void AttemptToRegister(JSONObject jsonObject) {
         mAlert.onShowProgressDialog(this, true);
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        BaseActivity.printLog("response-json : ", jsonObject.toString());
+        } else {
+            AndroidNetworking.post(REGISTER)
+                    .addJSONObjectBody(jsonObject)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                String getId = String.valueOf(response.get("id"));
+                                String getFirstname = String.valueOf(response.get("firstname"));
+                                String getLastname = String.valueOf(response.get("lastname"));
+                                String getEmail = String.valueOf(response.get("email"));
 
-        try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/index.php/rest/V1/");
-            Call<JsonObject> call = jsonPostService.userRegistration(jsonObject);
-            call.enqueue(new Callback<JsonObject>() {
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                    try {
-                        if (response.body() != null) {
-                            if (response.code() == 400) {
-                                mAlert.onShowProgressDialog(SignUpActivity.this, false);
-                            } else if (response.code() == 200) {
-
-                                String getId = (response.body().get("id").getAsString());
-                                String getFirstname = (response.body().get("firstname").getAsString());
-                                String getLastname = (response.body().get("lastname").getAsString());
-                                String getEmail = (response.body().get("email").getAsString());
-
-                                BaseActivity.printLog("response-success : ", response.body().toString());
+                                BaseActivity.printLog("response-success : ", response.toString());
                                 mAlert.onShowProgressDialog(SignUpActivity.this, false);
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class)
                                         .putExtra("id", "" + getId)
@@ -144,28 +142,19 @@ public class SignUpActivity extends AppCompatActivity {
                                         .putExtra("email", "" + getEmail));
 
                                 MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
-
-
-                                //String mAllData= String.valueOf(response.body());
-                           /* Gson gson = new Gson();
-                            RegisterModel mRegistermodel = gson.fromJson(response.body(), RegisterModel.class);
-                            Log.e("jj", "" + mRegistermodel.getAddresses());*/
-
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(SignUpActivity.this, false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
     }
 

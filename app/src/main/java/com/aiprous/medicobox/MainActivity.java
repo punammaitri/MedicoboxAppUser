@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity
         rvForNavigation = (RecyclerView) navView.findViewById(R.id.rvForNavigation);
         View header = navView.getHeaderView(0);
 
-       /* txtUserName.setText(MedicoboxApp.onGetFirstName());
-        txtEmail.setText(MedicoboxApp.onGetEmail());*/
+        txtUserName.setText(MedicoboxApp.onGetFirstName());
+        txtEmail.setText(MedicoboxApp.onGetEmail());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rvForNavigation.setLayoutManager(layoutManager);
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity
     public void navItemClicked(String name, int position) {
 
        /* if (!isNetworkAvailable(mContext)) {
-            CustomProgressDialog.getInstance().showDialog(mContext, Constant.Network_Error, Constant.ERROR_TYPE);
+            CustomProgressDialog.getInstance().showDialog(mContext, APIConstant.Network_Error, APIConstant.ERROR_TYPE);
             return;*/
 
             if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
