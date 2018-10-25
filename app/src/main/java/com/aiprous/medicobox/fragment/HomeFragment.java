@@ -31,6 +31,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -71,7 +72,6 @@ public class HomeFragment extends Fragment {
     ArrayList<Integer> sliderimages = new ArrayList<>();
     ArrayList<Integer> sliderimagesCall = new ArrayList<>();
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
-    ArrayList<Product> mlistModelsArray = new ArrayList<>();
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
     ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
@@ -141,136 +141,66 @@ public class HomeFragment extends Fragment {
     private void AttemptToGetProduct() {
         if (!isNetworkAvailable(getActivity())) {
             Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        } else {
+            mAlert.onShowProgressDialog(getActivity(), true);
 
-        mAlert.onShowProgressDialog(getActivity(), true);
+            AndroidNetworking.get("http://user8.itsindev.com/medibox/featured-products.php")
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONArray(new JSONArrayRequestListener() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            // do anything with response
+                            JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
+                            if (entries != null) {
+                                mRegisterModels.clear();
+                                for (int i = 0; i < entries.size(); i++) {
+                                    String image = ((JsonObject) entries.get(i)).get("image").getAsString();
+                                    String name = ((JsonObject) entries.get(i)).get("name").getAsString();
+                                    String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
+                                    String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
 
-        AndroidNetworking.get("http://user8.itsindev.com/medibox/featured-products.php")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        // do anything with response
-                        JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
-                        if (entries != null) {
-                            mRegisterModels.clear();
-                            for (int i = 0; i < entries.size(); i++) {
-                                String image = ((JsonObject) entries.get(i)).get("image").getAsString();
-                                String name = ((JsonObject) entries.get(i)).get("name").getAsString();
-                                String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
-                                String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
-
-                                RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
-                                registerModel.setImage(image);
-                                registerModel.setName(name);
-                                registerModel.setMin_price(min_price);
-                                registerModel.setMax_price(max_price);
-                                mRegisterModels.add(registerModel);
+                                    RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
+                                    registerModel.setImage(image);
+                                    registerModel.setName(name);
+                                    registerModel.setMin_price(min_price);
+                                    registerModel.setMax_price(max_price);
+                                    mRegisterModels.add(registerModel);
+                                }
                             }
+
+                            mAlert.onShowProgressDialog(getActivity(), false);
+                            //set adapter
+                            rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                            rc_product.setHasFixedSize(true);
+                            rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
+                            BaseActivity.printLog("response-success : ", response.toString());
                         }
 
-                        mAlert.onShowProgressDialog(getActivity(), false);
-                        //set adapter
-                        rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                        rc_product.setHasFixedSize(true);
-                        rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
-                        BaseActivity.printLog("response-success : ", response.toString());
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        if (error.getErrorCode() != 0) {
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        } else {
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                         }
-                    }
-                });
-
-        /*try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/");
-            Call<JsonArray> call = jsonPostService.getProductList();
-            call.enqueue(new Callback<JsonArray>() {
-
-                @Override
-                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-
-                    try {
-                        if (response.body() != null) {
-
-                            if (response.code() == 200) {
-
-                                JsonArray entries = (JsonArray) new JsonParser().parse(response.body().toString());
-                                if (entries != null) {
-                                    mRegisterModels.clear();
-                                    for (int i = 0; i < entries.size(); i++) {
-                                        String image = ((JsonObject) entries.get(i)).get("image").getAsString();
-                                        String name = ((JsonObject) entries.get(i)).get("name").getAsString();
-                                        String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
-                                        String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
-
-                                        RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
-                                        registerModel.setImage(image);
-                                        registerModel.setName(name);
-                                        registerModel.setMin_price(min_price);
-                                        registerModel.setMax_price(max_price);
-                                        mRegisterModels.add(registerModel);
-                                    }
-                                }
-
-                                mAlert.onShowProgressDialog(getActivity(), false);
-                                //set adapter
-                                rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                                rc_product.setHasFixedSize(true);
-                                rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
-                                BaseActivity.printLog("response-success : ", response.body().toString());
-                            } else if (response.code() == 400) {
-                                mAlert.onShowProgressDialog(getActivity(), false);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonArray> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                    mAlert.onShowProgressDialog(getActivity(), false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+                    });
+        }
     }
 
     private void AttemptToGetCategories() {
         if (!isNetworkAvailable(getActivity())) {
             Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            // Using the Retrofit
-            IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/API/");
-            Call<JsonObject> call = jsonPostService.getCategories();
-            call.enqueue(new Callback<JsonObject>() {
-
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                    try {
-                        if (response.body() != null) {
-
-                            if (response.code() == 200) {
-
-                                JsonObject entries = (JsonObject) new JsonParser().parse(response.body().toString());
+        } else {
+            AndroidNetworking.get("http://user8.itsindev.com/medibox/API/categories.php")
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
                                 JSONObject object = new JSONObject(entries.toString());
 
                                 JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
@@ -279,39 +209,22 @@ public class HomeFragment extends Fragment {
                                 for (int j = 0; j < getAllObject.length(); j++) {
 
                                 }
-
-                               /* for (int j = 0; j < getAllObject.length(); j++) {
-                                    String name = getAllObject.get("name").toString();
-
-                                    CategoryModel mCategory = new CategoryModel(name);
-                                    mCategory.setName(name);
-                                    mCategoryModels.add(mCategory);
-                                }
-*/
-                               // mAlert.onShowProgressDialog(getActivity(), false);
-                                BaseActivity.printLog("response-success : ", response.body().toString());
-                            } else if (response.code() == 400) {
-                               // mAlert.onShowProgressDialog(getActivity(), false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
+                            Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e("response-failure", call.toString());
-                   // mAlert.onShowProgressDialog(getActivity(), false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
     }
-
-
-
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -394,7 +307,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-           // mAlert.onShowProgressDialog(getActivity(), true);
+            // mAlert.onShowProgressDialog(getActivity(), true);
             super.onPreExecute();
         }
 
