@@ -25,10 +25,12 @@ public class MedicoboxApp extends MultiDexApplication {
         return mContext;
     }
 
-    public static void onSaveLoginDetail(String id, String firstname, String lastname, String mobile_number, String email) {
+    public static void onSaveLoginDetail(String id,String
+             authToken,String firstname, String lastname, String mobile_number, String email) {
 
         SharedPreferences.Editor edt = mSharedPreferences.edit();
         edt.putString("ID", id);
+        edt.putString("AUTHTOKEN", authToken);
         edt.putString("FIRSTNAME", firstname);
         edt.putString("LASTNAME", lastname);
         edt.putString("MOBILENO", mobile_number);
@@ -39,6 +41,10 @@ public class MedicoboxApp extends MultiDexApplication {
 
     public static String onGetId() {
         return mSharedPreferences.getString("ID", "");
+    }
+
+    public static String onGetAuthToken() {
+        return mSharedPreferences.getString("AUTHTOKEN", "");
     }
 
     public static String onGetFirstName() {

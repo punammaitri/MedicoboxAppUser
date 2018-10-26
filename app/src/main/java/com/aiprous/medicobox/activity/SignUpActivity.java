@@ -141,7 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         .putExtra("lastname", "" + getLastname)
                                         .putExtra("email", "" + getEmail));
 
-                                MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
+                                MedicoboxApp.onSaveLoginDetail(getId,"", getFirstname, getLastname, "", getEmail);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

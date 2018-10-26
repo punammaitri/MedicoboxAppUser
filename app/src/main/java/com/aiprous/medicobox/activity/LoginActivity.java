@@ -428,7 +428,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void CallGetBearerTokenAPi(String bearerToken) {
+    private void CallGetBearerTokenAPi(final String bearerToken) {
 
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
@@ -452,7 +452,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 mAlert.onShowProgressDialog(LoginActivity.this, false);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                         .putExtra("email", "" + getEmail));
-                                MedicoboxApp.onSaveLoginDetail(getId, getFirstname, getLastname, "", getEmail);
+                                MedicoboxApp.onSaveLoginDetail(getId,bearerToken, getFirstname, getLastname, "", getEmail);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
