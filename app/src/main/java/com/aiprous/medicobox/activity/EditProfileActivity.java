@@ -137,8 +137,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 object.put("middlename", "");
                 object.put("prefix", "");
                 object.put("suffix", "");
-                object.put("gender", "");
-                object.put("storeId", "");
+                object.put("gender", 1);
+                object.put("storeId", MedicoboxApp.onGetStoreId());
                 object.put("taxvat", "");
                 object.put("websiteId", "");
 
@@ -205,7 +205,6 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(EditProfileActivity.this, true);
             AndroidNetworking.put(UPDATEUSERINFO)
                     .addJSONObjectBody(jsonObject)
                     .addHeaders(Authorization, BEARER + bearerToken)
@@ -221,7 +220,6 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
                             Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());

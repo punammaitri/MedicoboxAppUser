@@ -39,7 +39,6 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
-
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.TrackGPS;
 
@@ -128,15 +127,14 @@ public class MainActivity extends AppCompatActivity
         //navigation drawer for pharmacist
         //navigationItemPharmacist(true);
 
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             rlayout_cart.setVisibility(View.VISIBLE);
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
+
     public void addFragment() {
         //optionMenu.setVisibility(View.VISIBLE);
         FragmentManager mFragmentManager = getSupportFragmentManager();
@@ -200,37 +198,37 @@ public class MainActivity extends AppCompatActivity
             CustomProgressDialog.getInstance().showDialog(mContext, APIConstant.Network_Error, APIConstant.ERROR_TYPE);
             return;*/
 
-            if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                int fragCount = getSupportFragmentManager().getBackStackEntryCount();
-                if (fragCount > 0) {
-                    for (int i = 0; i < fragCount; i++) {
-                        getSupportFragmentManager().popBackStackImmediate();
-                    }
+        if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            int fragCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (fragCount > 0) {
+                for (int i = 0; i < fragCount; i++) {
+                    getSupportFragmentManager().popBackStackImmediate();
                 }
-                addFragment();
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account))) {
-                startActivity(new Intent(mContext, MyAccountActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
-                startActivity(new Intent(this, CartActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
-                startActivity(new Intent(mContext, SettingActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
-                startActivity(new Intent(mContext, NotificationActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
-            } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
-                logout();
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return;
             }
+            addFragment();
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account))) {
+            startActivity(new Intent(mContext, MyAccountActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
+            startActivity(new Intent(this, CartActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
+            startActivity(new Intent(mContext, SettingActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
+            startActivity(new Intent(mContext, NotificationActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
+            logout();
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
     }
 
     // set data into navigation view
@@ -311,7 +309,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                         startActivity(new Intent(mContext, LoginActivity.class));
-                        MedicoboxApp.onSaveLoginDetail("", "","", "", "", "");
+                        MedicoboxApp.onSaveLoginDetail("", "", "",  "", "", "", "");
                         MedicoboxApp.onSaveCartId("");
                         finish();
                     }
@@ -350,11 +348,10 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.rlayout_cart)
     public void onClickCart() {
-        startActivity(new Intent(this,CartActivity.class));
+        startActivity(new Intent(this, CartActivity.class));
     }
 
-    private void getLocationFromLatLong()
-    {
+    private void getLocationFromLatLong() {
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             String[] lLatLong = MedicoboxApp.getLatiLong().split(",");
@@ -378,7 +375,6 @@ public class MainActivity extends AppCompatActivity
             Log.e("Location is not fetch", "");
         }
     }
-
 
 
 }
