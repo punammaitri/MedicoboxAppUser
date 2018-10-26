@@ -8,9 +8,11 @@
         android:layout_width="110dp"
         android:layout_height="160dp"
         android:layout_marginTop="@dimen/height_15"
-        android:background="@color/divider_bg" />
+        android:background="@color/divider_bg"
+        android:scaleType="fitXY"/>
 
     <ImageView
+        android:id="@+id/img_delete"
         android:layout_width="@dimen/height_30"
         android:layout_height="@dimen/height_30"
         android:layout_marginLeft="96dp"

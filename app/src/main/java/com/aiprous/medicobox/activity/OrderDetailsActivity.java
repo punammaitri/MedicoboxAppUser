@@ -17,10 +17,12 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.ProductListAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.ProductsModel;
-import com.aiprous.medicobox.utils.APIService;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.aiprous.medicobox.utils.IRetrofit;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -33,10 +35,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class OrderDetailsActivity extends AppCompatActivity {
@@ -95,34 +95,87 @@ public class OrderDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
         //Add Json Object
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("category_id", "38");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("category_id", "38");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         getAllproducts(jsonObject);
     }
 
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
     }
 
 
-    private void getAllproducts(JsonObject jsonObject) {
+    private void getAllproducts(JSONObject jsonObject) {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-            return;
+        } else {
+            mAlert.onShowProgressDialog(this, true);
+            AndroidNetworking.post(GETPRODUCT)
+                    .addJSONObjectBody(jsonObject)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                                JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+
+                                if (getAllProductList != null) {
+                                    mProductsModel.clear();
+                                    for (int i = 0; i < getAllProductList.length(); i++) {
+                                        String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                        String title = getAllProductList.getJSONObject(i).get("title").toString();
+                                        String price = getAllProductList.getJSONObject(i).get("price").toString();
+                                        String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
+
+                                        ProductsModel registerModel = new ProductsModel(id, sku, title, price, imageUrl);
+                                        registerModel.setId(id);
+                                        registerModel.setSku(sku);
+                                        registerModel.setTitle(title);
+                                        registerModel.setPrice(price);
+                                        registerModel.setImage_url(imageUrl);
+                                        mProductsModel.add(registerModel);
+                                    }
+                                }
+                                mAlert.onShowProgressDialog(OrderDetailsActivity.this, false);
+                                layoutManager = new LinearLayoutManager(mContext);
+                                rc_product.setLayoutManager(new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false));
+                                rc_product.setHasFixedSize(true);
+                                rc_product.setAdapter(new ProductListAdapter(mContext, mProductsModel));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
 
-        try {
+        /*try {
             // Using the Retrofit
             IRetrofit jsonPostService = APIService.createService(IRetrofit.class, "http://user8.itsindev.com/medibox/API/");
             Call<JsonObject> call = jsonPostService.getProducts(jsonObject);
@@ -148,7 +201,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                             String price = getAllProductList.getJSONObject(i).get("price").toString();
                                             String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
 
-                                            ProductsModel registerModel = new ProductsModel(id, sku, title,price, imageUrl);
+                                            ProductsModel registerModel = new ProductsModel(id, sku, title, price, imageUrl);
                                             registerModel.setId(id);
                                             registerModel.setSku(sku);
                                             registerModel.setTitle(title);
@@ -186,7 +239,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @OnClick(R.id.rlayout_back_button)

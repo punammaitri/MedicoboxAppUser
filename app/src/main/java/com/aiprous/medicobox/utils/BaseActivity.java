@@ -79,7 +79,7 @@ public class BaseActivity extends AppCompatActivity {
         Toast myToast = new Toast(context);
         TextView textView = inflatedView.findViewById(R.id.textView);
         textView.setText(message);
-        myToast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, Constant.SUCCESS_CODE);
+        myToast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, APIConstant.SUCCESS_CODE);
         myToast.setDuration(Toast.LENGTH_SHORT);
         myToast.setView(inflatedView);
         myToast.show();

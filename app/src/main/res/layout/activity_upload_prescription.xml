@@ -33,6 +33,7 @@
                 android:layout_marginRight="@dimen/height_5">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_take_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/height_4"
@@ -82,6 +83,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/height_4"
@@ -251,14 +253,13 @@
                             android:text="Yes"
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:theme="@style/MyRadioButton"
                             android:textColor="@color/colorblack"
-                            android:checked="true"
                             android:text="No"
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -348,6 +349,7 @@
                     </RelativeLayout>
 
                     <ImageView
+                        android:id="@+id/img_valid_prescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/valid_prescription_guide"
