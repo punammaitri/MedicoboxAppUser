@@ -462,6 +462,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            mAlert.onShowProgressDialog(LoginActivity.this, false);
                             Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());

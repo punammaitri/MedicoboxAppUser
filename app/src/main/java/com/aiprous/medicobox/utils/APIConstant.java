@@ -13,6 +13,7 @@ public class APIConstant {
     public static String CONFIRMKEY = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/activate";
     public static String BANNERAPI = "http://user8.itsindev.com/medibox/API/home-banners.php";
     public static String GETBEARERTOKEN = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me";
+    public static String UPDATEUSERINFO = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me";
     public static String Authorization = "Authorization";
     public static String BEARER = "Bearer ";
 
