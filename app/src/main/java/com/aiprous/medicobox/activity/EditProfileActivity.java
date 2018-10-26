@@ -205,6 +205,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
+            mAlert.onShowProgressDialog(EditProfileActivity.this, true);
             AndroidNetworking.put(UPDATEUSERINFO)
                     .addJSONObjectBody(jsonObject)
                     .addHeaders(Authorization, BEARER + bearerToken)
@@ -214,13 +215,15 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            GetProfileInfoUsingAuthKey(MedicoboxApp.onGetAuthToken());
+                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
+                            startActivity(getIntent());
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
                             Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
