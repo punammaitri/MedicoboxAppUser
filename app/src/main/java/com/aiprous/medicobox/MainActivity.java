@@ -312,6 +312,7 @@ public class MainActivity extends AppCompatActivity
                         sDialog.dismissWithAnimation();
                         startActivity(new Intent(mContext, LoginActivity.class));
                         MedicoboxApp.onSaveLoginDetail("", "","", "", "", "");
+                        MedicoboxApp.onSaveCartId("");
                         finish();
                     }
                 })
