@@ -255,7 +255,7 @@ public class ListActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                            // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
-                            MedicoboxApp.onSaveCartId(response.toString());
+                            MedicoboxApp.onSaveCartId(response);
                             Log.e("Cart id", "Cart Id  : " + response.toString());
                            // mAlert.onShowProgressDialog(ListActivity.this, false);
                         }

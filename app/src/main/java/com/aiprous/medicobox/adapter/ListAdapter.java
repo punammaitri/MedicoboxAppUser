@@ -142,8 +142,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
                 //call guest add to cart api
                 try {
+                    String lquote_id=MedicoboxApp.onGetCartID();
                     JSONObject object = new JSONObject();
-                    object.put("quote_id", MedicoboxApp.onGetCartID());
+                    object.put("quote_id",lquote_id);
                     object.put("sku", mSku);
                     object.put("qty", mQty);
 
