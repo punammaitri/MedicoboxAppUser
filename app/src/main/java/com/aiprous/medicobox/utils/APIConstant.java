@@ -15,6 +15,8 @@ public class APIConstant {
     public static String GETBEARERTOKEN = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me";
     public static String Authorization = "Authorization";
     public static String BEARER = "Bearer ";
+    public static String GETCARTID="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
+    public  static String ADDTOCART="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items";
 
     //Response Status Code
     public static final int SUCCESS_CODE = 200;

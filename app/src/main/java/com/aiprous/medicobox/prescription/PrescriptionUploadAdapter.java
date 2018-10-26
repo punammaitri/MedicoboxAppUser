@@ -44,7 +44,12 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
             @Override
             public void onClick(View v) {
 
-                mDataArrayList.remove(position);
+                try{
+                    mDataArrayList.remove(position);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
         });
 

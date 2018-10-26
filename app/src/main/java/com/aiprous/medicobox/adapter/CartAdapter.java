@@ -42,9 +42,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private String mdiscount;
     private String mPrice;
     int mQty;
-    int mImageURL;
+    String mImageURL;
     public int mTotalMRPprice = 0;
     private int mTotalPrice=0;
+    private String mSku;
 
 
     public CartAdapter(Context mContext, ArrayList<AddToCartOptionDetailModel> mCartArrayList) {
@@ -104,6 +105,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
                 mPrice=mCartArrayList.get(lItemIndex).getPrice();
                 mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                mSku=mCartArrayList.get(lItemIndex).getSku();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
@@ -128,6 +130,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
                     mPrice=mCartArrayList.get(lItemIndex).getPrice();
                     mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                    mSku=mCartArrayList.get(lItemIndex).getSku();
                     if (holder.tv_value.getText().equals("0")) {
 
                        // holder.rlayout_number_of_item.setVisibility(View.GONE);
@@ -192,7 +195,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -200,6 +203,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 md.setDiscount(mdiscount);
                 md.setPrice(mPrice);
                 md.setQty("" + mQty);
+                md.setSku(mSku);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
@@ -225,7 +229,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -233,6 +237,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 md.setDiscount(mdiscount);
                 md.setPrice(mPrice);
                 md.setQty("" + mQty);
+                md.setSku(mSku);
                 singletonOptionData.option.add(md);
             }
         }

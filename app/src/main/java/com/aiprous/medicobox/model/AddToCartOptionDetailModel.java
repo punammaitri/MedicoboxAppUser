@@ -2,17 +2,17 @@ package com.aiprous.medicobox.model;
 
 public class AddToCartOptionDetailModel {
 
-
-    int image;
+    String image;
     String medicineName;
     String value;
     String mrp;
     String discount;
     String price;
     String Qty;
+    String sku;
 
 
-    public AddToCartOptionDetailModel(int image, String medicineName, String value, String mrp, String discount, String price, String qty) {
+    public AddToCartOptionDetailModel(String image, String medicineName, String value, String mrp, String discount, String price, String qty,String sku) {
         this.image = image;
         this.medicineName = medicineName;
         this.value = value;
@@ -20,13 +20,14 @@ public class AddToCartOptionDetailModel {
         this.discount = discount;
         this.price = price;
         Qty = qty;
+        this.sku=sku;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -76,5 +77,13 @@ public class AddToCartOptionDetailModel {
 
     public void setQty(String qty) {
         Qty = qty;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }
