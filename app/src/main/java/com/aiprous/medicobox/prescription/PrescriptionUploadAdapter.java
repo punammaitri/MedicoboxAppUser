@@ -36,9 +36,18 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        //holder.imgOption.setImageResource(mDataArrayList.get(position).getImage());
+        holder.imgOption.setImageBitmap(mDataArrayList.get(position).getImagebitmap());
+
+        holder.img_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDataArrayList.remove(position);
+            }
+        });
+
     }
 
     @Override
@@ -50,6 +59,8 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
 
         @BindView(R.id.imgOption)
         ImageView imgOption;
+        @BindView(R.id.img_delete)
+        ImageView img_delete;
 
 
         ViewHolder(@NonNull View view) {
