@@ -137,8 +137,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 object.put("middlename", "");
                 object.put("prefix", "");
                 object.put("suffix", "");
-                object.put("gender", "");
-                object.put("storeId", "");
+                object.put("gender", 1);
+                object.put("storeId", MedicoboxApp.onGetStoreId());
                 object.put("taxvat", "");
                 object.put("websiteId", "");
 
@@ -215,14 +215,15 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            GetProfileInfoUsingAuthKey(MedicoboxApp.onGetAuthToken());
+                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
+                            startActivity(getIntent());
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
                             Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

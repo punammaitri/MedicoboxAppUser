@@ -14,6 +14,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
+import com.aiprous.medicobox.model.CartModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ import static com.aiprous.medicobox.activity.CartActivity.tv_cart_size;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
 
-    private ArrayList<AddToCartOptionDetailModel> mCartArrayList;
+    private ArrayList<CartModel.Items> mCartArrayList;
     private Context mContext;
 
     private ArrayList<AddToCartOptionDetailModel> ItemModelList;
@@ -48,7 +49,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private String mSku;
 
 
-    public CartAdapter(Context mContext, ArrayList<AddToCartOptionDetailModel> mCartArrayList) {
+    public CartAdapter(Context mContext, ArrayList<CartModel.Items> mCartArrayList) {
         this.mContext = mContext;
         this.mCartArrayList = mCartArrayList;
     }
@@ -64,9 +65,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-     holder.tv_item_name.setText(mCartArrayList.get(position).getMedicineName());
-     holder.tv_medicine_contains.setText(mCartArrayList.get(position).getValue());
-     holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
+     holder.tv_item_name.setText(mCartArrayList.get(position).getName());
+    // holder.tv_medicine_contains.setText(mCartArrayList.get(position).getValue());
+    // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
      holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
      holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
 
@@ -75,12 +76,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.tv_value.setText(mCartArrayList.get(position).getQty());
 
         //Add to cart
-        mMedicineName=mCartArrayList.get(position).getMedicineName();
-        mValue=mCartArrayList.get(position).getValue();
-        mMrp=mCartArrayList.get(position).getMrp();
-        mdiscount=mCartArrayList.get(position).getDiscount();
-        mPrice=mCartArrayList.get(position).getPrice();
-        mImageURL=mCartArrayList.get(position).getImage();
+        mMedicineName=mCartArrayList.get(position).getName();
+       // mValue=mCartArrayList.get(position).getValue();
+      //  mMrp=mCartArrayList.get(position).getMrp();
+       // mdiscount=mCartArrayList.get(position).getDiscount();
+        mPrice= String.valueOf(mCartArrayList.get(position).getPrice());
+       // mImageURL=mCartArrayList.get(position).getImage();
         mQty= Integer.parseInt(holder.tv_value.getText().toString());
 
         AddItemsToCart();
@@ -99,12 +100,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
-                mMedicineName=mCartArrayList.get(lItemIndex).getMedicineName();
-                mValue=mCartArrayList.get(lItemIndex).getValue();
-                mMrp=mCartArrayList.get(lItemIndex).getMrp();
-                mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
-                mPrice=mCartArrayList.get(lItemIndex).getPrice();
-                mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                mMedicineName=mCartArrayList.get(lItemIndex).getName();
+               // mValue=mCartArrayList.get(lItemIndex).getValue();
+               // mMrp=mCartArrayList.get(lItemIndex).getMrp();
+              //  mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
+                mPrice= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+               // mImageURL=mCartArrayList.get(lItemIndex).getImage();
                 mSku=mCartArrayList.get(lItemIndex).getSku();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
@@ -124,17 +125,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     --setValuePosition;
                     holder.tv_value.setText("" + setValuePosition);
                     mQty=setValuePosition;
-                    mMedicineName=mCartArrayList.get(lItemIndex).getMedicineName();
-                    mValue=mCartArrayList.get(lItemIndex).getValue();
-                    mMrp=mCartArrayList.get(lItemIndex).getMrp();
-                    mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
-                    mPrice=mCartArrayList.get(lItemIndex).getPrice();
-                    mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                    mMedicineName=mCartArrayList.get(lItemIndex).getName();
+                   // mValue=mCartArrayList.get(lItemIndex).getValue();
+                   // mMrp=mCartArrayList.get(lItemIndex).getMrp();
+                   // mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
+                    mPrice= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                   // mImageURL=mCartArrayList.get(lItemIndex).getImage();
                     mSku=mCartArrayList.get(lItemIndex).getSku();
                     if (holder.tv_value.getText().equals("0")) {
-
-                       // holder.rlayout_number_of_item.setVisibility(View.GONE);
-                      //  holder.rlayout_add.setVisibility(View.VISIBLE);
 
 
                     }
@@ -150,7 +148,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
                 ItemModelList = singletonOptionData.getOptionList();
                 for (int i = 0; i < ItemModelList.size(); i++) {
-                    if (ItemModelList.get(i).getMedicineName().equals(mCartArrayList.get(position).getMedicineName())) {
+                    if (ItemModelList.get(i).getMedicineName().equals(mCartArrayList.get(position).getName())) {
                         ItemModelList.remove(i);
                         notifyDataSetChanged();
                         if(!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()){

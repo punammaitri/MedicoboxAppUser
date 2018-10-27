@@ -8,20 +8,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.CartAdapter;
+import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.CartModel;
+import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
+import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -39,8 +59,10 @@ public class CartActivity extends AppCompatActivity {
     TextView tv_shipping_note;
     public static TextView tv_cart_empty;
     public static NestedScrollView nestedscroll_cart;
-    ArrayList<CartActivity.CartModel> cartModelArrayList = new ArrayList<>();
+    ArrayList<CartModel.Items> cartModelArrayList = new ArrayList<>();
     private Context mcontext = this;
+    CustomProgressDialog mAlert;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +73,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        mAlert = CustomProgressDialog.getInstance();
 
         tv_mrp_total=(TextView)findViewById(R.id.tv_mrp_total);
         tv_price_discount=(TextView)findViewById(R.id.tv_price_discount);
@@ -67,22 +91,9 @@ public class CartActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm", 235, 200, "box of 450 gm powder"));
-        cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm", 235, 200, "box of 450 gm powder"));
-        cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm", 235, 200, "box of 450 gm powder"));
-        cartModelArrayList.add(new CartModel("Horicks Lite Badam Jar 450 gm", 235, 200, "box of 450 gm powder"));
 
-        //set text
-        //tv_mrp_total.setText(mcontext.getResources().getString(R.string.Rs) + " 350.0");
-        //tv_price_discount.setText("-" + mcontext.getResources().getString(R.string.Rs) + " 30.0");
-       // tv_to_be_paid.setText(mcontext.getResources().getString(R.string.Rs) + " 350.0");
-       // tv_total_saving.setText(mcontext.getResources().getString(R.string.Rs) + " 30.0");
         tv_shipping_note.setText("Free shipping for orders above " + mcontext.getResources().getString(R.string.Rs) + "500");
 
-
-        rc_cart.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
-        rc_cart.setHasFixedSize(true);
-        rc_cart.setAdapter(new CartAdapter(mcontext, SingletonAddToCart.getGsonInstance().getOptionList()));
 
     }
 
@@ -112,50 +123,71 @@ public class CartActivity extends AppCompatActivity {
         finish();
     }
 
-    public class CartModel {
-        String medicineName;
-        int mrp;
-        int price;
-        String Contains;
+
+    private void getCartItems(JSONObject jsonObject) {
+        if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            mAlert.onShowProgressDialog(this, true);
+            AndroidNetworking.post(GETCARTITEMS)
+                    .addJSONObjectBody(jsonObject)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                                JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+
+                                if (getAllProductList != null) {
+                                    cartModelArrayList.clear();
+                                    for (int i = 0; i < getAllProductList.length(); i++) {
+                                        int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                        int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                        String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                        int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                        String product_type=getAllProductList.getJSONObject(i).get("product_type").toString();
+                                        String lquoteId=getAllProductList.getJSONObject(i).get("quote_id").toString();
 
 
-        public CartModel(String medicineName, int mrp, int price, String contains) {
-            this.medicineName = medicineName;
-            this.mrp = mrp;
-            this.price = price;
-            Contains = contains;
-        }
+                                        CartModel.Items listModel = new CartModel.Items(lquoteId,product_type,price,name,qty,sku,id);
+                                        listModel.setQuote_id(lquoteId);
+                                        listModel.setProduct_type(product_type);
+                                        listModel.setPrice(price);
+                                        listModel.setName(name);
+                                        listModel.setQty(qty);
+                                        listModel.setSku(sku);
+                                        listModel.setItem_id(id);
+                                        cartModelArrayList.add(listModel);
+                                    }
+                                }
+                                mAlert.onShowProgressDialog(CartActivity.this, false);
+                                layoutManager = new LinearLayoutManager(mcontext);
+                                rc_cart.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
+                                rc_cart.setHasFixedSize(true);
+                                rc_cart.setAdapter(new CartAdapter(mcontext, cartModelArrayList));
 
-        public String getMedicineName() {
-            return medicineName;
-        }
 
-        public void setMedicineName(String medicineName) {
-            this.medicineName = medicineName;
-        }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-        public int getMrp() {
-            return mrp;
-        }
-
-        public void setMrp(int mrp) {
-            this.mrp = mrp;
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public void setPrice(int price) {
-            this.price = price;
-        }
-
-        public String getContains() {
-            return Contains;
-        }
-
-        public void setContains(String contains) {
-            Contains = contains;
+                        @Override
+                        public void onError(ANError error) {
+                            mAlert.onShowProgressDialog(CartActivity.this, false);
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
         }
     }
+
+
 }

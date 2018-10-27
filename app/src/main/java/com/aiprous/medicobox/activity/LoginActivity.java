@@ -452,7 +452,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 mAlert.onShowProgressDialog(LoginActivity.this, false);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                         .putExtra("email", "" + getEmail));
-                                MedicoboxApp.onSaveLoginDetail(getId,bearerToken, getFirstname, getLastname, "", getEmail);
+                                MedicoboxApp.onSaveLoginDetail(getId,bearerToken, getFirstname, getLastname, "", getEmail,getStoreId);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

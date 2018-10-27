@@ -132,6 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 String getFirstname = String.valueOf(response.get("firstname"));
                                 String getLastname = String.valueOf(response.get("lastname"));
                                 String getEmail = String.valueOf(response.get("email"));
+                                String getStoreId = String.valueOf(response.get("store_id"));
 
                                 BaseActivity.printLog("response-success : ", response.toString());
                                 mAlert.onShowProgressDialog(SignUpActivity.this, false);
@@ -141,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         .putExtra("lastname", "" + getLastname)
                                         .putExtra("email", "" + getEmail));
 
-                                MedicoboxApp.onSaveLoginDetail(getId,"", getFirstname, getLastname, "", getEmail);
+                                MedicoboxApp.onSaveLoginDetail(getId, "", getFirstname, getLastname, "", getEmail,getStoreId);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
