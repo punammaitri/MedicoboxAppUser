@@ -76,13 +76,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(ForgotPasswordActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Toast.makeText(ForgotPasswordActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());

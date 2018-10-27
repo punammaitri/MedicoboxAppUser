@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void logout() {
+    /*private void logout() {
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText(mContext.getResources().getString(R.string.are_you_sure))
                 .setContentText(mContext.getResources().getString(R.string.are_you_sure_logout))
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                         startActivity(new Intent(mContext, LoginActivity.class));
-                        MedicoboxApp.onSaveLoginDetail("", "", "",  "", "", "", "");
+                        MedicoboxApp.onSaveLoginDetail("", "", "", "", "", "", "");
                         MedicoboxApp.onSaveCartId("");
                         finish();
                     }
@@ -322,6 +322,34 @@ public class MainActivity extends AppCompatActivity
                 })
                 .show();
 
+    }
+*/
+    private void logout() {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("Won't be able to recover this file!")
+                .setConfirmText("Yes")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.setTitleText("Deleted!")
+                                .setContentText("Your data deleted successfully!")
+                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                    }
+                })
+                .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        //sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
     }
 
     @Override

@@ -9,10 +9,14 @@ import android.content.IntentSender;
 import android.location.Address;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.aiprous.medicobox.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -26,42 +30,122 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class CustomProgressDialog {
 
-    private ProgressDialog mDialog;
-    public static CustomProgressDialog mInstance;
-    private GoogleApiClient googleApiClient;
-    final static int REQUEST_LOCATION = 199;
-    private String mAddress;
-    List<Address> addresses;
+    private static CustomProgressDialog pDialog;
+    @Nullable
+    private SweetAlertDialog mDialog;
 
-    public static CustomProgressDialog getInstance() {
-        if (mInstance == null) {
-            mInstance = new CustomProgressDialog();
-        }
-        return mInstance;
+    private CustomProgressDialog() {
     }
 
-    public void onShowProgressDialog(Activity activity, boolean isShow) {
+    public static synchronized CustomProgressDialog getInstance() {
+        if (pDialog == null) {
+            pDialog = new CustomProgressDialog();
+        }
+        return pDialog;
+    }
 
-        try {
-            if (isShow) {
-                mDialog = ProgressDialog.show(activity, "", "Loading...", true);
-                mDialog.show();
-            } else {
-                if (mDialog.isShowing())
-                    mDialog.dismiss();
+    public void showDialog(@NonNull Context context, @Nullable String msg, int processType) {
+        String msgString;
+        if (context instanceof Activity)
+            if (((AppCompatActivity) context).isFinishing()) {
+                return;
             }
-        } catch (Exception e) {
+        switch (processType) {
+            case APIConstant.PROGRESS_TYPE:
+                if (mDialog == null) {
+                    mDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+                    mDialog.getProgressHelper().setBarColor(context.getResources().getColor(R.color.colorPrimary));
+                    if (msg != null && !"".equals(msg)) {
+                        mDialog.setTitleText(msg);
+                    } else {
+                        mDialog.setTitleText(context.getResources().getString(R.string.loading));
+                    }
+                    mDialog.setCancelable(false);
+                    if (!mDialog.isShowing()) {
+                        mDialog.show();
+                    }
+                }
+                break;
+            case APIConstant.ERROR_TYPE:
+                if (msg != null && !"".equals(msg)) {
+                    msgString = msg;
+                } else {
+                    msgString = APIConstant.SOME_THING_WENT_WRONG;
+                }
+                mDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Oops!")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                try {
+                                    mDialog.dismiss();
+                                    mDialog = null;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .setContentText(msgString);
+                if (!mDialog.isShowing()) {
+                    mDialog.show();
+                }
+                break;
+            case APIConstant.SUCCESS_TYPE:
+                if (msg != null && !"".equals(msg)) {
+                    msgString = msg;
+                } else {
+                    msgString = "Done";
+                }
+                mDialog = new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Success!")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                try {
+                                    mDialog.dismiss();
+                                    mDialog = null;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .setContentText(msgString);
+                if (!mDialog.isShowing()) {
+                    mDialog.show();
+                }
+                break;
+            case APIConstant.WARNING_TYPE:
+                if (msg != null && !"".equals(msg)) {
+                    msgString = msg;
+                } else {
+                    msgString = APIConstant.SOME_THING_WENT_WRONG;
+                }
+                mDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Oops!")
+                        .setContentText(msgString);
+                if (!mDialog.isShowing()) {
+                    mDialog.show();
+                }
+                break;
+        }
+    }
 
+    public void dismissDialog() {
+        try {
+            if (mDialog != null && mDialog.isShowing()) {
+                mDialog.dismiss();
+            }
+            mDialog = null;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
 
-    public void onShowToastNotification(Activity activity, String msg) {
-        Toast ltoast = Toast.makeText(activity, msg, Toast.LENGTH_LONG);
-        ltoast.show();
-    }
 
     public void onHideKeyBoard(Activity mActivity) {
         final InputMethodManager imm = (InputMethodManager) mActivity
@@ -70,95 +154,5 @@ public class CustomProgressDialog {
         imm.hideSoftInputFromWindow(mActivity.getCurrentFocus().getWindowToken(), 0);
     }
 
-    //Alert dialog for call admin
-    public void BuyerAlert(final Activity activity) {
-
-    }
-
-    private void enableLoc(final Activity activity) {
-
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(activity)
-                    .addApi(LocationServices.API)
-                    .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                        @Override
-                        public void onConnected(Bundle bundle) {
-
-                        }
-
-                        @Override
-                        public void onConnectionSuspended(int i) {
-                            googleApiClient.connect();
-                        }
-                    })
-                    .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                        @Override
-                        public void onConnectionFailed(ConnectionResult connectionResult) {
-
-                            Log.d("Location error", "Location error " + connectionResult.getErrorCode());
-                        }
-                    }).build();
-            googleApiClient.connect();
-
-            LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(30 * 1000);
-            locationRequest.setFastestInterval(5 * 1000);
-            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                    .addLocationRequest(locationRequest);
-
-            builder.setAlwaysShow(true);
-
-            PendingResult<LocationSettingsResult> result =
-                    LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-                @Override
-                public void onResult(LocationSettingsResult result) {
-                    final Status status = result.getStatus();
-                    switch (status.getStatusCode()) {
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            try {
-                                // Show the dialog by calling startResolutionForResult(),
-                                // and check the result in onActivityResult().
-                                status.startResolutionForResult(activity, REQUEST_LOCATION);
-
-                            } catch (IntentSender.SendIntentException e) {
-                                // Ignore the error.
-                            }
-                            break;
-                    }
-                }
-            });
-        }
-    }
-
-    private boolean hasGPSDevice(Context context) {
-        final LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (mgr == null)
-            return false;
-        final List<String> providers = mgr.getAllProviders();
-        if (providers == null)
-            return false;
-        return providers.contains(LocationManager.GPS_PROVIDER);
-    }
-
-    public void showAlert(final Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("Are you sure to exit the app?")
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        activity.finishAffinity();
-                        activity.finish();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
 }

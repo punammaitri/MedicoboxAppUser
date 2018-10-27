@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -21,6 +22,7 @@ import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -108,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     CustomProgressDialog mAlert;
     private String lEmail;
     private String lPass;
+    private  Context mContext = this;
 
     //@BindView(R.id.btn_sign_in_withotp)
     //Button btn_sign_in_withotp;
@@ -387,7 +390,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 e.printStackTrace();
             }
 
-            AttemptLogin(jsonObject, lEmail, lPass);
+            AttemptLogin(jsonObject);
         } else if (lEmail.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
@@ -395,11 +398,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void AttemptLogin(JSONObject jsonObject, final String lEmail, String lPass) {
+    private void AttemptLogin(JSONObject jsonObject) {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.post(LOGIN)
                     .addJSONObjectBody(jsonObject) // posting json
                     .setPriority(Priority.MEDIUM)
@@ -409,6 +412,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         public void onResponse(JSONObject response) {
                             // do anything with response
                             try {
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 CallGetBearerTokenAPi(response.getString("response"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -418,7 +422,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(LoginActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
@@ -433,6 +437,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.get(GETBEARERTOKEN)
                     .addHeaders(Authorization, BEARER + bearerToken)
                     .setPriority(Priority.MEDIUM)
@@ -449,7 +454,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 String getLastname = response.getString("lastname");
                                 String getStoreId = response.getString("store_id");
 
-                                mAlert.onShowProgressDialog(LoginActivity.this, false);
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                         .putExtra("email", "" + getEmail));
                                 MedicoboxApp.onSaveLoginDetail(getId,bearerToken, getFirstname, getLastname, "", getEmail,getStoreId);
@@ -462,8 +467,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(LoginActivity.this, false);
-                            Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            Toast.makeText(LoginActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

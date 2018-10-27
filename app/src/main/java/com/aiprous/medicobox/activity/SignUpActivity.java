@@ -14,6 +14,7 @@ import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.register.RegisterModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -97,15 +98,36 @@ public class SignUpActivity extends AppCompatActivity {
 
             try {
                 JSONObject object = new JSONObject();
+                object.put("id", 0);
+                object.put("groupId", 0);
+                object.put("defaultBilling", "string");
+                object.put("defaultShipping", "string");
+                object.put("confirmation", "string");
+                object.put("createdAt", "string");
+                object.put("updatedAt", "string");
+                object.put("createdIn", "string");
+                object.put("dob", "string");
                 object.put("email", lEmail);
                 object.put("firstname", lName);
                 object.put("lastname", lName);
-                object.put("store_id", 0);
+                object.put("middlename", "string");
+                object.put("prefix", "string");
+                object.put("suffix", "string");
+                object.put("gender", 0);
+                object.put("storeId", 0);
+                object.put("taxvat", "string");
+                object.put("websiteId", 1);
+                object.put("addresses", "");
+                object.put("disableAutoGroupChange", 0);
+                object.put("extensionAttributes", "");
+                object.put("customAttributes", "");
 
                 //Add Json Object
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("customer", object);
                 jsonObject.put("password", lPass);
+                jsonObject.put("redirectUrl", "string");
+                jsonObject.put("mobile", lMobile);
 
                 AttemptToRegister(jsonObject);
             } catch (JSONException e) {
@@ -115,7 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void AttemptToRegister(JSONObject jsonObject) {
-        mAlert.onShowProgressDialog(this, true);
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
@@ -135,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 String getStoreId = String.valueOf(response.get("store_id"));
 
                                 BaseActivity.printLog("response-success : ", response.toString());
-                                mAlert.onShowProgressDialog(SignUpActivity.this, false);
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class)
                                         .putExtra("id", "" + getId)
                                         .putExtra("firstname", "" + getFirstname)
