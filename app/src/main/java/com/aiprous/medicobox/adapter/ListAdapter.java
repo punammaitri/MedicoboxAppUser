@@ -69,6 +69,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private String mImageURL;
     private String mSku;
 
+    private String quote_id;
 
 
 
@@ -140,10 +141,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 holder.tv_value.setText("" + setValuePosition);
                 AddItemsToCart();
 
+                String getCartId = MedicoboxApp.onGetCartID();
+                String lcartID=getCartId;
+                quote_id=lcartID.replace("\"", "");
                 //call guest add to cart api
                 try {
                     JSONObject object = new JSONObject();
-                    object.put("quote_id", MedicoboxApp.onGetCartID());
+                    object.put("quote_id", quote_id);
                     object.put("sku", mSku);
                     object.put("qty", mQty);
 
