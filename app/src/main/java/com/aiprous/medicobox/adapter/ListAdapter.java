@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.EditProfileActivity;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -24,13 +27,18 @@ import com.aiprous.medicobox.activity.SignUpActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
+import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,6 +55,9 @@ import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 
+import static com.aiprous.medicobox.utils.APIConstant.EDITCARTITEM;
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
+import static com.aiprous.medicobox.utils.APIConstant.UPDATEUSERINFO;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
@@ -68,8 +79,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     int mQty;
     private String mImageURL;
     private String mSku;
-
-
+    private String mCartId;
+    CustomProgressDialog mAlert;
+     private String mItemId;
 
 
     public ListAdapter(Context mContext, ArrayList<ListModel> mDataArrayList) {
@@ -88,7 +100,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-       // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
+        mAlert = CustomProgressDialog.getInstance();
+
+        //remove double qoute
+        String getCartId = MedicoboxApp.onGetCartID();
+        String lCartId=getCartId;
+        mCartId=lCartId.replace("\"", "");
+
+        // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
         holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
        // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
@@ -115,7 +134,45 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View v) {
                 holder.rlayout_number_of_item.setVisibility(View.VISIBLE);
                 holder.rlayout_add.setVisibility(View.GONE);
-                holder.tv_plus.performClick();
+              //  holder.tv_plus.performClick();
+
+                rlayout_cart.setVisibility(View.VISIBLE);
+
+                int lItemIndex = Integer.parseInt("" + v.getTag());
+
+                mMedicineName=mDataArrayList.get(lItemIndex).getTitle();
+                mValue=mDataArrayList.get(lItemIndex).getShort_description();
+                // mMrp=mDataArrayList.get(lItemIndex).getMrp();
+                // mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
+                mSku=mDataArrayList.get(lItemIndex).getSku();
+                mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                mImageURL=mDataArrayList.get(lItemIndex).getImage();
+                setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
+                mQty=setValuePosition;
+                holder.tv_value.setText("" + setValuePosition);
+               // AddItemsToCart();
+
+                String getCartId = MedicoboxApp.onGetCartID();
+                String lCartId=getCartId;
+                 mCartId=lCartId.replace("\"", "");
+
+                //call guest add to cart api
+                try {
+
+                    JSONObject object = new JSONObject();
+                    object.put("quote_id",mCartId);
+                    object.put("sku", mSku);
+                    object.put("qty", mQty);
+
+                    //Add Json Object
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("cart_item", object);
+
+                    AttemptAddToCart(jsonObject);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -138,14 +195,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
-                AddItemsToCart();
 
-                //call guest add to cart api
-                try {
-                    String lquote_id=MedicoboxApp.onGetCartID();
+                //call edit cart api
+               try {
+
                     JSONObject object = new JSONObject();
-                    object.put("quote_id",lquote_id);
-                    object.put("sku", mSku);
+                    object.put("quote_id",mCartId);
+                    object.put("item_id", mItemId);
                     object.put("qty", mQty);
 
 
@@ -154,12 +210,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     jsonObject.put("cart_item", object);
 
 
-                    AttemptAddToCart(jsonObject);
+                    callEditCartItem(jsonObject,MedicoboxApp.onGetAuthToken());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
             }
         });
@@ -188,7 +243,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         holder.rlayout_add.setVisibility(View.VISIBLE);
 
                     }
-                    AddItemsToCart();
+                   // AddItemsToCart();
+                    //call edit cart api
+                    try {
+
+                        JSONObject object = new JSONObject();
+                        object.put("quote_id",mCartId);
+                        object.put("item_id", mItemId);
+                        object.put("qty", mQty);
+
+
+                        //Add Json Object
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("cart_item", object);
+
+
+                        callEditCartItem(jsonObject,MedicoboxApp.onGetAuthToken());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });
@@ -217,7 +292,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -226,6 +301,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 md.setPrice(mPrice);
                 md.setQty("" + mQty);
                 md.setSku(mSku);
+                md.setItem_id(mItemId);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
@@ -245,7 +321,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -254,6 +330,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 md.setPrice(mPrice);
                 md.setQty("" + mQty);
                 md.setSku(mSku);
+                md.setItem_id(mItemId);
                 singletonOptionData.option.add(md);
             }
         }
@@ -264,7 +341,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     }
 
-    //api
+    //Add to cart API
 
     private void AttemptAddToCart(JSONObject jsonObject) {
        // mAlert.onShowProgressDialog(this, true);
@@ -280,25 +357,49 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            //String getId = String.valueOf(response.get("id"));
-                            // String getFirstname = String.valueOf(response.get("firstname"));
-                            // String getLastname = String.valueOf(response.get("lastname"));
-                            // String getEmail = String.valueOf(response.get("email"));
 
-                            BaseActivity.printLog("response-success : ", response.toString());
-                            //  mAlert.onShowProgressDialog(SignUpActivity.this, false);
-                              /*  startActivity(new Intent(SignUpActivity.this, MainActivity.class)
-                                        .putExtra("id", "" + getId)
-                                        .putExtra("firstname", "" + getFirstname)
-                                        .putExtra("lastname", "" + getLastname)
-                                        .putExtra("email", "" + getEmail));*/
+                         BaseActivity.printLog("response-success : ", response.toString());
 
-                            //  MedicoboxApp.onSaveLoginDetail(getId,"", getFirstname, getLastname, "", getEmail);
+                            //save item id into itemid variable
+                            AddItemsToCart();
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+    private void callEditCartItem(JSONObject jsonObject, String bearerToken) {
+
+        if (!isNetworkAvailable(mContext)) {
+            Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            mAlert.onShowProgressDialog(mContext, true);
+            AndroidNetworking.put(EDITCARTITEM+mItemId)
+                    .addJSONObjectBody(jsonObject)
+                    .addHeaders(Authorization, BEARER + bearerToken)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+
+                            //save item id into itemid variable
+                            AddItemsToCart();
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                           // Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
+                            mAlert.onShowProgressDialog(mContext, false);
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

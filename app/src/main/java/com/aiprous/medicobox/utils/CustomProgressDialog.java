@@ -42,7 +42,7 @@ public class CustomProgressDialog {
         return mInstance;
     }
 
-    public void onShowProgressDialog(Activity activity, boolean isShow) {
+    public void onShowProgressDialog(Context activity, boolean isShow) {
 
         try {
             if (isShow) {

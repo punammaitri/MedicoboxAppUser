@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartModel {
-
-
     @Expose
     @SerializedName("extension_attributes")
     public Extension_attributes extension_attributes;

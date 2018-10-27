@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.ListAdapter;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.ListModel;
@@ -39,6 +40,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
@@ -100,6 +103,9 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //get cart items through api
+        getCartItems();
         if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
         {
             tv_cart_empty.setVisibility(View.VISIBLE);
@@ -124,13 +130,13 @@ public class CartActivity extends AppCompatActivity {
     }
 
 
-    private void getCartItems(JSONObject jsonObject) {
+    private void getCartItems() {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
             mAlert.onShowProgressDialog(this, true);
-            AndroidNetworking.post(GETCARTITEMS)
-                    .addJSONObjectBody(jsonObject)
+            AndroidNetworking.get(GETCARTITEMS)
+                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                     .setPriority(Priority.MEDIUM)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {

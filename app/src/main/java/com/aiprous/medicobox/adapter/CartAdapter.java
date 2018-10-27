@@ -4,17 +4,29 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.model.CartModel;
+import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,6 +37,11 @@ import butterknife.ButterKnife;
 import static com.aiprous.medicobox.activity.CartActivity.nestedscroll_cart;
 import static com.aiprous.medicobox.activity.CartActivity.tv_cart_empty;
 import static com.aiprous.medicobox.activity.CartActivity.tv_cart_size;
+import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.DELETECARTITEMS;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
@@ -47,6 +64,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public int mTotalMRPprice = 0;
     private int mTotalPrice=0;
     private String mSku;
+    private String mItemId;
+    CustomProgressDialog mAlert;
 
 
     public CartAdapter(Context mContext, ArrayList<CartModel.Items> mCartArrayList) {
@@ -65,6 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
+        mAlert = CustomProgressDialog.getInstance();
      holder.tv_item_name.setText(mCartArrayList.get(position).getName());
     // holder.tv_medicine_contains.setText(mCartArrayList.get(position).getValue());
     // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
@@ -73,7 +93,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
 
      //set number of items
-        holder.tv_value.setText(mCartArrayList.get(position).getQty());
+        holder.tv_value.setText(""+mCartArrayList.get(position).getQty());
 
         //Add to cart
         mMedicineName=mCartArrayList.get(position).getName();
@@ -145,6 +165,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
+                mItemId= String.valueOf(mCartArrayList.get(position).getItem_id());
+                //call delete api
+                AttemptDeleteCartItem();
                 SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
                 ItemModelList = singletonOptionData.getOptionList();
                 for (int i = 0; i < ItemModelList.size(); i++) {
@@ -272,6 +295,40 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             CartActivity.tv_total_saving.setText(mContext.getResources().getString(R.string.Rs)+""+lPriceDiscount);
         }
     }
+
+    private void AttemptDeleteCartItem() {
+         mAlert.onShowProgressDialog(mContext, true);
+        if (!isNetworkAvailable(mContext)) {
+            Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            AndroidNetworking.delete(DELETECARTITEMS+mItemId)
+                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            mAlert.onShowProgressDialog(mContext, false);
+                           // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
+                            if(response.toString().equals("true")){
+                                Toast.makeText(mContext, "Product deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            mAlert.onShowProgressDialog(mContext, false);
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_item_name)

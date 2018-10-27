@@ -10,9 +10,10 @@ public class AddToCartOptionDetailModel {
     String price;
     String Qty;
     String sku;
+    String item_id;
 
 
-    public AddToCartOptionDetailModel(String image, String medicineName, String value, String mrp, String discount, String price, String qty,String sku) {
+    public AddToCartOptionDetailModel(String image, String medicineName, String value, String mrp, String discount, String price, String qty,String sku,String item_id) {
         this.image = image;
         this.medicineName = medicineName;
         this.value = value;
@@ -21,6 +22,7 @@ public class AddToCartOptionDetailModel {
         this.price = price;
         Qty = qty;
         this.sku=sku;
+        this.item_id=item_id;
     }
 
     public String getImage() {
@@ -85,5 +87,13 @@ public class AddToCartOptionDetailModel {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
     }
 }

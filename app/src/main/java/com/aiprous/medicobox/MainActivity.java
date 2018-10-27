@@ -370,7 +370,7 @@ public class MainActivity extends AppCompatActivity
             MedicoboxApp.onSaveCity(city);
             Log.e("Location fetch:", "" + fullAddress);
             //Toast.makeText(mContext, fullAddress, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.e("Location is not fetch", "");
         }
