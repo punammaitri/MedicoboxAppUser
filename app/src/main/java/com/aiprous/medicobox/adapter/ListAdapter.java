@@ -179,7 +179,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View v) {
                 if(position%2==0)
                 {
-                    mContext.startActivity(new Intent(mContext,ProductDetailActivity.class));
+                    mContext.startActivity(new Intent(mContext,ProductDetailActivity.class).putExtra("productId",mDataArrayList.get(position).getId()));
                 }else {
                     mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class));
                 }

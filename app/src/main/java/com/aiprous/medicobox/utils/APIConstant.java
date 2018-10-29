@@ -21,6 +21,7 @@ public class APIConstant {
     public static String GETCARTITEMS="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
     public static String DELETECARTITEMS="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String EDITCARTITEM="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
+    public static String SINGLEPRODUCT="http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
 
 
     //Response Status Code

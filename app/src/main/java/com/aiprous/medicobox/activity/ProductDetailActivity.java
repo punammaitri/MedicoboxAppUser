@@ -10,25 +10,48 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
+import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.adapter.ProductDetailsAdapter;
 import com.aiprous.medicobox.adapter.ViewPagerAdapter;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
+import com.aiprous.medicobox.model.ListModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
+import static com.aiprous.medicobox.utils.APIConstant.SINGLEPRODUCT;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -53,6 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Context mcontext = this;
     private int dotscount;
     private ImageView[] dots;
+    private String mProductId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +167,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         else {
             tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
+
+        if(getIntent().getStringExtra("productId")!=null)
+        {
+            mProductId=getIntent().getStringExtra("productId");
+            getSingleproducts(mProductId);
+        }
+
+
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -160,4 +192,74 @@ public class ProductDetailActivity extends AppCompatActivity {
     public void BackPressDetail() {
         finish();
     }
+
+    private void getSingleproducts(String productId) {
+        if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
+            AndroidNetworking.post(SINGLEPRODUCT+productId)
+                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                               // JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+
+                                /*if (getAllProductList != null) {
+                                    mListModelArray.clear();
+                                    for (int i = 0; i < getAllProductList.length(); i++) {
+                                        String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                        String title = getAllProductList.getJSONObject(i).get("title").toString();
+                                        String price = getAllProductList.getJSONObject(i).get("price").toString();
+                                        String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
+                                        String sales_price=getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                        String short_description=getAllProductList.getJSONObject(i).get("short_description").toString();
+
+                                        ListModel listModel = new ListModel(id, sku, title, price,sales_price,short_description,imageUrl);
+                                        listModel.setId(id);
+                                        listModel.setSku(sku);
+                                        listModel.setTitle(title);
+                                        listModel.setPrice(price);
+                                        listModel.setSale_price(sales_price);
+                                        listModel.setShort_description(short_description);
+                                        listModel.setImage(imageUrl);
+                                        mListModelArray.add(listModel);
+                                    }
+                                }
+                                CustomProgressDialog.getInstance().dismissDialog();
+
+                                if(!mListModelArray.isEmpty())
+                                {
+                                    layoutManager = new LinearLayoutManager(mContext);
+                                    rc_medicine_list.setLayoutManager(new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false));
+                                    rc_medicine_list.setHasFixedSize(true);
+                                    rc_medicine_list.setAdapter(new ListAdapter(mContext, mListModelArray));
+                                }*/
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+
+
 }
