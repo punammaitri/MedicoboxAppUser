@@ -32,6 +32,12 @@
     <string name="are_you_exit">You want to exit?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="ok">OK</string>
+    <string name="cancelled">Cancelled!</string>
+    <string name="cancelled_file">"You file has been cancelled!</string>
+    <string name="deleted">Deleted!</string>
+    <string name="deleted_file">Your file has been deleted!</string>
+    <string name="confirm_deleted">Are you sure to delete this file!</string>
     <string name="are_you_sure_logout">You want to logout?</string>
     <string name="address"> Flat No 104, A wing, \nGreen Olive Apartments, \nHinjawadi \nPune-411057  \nMaharashtra \nIndia</string>
 

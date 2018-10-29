@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.register.RegisterModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -22,8 +21,6 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,9 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText edtEmail;
     @BindView(R.id.edt_password)
     EditText edtPassword;
-    public ArrayList<String> mTempArray = new ArrayList<String>();
     Context mContext = this;
-    private RegisterModel detailModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +110,13 @@ public class SignUpActivity extends AppCompatActivity {
                 jsonObject.put("password", lPass);
                 jsonObject.put("mobile", lMobile);
 
-                AttemptToRegister(jsonObject);
+                if (!isNetworkAvailable(this)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                    AttemptToRegister(jsonObject);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -123,70 +124,41 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void AttemptToRegister(final JSONObject jsonObject) {
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        if (!isNetworkAvailable(this)) {
-            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-        } else {
-            AndroidNetworking.post(REGISTER)
-                    .addJSONObjectBody(jsonObject)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
+        AndroidNetworking.post(REGISTER)
+                .addJSONObjectBody(jsonObject)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-                            //for registration response
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            try {
-                                JSONObject jsonResponse = new JSONObject(response.getString("response"));
+                        //for registration response
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response.getString("response"));
 
-                                if (!jsonResponse.isNull("message")) {
-                                    String errorMessage = jsonResponse.getString("message");
-                                    Toast.makeText(mContext, "" + errorMessage, Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                                    finish();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            if (!jsonResponse.isNull("message")) {
+                                String errorMessage = jsonResponse.getString("message");
+                                Toast.makeText(mContext, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                finish();
                             }
-
-
-                            /*
-                            try {
-                                JSONObject jsonObj = new JSONObject(response.getString("response"));
-                                String getId = jsonObj.getString("id");
-                                String getFirstname = jsonObj.getString("firstname");
-                                String getLastname = jsonObj.getString("lastname");
-                                String getEmail = jsonObj.getString("email");
-                                String getMobile = jsonObj.getString("mobile");
-                                String getStoreId = jsonObj.getString("store_id");
-
-                                BaseActivity.printLog("response-success : ", response.toString());
-                                CustomProgressDialog.getInstance().dismissDialog();
-                                startActivity(new Intent(SignUpActivity.this, MainActivity.class)
-                                        .putExtra("id", "" + getId)
-                                        .putExtra("firstname", "" + getFirstname)
-                                        .putExtra("lastname", "" + getLastname)
-                                        .putExtra("email", "" + getEmail));
-
-                                MedicoboxApp.onSaveLoginDetail(getId, "", getFirstname, getLastname, getMobile, getEmail, getStoreId);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     @OnClick(R.id.tv_sign_in_here)

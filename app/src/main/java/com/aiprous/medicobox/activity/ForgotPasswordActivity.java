@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -36,7 +38,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     EditText edtVerificationCode;
     @BindView(R.id.edt_new_password)
     EditText edtNewPassword;
-
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,36 +62,36 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        AttemptToConfirmKey(jsonObject);
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        }else {
+            AttemptToConfirmKey(jsonObject);
+        }
     }
 
     private void AttemptToConfirmKey(JSONObject jsonObject) {
 
-        if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            AndroidNetworking.post(CONFIRMKEY)
-                    .addJSONObjectBody(jsonObject) // posting json
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            CustomProgressDialog.getInstance().dismissDialog();
-                        }
+        AndroidNetworking.post(CONFIRMKEY)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Toast.makeText(ForgotPasswordActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(ForgotPasswordActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
 

@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.adapter.ProductDescriptionAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
@@ -70,22 +69,21 @@ public class ProductDescriptionActivity extends AppCompatActivity {
         rv_people_also_viewed.setAdapter(new ProductDescriptionAdapter(mcontext, mlistModelsArray));
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
+
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)

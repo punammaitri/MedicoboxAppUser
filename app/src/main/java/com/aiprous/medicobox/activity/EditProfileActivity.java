@@ -84,7 +84,11 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onResume();
 
         mAlert = CustomProgressDialog.getInstance();
-        GetProfileInfoUsingAuthKey(MedicoboxApp.onGetAuthToken());
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            GetProfileInfoUsingAuthKey(MedicoboxApp.onGetAuthToken());
+        }
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
@@ -149,7 +153,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("customer", object);
 
-                UpdateProfileInfo(jsonObject,MedicoboxApp.onGetAuthToken());
+                if (!isNetworkAvailable(this)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    UpdateProfileInfo(jsonObject, MedicoboxApp.onGetAuthToken());
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -157,81 +165,71 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void GetProfileInfoUsingAuthKey(final String bearerToken) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(GETBEARERTOKEN)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            String getId = response.getString("id");
+                            String getGroupId = response.getString("group_id");
+                            String getEmail = response.getString("email");
+                            String getFirstname = response.getString("firstname");
+                            String getLastname = response.getString("lastname");
+                            String getStoreId = response.getString("store_id");
+                            String getWebsiteId = response.getString("website_id");
 
-        if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(GETBEARERTOKEN)
-                    .addHeaders(Authorization, BEARER + bearerToken)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
-                                String getId = response.getString("id");
-                                String getGroupId = response.getString("group_id");
-                                String getEmail = response.getString("email");
-                                String getFirstname = response.getString("firstname");
-                                String getLastname = response.getString("lastname");
-                                String getStoreId = response.getString("store_id");
-                                String getWebsiteId = response.getString("website_id");
+                            edtFirstName.setText(getFirstname);
+                            edtLastName.setText(getLastname);
+                            edtEmailId.setText(getEmail);
 
-                                edtFirstName.setText(getFirstname);
-                                edtLastName.setText(getLastname);
-                                edtEmailId.setText(getEmail);
-
-                                CustomProgressDialog.getInstance().dismissDialog();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
                             CustomProgressDialog.getInstance().dismissDialog();
-                            Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     private void UpdateProfileInfo(final JSONObject jsonObject, String bearerToken) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.put(UPDATEUSERINFO)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        startActivity(getIntent());
+                    }
 
-        if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.put(UPDATEUSERINFO)
-                    .addJSONObjectBody(jsonObject)
-                    .addHeaders(Authorization, BEARER + bearerToken)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            startActivity(getIntent());
-                        }
-
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 }

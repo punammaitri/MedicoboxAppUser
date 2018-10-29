@@ -39,7 +39,6 @@ import butterknife.ButterKnife;
 import static com.aiprous.medicobox.activity.CartActivity.nestedscroll_cart;
 import static com.aiprous.medicobox.activity.CartActivity.tv_cart_empty;
 import static com.aiprous.medicobox.activity.CartActivity.tv_cart_size;
-import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.DELETECARTITEMS;
@@ -65,7 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     int mQty;
     String mImageURL;
     public int mTotalMRPprice = 0;
-    private int mTotalPrice=0;
+    private int mTotalPrice = 0;
     private String mSku;
     private String mItemId;
     CustomProgressDialog mAlert;
@@ -88,34 +87,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         mAlert = CustomProgressDialog.getInstance();
-     holder.tv_item_name.setText(mCartArrayList.get(position).getName());
-    // holder.tv_medicine_contains.setText(mCartArrayList.get(position).getValue());
-    // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
-     holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-     holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
+        holder.tv_item_name.setText(mCartArrayList.get(position).getName());
+        // holder.tv_medicine_contains.setText(mCartArrayList.get(position).getValue());
+        // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
+        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
 
-
-     //set number of items
-        holder.tv_value.setText(""+mCartArrayList.get(position).getQty());
+        //set number of items
+        holder.tv_value.setText("" + mCartArrayList.get(position).getQty());
 
         //Add to cart
-        mMedicineName=mCartArrayList.get(position).getName();
-       // mValue=mCartArrayList.get(position).getValue();
-      //  mMrp=mCartArrayList.get(position).getMrp();
-       // mdiscount=mCartArrayList.get(position).getDiscount();
-        mPrice= String.valueOf(mCartArrayList.get(position).getPrice());
-       // mImageURL=mCartArrayList.get(position).getImage();
-        mQty= Integer.parseInt(holder.tv_value.getText().toString());
+        mMedicineName = mCartArrayList.get(position).getName();
+        // mValue=mCartArrayList.get(position).getValue();
+        //  mMrp=mCartArrayList.get(position).getMrp();
+        // mdiscount=mCartArrayList.get(position).getDiscount();
+        mPrice = String.valueOf(mCartArrayList.get(position).getPrice());
+        // mImageURL=mCartArrayList.get(position).getImage();
+        mQty = Integer.parseInt(holder.tv_value.getText().toString());
 
         AddItemsToSingleton();
 
 
-
-     if(position==getItemCount()-1)
-     {
-         holder.view_cart_item.setVisibility(View.GONE);
-     }
-
+        if (position == getItemCount() - 1) {
+            holder.view_cart_item.setVisibility(View.GONE);
+        }
 
         holder.tv_plus.setTag(position);
         holder.tv_plus.setOnClickListener(new View.OnClickListener() {
@@ -123,39 +118,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
-                mMedicineName=mCartArrayList.get(lItemIndex).getName();
-               // mValue=mCartArrayList.get(lItemIndex).getValue();
-               // mMrp=mCartArrayList.get(lItemIndex).getMrp();
-              //  mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
-                mPrice= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-               // mImageURL=mCartArrayList.get(lItemIndex).getImage();
-                mSku=mCartArrayList.get(lItemIndex).getSku();
+                mMedicineName = mCartArrayList.get(lItemIndex).getName();
+                // mValue=mCartArrayList.get(lItemIndex).getValue();
+                // mMrp=mCartArrayList.get(lItemIndex).getMrp();
+                //  mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
+                mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                // mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                mSku = mCartArrayList.get(lItemIndex).getSku();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
-                mQty=setValuePosition;
+                mQty = setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
                 //call edit cart api
                 try {
 
-                    for(int i=0;i<ItemModelList.size();i++)
-                    {
-                        if(mMedicineName.equals(ItemModelList.get(i).getMedicineName()))
-                        {
-                            mItemId=ItemModelList.get(i).getItem_id();
+                    for (int i = 0; i < ItemModelList.size(); i++) {
+                        if (mMedicineName.equals(ItemModelList.get(i).getMedicineName())) {
+                            mItemId = ItemModelList.get(i).getItem_id();
                         }
                     }
 
                     JSONObject object = new JSONObject();
-                    object.put("quote_id",mCartArrayList.get(lItemIndex).getQuote_id());
+                    object.put("quote_id", mCartArrayList.get(lItemIndex).getQuote_id());
                     object.put("item_id", mItemId);
                     object.put("qty", mQty);
-
 
                     //Add Json Object
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("cart_item", object);
 
-                    mItemId= String.valueOf(mCartArrayList.get(lItemIndex).getItem_id());
-                    callEditCartItem(jsonObject,MedicoboxApp.onGetAuthToken());
+                    mItemId = String.valueOf(mCartArrayList.get(lItemIndex).getItem_id());
+                    if (!isNetworkAvailable(mContext)) {
+                        CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                    } else {
+                        callEditCartItem(jsonObject, MedicoboxApp.onGetAuthToken());
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -173,14 +170,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if (setValuePosition != 0) {
                     --setValuePosition;
                     holder.tv_value.setText("" + setValuePosition);
-                    mQty=setValuePosition;
-                    mMedicineName=mCartArrayList.get(lItemIndex).getName();
-                   // mValue=mCartArrayList.get(lItemIndex).getValue();
-                   // mMrp=mCartArrayList.get(lItemIndex).getMrp();
-                   // mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
-                    mPrice= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                   // mImageURL=mCartArrayList.get(lItemIndex).getImage();
-                    mSku=mCartArrayList.get(lItemIndex).getSku();
+                    mQty = setValuePosition;
+                    mMedicineName = mCartArrayList.get(lItemIndex).getName();
+                    // mValue=mCartArrayList.get(lItemIndex).getValue();
+                    // mMrp=mCartArrayList.get(lItemIndex).getMrp();
+                    // mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
+                    mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                    // mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                    mSku = mCartArrayList.get(lItemIndex).getSku();
                     if (holder.tv_value.getText().equals("0")) {
 
                     }
@@ -188,16 +185,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     //call edit cart api
                     try {
                         JSONObject object = new JSONObject();
-                        object.put("quote_id",mCartArrayList.get(lItemIndex).getQuote_id());
+                        object.put("quote_id", mCartArrayList.get(lItemIndex).getQuote_id());
                         object.put("item_id", mCartArrayList.get(lItemIndex).getItem_id());
                         object.put("qty", mQty);
-
 
                         //Add Json Object
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("cart_item", object);
-                        mItemId= String.valueOf(mCartArrayList.get(lItemIndex).getItem_id());
-                        callEditCartItem(jsonObject,MedicoboxApp.onGetAuthToken());
+                        mItemId = String.valueOf(mCartArrayList.get(lItemIndex).getItem_id());
+                        if (!isNetworkAvailable(mContext)) {
+                            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                        } else {
+                            callEditCartItem(jsonObject, MedicoboxApp.onGetAuthToken());
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -210,19 +210,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
-                mItemId= String.valueOf(mCartArrayList.get(position).getItem_id());
+                mItemId = String.valueOf(mCartArrayList.get(position).getItem_id());
                 //call delete api
-                AttemptDeleteCartItem();
+                if (!isNetworkAvailable(mContext)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    AttemptDeleteCartItem();
+                }
 
                 SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
                 ItemModelList = singletonOptionData.getOptionList();
-                if(!ItemModelList.isEmpty())
-                {
+                if (!ItemModelList.isEmpty()) {
                     for (int i = 0; i < ItemModelList.size(); i++) {
                         if (ItemModelList.get(i).getMedicineName().equals(mCartArrayList.get(position).getName())) {
                             ItemModelList.remove(i);
                             //notifyDataSetChanged();
-                            if(!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()){
+                            if (!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                                 //this is for make cart icon visible
                                 CartActivity.rlayout_cart.setVisibility(View.VISIBLE);
                                 tv_cart_empty.setVisibility(View.GONE);
@@ -234,19 +237,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     }
                 }
 
-                for(int j=0;j<mCartArrayList.size();j++)
-                {
-                    String lItemId=String.valueOf(mCartArrayList.get(j).getItem_id());
-                    if(mItemId.equals(lItemId))
-                    {
+                for (int j = 0; j < mCartArrayList.size(); j++) {
+                    String lItemId = String.valueOf(mCartArrayList.get(j).getItem_id());
+                    if (mItemId.equals(lItemId)) {
                         mCartArrayList.remove(j);
                         notifyDataSetChanged();
                         break;
                     }
                 }
 
-                if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-                {
+                if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                     CartActivity.rlayout_cart.setVisibility(View.GONE);
                     tv_cart_empty.setVisibility(View.VISIBLE);
                     nestedscroll_cart.setVisibility(View.GONE);
@@ -256,6 +256,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });
 
     }
+
     @Override
     public int getItemCount() {
         return (mCartArrayList == null) ? 0 : mCartArrayList.size();
@@ -279,7 +280,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -295,13 +296,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 for (int i = 0; i < ItemModelList.size(); i++) {
                     if (ItemModelList.get(i).getQty().equals("0")) {
                         ItemModelList.remove(i);
-                        if(!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()){
+                        if (!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                             //this is for make cart icon visible
                             CartActivity.rlayout_cart.setVisibility(View.VISIBLE);
                             tv_cart_empty.setVisibility(View.GONE);
                             nestedscroll_cart.setVisibility(View.VISIBLE);
-                        }
-                        else {
+                        } else {
 
                             CartActivity.rlayout_cart.setVisibility(View.GONE);
                             tv_cart_empty.setVisibility(View.VISIBLE);
@@ -314,7 +314,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -328,16 +328,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         }
 
-         String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
-         tv_cart_size.setText(cart_size);
-         calculateTotalPrice();
+        String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
+        tv_cart_size.setText(cart_size);
+        calculateTotalPrice();
 
     }
 
     //To calculate the total
     public void calculateTotalPrice() {
         mTotalMRPprice = 0;
-        mTotalPrice=0;
+        mTotalPrice = 0;
         if (ItemModelList != null) {
             Iterator<AddToCartOptionDetailModel> iterator = ItemModelList.iterator();
             while (iterator.hasNext()) {
@@ -345,94 +345,82 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if (tempObj.getMrp() != null && !tempObj.getMrp().isEmpty()) {
                     try {
                         String tempMRPCost = tempObj.getMrp();
-                        String tempPrice=tempObj.getPrice();
+                        String tempPrice = tempObj.getPrice();
                         mTotalMRPprice = mTotalMRPprice + Integer.parseInt(tempMRPCost);
-                        mTotalPrice= mTotalPrice+Integer.parseInt(tempPrice);
+                        mTotalPrice = mTotalPrice + Integer.parseInt(tempPrice);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-            CartActivity.tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs)+""+mTotalMRPprice);
-            int lPriceDiscount=mTotalMRPprice-mTotalPrice;
-            CartActivity.tv_price_discount.setText(mContext.getResources().getString(R.string.Rs)+""+lPriceDiscount);
-            CartActivity.tv_to_be_paid.setText(mContext.getResources().getString(R.string.Rs)+""+mTotalPrice);
-            CartActivity.tv_total_saving.setText(mContext.getResources().getString(R.string.Rs)+""+lPriceDiscount);
+            CartActivity.tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "" + mTotalMRPprice);
+            int lPriceDiscount = mTotalMRPprice - mTotalPrice;
+            CartActivity.tv_price_discount.setText(mContext.getResources().getString(R.string.Rs) + "" + lPriceDiscount);
+            CartActivity.tv_to_be_paid.setText(mContext.getResources().getString(R.string.Rs) + "" + mTotalPrice);
+            CartActivity.tv_total_saving.setText(mContext.getResources().getString(R.string.Rs) + "" + lPriceDiscount);
         }
     }
 
     private void AttemptDeleteCartItem() {
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        if (!isNetworkAvailable(mContext)) {
-            Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            AndroidNetworking.delete(DELETECARTITEMS+mItemId)
-                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsString(new StringRequestListener() {
-                        @Override
-                        public void onResponse(String response) {
-                            CustomProgressDialog.getInstance().dismissDialog();
-                           // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
-                            if(response.toString().equals("true")){
-                                Toast.makeText(mContext, "Product deleted successfully", Toast.LENGTH_SHORT).show();
+        AndroidNetworking.delete(DELETECARTITEMS + mItemId)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
+                        if (response.toString().equals("true")) {
+                            Toast.makeText(mContext, "Product deleted successfully", Toast.LENGTH_SHORT).show();
 
-                            }
                         }
+                    }
 
-                        @Override
-                        public void onError(ANError anError) {
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            // handle error
-                            Log.e("Error", "onError errorCode : " + anError.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + anError.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError anError) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                    }
+                });
     }
 
     private void callEditCartItem(JSONObject jsonObject, String bearerToken) {
-
-        if (!isNetworkAvailable(mContext)) {
-            Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.put(EDITCARTITEM+mItemId)
-                    .addJSONObjectBody(jsonObject)
-                    .addHeaders(Authorization, BEARER + bearerToken)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-
-                            try{
-                                mItemId = response.getString("item_id");
-
-                            }catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            BaseActivity.printLog("response-success : ", response.toString());
-                            //save item id into itemid variable
-                            AddItemsToSingleton();
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.put(EDITCARTITEM + mItemId)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            mItemId = response.getString("item_id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        BaseActivity.printLog("response-success : ", response.toString());
+                        //save item id into itemid variable
+                        AddItemsToSingleton();
+                    }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            // Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        // Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

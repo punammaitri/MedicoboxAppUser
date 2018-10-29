@@ -61,8 +61,6 @@ public class SubstitutesProductAdapter extends RecyclerView.Adapter<SubstitutesP
         @BindView(R.id.tv_price)
         TextView tv_price;
 
-
-
         ViewHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);

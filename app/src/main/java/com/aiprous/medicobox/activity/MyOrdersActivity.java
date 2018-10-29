@@ -63,11 +63,11 @@ public class MyOrdersActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(mContext);
         rc_my_order_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_my_order_list.setHasFixedSize(true);
-        mlistAdapter=new MyOrdersAdapter(mContext, myOrdersArrayList);
+        mlistAdapter = new MyOrdersAdapter(mContext, myOrdersArrayList);
         rc_my_order_list.setAdapter(mlistAdapter);
 
 
-        try{
+        try {
             searchview_order_id.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -78,8 +78,7 @@ public class MyOrdersActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextChange(String newText) {
 
-                    if(myOrdersArrayList!=null&&!myOrdersArrayList.isEmpty())
-                    {
+                    if (myOrdersArrayList != null && !myOrdersArrayList.isEmpty()) {
                         ArrayList<MyOrdersModel> filteredModelList = filter(myOrdersArrayList, newText);
                         mlistAdapter.setFilter(filteredModelList);
                     }
@@ -102,9 +101,7 @@ public class MyOrdersActivity extends AppCompatActivity {
                 }
             });
 
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -113,18 +110,16 @@ public class MyOrdersActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //show cart size
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
+
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
     }
 
     @OnClick(R.id.rlayout_back_button)

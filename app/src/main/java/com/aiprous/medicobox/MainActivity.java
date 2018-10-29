@@ -307,7 +307,9 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                        startActivity(new Intent(mContext, LoginActivity.class));
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         MedicoboxApp.onSaveLoginDetail("", "", "", "", "", "", "");
                         MedicoboxApp.onSaveCartId("");
                         finish();
@@ -317,43 +319,6 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                    }
-                })
-                .show();
-    }
-
-
-    private void delete() {
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Are you sure?")
-                .setContentText("Are you sure to delete this file!")
-                .setCancelText("No")
-                .setConfirmText("Yes")
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        // reuse previous dialog instance, keep widget user state, reset them if you need
-                        sDialog.setTitleText("Cancelled!")
-                                .setContentText("You file has been cancelled!)")
-                                .setConfirmText("OK")
-                                .showCancelButton(false)
-                                .setCancelClickListener(null)
-                                .setConfirmClickListener(null)
-                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-
-                    }
-                })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.setTitleText("Deleted!")
-                                .setContentText("Your file has been deleted!")
-                                .setConfirmText("OK")
-                                .showCancelButton(false)
-                                .setCancelClickListener(null)
-                                .setConfirmClickListener(null)
-                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     }
                 })
                 .show();
@@ -410,6 +375,4 @@ public class MainActivity extends AppCompatActivity
             Log.e("Location is not fetch", "");
         }
     }
-
-
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.aiprous.medicobox.R;
+import com.cazaea.sweetalert.SweetAlertDialog;
 
 import java.util.ArrayList;
 
@@ -44,15 +45,58 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
             @Override
             public void onClick(View v) {
 
-                try{
-                    mDataArrayList.remove(position);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
+                deleteAlert(mDataArrayList, position);
             }
         });
+    }
 
+    private void deleteAlert(final ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList, final int position) {
+        new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(mContext.getResources().getString(R.string.are_you_sure))
+                .setContentText(mContext.getResources().getString(R.string.confirm_deleted))
+                .setCancelText(mContext.getResources().getString(R.string.no))
+                .setConfirmText(mContext.getResources().getString(R.string.yes))
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        // reuse previous dialog instance, keep widget user state, reset them if you need
+                        sDialog.setTitleText(mContext.getResources().getString(R.string.cancelled))
+                                .setContentText(mContext.getResources().getString(R.string.cancelled_file))
+                                .setConfirmText(mContext.getResources().getString(R.string.ok))
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.setTitleText(mContext.getResources().getString(R.string.deleted))
+                                .setContentText(mContext.getResources().getString(R.string.deleted_file))
+                                .setConfirmText(mContext.getResources().getString(R.string.ok))
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+
+                        //To delete the item
+                        try {
+                            for (int i = 0; i < mDataArrayList.size(); i++) {
+                                if (mDataArrayList.get(position).getImagebitmap().equals(mDataArrayList.get(i).getImagebitmap())) {
+                                    mDataArrayList.remove(i);
+                                    notifyDataSetChanged();
+                                    break;
+                                }
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .show();
     }
 
     @Override

@@ -43,22 +43,21 @@ public class MyAccountActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         //show cart size
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
+
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
     }
 
     @OnClick(R.id.tv_edit_profile)

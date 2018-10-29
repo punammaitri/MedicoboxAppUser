@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.MainActivity;
-
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -37,13 +36,12 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 
 public class SplashActivity extends AppCompatActivity implements android.location.LocationListener {
 
 
-    private static int SPLASH_TIME_OUT = 6000;
+    private static int SPLASH_TIME_OUT = 4000;
     private static final int REQUEST_PERMISSIONS = 20;
     final static int REQUEST_LOCATION = 199;
     private Context mContext = this;
@@ -58,11 +56,9 @@ public class SplashActivity extends AppCompatActivity implements android.locatio
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
         if (isAboveLollipop()) {
             if (!checkAppPermission()) requestPermission();
         }
-
         init();
     }
 
@@ -106,8 +102,6 @@ public class SplashActivity extends AppCompatActivity implements android.locatio
         }, 2000);*/
 
 
-
-
         if (GpsStatus) {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -130,8 +124,6 @@ public class SplashActivity extends AppCompatActivity implements android.locatio
         } else {
             enableLoc();
         }
-
-
     }
 
     @Override
@@ -150,7 +142,7 @@ public class SplashActivity extends AppCompatActivity implements android.locatio
             String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
 
             String fullAddress = area + "," + city + "," + state + "," + country + "," + postalCode;
-             MedicoboxApp.onSaveCity(city);
+            MedicoboxApp.onSaveCity(city);
             Log.e("Location fetch:", "" + fullAddress);
             //Toast.makeText(mContext, fullAddress, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
@@ -268,6 +260,4 @@ public class SplashActivity extends AppCompatActivity implements android.locatio
         }
         return false;
     }
-
-
 }
