@@ -108,13 +108,71 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         String lCartId=getCartId;
         mCartId=lCartId.replace("\"", "");
 
+
+/*
         // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
         holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
        // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
         holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
       //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
-        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());*/
+
+
+
+        SingletonAddToCart singletonAddToCart = SingletonAddToCart.getGsonInstance();
+        ItemModelList = singletonAddToCart.getOptionList();
+
+        if (!ItemModelList.isEmpty()) {
+
+            for (int i = 0; i < ItemModelList.size(); i++) {
+                if (ItemModelList.get(i).getMedicineName().equals(mDataArrayList.get(position).getTitle())) {
+
+                    //make cart layout  visible
+                    holder.rlayout_number_of_item.setVisibility(View.VISIBLE);
+                    holder.rlayout_add.setVisibility(View.GONE);
+
+                    // holder.img_medicine.setImageResource(ItemModelList.get(position).getImage_url());
+                    holder.tv_medicine_name.setText(ItemModelList.get(i).getMedicineName());
+                   // holder.tv_content.setText(ItemModelList.get(position).getShort_description());
+                    // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
+                    holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
+                    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getPrice());
+                    holder.tv_value.setText(ItemModelList.get(i).getQty());
+
+                   // addItemsSingleton();
+                    break;
+                }else {
+
+                    // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
+                    holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
+                    holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
+                    // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
+                    holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
+                    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+
+                    //make add button visible
+                    holder.rlayout_number_of_item.setVisibility(View.GONE);
+                    holder.rlayout_add.setVisibility(View.VISIBLE);
+
+                }
+            }
+        }else {
+
+            // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
+            holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
+            holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
+            // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
+            holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+
+        }
+
+
+
 
         holder.llayout_listing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +258,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 //call edit cart api
                try {
 
+                   for(int i=0;i<ItemModelList.size();i++)
+                   {
+                       if(mMedicineName.equals(ItemModelList.get(i).getMedicineName()))
+                       {
+                           mItemId=ItemModelList.get(i).getItem_id();
+                       }
+                   }
+
                     JSONObject object = new JSONObject();
                     object.put("quote_id",mCartId);
                     object.put("item_id", mItemId);
@@ -209,7 +275,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     //Add Json Object
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("cart_item", object);
-
 
                     callEditCartItem(jsonObject,MedicoboxApp.onGetAuthToken());
 
@@ -227,7 +292,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString());
-                if (setValuePosition != 0) {
+                if (setValuePosition != 1) {
                     --setValuePosition;
                     holder.tv_value.setText("" + setValuePosition);
                     mQty=setValuePosition;
@@ -275,7 +340,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return (mDataArrayList == null) ? 0 : mDataArrayList.size();
     }
 
-     private void AddItemsToCart() {
+     private void addItemsSingleton() {
         SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
         ItemModelList = singletonOptionData.getOptionList();
 
@@ -336,8 +401,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         }
 
-       String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
-        tv_cart_size.setText(cart_size + " Items | ");
+        String cart_size = String.valueOf(singletonOptionData.getOptionList().size());
+        tv_cart_size.setText(cart_size);
        // calculateTotalPrice();
 
     }
@@ -359,10 +424,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         public void onResponse(JSONObject response) {
                             // do anything with response
 
-                         BaseActivity.printLog("response-success : ", response.toString());
+                            try{
+                                 mItemId = response.getString("item_id");
 
+                            }catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            BaseActivity.printLog("response-success : ", response.toString());
                             //save item id into itemid variable
-                            AddItemsToCart();
+                            addItemsSingleton();
                         }
 
                         @Override
@@ -392,8 +462,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         public void onResponse(JSONObject response) {
                             // do anything with response
 
+                            try{
+                                mItemId = response.getString("item_id");
+
+                            }catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            BaseActivity.printLog("response-success : ", response.toString());
                             //save item id into itemid variable
-                            AddItemsToCart();
+                            addItemsSingleton();
                         }
 
                         @Override
