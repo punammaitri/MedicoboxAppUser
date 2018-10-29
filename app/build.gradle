@@ -62,9 +62,9 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    implementation 'com.squareup.retrofit:retrofit:1.9.0'
     // for sweet alert dialog
-    implementation 'com.github.f0ris.sweetalert:library:1.5.6'
+    implementation  'com.github.cazaea:sweet-alert-dialog:1.0.0'
+    // for android networking api call
     implementation 'com.amitshekhar.android:jackson-android-networking:1.0.0'
     //bar chart
     //implementation 'com.github.PhilJay:MPAndroidChart-Realm:v2.0.2@aar'

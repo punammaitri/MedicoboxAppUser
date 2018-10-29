@@ -41,8 +41,8 @@ import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.NavItemClicked;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.TrackGPS;
+import com.cazaea.sweetalert.SweetAlertDialog;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,7 +50,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class MainActivity extends AppCompatActivity
@@ -280,6 +279,7 @@ public class MainActivity extends AppCompatActivity
                 .setContentText(mContext.getResources().getString(R.string.are_you_exit))
                 .setConfirmText(mContext.getResources().getString(R.string.yes))
                 .setCancelText(mContext.getResources().getString(R.string.no))
+                .showCancelButton(true)
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
@@ -287,23 +287,22 @@ public class MainActivity extends AppCompatActivity
                         finish();
                     }
                 })
-                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                     }
                 })
                 .show();
-
-
     }
 
-    /*private void logout() {
+    private void logout() {
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText(mContext.getResources().getString(R.string.are_you_sure))
                 .setContentText(mContext.getResources().getString(R.string.are_you_sure_logout))
                 .setConfirmText(mContext.getResources().getString(R.string.yes))
                 .setCancelText(mContext.getResources().getString(R.string.no))
+                .showCancelButton(true)
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
@@ -314,39 +313,47 @@ public class MainActivity extends AppCompatActivity
                         finish();
                     }
                 })
-                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                     }
                 })
                 .show();
-
     }
-*/
-    private void logout() {
+
+
+    private void delete() {
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Are you sure?")
-                .setContentText("Won't be able to recover this file!")
+                .setContentText("Are you sure to delete this file!")
+                .setCancelText("No")
                 .setConfirmText("Yes")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        // reuse previous dialog instance, keep widget user state, reset them if you need
+                        sDialog.setTitleText("Cancelled!")
+                                .setContentText("You file has been cancelled!)")
+                                .setConfirmText("OK")
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+                    }
+                })
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.setTitleText("Deleted!")
-                                .setContentText("Your data deleted successfully!")
+                                .setContentText("Your file has been deleted!")
+                                .setConfirmText("OK")
+                                .showCancelButton(false)
+                                .setCancelClickListener(null)
+                                .setConfirmClickListener(null)
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    }
-                })
-                .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.dismissWithAnimation();
-                    }
-                })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        //sDialog.dismissWithAnimation();
                     }
                 })
                 .show();

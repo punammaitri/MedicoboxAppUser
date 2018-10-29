@@ -17,6 +17,7 @@ import android.util.Log;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
+import com.cazaea.sweetalert.SweetAlertDialog;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -26,7 +27,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /*
  * Created by lenovo on 3/9/2017.

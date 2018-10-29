@@ -4,7 +4,7 @@ package com.aiprous.medicobox.utils;
 public class APIConstant {
 
     //API URL
-    public static String LOGIN = "https://user8.itsindev.com/medibox/API/login.php";
+    public static String LOGIN = "http://user8.itsindev.com/medibox/API/login.php";
     public static String REGISTER = "http://user8.itsindev.com/medibox/API/register.php";
     public static String ISEMAILAVAILABLE = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/isEmailAvailable";
     public static String GETPRODUCT = "http://user8.itsindev.com/medibox/API/products.php";
@@ -29,7 +29,7 @@ public class APIConstant {
     public static final int ERROR_TYPE = 1;
     public static final int SUCCESS_TYPE = 2;
     public static final int WARNING_TYPE = 3;
-    public static final int PROGRESS_TYPE = 5;
+    public static final int PROGRESS_TYPE = 4;
     public static final String SOME_THING_WENT_WRONG = "Oops! Something went wrong!";
 }
 
