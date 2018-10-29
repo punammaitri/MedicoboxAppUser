@@ -24,7 +24,7 @@ import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
-import com.aiprous.medicobox.register.RegisterModel;
+import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
-    ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
+    ArrayList<FeaturedProductModel> mFeaturedProductModels = new ArrayList<FeaturedProductModel>();
     ArrayList<BannerModel> mBannerModels = new ArrayList<BannerModel>();
     ArrayList<String> mTempBannerArray = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
@@ -275,26 +275,26 @@ public class HomeFragment extends Fragment {
                         // do anything with response
                         JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
                         if (entries != null) {
-                            mRegisterModels.clear();
+                            mFeaturedProductModels.clear();
                             for (int i = 0; i < entries.size(); i++) {
                                 String image = ((JsonObject) entries.get(i)).get("image").getAsString();
                                 String name = ((JsonObject) entries.get(i)).get("name").getAsString();
                                 String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
                                 String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
 
-                                RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
-                                registerModel.setImage(image);
-                                registerModel.setName(name);
-                                registerModel.setMin_price(min_price);
-                                registerModel.setMax_price(max_price);
-                                mRegisterModels.add(registerModel);
+                                FeaturedProductModel featuredProductModel = new FeaturedProductModel(image, name, min_price, max_price);
+                                featuredProductModel.setImage(image);
+                                featuredProductModel.setName(name);
+                                featuredProductModel.setMin_price(min_price);
+                                featuredProductModel.setMax_price(max_price);
+                                mFeaturedProductModels.add(featuredProductModel);
                             }
                         }
 
-                        //set adapter
+                        //set featured adapter
                         rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
                         rc_product.setHasFixedSize(true);
-                        rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
+                        rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mFeaturedProductModels));
                         BaseActivity.printLog("response-success : ", response.toString());
                     }
 

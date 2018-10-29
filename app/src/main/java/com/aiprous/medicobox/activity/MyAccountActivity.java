@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -26,6 +27,8 @@ public class MyAccountActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
+    @BindView(R.id.txtEmail)
+    TextView txtEmail;
 
 
     @Override
@@ -42,6 +45,7 @@ public class MyAccountActivity extends AppCompatActivity {
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
+        txtEmail.setText(MedicoboxApp.onGetEmail());
     }
 
     @Override
