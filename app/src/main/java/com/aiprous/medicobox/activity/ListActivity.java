@@ -219,11 +219,14 @@ public class ListActivity extends AppCompatActivity {
                                     }
                                 }
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                layoutManager = new LinearLayoutManager(mContext);
-                                rc_medicine_list.setLayoutManager(new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false));
-                                rc_medicine_list.setHasFixedSize(true);
-                                rc_medicine_list.setAdapter(new ListAdapter(mContext, mListModelArray));
 
+                                if(!mListModelArray.isEmpty())
+                                {
+                                    layoutManager = new LinearLayoutManager(mContext);
+                                    rc_medicine_list.setLayoutManager(new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false));
+                                    rc_medicine_list.setHasFixedSize(true);
+                                    rc_medicine_list.setAdapter(new ListAdapter(mContext, mListModelArray));
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

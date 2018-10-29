@@ -19,9 +19,15 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
+import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
+import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
+import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.aiprous.medicobox.register.RegisterModel;
 import com.aiprous.medicobox.utils.APIConstant;
@@ -51,8 +57,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BANNERAPI;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.FEATUREDPRODUCT;
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.GETCATEGORY;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -80,7 +89,6 @@ public class HomeFragment extends Fragment {
     ArrayList<String> mCategoryModels = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
     private String mBannerUrl;
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -207,9 +215,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         AttemptToGetFeaturedProduct();
         AttemptToGetBannerImages();
+        getCartItems();
         AttemptToGetCategories();
+
 
         //new GetAllProduct().execute();
     }
@@ -428,4 +439,71 @@ public class HomeFragment extends Fragment {
             sliderAdvertise.addSlider(textSliderView);
         }
     }
+
+    private void getCartItems() {
+        if (!isNetworkAvailable(getActivity())) {
+            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+            AndroidNetworking.get(GETCARTITEMS)
+                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            try {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                                JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+
+                                if (getAllProductList != null) {
+                                    //clear singleton array
+                                    SingletonAddToCart.getGsonInstance().option.clear();
+                                    SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
+                                    for (int i = 0; i < getAllProductList.length(); i++) {
+                                        int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                        int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                        String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                        int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                        String product_type=getAllProductList.getJSONObject(i).get("product_type").toString();
+                                        String lquoteId=getAllProductList.getJSONObject(i).get("quote_id").toString();
+
+
+                                        AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("",name,"","","",""+price,""+qty,sku,""+id);
+                                        listModel.setImage("");
+                                        listModel.setMedicineName(name);
+                                        listModel.setValue("");
+                                        listModel.setMrp("");
+                                        listModel.setDiscount("");
+                                        listModel.setPrice(""+price);
+                                        listModel.setQty(""+qty);
+                                        listModel.setSku(sku);
+                                        listModel.setItem_id(""+id);
+                                        singletonOptionData.option.add(listModel);
+
+                                    }
+                                }
+                                CustomProgressDialog.getInstance().dismissDialog();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+
 }
