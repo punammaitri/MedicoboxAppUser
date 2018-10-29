@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.aiprous.medicobox.MainActivity;
+
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.utils.BaseActivity;

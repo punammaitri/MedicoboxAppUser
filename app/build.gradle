@@ -51,10 +51,10 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.facebook.android:facebook-android-sdk:4.14.0'
-    implementation 'com.google.android.gms:play-services:11.0.4'
-    implementation 'com.google.android.gms:play-services-location:11.0.4'
-    implementation 'com.google.android.gms:play-services-places:11.0.4'
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+   // implementation 'com.google.android.gms:play-services:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
     //slider
     implementation 'com.daimajia.slider:library:1.1.5@aar'

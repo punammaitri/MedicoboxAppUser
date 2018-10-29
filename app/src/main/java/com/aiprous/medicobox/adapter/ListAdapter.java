@@ -29,6 +29,7 @@ import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.ListModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -380,7 +381,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         if (!isNetworkAvailable(mContext)) {
             Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(mContext, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.put(EDITCARTITEM+mItemId)
                     .addJSONObjectBody(jsonObject)
                     .addHeaders(Authorization, BEARER + bearerToken)
@@ -399,7 +400,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         public void onError(ANError error) {
                             // handle error
                            // Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
-                            mAlert.onShowProgressDialog(mContext, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

@@ -18,6 +18,7 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.model.CartModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -216,7 +217,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -225,6 +226,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 md.setPrice(mPrice);
                 md.setQty("" + mQty);
                 md.setSku(mSku);
+                md.setImage(mItemId);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
@@ -250,7 +252,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -259,6 +261,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 md.setPrice(mPrice);
                 md.setQty("" + mQty);
                 md.setSku(mSku);
+                md.setItem_id(mItemId);
                 singletonOptionData.option.add(md);
             }
         }
@@ -297,7 +300,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     private void AttemptDeleteCartItem() {
-         mAlert.onShowProgressDialog(mContext, true);
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         if (!isNetworkAvailable(mContext)) {
             Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
@@ -308,7 +311,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     .getAsString(new StringRequestListener() {
                         @Override
                         public void onResponse(String response) {
-                            mAlert.onShowProgressDialog(mContext, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                            // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
                             if(response.toString().equals("true")){
                                 Toast.makeText(mContext, "Product deleted successfully", Toast.LENGTH_SHORT).show();
@@ -317,7 +320,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                         @Override
                         public void onError(ANError anError) {
-                            mAlert.onShowProgressDialog(mContext, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             // handle error
                             Log.e("Error", "onError errorCode : " + anError.getErrorCode());
                             Log.e("Error", "onError errorBody : " + anError.getErrorBody());

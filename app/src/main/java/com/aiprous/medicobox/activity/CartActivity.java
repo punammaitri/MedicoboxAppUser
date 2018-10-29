@@ -67,7 +67,7 @@ public class CartActivity extends AppCompatActivity {
     private Context mcontext = this;
     CustomProgressDialog mAlert;
     private RecyclerView.LayoutManager layoutManager;
-
+    private  Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,12 +135,9 @@ public class CartActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.get(GETCARTITEMS)
                     .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-            CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.post(GETCARTITEMS)
-                    .addJSONObjectBody(jsonObject)
                     .setPriority(Priority.MEDIUM)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {
