@@ -1,36 +1,15 @@
 package com.aiprous.medicobox.utils;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.IntentSender;
-import android.location.Address;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.cazaea.sweetalert.SweetAlertDialog;
 
-import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CustomProgressDialog {
 
@@ -77,7 +56,7 @@ public class CustomProgressDialog {
                     msgString = APIConstant.SOME_THING_WENT_WRONG;
                 }
                 mDialog = new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Oops!")
+                        .setTitleText("Oops...")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {

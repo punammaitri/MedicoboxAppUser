@@ -10,9 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.register.RegisterModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -74,17 +72,25 @@ public class SignUpActivity extends AppCompatActivity {
         mAlert = CustomProgressDialog.getInstance();
     }
 
+    @Override
+    protected void onResume() {
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        }
+        super.onResume();
+    }
+
     @OnClick(R.id.btn_sign_up)
     public void onClickSignUp() {
 
-        String lName = edt_first_name.getText().toString().trim();
+        String lFirstname = edt_first_name.getText().toString().trim();
+        String lLastname = edt_last_name.getText().toString().trim();
         String lMobile = edtMobile.getText().toString().trim();
         String lEmail = edtEmail.getText().toString().trim();
         String lPass = edtPassword.getText().toString().trim();
         String lConfirm_password = edt_confirm_password.getText().toString().trim();
 
         String emailPattern = "[A-Za-z0-9._-]+@[a-z]+\\.+[a-z]+";
-
 
         if (edt_first_name.getText().length() <= 2) {
             edt_first_name.setError("Name must be greater than 2 character");
@@ -97,36 +103,16 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (passwordValidation(mContext, lPass, edtPassword)) {
 
             try {
-                JSONObject object = new JSONObject();
-                object.put("id", 0);
-                object.put("groupId", 0);
-                object.put("defaultBilling", "string");
-                object.put("defaultShipping", "string");
-                object.put("confirmation", "string");
-                object.put("createdAt", "string");
-                object.put("updatedAt", "string");
-                object.put("createdIn", "string");
-                object.put("dob", "string");
-                object.put("email", lEmail);
-                object.put("firstname", lName);
-                object.put("lastname", lName);
-                object.put("middlename", "string");
-                object.put("prefix", "string");
-                object.put("suffix", "string");
-                object.put("gender", 0);
-                object.put("storeId", 0);
-                object.put("taxvat", "string");
-                object.put("websiteId", 1);
-                object.put("addresses", "");
-                object.put("disableAutoGroupChange", 0);
-                object.put("extensionAttributes", "");
-                object.put("customAttributes", "");
+                JSONObject objCustomer = new JSONObject();
+                objCustomer.put("email", lEmail);
+                objCustomer.put("firstname", lFirstname);
+                objCustomer.put("lastname", lLastname);
+                objCustomer.put("storeId", 1);
 
                 //Add Json Object
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("customer", object);
+                jsonObject.put("customer", objCustomer);
                 jsonObject.put("password", lPass);
-                jsonObject.put("redirectUrl", "string");
                 jsonObject.put("mobile", lMobile);
 
                 AttemptToRegister(jsonObject);
@@ -136,10 +122,10 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void AttemptToRegister(JSONObject jsonObject) {
+    private void AttemptToRegister(final JSONObject jsonObject) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             AndroidNetworking.post(REGISTER)
                     .addJSONObjectBody(jsonObject)
@@ -148,13 +134,34 @@ public class SignUpActivity extends AppCompatActivity {
                     .getAsJSONObject(new JSONObjectRequestListener() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            // do anything with response
+
+                            //for registration response
+                            CustomProgressDialog.getInstance().dismissDialog();
                             try {
-                                String getId = String.valueOf(response.get("id"));
-                                String getFirstname = String.valueOf(response.get("firstname"));
-                                String getLastname = String.valueOf(response.get("lastname"));
-                                String getEmail = String.valueOf(response.get("email"));
-                                String getStoreId = String.valueOf(response.get("store_id"));
+                                JSONObject jsonResponse = new JSONObject(response.getString("response"));
+
+                                if (!jsonResponse.isNull("message")) {
+                                    String errorMessage = jsonResponse.getString("message");
+                                    Toast.makeText(mContext, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                    finish();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            /*
+                            try {
+                                JSONObject jsonObj = new JSONObject(response.getString("response"));
+                                String getId = jsonObj.getString("id");
+                                String getFirstname = jsonObj.getString("firstname");
+                                String getLastname = jsonObj.getString("lastname");
+                                String getEmail = jsonObj.getString("email");
+                                String getMobile = jsonObj.getString("mobile");
+                                String getStoreId = jsonObj.getString("store_id");
 
                                 BaseActivity.printLog("response-success : ", response.toString());
                                 CustomProgressDialog.getInstance().dismissDialog();
@@ -164,15 +171,16 @@ public class SignUpActivity extends AppCompatActivity {
                                         .putExtra("lastname", "" + getLastname)
                                         .putExtra("email", "" + getEmail));
 
-                                MedicoboxApp.onSaveLoginDetail(getId, "", getFirstname, getLastname, "", getEmail,getStoreId);
+                                MedicoboxApp.onSaveLoginDetail(getId, "", getFirstname, getLastname, getMobile, getEmail, getStoreId);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                            }
+                            }*/
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

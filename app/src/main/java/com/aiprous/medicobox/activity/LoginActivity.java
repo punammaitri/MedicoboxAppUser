@@ -56,6 +56,7 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     CustomProgressDialog mAlert;
     private String lEmail;
     private String lPass;
-    private  Context mContext = this;
+    private Context mContext = this;
 
     //@BindView(R.id.btn_sign_in_withotp)
     //Button btn_sign_in_withotp;
@@ -316,6 +317,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onResume() {
         printhashkey();
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        }
         super.onResume();
     }
 
@@ -390,90 +394,97 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 e.printStackTrace();
             }
 
-            AttemptLogin(jsonObject);
+            if (!isNetworkAvailable(this)) {
+                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+            } else {
+                CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                AttemptLogin(jsonObject);
+            }
+
         } else if (lEmail.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
-            //showToast(this, getResources().getString(R.string.error_pass));
+            showToast(this, getResources().getString(R.string.error_pass));
         }
     }
 
     private void AttemptLogin(JSONObject jsonObject) {
-        if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.post(LOGIN)
-                    .addJSONObjectBody(jsonObject) // posting json
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
+        AndroidNetworking.post(LOGIN)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            String getResponse = response.getString("response");
+                            if (getResponse.contains("{")) {
+                                // for removing braces
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                CallGetBearerTokenAPi(response.getString("response"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                String responsewithBrace = getResponse.replace("{", "").replace("}", "");
+                                StringTokenizer getMessage = new StringTokenizer(responsewithBrace, ":");
+                                String msg = getMessage.nextToken();
+                                String responseWithoutBrace = getMessage.nextToken();
+                                Toast.makeText(mContext, "" + responseWithoutBrace, Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (!isNetworkAvailable(LoginActivity.this)) {
+                                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                                } else {
+                                    CallGetBearerTokenAPi(getResponse);
+                                }
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     private void CallGetBearerTokenAPi(final String bearerToken) {
+        AndroidNetworking.get(GETBEARERTOKEN)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            String getId = response.getString("id");
+                            String getGroupId = response.getString("group_id");
+                            String getEmail = response.getString("email");
+                            String getFirstname = response.getString("firstname");
+                            String getLastname = response.getString("lastname");
+                            String getStoreId = response.getString("store_id");
 
-        if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(GETBEARERTOKEN)
-                    .addHeaders(Authorization, BEARER + bearerToken)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
-                                String getId = response.getString("id");
-                                String getGroupId = response.getString("group_id");
-                                String getEmail = response.getString("email");
-                                String getFirstname = response.getString("firstname");
-                                String getLastname = response.getString("lastname");
-                                String getStoreId = response.getString("store_id");
-
-                                CustomProgressDialog.getInstance().dismissDialog();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                        .putExtra("email", "" + getEmail));
-                                MedicoboxApp.onSaveLoginDetail(getId,bearerToken, getFirstname, getLastname, "", getEmail,getStoreId);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                    .putExtra("email", "" + getEmail));
+                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, "", getEmail, getStoreId);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Toast.makeText(LoginActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(LoginActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 }
