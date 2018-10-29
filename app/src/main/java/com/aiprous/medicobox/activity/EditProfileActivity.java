@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -59,6 +61,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @BindView(R.id.edt_confirm_password)
     EditText edtConfirmPassword;
     CustomProgressDialog mAlert;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +161,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(EditProfileActivity.this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.get(GETBEARERTOKEN)
                     .addHeaders(Authorization, BEARER + bearerToken)
                     .setPriority(Priority.MEDIUM)
@@ -180,7 +183,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 edtLastName.setText(getLastname);
                                 edtEmailId.setText(getEmail);
 
-                                mAlert.onShowProgressDialog(EditProfileActivity.this, false);
+                                CustomProgressDialog.getInstance().dismissDialog();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -190,7 +193,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
@@ -205,7 +208,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(EditProfileActivity.this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.put(UPDATEUSERINFO)
                     .addJSONObjectBody(jsonObject)
                     .addHeaders(Authorization, BEARER + bearerToken)
@@ -215,7 +218,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             startActivity(getIntent());
                         }
 
@@ -223,7 +226,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         public void onError(ANError error) {
                             // handle error
                             Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                            mAlert.onShowProgressDialog(EditProfileActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

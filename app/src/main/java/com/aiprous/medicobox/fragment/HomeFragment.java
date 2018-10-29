@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.aiprous.medicobox.register.RegisterModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -205,8 +207,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAlert.onShowProgressDialog(getActivity(), true);
-        new GetAllProduct().execute();
+        AttemptToGetFeaturedProduct();
+        AttemptToGetBannerImages();
+        AttemptToGetCategories();
+
+        //new GetAllProduct().execute();
     }
 
 
@@ -226,9 +231,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                AttemptToGetFeaturedProduct();
-                AttemptToGetBannerImages();
-                AttemptToGetCategories();
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -260,8 +263,7 @@ public class HomeFragment extends Fragment {
         if (!isNetworkAvailable(getActivity())) {
             Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            //mAlert.onShowProgressDialog(getActivity(), true);
-
+            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.get(FEATUREDPRODUCT)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -287,17 +289,19 @@ public class HomeFragment extends Fragment {
                                 }
                             }
 
-                            mAlert.onShowProgressDialog(getActivity(), false);
                             //set adapter
                             rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
                             rc_product.setHasFixedSize(true);
                             rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
+
+                            CustomProgressDialog.getInstance().dismissDialog();
                             BaseActivity.printLog("response-success : ", response.toString());
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
@@ -310,6 +314,7 @@ public class HomeFragment extends Fragment {
         if (!isNetworkAvailable(getActivity())) {
             Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
+            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.get(GETCATEGORY)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -331,11 +336,14 @@ public class HomeFragment extends Fragment {
                                 e.printStackTrace();
                             }
 
+                            CustomProgressDialog.getInstance().dismissDialog();
+
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
@@ -348,6 +356,7 @@ public class HomeFragment extends Fragment {
         if (!isNetworkAvailable(getActivity())) {
             Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
+            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.get(BANNERAPI)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -371,6 +380,7 @@ public class HomeFragment extends Fragment {
                                 }
 
                                 Log.e("banner image array", "" + mBannerModels);
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 fetchBannerImages();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -380,6 +390,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

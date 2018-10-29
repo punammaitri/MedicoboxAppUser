@@ -17,6 +17,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.ProductListAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.ProductsModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -122,7 +123,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.post(GETPRODUCT)
                     .addJSONObjectBody(jsonObject)
                     .setPriority(Priority.MEDIUM)
@@ -154,7 +155,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                         mProductsModel.add(registerModel);
                                     }
                                 }
-                                mAlert.onShowProgressDialog(OrderDetailsActivity.this, false);
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 layoutManager = new LinearLayoutManager(mContext);
                                 rc_product.setLayoutManager(new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false));
                                 rc_product.setHasFixedSize(true);

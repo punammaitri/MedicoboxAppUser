@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -36,6 +38,7 @@ public class SetPasswordActivity extends AppCompatActivity {
     EditText edtEmail;
     private String lEmail;
     CustomProgressDialog mAlert;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,7 @@ public class SetPasswordActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
             AndroidNetworking.post(ISEMAILAVAILABLE)
                     .addJSONObjectBody(jsonObject) // posting json
@@ -99,7 +102,7 @@ public class SetPasswordActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            mAlert.onShowProgressDialog(SetPasswordActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             startActivity(new Intent(SetPasswordActivity.this, ForgotPasswordActivity.class));
                             finish();
                         }
@@ -107,7 +110,7 @@ public class SetPasswordActivity extends AppCompatActivity {
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            mAlert.onShowProgressDialog(SetPasswordActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             /*startActivity(new Intent(SetPasswordActivity.this, ForgotPasswordActivity.class));
                             finish();*/
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());

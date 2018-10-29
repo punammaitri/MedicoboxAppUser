@@ -20,6 +20,7 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.model.ProductsModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -181,7 +182,7 @@ public class ListActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
-            mAlert.onShowProgressDialog(this, true);
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             AndroidNetworking.post(GETPRODUCT)
                     .addJSONObjectBody(jsonObject)
                     .setPriority(Priority.MEDIUM)
@@ -217,7 +218,7 @@ public class ListActivity extends AppCompatActivity {
                                         mListModelArray.add(listModel);
                                     }
                                 }
-                                mAlert.onShowProgressDialog(ListActivity.this, false);
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 layoutManager = new LinearLayoutManager(mContext);
                                 rc_medicine_list.setLayoutManager(new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false));
                                 rc_medicine_list.setHasFixedSize(true);
@@ -231,7 +232,7 @@ public class ListActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(ANError error) {
-                            mAlert.onShowProgressDialog(ListActivity.this, false);
+                            CustomProgressDialog.getInstance().dismissDialog();
                             // handle error
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
