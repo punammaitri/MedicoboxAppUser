@@ -40,21 +40,16 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-    holder.tv_item_name.setText(orderSummaryArrayList.get(position).getProductName());
-    holder.tv_medicine_contains.setText(orderSummaryArrayList.get(position).getProductcontains());
-    holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+orderSummaryArrayList.get(position).getProduct_mrp());
-    holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+orderSummaryArrayList.get(position).getProduct_price());
+        holder.tv_item_name.setText(orderSummaryArrayList.get(position).getProductName());
+        holder.tv_medicine_contains.setText(orderSummaryArrayList.get(position).getProductcontains());
+        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + orderSummaryArrayList.get(position).getProduct_mrp());
+        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + orderSummaryArrayList.get(position).getProduct_price());
 
-    if(position==getItemCount()-1)
-    {
-        holder.view_order_summary.setVisibility(View.GONE);
+        if (position == getItemCount() - 1) {
+            holder.view_order_summary.setVisibility(View.GONE);
+        }
     }
-
-
-    }
-
-
 
     @Override
     public int getItemCount() {
@@ -63,17 +58,16 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-       @BindView(R.id.tv_item_name)
-       TextView tv_item_name;
-       @BindView(R.id.tv_mrp_price)
-       TextView tv_mrp_price;
-       @BindView(R.id.tv_medicine_contains)
-       TextView tv_medicine_contains;
-       @BindView(R.id.tv_price)
-       TextView tv_price;
-       @BindView(R.id.view_order_summary)
-       View view_order_summary;
-
+        @BindView(R.id.tv_item_name)
+        TextView tv_item_name;
+        @BindView(R.id.tv_mrp_price)
+        TextView tv_mrp_price;
+        @BindView(R.id.tv_medicine_contains)
+        TextView tv_medicine_contains;
+        @BindView(R.id.tv_price)
+        TextView tv_price;
+        @BindView(R.id.view_order_summary)
+        View view_order_summary;
 
 
         ViewHolder(@NonNull View view) {

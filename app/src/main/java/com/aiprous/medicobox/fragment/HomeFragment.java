@@ -1,7 +1,6 @@
 package com.aiprous.medicobox.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -15,19 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.ListActivity;
-import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
-import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.aiprous.medicobox.register.RegisterModel;
 import com.aiprous.medicobox.utils.APIConstant;
@@ -86,9 +81,9 @@ public class HomeFragment extends Fragment {
     ArrayList<RegisterModel> mRegisterModels = new ArrayList<RegisterModel>();
     ArrayList<BannerModel> mBannerModels = new ArrayList<BannerModel>();
     ArrayList<String> mTempBannerArray = new ArrayList<String>();
-    ArrayList<String> mCategoryModels = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
     private String mBannerUrl;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -105,8 +100,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
@@ -129,7 +123,6 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onSliderClick(BaseSliderView baseSliderView) {
                             //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
-
                         }
                     });
 
@@ -211,17 +204,19 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
 
-        AttemptToGetFeaturedProduct();
-        AttemptToGetBannerImages();
-        getCartItems();
-        AttemptToGetCategories();
-
-
+        if (!isNetworkAvailable(getActivity())) {
+            CustomProgressDialog.getInstance().showDialog(getActivity(), getActivity().getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            AttemptToGetFeaturedProduct();
+            CustomProgressDialog.getInstance().dismissDialog();
+            AttemptToGetBannerImages();
+            getCartItems();
+            AttemptToGetCategories();
+        }
         //new GetAllProduct().execute();
     }
 
@@ -242,7 +237,6 @@ public class HomeFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
             try {
-
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -271,143 +265,128 @@ public class HomeFragment extends Fragment {
     }
 
     private void AttemptToGetFeaturedProduct() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(FEATUREDPRODUCT)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONArray(new JSONArrayRequestListener() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            // do anything with response
-                            JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
-                            if (entries != null) {
-                                mRegisterModels.clear();
-                                for (int i = 0; i < entries.size(); i++) {
-                                    String image = ((JsonObject) entries.get(i)).get("image").getAsString();
-                                    String name = ((JsonObject) entries.get(i)).get("name").getAsString();
-                                    String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
-                                    String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
+        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(FEATUREDPRODUCT)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // do anything with response
+                        JsonArray entries = (JsonArray) new JsonParser().parse(response.toString());
+                        if (entries != null) {
+                            mRegisterModels.clear();
+                            for (int i = 0; i < entries.size(); i++) {
+                                String image = ((JsonObject) entries.get(i)).get("image").getAsString();
+                                String name = ((JsonObject) entries.get(i)).get("name").getAsString();
+                                String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
+                                String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
 
-                                    RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
-                                    registerModel.setImage(image);
-                                    registerModel.setName(name);
-                                    registerModel.setMin_price(min_price);
-                                    registerModel.setMax_price(max_price);
-                                    mRegisterModels.add(registerModel);
-                                }
+                                RegisterModel registerModel = new RegisterModel(image, name, min_price, max_price);
+                                registerModel.setImage(image);
+                                registerModel.setName(name);
+                                registerModel.setMin_price(min_price);
+                                registerModel.setMax_price(max_price);
+                                mRegisterModels.add(registerModel);
                             }
-
-                            //set adapter
-                            rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                            rc_product.setHasFixedSize(true);
-                            rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
-
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            BaseActivity.printLog("response-success : ", response.toString());
                         }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                        //set adapter
+                        rc_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                        rc_product.setHasFixedSize(true);
+                        rc_product.setAdapter(new FeatureProductAdapter(getActivity(), mRegisterModels));
+                        BaseActivity.printLog("response-success : ", response.toString());
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     private void AttemptToGetCategories() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(GETCATEGORY)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
-                                JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
-                                JSONObject object = new JSONObject(entries.toString());
+        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(GETCATEGORY)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject object = new JSONObject(entries.toString());
 
-                                JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
+                            JSONObject getAllObject = object.getJSONObject("2").getJSONObject("child");
 
-                                String mCategoryArrays = getAllObject.toString();
-                                for (int j = 0; j < getAllObject.length(); j++) {
+                            String mCategoryArrays = getAllObject.toString();
+                            for (int j = 0; j < getAllObject.length(); j++) {
 
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-
-                            CustomProgressDialog.getInstance().dismissDialog();
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     private void AttemptToGetBannerImages() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(BANNERAPI)
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
-                            mBannerModels.clear();
+        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(BANNERAPI)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
+                        mBannerModels.clear();
 
-                            try {
-                                JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
-                                JSONArray array = object.getJSONArray("response");//get the array with the key "response"
+                        try {
+                            JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
+                            JSONArray array = object.getJSONArray("response");//get the array with the key "response"
 
-                                // Access the element using for loop
-                                for (int i = 0; i < array.length(); i++) {
-                                    mBannerUrl = array.getString(i);
-                                    BannerModel mBM = new BannerModel(mBannerUrl);
-                                    mBM.setImage_url(mBannerUrl);
-                                    mBannerModels.add(mBM);
-                                }
-
-                                Log.e("banner image array", "" + mBannerModels);
-                                CustomProgressDialog.getInstance().dismissDialog();
-                                fetchBannerImages();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            // Access the element using for loop
+                            for (int i = 0; i < array.length(); i++) {
+                                mBannerUrl = array.getString(i);
+                                BannerModel mBM = new BannerModel(mBannerUrl);
+                                mBM.setImage_url(mBannerUrl);
+                                mBannerModels.add(mBM);
                             }
-                        }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
+                            Log.e("banner image array", "" + mBannerModels);
                             CustomProgressDialog.getInstance().dismissDialog();
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                            fetchBannerImages();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     //Fetch Banner images
@@ -441,69 +420,63 @@ public class HomeFragment extends Fragment {
     }
 
     private void getCartItems() {
-        if (!isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(GETCARTITEMS)
-                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
-                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                                JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
 
-                                if (getAllProductList != null) {
-                                    //clear singleton array
-                                    SingletonAddToCart.getGsonInstance().option.clear();
-                                    SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
-                                    for (int i = 0; i < getAllProductList.length(); i++) {
-                                        int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
-                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                        int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
-                                        String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                        int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
-                                        String product_type=getAllProductList.getJSONObject(i).get("product_type").toString();
-                                        String lquoteId=getAllProductList.getJSONObject(i).get("quote_id").toString();
+                            if (getAllProductList != null) {
+                                //clear singleton array
+                                SingletonAddToCart.getGsonInstance().option.clear();
+                                SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
+                                for (int i = 0; i < getAllProductList.length(); i++) {
+                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
+                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
 
 
-                                        AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("",name,"","","",""+price,""+qty,sku,""+id);
-                                        listModel.setImage("");
-                                        listModel.setMedicineName(name);
-                                        listModel.setValue("");
-                                        listModel.setMrp("");
-                                        listModel.setDiscount("");
-                                        listModel.setPrice(""+price);
-                                        listModel.setQty(""+qty);
-                                        listModel.setSku(sku);
-                                        listModel.setItem_id(""+id);
-                                        singletonOptionData.option.add(listModel);
+                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("", name, "", "", "", "" + price, "" + qty, sku, "" + id);
+                                    listModel.setImage("");
+                                    listModel.setMedicineName(name);
+                                    listModel.setValue("");
+                                    listModel.setMrp("");
+                                    listModel.setDiscount("");
+                                    listModel.setPrice("" + price);
+                                    listModel.setQty("" + qty);
+                                    listModel.setSku(sku);
+                                    listModel.setItem_id("" + id);
+                                    singletonOptionData.option.add(listModel);
 
-                                    }
                                 }
-                                CustomProgressDialog.getInstance().dismissDialog();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-                        }
-
-                        @Override
-                        public void onError(ANError error) {
                             CustomProgressDialog.getInstance().dismissDialog();
-                            // handle error
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
-
-
 }

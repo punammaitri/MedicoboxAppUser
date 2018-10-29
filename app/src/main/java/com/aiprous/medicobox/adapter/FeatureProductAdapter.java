@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.aiprous.medicobox.R;
 
 import com.aiprous.medicobox.register.RegisterModel;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +55,6 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMin_price());
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMax_price());
-
 
         //holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount() + "off");
 

@@ -52,23 +52,21 @@ public class OrderPlacedActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         init();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
 
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
     }
 
     private void init() {

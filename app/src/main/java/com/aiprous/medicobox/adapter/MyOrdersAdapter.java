@@ -68,10 +68,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
                 mContext.startActivity(new Intent(mContext, OrderDetailsActivity.class));
             }
         });
-
-
     }
-
 
     @Override
     public int getItemCount() {

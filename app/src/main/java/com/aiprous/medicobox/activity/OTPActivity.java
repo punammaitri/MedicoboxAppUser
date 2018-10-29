@@ -50,15 +50,12 @@ public class OTPActivity extends AppCompatActivity {
                 if (s.length() == 1) {
                     edt_two.requestFocus();
                 }
-
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
 
@@ -70,13 +67,11 @@ public class OTPActivity extends AppCompatActivity {
 
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
         });
@@ -88,13 +83,11 @@ public class OTPActivity extends AppCompatActivity {
 
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
         });
@@ -102,14 +95,13 @@ public class OTPActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_otp_proceed)
     public void onClickOtpProceesd() {
-        String lOne=edt_one.getText().toString();
-        String ltwo=edt_two.getText().toString();
-        String lThree=edt_there.getText().toString();
-        String lfour=edt_four.getText().toString();
-        if(lOne.length()==0&&ltwo.length()==0&&lThree.length()==0&&lfour.length()==0) {
+        String lOne = edt_one.getText().toString();
+        String ltwo = edt_two.getText().toString();
+        String lThree = edt_there.getText().toString();
+        String lfour = edt_four.getText().toString();
+        if (lOne.length() == 0 && ltwo.length() == 0 && lThree.length() == 0 && lfour.length() == 0) {
             Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }

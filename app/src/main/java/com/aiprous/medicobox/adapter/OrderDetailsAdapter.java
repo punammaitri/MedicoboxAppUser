@@ -40,13 +40,12 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
 
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getMedicine_name());
         holder.tv_item_contains.setText(mDataArrayList.get(position).getItem_contains());
-        holder.tv_mrp_price.setText("MRP "+mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp_price());
-        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMedicine_price());
-        if(position==getItemCount()-1)
-        {
+        holder.tv_mrp_price.setText("MRP " + mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMrp_price());
+        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMedicine_price());
+
+        if (position == getItemCount() - 1) {
             holder.view_order_details.setVisibility(View.GONE);
         }
-
 
     }
 

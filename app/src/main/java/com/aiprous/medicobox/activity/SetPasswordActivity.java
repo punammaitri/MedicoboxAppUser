@@ -72,7 +72,12 @@ public class SetPasswordActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            AttemptSetPassword(jsonObject);
+            if (!isNetworkAvailable(this)) {
+                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+            } else {
+                AttemptSetPassword(jsonObject);
+            }
+
         } else if (lEmail.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         }
@@ -80,44 +85,39 @@ public class SetPasswordActivity extends AppCompatActivity {
     }
 
     private void AttemptSetPassword(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
-        if (!isNetworkAvailable(this)) {
-            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
-        } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(ISEMAILAVAILABLE)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
 
-            AndroidNetworking.post(ISEMAILAVAILABLE)
-                    .addJSONObjectBody(jsonObject) // posting json
-                    .setPriority(Priority.MEDIUM)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
-                            try {
-
-                                JSONObject jsonResponse = new JSONObject(response.toString());
-                                boolean success = jsonResponse.getBoolean("success");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            CustomProgressDialog.getInstance().dismissDialog();
-                            startActivity(new Intent(SetPasswordActivity.this, ForgotPasswordActivity.class));
-                            finish();
+                            JSONObject jsonResponse = new JSONObject(response.toString());
+                            boolean success = jsonResponse.getBoolean("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            CustomProgressDialog.getInstance().dismissDialog();
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        startActivity(new Intent(SetPasswordActivity.this, ForgotPasswordActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
                             /*startActivity(new Intent(SetPasswordActivity.this, ForgotPasswordActivity.class));
                             finish();*/
-                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                        }
-                    });
-        }
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 }
