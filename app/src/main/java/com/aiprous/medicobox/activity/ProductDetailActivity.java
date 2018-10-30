@@ -198,7 +198,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
             CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.post(SINGLEPRODUCT+productId)
+            AndroidNetworking.get(SINGLEPRODUCT+productId)
                     .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -206,46 +206,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            try {
-                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                               // JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
-
-                                /*if (getAllProductList != null) {
-                                    mListModelArray.clear();
-                                    for (int i = 0; i < getAllProductList.length(); i++) {
-                                        String id = getAllProductList.getJSONObject(i).get("id").toString();
-                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                        String title = getAllProductList.getJSONObject(i).get("title").toString();
-                                        String price = getAllProductList.getJSONObject(i).get("price").toString();
-                                        String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
-                                        String sales_price=getAllProductList.getJSONObject(i).get("sale_price").toString();
-                                        String short_description=getAllProductList.getJSONObject(i).get("short_description").toString();
-
-                                        ListModel listModel = new ListModel(id, sku, title, price,sales_price,short_description,imageUrl);
-                                        listModel.setId(id);
-                                        listModel.setSku(sku);
-                                        listModel.setTitle(title);
-                                        listModel.setPrice(price);
-                                        listModel.setSale_price(sales_price);
-                                        listModel.setShort_description(short_description);
-                                        listModel.setImage(imageUrl);
-                                        mListModelArray.add(listModel);
-                                    }
-                                }
-                                CustomProgressDialog.getInstance().dismissDialog();
-
-                                if(!mListModelArray.isEmpty())
-                                {
-                                    layoutManager = new LinearLayoutManager(mContext);
-                                    rc_medicine_list.setLayoutManager(new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false));
-                                    rc_medicine_list.setHasFixedSize(true);
-                                    rc_medicine_list.setAdapter(new ListAdapter(mContext, mListModelArray));
-                                }*/
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

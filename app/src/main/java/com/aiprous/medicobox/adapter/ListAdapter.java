@@ -109,17 +109,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         mCartId=lCartId.replace("\"", "");
 
 
-/*
-        // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
-        holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
-        holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
-       // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
-        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-      //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
-        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());*/
-
-
-
         SingletonAddToCart singletonAddToCart = SingletonAddToCart.getGsonInstance();
         ItemModelList = singletonAddToCart.getOptionList();
 
@@ -181,7 +170,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 {
                     mContext.startActivity(new Intent(mContext,ProductDetailActivity.class).putExtra("productId",mDataArrayList.get(position).getId()));
                 }else {
-                    mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class));
+                    mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class).putExtra("productId",mDataArrayList.get(position).getId()));
                 }
 
             }
