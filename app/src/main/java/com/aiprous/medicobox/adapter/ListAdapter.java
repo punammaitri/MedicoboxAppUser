@@ -85,6 +85,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private String mCartId;
     CustomProgressDialog mAlert;
      private String mItemId;
+     private String mVisibiltyFlag;
 
 
     public ListAdapter(Context mContext, ArrayList<ListModel> mDataArrayList) {
@@ -136,8 +137,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     break;
                 }else {
 
-                    // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
-
                     Picasso.with(mContext)
                             .load(mDataArrayList.get(position).getImage())
                             .into(holder.img_medicine, new Callback() {
@@ -167,7 +166,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         }else {
 
-            // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
+            Picasso.with(mContext)
+                    .load(mDataArrayList.get(position).getImage())
+                    .into(holder.img_medicine, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+
             holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
             holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
             // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
@@ -178,16 +190,37 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
 
 
-
-
         holder.llayout_listing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (holder.rlayout_number_of_item.getVisibility() == View.VISIBLE) {
+                    // Its visible
+                    mVisibiltyFlag="1";
+                } else {
+                    // Either gone or invisible
+                    mVisibiltyFlag="2";
+                }
                 if(position%2==0)
                 {
-                    mContext.startActivity(new Intent(mContext,ProductDetailActivity.class).putExtra("productId",mDataArrayList.get(position).getId()));
+                    mContext.startActivity(new Intent(mContext,ProductDetailActivity.class)
+                            .putExtra("productId",mDataArrayList.get(position).getId())
+                            .putExtra("VisibiltyFlag",mVisibiltyFlag)
+                            .putExtra("SKU",mDataArrayList.get(position).getSku())
+                            .putExtra("Qty",holder.tv_value.getText().toString())
+                            .putExtra("imageUrl",mDataArrayList.get(position).getImage())
+                            .putExtra("MedicineName",mDataArrayList.get(position).getTitle())
+                            .putExtra("value",mDataArrayList.get(position).getShort_description())
+                            .putExtra("price",mDataArrayList.get(position).getPrice()));
                 }else {
-                    mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class).putExtra("productId",mDataArrayList.get(position).getId()));
+                    mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class)
+                            .putExtra("productId",mDataArrayList.get(position).getId())
+                            .putExtra("VisibiltyFlag",mVisibiltyFlag)
+                            .putExtra("SKU",mDataArrayList.get(position).getSku())
+                            .putExtra("Qty",holder.tv_value.getText().toString())
+                            .putExtra("imageUrl",mDataArrayList.get(position).getImage())
+                            .putExtra("MedicineName",mDataArrayList.get(position).getTitle())
+                            .putExtra("value",mDataArrayList.get(position).getShort_description())
+                            .putExtra("price",mDataArrayList.get(position).getPrice()));
                 }
 
             }
@@ -199,8 +232,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View v) {
                 holder.rlayout_number_of_item.setVisibility(View.VISIBLE);
                 holder.rlayout_add.setVisibility(View.GONE);
-              //  holder.tv_plus.performClick();
-
                 rlayout_cart.setVisibility(View.VISIBLE);
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
@@ -269,6 +300,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                        if(mMedicineName.equals(ItemModelList.get(i).getMedicineName()))
                        {
                            mItemId=ItemModelList.get(i).getItem_id();
+                           break;
                        }
                    }
 
@@ -318,6 +350,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                    // AddItemsToCart();
                     //call edit cart api
                     try {
+
+                        for(int i=0;i<ItemModelList.size();i++)
+                        {
+                            if(mMedicineName.equals(ItemModelList.get(i).getMedicineName()))
+                            {
+                                mItemId=ItemModelList.get(i).getItem_id();
+                                break;
+                            }
+                        }
 
                         JSONObject object = new JSONObject();
                         object.put("quote_id",mCartId);
@@ -414,7 +455,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     //Add to cart API
-
     private void AttemptAddToCart(JSONObject jsonObject) {
        // mAlert.onShowProgressDialog(this, true);
         if (!isNetworkAvailable(mContext)) {

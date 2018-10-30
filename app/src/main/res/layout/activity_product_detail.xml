@@ -135,6 +135,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rlayout_plus_minus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
@@ -181,6 +182,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_plus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/height_10"
@@ -423,7 +425,7 @@
 
 
             <Button
-                android:id="@+id/buttonRegistration"
+                android:id="@+id/btn_add_to_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
