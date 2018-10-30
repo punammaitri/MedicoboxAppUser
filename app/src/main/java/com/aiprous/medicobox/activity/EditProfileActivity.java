@@ -2,6 +2,7 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -22,9 +23,16 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +43,8 @@ import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETBEARERTOKEN;
 import static com.aiprous.medicobox.utils.APIConstant.UPDATEUSERINFO;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
+import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
+import static com.aiprous.medicobox.utils.BaseActivity.passwordValidation;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -62,6 +72,8 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText edtConfirmPassword;
     CustomProgressDialog mAlert;
     private Context mContext = this;
+    SingleDateAndTimePickerDialog.Builder singleBuilder;
+    SimpleDateFormat simpleDateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,28 +121,28 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_save)
     public void onSave() {
-        String lfirst_name = edtFirstName.getText().toString();
-        String lLast_Name = edtLastName.getText().toString();
-        String lMobile_no = edtMobileNo.getText().toString();
-        String lEmail_id = edtEmailId.getText().toString();
-        String lDob = edtDob.getText().toString();
-        String lPassword = edtPassword.getText().toString();
-        String lConfirm_password = edtConfirmPassword.getText().toString();
+        String lfirst_name = edtFirstName.getText().toString().trim();
+        String lLast_Name = edtLastName.getText().toString().trim();
+        String lMobile_no = edtMobileNo.getText().toString().trim();
+        String lEmail_id = edtEmailId.getText().toString().trim();
+        String lDob = edtDob.getText().toString().trim();
+        String lPassword = edtPassword.getText().toString().trim();
+        String lConfirm_password = edtConfirmPassword.getText().toString().trim();
 
-        if (lfirst_name.length() == 0) {
-            edtFirstName.setError("Please enter first name");
-        } else if (lLast_Name.length() == 0) {
-            edtLastName.setError("Please enter last name");
-        } else if (lMobile_no.length() == 0) {
-            edtMobileNo.setError("Please enter mobile number");
-        } else if (lEmail_id.length() == 0) {
-            edtEmailId.setError("Please enter email id");
-        } else if (lPassword.length() == 0) {
-            edtPassword.setError("Please enter password");
-        } else if (lConfirm_password.length() == 0) {
+        if (lfirst_name.length() <= 2) {
+            edtFirstName.setError("Firstname must be greater than 2 character");
+        } else if (lLast_Name.length() <= 2) {
+            edtLastName.setError("Lastname must be greater than 2 character");
+        } else if (lMobile_no.length() <= 9) {
+            edtMobileNo.setError("Mobile number must be greater 10 digit");
+        } else if (!isValidEmailId(edtEmailId)) {
+            edtEmailId.setError("Invalid email address");
+        } else if (!passwordValidation(mContext, lPassword, edtPassword)) {
+            edtPassword.setError("Please enter proper password");
+        } else if (!passwordValidation(mContext, lConfirm_password, edtConfirmPassword)) {
             edtConfirmPassword.setError("Please enter confirm password");
         } else if (!lPassword.equals(lConfirm_password)) {
-            Toast.makeText(this, "Password and confirm password should be same", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password mismatch", Toast.LENGTH_SHORT).show();
         } else {
             //API call
 
@@ -218,6 +230,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         CustomProgressDialog.getInstance().dismissDialog();
+                        finish();
                         startActivity(getIntent());
                     }
 
@@ -231,5 +244,42 @@ public class EditProfileActivity extends AppCompatActivity {
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
+    }
+
+
+    @OnClick(R.id.edt_dob)
+    public void onViewClicked() {
+        openDateAndTimePicker();
+    }
+
+    public void openDateAndTimePicker() {
+        //////////////for pick up date and time /////////////////////////////////
+        simpleDateFormat = new SimpleDateFormat("HH:mm EEE dd MM yyyy", Locale.getDefault());
+        final Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+        calendar.setTimeInMillis(System.currentTimeMillis() - 1000);
+
+        final Date minDate = calendar.getTime();
+
+        singleBuilder = new SingleDateAndTimePickerDialog.Builder(this)
+                .bottomSheet()
+                .curved()
+                .minutesStep(1)
+                .backgroundColor(Color.WHITE)
+                .minDateRange(minDate)
+
+                .displayListener(new SingleDateAndTimePickerDialog.DisplayListener() {
+                    @Override
+                    public void onDisplayed(SingleDateAndTimePicker picker) {
+                    }
+                })
+                .listener(new SingleDateAndTimePickerDialog.Listener() {
+                    @Override
+                    public void onDateSelected(Date date) {
+                        edtDob.setText(simpleDateFormat.format(date));
+                    }
+                });
+        singleBuilder.display();
     }
 }

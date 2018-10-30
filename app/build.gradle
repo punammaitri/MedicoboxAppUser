@@ -30,47 +30,40 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //mutidex
+    //multidex
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:appcompat-v7:26.+'
     implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     // butter knife
     implementation 'com.jakewharton:butterknife:8.7.0'
-    implementation 'com.android.support:support-v4:26.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
-    //cardview
+    //cardview 7 recycler view
     implementation 'com.android.support:cardview-v7:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.0.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
-
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-
+    //for gson conversion
     implementation 'com.google.code.gson:gson:2.6.2'
+    //for facebook
     implementation 'com.facebook.android:facebook-android-sdk:4.14.0'
-   // implementation 'com.google.android.gms:play-services:16.0.0'
+    // google play services
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    // for direction
     implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
-    //slider
+    //picasso
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
-    //picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
-
+    // single date and time picker like ios
+    implementation 'com.github.florent37:singledateandtimepicker:1.1.5'
     // for sweet alert dialog
     implementation  'com.github.cazaea:sweet-alert-dialog:1.0.0'
     // for android networking api call
     implementation 'com.amitshekhar.android:jackson-android-networking:1.0.0'
     //bar chart
-    //implementation 'com.github.PhilJay:MPAndroidChart-Realm:v2.0.2@aar'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.0.9'
-    implementation 'com.squareup.okhttp:okhttp:2.5.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     testImplementation 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -63,7 +63,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /* check email id is valid or not */
-    public boolean isValidEmailId(EditText editText) {
+    public static boolean isValidEmailId(EditText editText) {
         String text = editText.getText().toString().trim();
         if (!Pattern.matches(EMAIL_REGEX, text)) {
             editText.requestFocus();
@@ -72,6 +72,7 @@ public class BaseActivity extends AppCompatActivity {
             return true;
         }
     }
+
 
     /* show toast message to user */
     public static void showToast(Context context, String message) {
@@ -110,16 +111,6 @@ public class BaseActivity extends AppCompatActivity {
             valid = false;
         }
         return valid;
-    }
-
-    /*Password Validate*/
-    public static boolean isValidPassword(final String password) {
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-        return matcher.matches();
     }
 
     /*Change Status bar color*/

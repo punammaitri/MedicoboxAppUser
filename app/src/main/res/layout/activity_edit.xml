@@ -124,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="DOB"
+                    android:focusable="false"
                     android:inputType="text"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 

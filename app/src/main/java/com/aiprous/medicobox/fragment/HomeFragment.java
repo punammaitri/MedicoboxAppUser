@@ -21,10 +21,12 @@ import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
-import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
+import com.aiprous.medicobox.sliderimages.FlipperLayout;
+import com.aiprous.medicobox.sliderimages.FlipperView;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -47,6 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,8 +65,8 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class HomeFragment extends Fragment {
-    @BindView(R.id.sliderAdvertise)
-    SliderLayout sliderAdvertise;
+    @BindView(R.id.flipper_layout)
+    FlipperLayout flipperLayout;
     @BindView(R.id.slider_contactus)
     SliderLayout slider_contactus;
     @BindView(R.id.rc_product)
@@ -136,7 +139,6 @@ public class HomeFragment extends Fragment {
         }
 
         mAlert = CustomProgressDialog.getInstance();
-
     }
 
     public interface OnFragmentInteractionListener {
@@ -356,7 +358,6 @@ public class HomeFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
-                        mBannerModels.clear();
 
                         try {
                             JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
@@ -364,15 +365,12 @@ public class HomeFragment extends Fragment {
 
                             // Access the element using for loop
                             for (int i = 0; i < array.length(); i++) {
-                                mBannerUrl = array.getString(i);
-                                BannerModel mBM = new BannerModel(mBannerUrl);
-                                mBM.setImage_url(mBannerUrl);
-                                mBannerModels.add(mBM);
+                                FlipperView view = new FlipperView(getActivity());
+                                view.setImageUrl(array.getString(i));
+                                flipperLayout.addFlipperView(view);
                             }
 
-                            Log.e("banner image array", "" + mBannerModels);
                             CustomProgressDialog.getInstance().dismissDialog();
-                            fetchBannerImages();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -387,36 +385,6 @@ public class HomeFragment extends Fragment {
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
-    }
-
-    //Fetch Banner images
-    public void fetchBannerImages() {
-        //Add all to temp banner array
-        for (int j = 0; j < mBannerModels.size(); j++) {
-            mTempBannerArray.add(mBannerModels.get(j).getImage_url());
-        }
-
-        //show slider images
-        for (int i = 0; i < mTempBannerArray.size(); i++) {
-            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-            final String imageUrl = mTempBannerArray.get(i).toString();
-            textSliderView.image(imageUrl).setScaleType(BaseSliderView.ScaleType.Fit).empty(R.drawable.bannerimage)
-                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                        @Override
-                        public void onSliderClick(BaseSliderView baseSliderView) {
-                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
-
-                        }
-                    });
-
-            if (mTempBannerArray.size() > 1)
-                sliderAdvertise.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
-            sliderAdvertise.setIndicatorVisibility(mVisibility);
-            sliderAdvertise.setCustomAnimation(new DescriptionAnimation());
-            sliderAdvertise.setDuration(4000);
-
-            sliderAdvertise.addSlider(textSliderView);
-        }
     }
 
     private void getCartItems() {

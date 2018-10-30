@@ -31,15 +31,14 @@
                     android:id="@+id/img_product"
                     android:layout_width="@dimen/height_60"
                     android:layout_height="110dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bottle" />
+                    android:scaleType="fitXY" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </RelativeLayout>
 
             <TextView
@@ -47,12 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/height_5"
+                android:ellipsize="end"
                 android:fontFamily="@font/open_sans_regular"
                 android:gravity="center"
                 android:maxLines="2"
                 android:minHeight="@dimen/height_45"
                 android:text="Flexi "
-                android:ellipsize="end"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
                 android:textStyle="bold" />

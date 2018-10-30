@@ -13,8 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-
 import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,10 +35,6 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //View view = LayoutInflater.from(parent.getContext())
-        //        .inflate(R.layout.feature_product_item, parent, false);
-        // return new ViewHolder(view);
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.feature_product_item, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
@@ -52,13 +49,18 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMax_price());
 
+        Float getMrp = Float.valueOf(mDataArrayList.get(position).getMin_price());
+        Float getdiscountAmount = Float.valueOf(mDataArrayList.get(position).getMax_price());
+
+        Float finalDisAmount = getMrp - getdiscountAmount;
+        Float getTotalDiscount = (finalDisAmount / getMrp) * 100;
+        holder.tv_product_discount.setText("" + getTotalDiscount + " " + "off");
         //holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount() + "off");
 
-
-       /*
         //Use Picasso to load image
         Picasso.with(mContext)
-                .load()
+                .load(mDataArrayList.get(position).getImage())
+                .placeholder(R.drawable.bottle)
                 .into(holder.img_product, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -69,7 +71,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
                     public void onError() {
                         holder.progressBar.setVisibility(View.GONE);
                     }
-                });*/
+                });
 
     }
 
