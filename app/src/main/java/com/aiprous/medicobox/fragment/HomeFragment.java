@@ -49,7 +49,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -366,8 +365,15 @@ public class HomeFragment extends Fragment {
                             // Access the element using for loop
                             for (int i = 0; i < array.length(); i++) {
                                 FlipperView view = new FlipperView(getActivity());
-                                view.setImageUrl(array.getString(i));
-                                flipperLayout.addFlipperView(view);
+
+                                if (array.getString(i).contains("https")) {
+                                    String url = array.getString(i).replace("https", "http");
+                                    view.setImageUrl(url);
+                                    flipperLayout.addFlipperView(view);
+                                } else {
+                                    view.setImageUrl(array.getString(i));
+                                    flipperLayout.addFlipperView(view);
+                                }
                             }
 
                             CustomProgressDialog.getInstance().dismissDialog();
