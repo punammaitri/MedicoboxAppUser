@@ -44,12 +44,13 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //To delete data according to position
                 deleteAlert(mDataArrayList, position);
             }
         });
     }
 
+    //To delete data according to position
     private void deleteAlert(final ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList, final int position) {
         new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText(mContext.getResources().getString(R.string.are_you_sure))

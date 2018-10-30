@@ -1,7 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -15,10 +14,7 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 
-import com.aiprous.medicobox.register.RegisterModel;
-import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 
 import java.util.ArrayList;
 
@@ -27,10 +23,10 @@ import butterknife.ButterKnife;
 
 
 public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAdapter.ViewHolder> {
-    private ArrayList<RegisterModel> mDataArrayList;
+    private ArrayList<FeaturedProductModel> mDataArrayList;
     private Context mContext;
 
-    public FeatureProductAdapter(Context mContext, ArrayList<RegisterModel> mDataArrayList) {
+    public FeatureProductAdapter(Context mContext, ArrayList<FeaturedProductModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }

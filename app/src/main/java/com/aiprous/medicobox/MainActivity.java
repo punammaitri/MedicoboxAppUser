@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment(this);
         setDrawerToggle();
         addFragment();
-
-
     }
 
     @Override
@@ -192,10 +190,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void navItemClicked(String name, int position) {
-
-       /* if (!isNetworkAvailable(mContext)) {
-            CustomProgressDialog.getInstance().showDialog(mContext, APIConstant.Network_Error, APIConstant.ERROR_TYPE);
-            return;*/
 
         if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_home))) {
             drawerLayout.closeDrawer(GravityCompat.START);

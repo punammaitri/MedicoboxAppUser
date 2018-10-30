@@ -1,11 +1,11 @@
-package com.aiprous.medicobox.register;
+package com.aiprous.medicobox.featuredproduct;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RegisterModel {
+public class FeaturedProductModel {
 
-    public RegisterModel(String image, String name, String min_price, String final_price) {
+    public FeaturedProductModel(String image, String name, String min_price, String final_price) {
         this.image = image;
         this.name = name;
         this.min_price = min_price;

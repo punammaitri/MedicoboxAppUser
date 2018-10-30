@@ -104,12 +104,13 @@
                             android:textColor="@color/colorblack" />
 
                         <TextView
+                            android:id="@+id/txtEmail"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="shreya@gmail.com"
+                            android:text=""
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack" />
                     </LinearLayout>
