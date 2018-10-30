@@ -38,10 +38,23 @@ import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
+import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.model.NavItemClicked;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.aiprous.medicobox.utils.TrackGPS;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Locale;
@@ -50,6 +63,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 
 
 public class MainActivity extends AppCompatActivity
@@ -124,12 +141,8 @@ public class MainActivity extends AppCompatActivity
         //navigation drawer for pharmacist
         //navigationItemPharmacist(true);
 
-        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
-        } else {
-            rlayout_cart.setVisibility(View.VISIBLE);
-            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
-        }
+        getCartItems();
+
     }
 
     public void addFragment() {
@@ -369,4 +382,77 @@ public class MainActivity extends AppCompatActivity
             Log.e("Location is not fetch", "");
         }
     }
+
+    private void getCartItems() {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+
+                            if (getAllProductList != null) {
+                                //clear singleton array
+                                SingletonAddToCart.getGsonInstance().option.clear();
+                                SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
+                                for (int i = 0; i < getAllProductList.length(); i++) {
+                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
+                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
+
+
+                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("", name, "", "", "", "" + price, "" + qty, sku, "" + id);
+                                    listModel.setImage("");
+                                    listModel.setMedicineName(name);
+                                    listModel.setValue("");
+                                    listModel.setMrp("");
+                                    listModel.setDiscount("");
+                                    listModel.setPrice("" + price);
+                                    listModel.setQty("" + qty);
+                                    listModel.setSku(sku);
+                                    listModel.setItem_id("" + id);
+                                    singletonOptionData.option.add(listModel);
+
+                                }
+                            }
+
+                            if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
+                                rlayout_cart.setVisibility(View.GONE);
+                            } else {
+                                rlayout_cart.setVisibility(View.VISIBLE);
+                                tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+                            }
+
+                            CustomProgressDialog.getInstance().dismissDialog();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+
+
 }

@@ -38,6 +38,8 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,6 +137,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 }else {
 
                     // holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage_url());
+
+                    Picasso.with(mContext)
+                            .load(mDataArrayList.get(position).getImage())
+                            .into(holder.img_medicine, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                            });
+
                     holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
                     holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
                     // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
@@ -460,6 +477,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             BaseActivity.printLog("response-success : ", response.toString());
                             //save item id into itemid variable
                             addItemsSingleton();
+                            CustomProgressDialog.getInstance().dismissDialog();
                         }
 
                         @Override
