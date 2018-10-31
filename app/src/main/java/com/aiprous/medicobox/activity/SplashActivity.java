@@ -109,9 +109,11 @@ public class SplashActivity extends AppCompatActivity implements android.locatio
                     try {
                         if (MedicoboxApp.onGetEmail().isEmpty()) {
                             Intent lIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
                             startActivity(lIntent);
                         } else {
                             Intent lIntent = new Intent(SplashActivity.this, MainActivity.class);
+                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
                             startActivity(lIntent);
                         }
 

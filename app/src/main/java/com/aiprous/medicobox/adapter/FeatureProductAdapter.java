@@ -17,6 +17,7 @@ import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -43,19 +44,21 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
+
         //holder.img_product.setImageResource(mDataArrayList.get(position).getProduct_image());
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getName());
-        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMin_price());
+        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getMax_price());
+        holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getFinal_price());
 
-        Float getMrp = Float.valueOf(mDataArrayList.get(position).getMin_price());
-        Float getdiscountAmount = Float.valueOf(mDataArrayList.get(position).getMax_price());
+        Float getActualPrice = Float.valueOf(mDataArrayList.get(position).getPrice());
+        Float getFinalPrice = Float.valueOf(mDataArrayList.get(position).getFinal_price());
 
-        Float finalDisAmount = getMrp - getdiscountAmount;
-        Float getTotalDiscount = (finalDisAmount / getMrp) * 100;
-        holder.tv_product_discount.setText("" + getTotalDiscount + "%" + " Off");
-        //holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount() + "off");
+        Float finalDisAmount = getActualPrice - getFinalPrice;
+        Float getTotalDiscount = (finalDisAmount / getActualPrice) * 100;
+        String formattedDiscount = String.format ("%,.0f", getTotalDiscount);
+
+        holder.tv_product_discount.setText(formattedDiscount + "%" + " Off");
 
         //Use Picasso to load image
         Picasso.with(mContext)

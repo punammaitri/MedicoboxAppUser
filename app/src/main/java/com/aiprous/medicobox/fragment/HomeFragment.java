@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
 
 
     public HomeFragment() {
-    // Required empty public constructor
+        // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         init();
@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
                     .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                         @Override
                         public void onSliderClick(BaseSliderView baseSliderView) {
-                        //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
+                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
                         }
                     });
 
@@ -269,14 +269,14 @@ public class HomeFragment extends Fragment {
                             for (int i = 0; i < entries.size(); i++) {
                                 String image = ((JsonObject) entries.get(i)).get("image").getAsString();
                                 String name = ((JsonObject) entries.get(i)).get("name").getAsString();
-                                String min_price = ((JsonObject) entries.get(i)).get("min_price").getAsString();
-                                String max_price = ((JsonObject) entries.get(i)).get("max_price").getAsString();
+                                String actual_price = ((JsonObject) entries.get(i)).get("price").getAsString();
+                                String final_price = ((JsonObject) entries.get(i)).get("final_price").getAsString();
 
-                                FeaturedProductModel featuredProductModel = new FeaturedProductModel(image, name, min_price, max_price);
+                                FeaturedProductModel featuredProductModel = new FeaturedProductModel(image, name, actual_price, final_price);
                                 featuredProductModel.setImage(image);
                                 featuredProductModel.setName(name);
-                                featuredProductModel.setMin_price(min_price);
-                                featuredProductModel.setMax_price(max_price);
+                                featuredProductModel.setPrice(actual_price);
+                                featuredProductModel.setFinal_price(final_price);
                                 mFeaturedProductModels.add(featuredProductModel);
                             }
                         }
@@ -290,7 +290,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onError(ANError error) {
-                    // handle error
+                        // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
@@ -351,7 +351,7 @@ public class HomeFragment extends Fragment {
                             JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
                             JSONArray array = object.getJSONArray("response");//get the array with the key "response"
 
-                                // Access the element using for loop
+                            // Access the element using for loop
                             for (int i = 0; i < array.length(); i++) {
                                 FlipperView view = new FlipperView(getActivity());
 

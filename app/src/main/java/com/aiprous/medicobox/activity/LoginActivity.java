@@ -234,6 +234,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 if (!name.isEmpty()) {
                                     Toast.makeText(LoginActivity.this, "Login with facebook is successfully", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Login with facebook is failed", Toast.LENGTH_SHORT).show();
                                 }
@@ -329,6 +330,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (isLogin) {
             Toast.makeText(this, "Login With Gmail is successful", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             //callSocialMedia(lLoginwithGooglegmailId, "social_media", getFirebaseToken, googleUsername, googleUsername, googleLastname, gmailProfileUrl, "gmail");
         }
     }
@@ -358,20 +360,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @OnClick(R.id.tv_forgot_password)
     public void onClickPassword() {
         startActivity(new Intent(this, SetPasswordActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
 
     @OnClick(R.id.tv_sign_up_here)
     public void onCLickSignUpHere() {
-        // startActivity(new Intent(this, SignUpActivity.class));
         startActivity(new Intent(this, SignUpActivity.class));
-        //startActivity(new Intent(this, AddDeliveryBoyActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
 
     @OnClick(R.id.tv_sign_in_withotp)
     public void onClickSignInWithOtp() {
         startActivity(new Intent(this, OTPActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
 
@@ -471,6 +474,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                     .putExtra("email", "" + getEmail));
+                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
                             MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, "", getEmail, getStoreId);
                         } catch (JSONException e) {
                             e.printStackTrace();
