@@ -129,6 +129,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 
@@ -140,6 +141,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     @OnClick(R.id.btnContinue)
     public void ButtonContinue() {
         startActivity(new Intent(this, PrescriptionUploadOptionActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick({R.id.cardview_take_photo, R.id.cardview_gallery})

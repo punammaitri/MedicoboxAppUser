@@ -67,6 +67,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     private void init() {
@@ -98,5 +99,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
     @OnClick(R.id.btn_my_orders)
     public void myOrders() {
         startActivity(new Intent(this, MyOrdersActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }

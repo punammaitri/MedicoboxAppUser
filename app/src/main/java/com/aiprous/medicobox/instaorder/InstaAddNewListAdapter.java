@@ -123,6 +123,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
             @Override
             public void onClick(View view) {
                 mContext.startActivity(new Intent(mContext,InstaProductDetailActivity.class));
+
                 popup.dismiss();
             }
         });

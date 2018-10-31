@@ -216,23 +216,28 @@ public class MainActivity extends AppCompatActivity
             return;
         } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_account))) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
             startActivity(new Intent(this, CartActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_settings))) {
             startActivity(new Intent(mContext, SettingActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_notification))) {
             startActivity(new Intent(mContext, NotificationActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_logout))) {
             logout();
             drawerLayout.closeDrawer(GravityCompat.START);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             return;
         }
     }

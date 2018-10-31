@@ -244,6 +244,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     public class SubstituteProductModel {
@@ -578,6 +579,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     public void onClickDrugInfo()
     {
         startActivity(new Intent(this,DrugInformationTabActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 }

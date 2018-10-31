@@ -113,6 +113,7 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 
@@ -146,6 +147,7 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(myIntent);
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
                     }
                 });
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -202,6 +204,7 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     @OnClick(R.id.btn_Cancel_Order)
     public void cancelOrder() {
         startActivity(new Intent(this, CancelOrderActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.rlayout_back_button)

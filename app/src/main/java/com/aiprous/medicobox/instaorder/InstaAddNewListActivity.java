@@ -96,6 +96,7 @@ public class InstaAddNewListActivity extends AppCompatActivity {
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.btn_insta_list)

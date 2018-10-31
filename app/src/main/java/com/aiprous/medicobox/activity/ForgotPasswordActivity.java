@@ -107,6 +107,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             edtNewPassword.setError("Please enter new password");
         } else {
             startActivity(new Intent(this, LoginActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             finish();
         }
     }

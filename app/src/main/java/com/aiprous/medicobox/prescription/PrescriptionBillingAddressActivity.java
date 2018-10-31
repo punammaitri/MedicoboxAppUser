@@ -78,6 +78,7 @@ public class PrescriptionBillingAddressActivity extends AppCompatActivity {
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -121,6 +122,7 @@ public class PrescriptionBillingAddressActivity extends AppCompatActivity {
             edtPhone.setError("Phone number should be 10 digit");
         }else {
             startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
     }
 
