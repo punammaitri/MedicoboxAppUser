@@ -10,16 +10,20 @@ public class ListModel {
     String title;
     String price;
     String sale_price;
+    String discount;
     String short_description;
+    String prescription_required;
     String image;
 
-    public ListModel(String id, String sku, String title, String price, String sale_price, String short_description, String image) {
+    public ListModel(String id, String sku, String title, String price, String sale_price, String discount, String short_description, String prescription_required, String image) {
         this.id = id;
         this.sku = sku;
         this.title = title;
         this.price = price;
         this.sale_price = sale_price;
+        this.discount = discount;
         this.short_description = short_description;
+        this.prescription_required = prescription_required;
         this.image = image;
     }
 
@@ -63,12 +67,28 @@ public class ListModel {
         this.sale_price = sale_price;
     }
 
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
     public String getShort_description() {
         return short_description;
     }
 
     public void setShort_description(String short_description) {
         this.short_description = short_description;
+    }
+
+    public String getPrescription_required() {
+        return prescription_required;
+    }
+
+    public void setPrescription_required(String prescription_required) {
+        this.prescription_required = prescription_required;
     }
 
     public String getImage() {

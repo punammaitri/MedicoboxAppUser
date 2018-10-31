@@ -194,15 +194,19 @@ public class ListActivity extends AppCompatActivity {
                                     String price = getAllProductList.getJSONObject(i).get("price").toString();
                                     String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
                                     String sales_price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                    String discount=getAllProductList.getJSONObject(i).get("discount").toString();
                                     String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                    String prescription_required=getAllProductList.getJSONObject(i).get("prescription_required").toString();
 
-                                    ListModel listModel = new ListModel(id, sku, title, price, sales_price, short_description, imageUrl);
+                                    ListModel listModel = new ListModel(id, sku, title, price, sales_price,discount, short_description,prescription_required, imageUrl);
                                     listModel.setId(id);
                                     listModel.setSku(sku);
                                     listModel.setTitle(title);
                                     listModel.setPrice(price);
                                     listModel.setSale_price(sales_price);
+                                    listModel.setDiscount(discount);
                                     listModel.setShort_description(short_description);
+                                    listModel.setPrescription_required(prescription_required);
                                     listModel.setImage(imageUrl);
                                     mListModelArray.add(listModel);
                                 }

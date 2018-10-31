@@ -140,10 +140,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
                     holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
                     holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
-                    // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
+                    holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
                     holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
-                    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+                    holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
+                    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getSale_price());
 
                     //make add button visible
                     holder.rlayout_number_of_item.setVisibility(View.GONE);
@@ -169,10 +169,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
             holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
             holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
-            // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
+            holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
             holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
-            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+             holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getSale_price());
 
         }
 
@@ -214,10 +214,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
                 mMedicineName=mDataArrayList.get(lItemIndex).getTitle();
                 mValue=mDataArrayList.get(lItemIndex).getShort_description();
-                // mMrp=mDataArrayList.get(lItemIndex).getMrp();
-                // mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
+                 mMrp=mDataArrayList.get(lItemIndex).getPrice();
+                 mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                 mSku=mDataArrayList.get(lItemIndex).getSku();
-                mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                mPrice=mDataArrayList.get(lItemIndex).getSale_price();
                 mImageURL=mDataArrayList.get(lItemIndex).getImage();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
@@ -259,10 +259,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 int lItemIndex = Integer.parseInt("" + v.getTag());
                 mMedicineName=mDataArrayList.get(lItemIndex).getTitle();
                 mValue=mDataArrayList.get(lItemIndex).getShort_description();
-               // mMrp=mDataArrayList.get(lItemIndex).getMrp();
-               // mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
+                mMrp=mDataArrayList.get(lItemIndex).getPrice();
+                mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                 mSku=mDataArrayList.get(lItemIndex).getSku();
-                mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                mPrice=mDataArrayList.get(lItemIndex).getSale_price();
                 mImageURL=mDataArrayList.get(lItemIndex).getImage();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
@@ -312,10 +312,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     mQty=setValuePosition;
                     mMedicineName=mDataArrayList.get(lItemIndex).getTitle();
                     mValue=mDataArrayList.get(lItemIndex).getShort_description();
-                   // mMrp=mDataArrayList.get(lItemIndex).getMrp();
-                   // mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
+                    mMrp=mDataArrayList.get(lItemIndex).getPrice();
+                    mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                     mSku=mDataArrayList.get(lItemIndex).getSku();
-                    mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                    mPrice=mDataArrayList.get(lItemIndex).getSale_price();
                     mImageURL=mDataArrayList.get(lItemIndex).getImage();
                     if (holder.tv_value.getText().equals("0")) {
 
