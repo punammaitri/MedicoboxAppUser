@@ -16,7 +16,8 @@ public class APIConstant {
     public static String UPDATEUSERINFO = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me";
     public static String GETCARTID = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
     public static String ADDTOCART = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items";
-    public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
+    public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/index.php/API/get_cart_item.php";
+
     public static String DELETECARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String EDITCARTITEM = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";

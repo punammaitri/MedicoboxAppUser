@@ -49,7 +49,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
 
-    private ArrayList<CartModel.Items> mCartArrayList;
+    private ArrayList<CartModel.Response> mCartArrayList;
     private Context mContext;
 
     private ArrayList<AddToCartOptionDetailModel> ItemModelList;
@@ -70,7 +70,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     CustomProgressDialog mAlert;
 
 
-    public CartAdapter(Context mContext, ArrayList<CartModel.Items> mCartArrayList) {
+    public CartAdapter(Context mContext, ArrayList<CartModel.Response> mCartArrayList) {
         this.mContext = mContext;
         this.mCartArrayList = mCartArrayList;
     }
@@ -88,8 +88,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         mAlert = CustomProgressDialog.getInstance();
         holder.tv_item_name.setText(mCartArrayList.get(position).getName());
-        // holder.tv_medicine_contains.setText(mCartArrayList.get(position).getValue());
-        // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getMrp());
+         holder.tv_medicine_contains.setText(mCartArrayList.get(position).getShort_description());
+         holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
         holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
 
@@ -98,11 +98,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         //Add to cart
         mMedicineName = mCartArrayList.get(position).getName();
-        // mValue=mCartArrayList.get(position).getValue();
-        //  mMrp=mCartArrayList.get(position).getMrp();
-        // mdiscount=mCartArrayList.get(position).getDiscount();
-        mPrice = String.valueOf(mCartArrayList.get(position).getPrice());
-        // mImageURL=mCartArrayList.get(position).getImage();
+        mValue=mCartArrayList.get(position).getShort_description();
+         mMrp= String.valueOf(mCartArrayList.get(position).getPrice());
+         mdiscount= String.valueOf(mCartArrayList.get(position).getDiscount());
+        mPrice = String.valueOf(mCartArrayList.get(position).getSale_price());
+        mImageURL=mCartArrayList.get(position).getImage();
         mQty = Integer.parseInt(holder.tv_value.getText().toString());
 
         AddItemsToSingleton();
@@ -119,11 +119,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
                 mMedicineName = mCartArrayList.get(lItemIndex).getName();
-                // mValue=mCartArrayList.get(lItemIndex).getValue();
-                // mMrp=mCartArrayList.get(lItemIndex).getMrp();
-                //  mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
-                mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                // mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                 mValue=mCartArrayList.get(lItemIndex).getShort_description();
+                 mMrp= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                 mdiscount= String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
+                 mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
+                 mImageURL=mCartArrayList.get(lItemIndex).getImage();
                 mSku = mCartArrayList.get(lItemIndex).getSku();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty = setValuePosition;
@@ -166,11 +166,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     holder.tv_value.setText("" + setValuePosition);
                     mQty = setValuePosition;
                     mMedicineName = mCartArrayList.get(lItemIndex).getName();
-                    // mValue=mCartArrayList.get(lItemIndex).getValue();
-                    // mMrp=mCartArrayList.get(lItemIndex).getMrp();
-                    // mdiscount=mCartArrayList.get(lItemIndex).getDiscount();
-                    mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                    // mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                    mValue=mCartArrayList.get(lItemIndex).getShort_description();
+                    mMrp= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                    mdiscount= String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
+                    mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
+                    mImageURL=mCartArrayList.get(lItemIndex).getImage();
                     mSku = mCartArrayList.get(lItemIndex).getSku();
                     if (holder.tv_value.getText().equals("0")) {
 

@@ -401,7 +401,8 @@ public class MainActivity extends AppCompatActivity
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+
 
                             if (getAllProductList != null) {
                                 //clear singleton array
@@ -412,17 +413,21 @@ public class MainActivity extends AppCompatActivity
                                     String sku = getAllProductList.getJSONObject(i).get("sku").toString();
                                     int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
                                     String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                    String price = getAllProductList.getJSONObject(i).get("price").toString();
+                                    String price = getAllProductList.getJSONObject(i).get("sale_price").toString();
                                     String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
                                     String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                    String image = getAllProductList.getJSONObject(i).get("image").toString();
+                                    String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                    int mrp = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
 
 
-                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("", name, "", "", "", price, "" + qty, sku, "" + id);
-                                    listModel.setImage("");
+                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel(image, name, short_description, ""+mrp, ""+discount, price, "" + qty, sku, "" + id);
+                                    listModel.setImage(image);
                                     listModel.setMedicineName(name);
-                                    listModel.setValue("");
-                                    listModel.setMrp("");
-                                    listModel.setDiscount("");
+                                    listModel.setValue(short_description);
+                                    listModel.setMrp(""+mrp);
+                                    listModel.setDiscount(""+discount);
                                     listModel.setPrice("" + price);
                                     listModel.setQty("" + qty);
                                     listModel.setSku(sku);

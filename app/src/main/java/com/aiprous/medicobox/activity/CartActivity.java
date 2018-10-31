@@ -60,7 +60,7 @@ public class CartActivity extends AppCompatActivity {
     TextView tv_shipping_note;
     public static TextView tv_cart_empty;
     public static NestedScrollView nestedscroll_cart;
-    ArrayList<CartModel.Items> cartModelArrayList = new ArrayList<>();
+    ArrayList<CartModel.Response> cartModelArrayList = new ArrayList<>();
     private Context mcontext = this;
     CustomProgressDialog mAlert;
     private RecyclerView.LayoutManager layoutManager;
@@ -136,7 +136,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void getCartItems() {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GETCARTITEMS)
+        AndroidNetworking.post(GETCARTITEMS)
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -145,30 +145,43 @@ public class CartActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         try {
+
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
 
                             if (getAllProductList != null) {
                                 cartModelArrayList.clear();
                                 for (int i = 0; i < getAllProductList.length(); i++) {
-                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                    int item_id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
                                     String sku = getAllProductList.getJSONObject(i).get("sku").toString();
                                     int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                    String id = getAllProductList.getJSONObject(i).get("id").toString();
                                     String name = getAllProductList.getJSONObject(i).get("name").toString();
                                     int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
                                     String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
                                     String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                    String sale_price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                    String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                    String image = getAllProductList.getJSONObject(i).get("image").toString();
+                                    String prescription = getAllProductList.getJSONObject(i).get("prescription").toString();
+                                    int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
 
 
-                                    CartModel.Items listModel = new CartModel.Items(lquoteId, product_type, price, name, qty, sku, id);
-                                    listModel.setQuote_id(lquoteId);
-                                    listModel.setProduct_type(product_type);
-                                    listModel.setPrice(price);
-                                    listModel.setName(name);
-                                    listModel.setQty(qty);
+                                    CartModel.Response listModel = new CartModel.Response(discount,prescription,image,short_description,sale_price,lquoteId,product_type,price,name,id,qty,sku,item_id);
+                                    listModel.setItem_id(item_id);
                                     listModel.setSku(sku);
-                                    listModel.setItem_id(id);
+                                    listModel.setQty(qty);
+                                    listModel.setId(id);
+                                    listModel.setName(name);
+                                    listModel.setPrice(price);
+                                    listModel.setProduct_type(product_type);
+                                    listModel.getQuote_id();
+                                    listModel.setSale_price(sale_price);
+                                    listModel.setShort_description(short_description);
+                                    listModel.setImage(image);
+                                    listModel.setPrescription(prescription);
+                                    listModel.setDiscount(discount);
                                     cartModelArrayList.add(listModel);
                                 }
                             }
