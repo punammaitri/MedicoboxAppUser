@@ -21,10 +21,12 @@ import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
-import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
+import com.aiprous.medicobox.sliderimages.FlipperLayout;
+import com.aiprous.medicobox.sliderimages.FlipperView;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -62,8 +64,8 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class HomeFragment extends Fragment {
-    @BindView(R.id.sliderAdvertise)
-    SliderLayout sliderAdvertise;
+    @BindView(R.id.flipper_layout)
+    FlipperLayout flipperLayout;
     @BindView(R.id.slider_contactus)
     SliderLayout slider_contactus;
     @BindView(R.id.rc_product)
@@ -136,7 +138,6 @@ public class HomeFragment extends Fragment {
         }
 
         mAlert = CustomProgressDialog.getInstance();
-
     }
 
     public interface OnFragmentInteractionListener {
@@ -355,7 +356,6 @@ public class HomeFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         JsonObject entries = (JsonObject) new JsonParser().parse(response.toString());
-                        mBannerModels.clear();
 
                         try {
                             JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
@@ -363,15 +363,19 @@ public class HomeFragment extends Fragment {
 
                             // Access the element using for loop
                             for (int i = 0; i < array.length(); i++) {
-                                mBannerUrl = array.getString(i);
-                                BannerModel mBM = new BannerModel(mBannerUrl);
-                                mBM.setImage_url(mBannerUrl);
-                                mBannerModels.add(mBM);
+                                FlipperView view = new FlipperView(getActivity());
+
+                                if (array.getString(i).contains("https")) {
+                                    String url = array.getString(i).replace("https", "http");
+                                    view.setImageUrl(url);
+                                    flipperLayout.addFlipperView(view);
+                                } else {
+                                    view.setImageUrl(array.getString(i));
+                                    flipperLayout.addFlipperView(view);
+                                }
                             }
 
-                            Log.e("banner image array", "" + mBannerModels);
                             CustomProgressDialog.getInstance().dismissDialog();
-                            fetchBannerImages();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -418,5 +422,32 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void getCartItems() {
+        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
+
+                            if (getAllProductList != null) {
+                                //clear singleton array
+                                SingletonAddToCart.getGsonInstance().option.clear();
+                                SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
+                                for (int i = 0; i < getAllProductList.length(); i++) {
+                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
+                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
 
 }

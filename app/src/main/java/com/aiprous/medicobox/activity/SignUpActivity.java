@@ -28,6 +28,7 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.REGISTER;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
+import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
 import static com.aiprous.medicobox.utils.BaseActivity.passwordValidation;
 
 
@@ -85,16 +86,14 @@ public class SignUpActivity extends AppCompatActivity {
         String lPass = edtPassword.getText().toString().trim();
         String lConfirm_password = edt_confirm_password.getText().toString().trim();
 
-        String emailPattern = "[A-Za-z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        if (edt_first_name.getText().length() <= 2) {
-            edt_first_name.setError("Name must be greater than 2 character");
-        } else if (edtMobile.getText().length() <= 9) {
+        if (lFirstname.length() <= 2) {
+            edt_first_name.setError("Firstname must be greater than 2 character");
+        } else if (lMobile.length() <= 9) {
             edtMobile.setError("Mobile number must be greater 10 digit");
-        } else if (!lEmail.matches(emailPattern)) {
+        } else if (!isValidEmailId(edtEmail)) {
             edtEmail.setError("Invalid email address");
         } else if (!lPass.equals(lConfirm_password)) {
-            Toast.makeText(mContext, "Password and confirm password should be same", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Password mismatch", Toast.LENGTH_SHORT).show();
         } else if (passwordValidation(mContext, lPass, edtPassword)) {
 
             try {

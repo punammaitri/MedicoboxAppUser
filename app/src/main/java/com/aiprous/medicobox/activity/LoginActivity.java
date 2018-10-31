@@ -67,6 +67,7 @@ import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETBEARERTOKEN;
 import static com.aiprous.medicobox.utils.APIConstant.LOGIN;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
+import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
 import static com.aiprous.medicobox.utils.BaseActivity.showToast;
 
 
@@ -385,7 +386,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         lEmail = edtMobileEmail.getText().toString().trim();
         lPass = edtPassword.getText().toString().trim();
 
-        if (lEmail.length() > 0 && lPass.length() > 0) {
+        if (isValidEmailId(edtMobileEmail) && lPass.length() > 0) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("username", lEmail);
