@@ -83,6 +83,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     @BindView(R.id.btn_add_to_cart)
     Button btn_add_to_cart;
 
+
     ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
     private Context mcontext = this;
     private int dotscount;
@@ -299,7 +300,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                            Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
                             CustomProgressDialog.getInstance().dismissDialog();
                         }
 
@@ -571,6 +572,12 @@ public class ProductDetailBActivity extends AppCompatActivity {
         //tv_cart_size.setText(cart_size);
         // calculateTotalPrice();
 
+    }
+
+    @OnClick(R.id.llayout_drug_information)
+    public void onClickDrugInfo()
+    {
+        startActivity(new Intent(this,DrugInformationTabActivity.class));
     }
 
 }

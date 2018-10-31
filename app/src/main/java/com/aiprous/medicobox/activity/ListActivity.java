@@ -83,13 +83,6 @@ public class ListActivity extends AppCompatActivity {
 
         rc_medicine_list = (RecyclerView) findViewById(R.id.rc_medicine_list);
 
-        //add static data into array list
-       /* mlistModelsArray.add(new ListModel(R.drawable.bottle, "ABC", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "xyz", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "pqr", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "aaa", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "ccc", "Bottle of 60 tablet", "150", "30%", "135"));
-*/
 
         try {
             searchview_medicine.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -1,7 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -14,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.fragment.HomeFragment;
 
 import java.util.ArrayList;

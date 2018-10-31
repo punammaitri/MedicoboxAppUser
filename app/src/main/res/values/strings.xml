@@ -53,4 +53,7 @@
     <string name="notification_opt">Opt in to get notifications about best deals and promotions</string>
 
     <string name="location_permission">App was not allowed to access Location. Consider granting it Location permission.</string>
+    <string name="title_activity_drug_information_tab">DrugInformationTabActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
