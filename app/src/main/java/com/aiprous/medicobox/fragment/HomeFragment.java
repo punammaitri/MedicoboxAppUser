@@ -19,11 +19,8 @@ import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
-import com.aiprous.medicobox.application.MedicoboxApp;
-import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
-import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.aiprous.medicobox.sliderimages.FlipperLayout;
 import com.aiprous.medicobox.sliderimages.FlipperView;
@@ -54,11 +51,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BANNERAPI;
-import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.FEATUREDPRODUCT;
-import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.GETCATEGORY;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -84,7 +78,7 @@ public class HomeFragment extends Fragment {
 
 
     public HomeFragment() {
-        // Required empty public constructor
+    // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
@@ -100,7 +94,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         init();
@@ -120,7 +114,7 @@ public class HomeFragment extends Fragment {
                     .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                         @Override
                         public void onSliderClick(BaseSliderView baseSliderView) {
-                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
+                        //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
                         }
                     });
 
@@ -296,7 +290,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onError(ANError error) {
-                        // handle error
+                    // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
@@ -357,7 +351,7 @@ public class HomeFragment extends Fragment {
                             JSONObject object = new JSONObject(entries.toString()); //first, get the jsonObject
                             JSONArray array = object.getJSONArray("response");//get the array with the key "response"
 
-                            // Access the element using for loop
+                                // Access the element using for loop
                             for (int i = 0; i < array.length(); i++) {
                                 FlipperView view = new FlipperView(getActivity());
 
