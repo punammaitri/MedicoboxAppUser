@@ -75,16 +75,13 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.btn_upload)
     Button btn_upload;
     View view;
-    ArrayList<Integer> sliderimages = new ArrayList<>();
     ArrayList<Integer> sliderimagesCall = new ArrayList<>();
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
     ArrayList<FeaturedProductModel> mFeaturedProductModels = new ArrayList<FeaturedProductModel>();
-    ArrayList<BannerModel> mBannerModels = new ArrayList<BannerModel>();
-    ArrayList<String> mTempBannerArray = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
-    private String mBannerUrl;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -111,8 +108,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void init() {
-        sliderimages.add(R.drawable.bannerimage);
-        sliderimages.add(R.drawable.contactus);
+
 
         sliderimagesCall.add(R.drawable.contactus);
         sliderimagesCall.add(R.drawable.bannerimage);
@@ -215,7 +211,6 @@ public class HomeFragment extends Fragment {
             AttemptToGetFeaturedProduct();
             CustomProgressDialog.getInstance().dismissDialog();
             AttemptToGetBannerImages();
-            getCartItems();
             AttemptToGetCategories();
         }
         //new GetAllProduct().execute();
@@ -393,64 +388,4 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void getCartItems() {
-        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GETCARTITEMS)
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                        try {
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
-
-                            if (getAllProductList != null) {
-                                //clear singleton array
-                                SingletonAddToCart.getGsonInstance().option.clear();
-                                SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
-                                for (int i = 0; i < getAllProductList.length(); i++) {
-                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
-                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
-                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
-                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
-                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
-
-
-                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("", name, "", "", "", "" + price, "" + qty, sku, "" + id);
-                                    listModel.setImage("");
-                                    listModel.setMedicineName(name);
-                                    listModel.setValue("");
-                                    listModel.setMrp("");
-                                    listModel.setDiscount("");
-                                    listModel.setPrice("" + price);
-                                    listModel.setQty("" + qty);
-                                    listModel.setSku(sku);
-                                    listModel.setItem_id("" + id);
-                                    singletonOptionData.option.add(listModel);
-
-                                }
-                            }
-                            CustomProgressDialog.getInstance().dismissDialog();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        CustomProgressDialog.getInstance().dismissDialog();
-                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                    }
-                });
-    }
 }
