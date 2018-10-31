@@ -54,7 +54,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
 
         Float finalDisAmount = getMrp - getdiscountAmount;
         Float getTotalDiscount = (finalDisAmount / getMrp) * 100;
-        holder.tv_product_discount.setText("" + getTotalDiscount + " " + "off");
+        holder.tv_product_discount.setText("" + getTotalDiscount + "%" + " Off");
         //holder.tv_product_discount.setText(mDataArrayList.get(position).getProduct_discount() + "off");
 
         //Use Picasso to load image
