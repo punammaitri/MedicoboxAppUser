@@ -112,6 +112,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick({R.id.rb_order_everything, R.id.rb_specify_medicine, R.id.rb_call_me, R.id.rlayout_back_button, R.id.btnContinue})
@@ -137,6 +138,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 break;
             case R.id.btnContinue:
                 startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_back_button:
                 finish();

@@ -267,7 +267,7 @@ public class HomeFragment extends Fragment {
                         if (entries != null) {
                             mFeaturedProductModels.clear();
                             for (int i = 0; i < entries.size(); i++) {
-                                String image = ((JsonObject) entries.get(i)).get("image").getAsString();
+                                String image = ((JsonObject) entries.get(i)).get("small_image").getAsString();
                                 String name = ((JsonObject) entries.get(i)).get("name").getAsString();
                                 String actual_price = ((JsonObject) entries.get(i)).get("price").getAsString();
                                 String final_price = ((JsonObject) entries.get(i)).get("final_price").getAsString();

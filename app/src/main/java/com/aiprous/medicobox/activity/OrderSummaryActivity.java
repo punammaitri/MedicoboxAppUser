@@ -95,6 +95,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -105,6 +106,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     @OnClick(R.id.btn_confirm_order)
     public void confirmOrder() {
         startActivity(new Intent(this, PaymentDetailsActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     public class OrderSummaryModel {

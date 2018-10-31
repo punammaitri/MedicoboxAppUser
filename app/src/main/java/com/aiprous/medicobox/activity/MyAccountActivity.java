@@ -61,12 +61,15 @@ public class MyAccountActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
+
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.tv_edit_profile)
     public void onClickEditProfile() {
         startActivity(new Intent(this, EditProfileActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -77,5 +80,6 @@ public class MyAccountActivity extends AppCompatActivity {
     @OnClick(R.id.tv_change_delivery_address)
     public void ChangeDeliveryAddress() {
         startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }

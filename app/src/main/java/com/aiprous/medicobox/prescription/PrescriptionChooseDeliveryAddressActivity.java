@@ -85,11 +85,13 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
     @OnClick(R.id.tv_add_new)
     public void addNew()
     {
         startActivity(new Intent(this,PrescriptionEditAddressActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 
@@ -101,6 +103,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @OnClick(R.id.btn_insta_list)
     public void ButtonInstaList() {
         startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 

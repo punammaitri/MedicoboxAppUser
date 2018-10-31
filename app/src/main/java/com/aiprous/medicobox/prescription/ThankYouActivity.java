@@ -64,6 +64,7 @@ public class ThankYouActivity extends AppCompatActivity {
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 }

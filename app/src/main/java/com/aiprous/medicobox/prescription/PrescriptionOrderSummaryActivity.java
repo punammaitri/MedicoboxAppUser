@@ -82,6 +82,7 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     public void ShowCart()
     {
         startActivity(new Intent(this,CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 
@@ -93,6 +94,7 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     @OnClick(R.id.btnConfirmOrder)
     public void ButtonConfirmOrder() {
         startActivity(new Intent(this, ThankYouActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 

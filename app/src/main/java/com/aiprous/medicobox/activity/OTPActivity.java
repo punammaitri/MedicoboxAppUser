@@ -103,6 +103,7 @@ public class OTPActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter OTP", Toast.LENGTH_SHORT).show();
         } else {
             startActivity(new Intent(this, MainActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
             finish();
         }
     }

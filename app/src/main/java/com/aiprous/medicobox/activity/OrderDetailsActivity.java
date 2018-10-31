@@ -119,6 +119,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
 
@@ -185,6 +186,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.btn_track_order)
     public void trackOrder() {
         startActivity(new Intent(this, OrderTrackingActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     public static class ProductModel {

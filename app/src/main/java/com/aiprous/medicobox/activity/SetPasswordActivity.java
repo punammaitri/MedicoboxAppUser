@@ -105,6 +105,7 @@ public class SetPasswordActivity extends AppCompatActivity {
 
                         CustomProgressDialog.getInstance().dismissDialog();
                         startActivity(new Intent(SetPasswordActivity.this, ForgotPasswordActivity.class));
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
                         finish();
                     }
 

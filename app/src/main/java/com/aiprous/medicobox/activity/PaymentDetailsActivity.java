@@ -70,6 +70,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -80,5 +81,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.tv_place_order)
     public void placeOrder() {
         startActivity(new Intent(this, OrderPlacedActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }
