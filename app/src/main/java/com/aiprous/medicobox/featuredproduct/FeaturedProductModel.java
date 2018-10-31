@@ -5,136 +5,131 @@ import com.google.gson.annotations.SerializedName;
 
 public class FeaturedProductModel {
 
-    public FeaturedProductModel(String image, String name, String min_price, String final_price) {
-        this.image = image;
-        this.name = name;
-        this.min_price = min_price;
-        this.final_price = final_price;
-    }
-
     @Expose
     @SerializedName("request_path")
-    private String request_path;
+    public String request_path;
     @Expose
     @SerializedName("fulfilled_by")
-    private String fulfilled_by;
+    public String fulfilled_by;
     @Expose
     @SerializedName("sold_by")
-    private String sold_by;
+    public String sold_by;
     @Expose
     @SerializedName("availability")
-    private String availability;
+    public String availability;
     @Expose
     @SerializedName("weight_uom")
-    private String weight_uom;
+    public String weight_uom;
     @Expose
     @SerializedName("prescription_required")
-    private String prescription_required;
+    public String prescription_required;
     @Expose
     @SerializedName("product_size")
-    private String product_size;
+    public String product_size;
     @Expose
     @SerializedName("product_form")
-    private String product_form;
+    public String product_form;
     @Expose
     @SerializedName("marketed_by")
-    private String marketed_by;
+    public String marketed_by;
     @Expose
     @SerializedName("status")
-    private String status;
+    public String status;
+    @Expose
+    @SerializedName("warningsprecautionschildrenand")
+    public String warningsprecautionschildrenand;
     @Expose
     @SerializedName("warningsprecautionspregnancyan")
-    private String warningsprecautionspregnancyan;
-    @Expose
-    @SerializedName("precautions")
-    private String precautions;
+    public String warningsprecautionspregnancyan;
     @Expose
     @SerializedName("side_effects")
-    private String side_effects;
-    @Expose
-    @SerializedName("drug_interaction")
-    private String drug_interaction;
+    public String side_effects;
     @Expose
     @SerializedName("how_to_use")
-    private String how_to_use;
-    @Expose
-    @SerializedName("works")
-    private String works;
+    public String how_to_use;
     @Expose
     @SerializedName("uses")
-    private String uses;
+    public String uses;
     @Expose
     @SerializedName("composition")
-    private String composition;
+    public String composition;
     @Expose
     @SerializedName("swatch_image")
-    private String swatch_image;
+    public String swatch_image;
     @Expose
     @SerializedName("url_key")
-    private String url_key;
+    public String url_key;
     @Expose
     @SerializedName("thumbnail")
-    private String thumbnail;
+    public String thumbnail;
     @Expose
     @SerializedName("small_image")
-    private String small_image;
+    public String small_image;
     @Expose
     @SerializedName("image")
-    private String image;
+    public String image;
     @Expose
     @SerializedName("name")
-    private String name;
+    public String name;
     @Expose
     @SerializedName("is_salable")
-    private String is_salable;
+    public String is_salable;
     @Expose
     @SerializedName("cat_index_position")
-    private String cat_index_position;
+    public String cat_index_position;
     @Expose
     @SerializedName("sw_featured")
-    private String sw_featured;
+    public String sw_featured;
     @Expose
     @SerializedName("max_price")
-    private String max_price;
+    public String max_price;
     @Expose
     @SerializedName("min_price")
-    private String min_price;
+    public String min_price;
     @Expose
     @SerializedName("minimal_price")
-    private String minimal_price;
+    public String minimal_price;
     @Expose
     @SerializedName("final_price")
-    private String final_price;
+    public String final_price;
     @Expose
     @SerializedName("tax_class_id")
-    private String tax_class_id;
+    public String tax_class_id;
     @Expose
     @SerializedName("price")
-    private String price;
+    public String price;
     @Expose
     @SerializedName("updated_at")
-    private String updated_at;
+    public String updated_at;
     @Expose
     @SerializedName("created_at")
-    private String created_at;
+    public String created_at;
     @Expose
     @SerializedName("required_options")
-    private String required_options;
+    public String required_options;
     @Expose
     @SerializedName("has_options")
-    private String has_options;
+    public String has_options;
     @Expose
     @SerializedName("sku")
-    private String sku;
+    public String sku;
     @Expose
     @SerializedName("type_id")
-    private String type_id;
+    public String type_id;
     @Expose
     @SerializedName("attribute_set_id")
-    private String attribute_set_id;
+    public String attribute_set_id;
     @Expose
     @SerializedName("entity_id")
-    private String entity_id;
+    public String entity_id;
+
+
+    public FeaturedProductModel(String image, String name, String actual_price, String final_price) {
+        this.image = image;
+        this.name = name;
+        this.price = actual_price;
+        this.final_price = final_price;
+    }
 
     public String getRequest_path() {
         return request_path;
@@ -216,20 +211,20 @@ public class FeaturedProductModel {
         this.status = status;
     }
 
+    public String getWarningsprecautionschildrenand() {
+        return warningsprecautionschildrenand;
+    }
+
+    public void setWarningsprecautionschildrenand(String warningsprecautionschildrenand) {
+        this.warningsprecautionschildrenand = warningsprecautionschildrenand;
+    }
+
     public String getWarningsprecautionspregnancyan() {
         return warningsprecautionspregnancyan;
     }
 
     public void setWarningsprecautionspregnancyan(String warningsprecautionspregnancyan) {
         this.warningsprecautionspregnancyan = warningsprecautionspregnancyan;
-    }
-
-    public String getPrecautions() {
-        return precautions;
-    }
-
-    public void setPrecautions(String precautions) {
-        this.precautions = precautions;
     }
 
     public String getSide_effects() {
@@ -240,28 +235,12 @@ public class FeaturedProductModel {
         this.side_effects = side_effects;
     }
 
-    public String getDrug_interaction() {
-        return drug_interaction;
-    }
-
-    public void setDrug_interaction(String drug_interaction) {
-        this.drug_interaction = drug_interaction;
-    }
-
     public String getHow_to_use() {
         return how_to_use;
     }
 
     public void setHow_to_use(String how_to_use) {
         this.how_to_use = how_to_use;
-    }
-
-    public String getWorks() {
-        return works;
-    }
-
-    public void setWorks(String works) {
-        this.works = works;
     }
 
     public String getUses() {

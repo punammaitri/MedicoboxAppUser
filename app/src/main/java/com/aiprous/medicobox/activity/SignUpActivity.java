@@ -142,6 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 finish();
                             }
                         } catch (JSONException e) {
@@ -163,6 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
     @OnClick(R.id.tv_sign_in_here)
     public void onClickSignInHere() {
         startActivity(new Intent(this, LoginActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
 }

@@ -112,6 +112,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -230,8 +231,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         CustomProgressDialog.getInstance().dismissDialog();
-                        finish();
                         startActivity(getIntent());
+                        finish();
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
                     }
 
                     @Override
