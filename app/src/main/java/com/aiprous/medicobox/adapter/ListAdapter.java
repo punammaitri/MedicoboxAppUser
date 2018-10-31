@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,18 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.activity.EditProfileActivity;
-import com.aiprous.medicobox.activity.ListActivity;
-import com.aiprous.medicobox.activity.ProductDetailActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
-import com.aiprous.medicobox.activity.SignUpActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
-import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -36,12 +28,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,8 +48,6 @@ import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 
 import static com.aiprous.medicobox.utils.APIConstant.EDITCARTITEM;
-import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
-import static com.aiprous.medicobox.utils.APIConstant.UPDATEUSERINFO;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
@@ -200,18 +187,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     // Either gone or invisible
                     mVisibiltyFlag="2";
                 }
-                if(position%2==0)
-                {
-                    mContext.startActivity(new Intent(mContext,ProductDetailActivity.class)
-                            .putExtra("productId",mDataArrayList.get(position).getId())
-                            .putExtra("VisibiltyFlag",mVisibiltyFlag)
-                            .putExtra("SKU",mDataArrayList.get(position).getSku())
-                            .putExtra("Qty",holder.tv_value.getText().toString())
-                            .putExtra("imageUrl",mDataArrayList.get(position).getImage())
-                            .putExtra("MedicineName",mDataArrayList.get(position).getTitle())
-                            .putExtra("value",mDataArrayList.get(position).getShort_description())
-                            .putExtra("price",mDataArrayList.get(position).getPrice()));
-                }else {
+
                     mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class)
                             .putExtra("productId",mDataArrayList.get(position).getId())
                             .putExtra("VisibiltyFlag",mVisibiltyFlag)
@@ -221,7 +197,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             .putExtra("MedicineName",mDataArrayList.get(position).getTitle())
                             .putExtra("value",mDataArrayList.get(position).getShort_description())
                             .putExtra("price",mDataArrayList.get(position).getPrice()));
-                }
+
 
             }
         });

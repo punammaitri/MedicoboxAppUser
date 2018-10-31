@@ -407,12 +407,12 @@ public class MainActivity extends AppCompatActivity
                                     String sku = getAllProductList.getJSONObject(i).get("sku").toString();
                                     int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
                                     String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    String price = getAllProductList.getJSONObject(i).get("price").toString();
                                     String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
                                     String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
 
 
-                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("", name, "", "", "", "" + price, "" + qty, sku, "" + id);
+                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel("", name, "", "", "", price, "" + qty, sku, "" + id);
                                     listModel.setImage("");
                                     listModel.setMedicineName(name);
                                     listModel.setValue("");
