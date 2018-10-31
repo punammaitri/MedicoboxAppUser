@@ -75,16 +75,13 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.btn_upload)
     Button btn_upload;
     View view;
-    ArrayList<Integer> sliderimages = new ArrayList<>();
     ArrayList<Integer> sliderimagesCall = new ArrayList<>();
     private PagerIndicator.IndicatorVisibility mVisibility = PagerIndicator.IndicatorVisibility.Invisible;
     private MainActivity mainActivity;
     CustomProgressDialog mAlert;
     ArrayList<FeaturedProductModel> mFeaturedProductModels = new ArrayList<FeaturedProductModel>();
-    ArrayList<BannerModel> mBannerModels = new ArrayList<BannerModel>();
-    ArrayList<String> mTempBannerArray = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
-    private String mBannerUrl;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -111,8 +108,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void init() {
-        sliderimages.add(R.drawable.bannerimage);
-        sliderimages.add(R.drawable.contactus);
+
 
         sliderimagesCall.add(R.drawable.contactus);
         sliderimagesCall.add(R.drawable.bannerimage);
@@ -391,63 +387,5 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
-
-    //Fetch Banner images
-    public void fetchBannerImages() {
-        //Add all to temp banner array
-        for (int j = 0; j < mBannerModels.size(); j++) {
-            mTempBannerArray.add(mBannerModels.get(j).getImage_url());
-        }
-
-        //show slider images
-        for (int i = 0; i < mTempBannerArray.size(); i++) {
-            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-            final String imageUrl = mTempBannerArray.get(i).toString();
-            textSliderView.image(imageUrl).setScaleType(BaseSliderView.ScaleType.Fit).empty(R.drawable.bannerimage)
-                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                        @Override
-                        public void onSliderClick(BaseSliderView baseSliderView) {
-                            //startActivity(new Intent(getActivity(), FullScreenVideoActivity.class));
-
-                        }
-                    });
-
-            if (mTempBannerArray.size() > 1)
-                sliderAdvertise.setPresetTransformer(SliderLayout.Transformer.Default);//Accordion
-            sliderAdvertise.setIndicatorVisibility(mVisibility);
-            sliderAdvertise.setCustomAnimation(new DescriptionAnimation());
-            sliderAdvertise.setDuration(4000);
-
-            sliderAdvertise.addSlider(textSliderView);
-        }
-    }
-
-    private void getCartItems() {
-        CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GETCARTITEMS)
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                        try {
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("items");//get the array with the key "response"
-
-                            if (getAllProductList != null) {
-                                //clear singleton array
-                                SingletonAddToCart.getGsonInstance().option.clear();
-                                SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
-                                for (int i = 0; i < getAllProductList.length(); i++) {
-                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
-                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
-                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
-                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
-                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
 
 }
