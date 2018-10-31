@@ -131,15 +131,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 //call edit cart api
                 try {
 
-                    for (int i = 0; i < ItemModelList.size(); i++) {
-                        if (mMedicineName.equals(ItemModelList.get(i).getMedicineName())) {
-                            mItemId = ItemModelList.get(i).getItem_id();
-                        }
-                    }
-
                     JSONObject object = new JSONObject();
                     object.put("quote_id", mCartArrayList.get(lItemIndex).getQuote_id());
-                    object.put("item_id", mItemId);
+                    object.put("item_id", mCartArrayList.get(lItemIndex).getItem_id());
                     object.put("qty", mQty);
 
                     //Add Json Object
