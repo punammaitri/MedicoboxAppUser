@@ -59,7 +59,7 @@
         android:layout_marginLeft="@dimen/height_10"
         android:clickable="true"
         app:iconifiedByDefault="false"
-        app:queryHint="Search Medicine"
+        app:queryHint="Search Medicines"
         android:queryBackground="@android:color/transparent"
         app:queryBackground="@android:color/transparent"
         android:layout_marginRight="@dimen/height_10" />

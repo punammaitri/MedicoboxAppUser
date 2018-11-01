@@ -57,8 +57,6 @@ dependencies {
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    // single date and time picker like ios
-    implementation 'com.github.florent37:singledateandtimepicker:1.1.5'
     // for sweet alert dialog
     implementation 'com.github.cazaea:sweet-alert-dialog:1.0.0'
     // for android networking api call
