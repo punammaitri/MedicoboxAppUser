@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:layout_height="wrap_content"
-                    android:text="Rs235.0"
+                    android:text="\u20B9235.0"
                     android:layout_toRightOf="@+id/tv_mrp"/>
             </RelativeLayout>
         </LinearLayout>
@@ -71,7 +71,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:text="Rs235.0"
+                    android:text="\u20B9235.0"
                     android:fontFamily="@font/open_sans_regular"
                     android:textStyle="bold"
                     android:textColor="@color/colorblack"

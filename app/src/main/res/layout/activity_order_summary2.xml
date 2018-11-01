@@ -137,7 +137,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="Rs350" />
+                            android:text="\u20B9 350" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -160,7 +160,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="-Rs30" />
+                            android:text="-\u20B9 30" />
 
 
                     </LinearLayout>
@@ -211,7 +211,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="Rs350.0"
+                            android:text="\u20B9 350.0"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -241,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="Rs30.0"
+                            android:text="\u20B9 30.0"
                             android:textColor="@color/colorgreen"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -254,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Free shipping for orders above Rs500"
+                android:text="Free shipping for orders above \u20B9500"
                 android:textStyle="italic"
                 android:textColor="@color/colorPrimary"/>
 

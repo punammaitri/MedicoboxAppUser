@@ -44,7 +44,7 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Cart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorblack"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
@@ -163,7 +163,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="Rs350"
+                            android:text="\u20B9 350"
                             android:textColor="@color/colorblack" />
                     </LinearLayout>
 
@@ -188,7 +188,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="-Rs30"
+                            android:text="-\u20B9 30"
                             android:textColor="@color/colorblack" />
 
 
@@ -242,7 +242,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="Rs350.0"
+                            android:text="\u20B9 350.0"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
                     </LinearLayout>

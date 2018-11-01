@@ -64,7 +64,7 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GETBEARERTOKEN;
+import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.LOGIN;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
@@ -456,7 +456,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void CallGetBearerTokenAPi(final String bearerToken) {
-        AndroidNetworking.get(GETBEARERTOKEN)
+        AndroidNetworking.get(GETUSERINFO)
                 .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -465,17 +465,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         try {
-                            String getId = response.getString("id");
-                            String getGroupId = response.getString("group_id");
-                            String getEmail = response.getString("email");
-                            String getFirstname = response.getString("firstname");
-                            String getLastname = response.getString("lastname");
-                            String getStoreId = response.getString("store_id");
+                            JSONObject jsonObject = new JSONObject(response.getString("response"));
+                            String getId = jsonObject.get("id").toString();
+                            String getGroupId = jsonObject.get("group_id").toString();
+                            String getEmail = jsonObject.get("email").toString();
+                            String getFirstname = jsonObject.get("firstname").toString();
+                            String getLastname = jsonObject.get("lastname").toString();
+                            String getStoreId = jsonObject.get("store_id").toString();
+                            String getWebsiteId = jsonObject.get("website_id").toString();
+                            String getMobile = jsonObject.get("mobile").toString();
 
                             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                     .putExtra("email", "" + getEmail));
                             overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, "", getEmail, getStoreId);
+                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobile, getEmail, getStoreId);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

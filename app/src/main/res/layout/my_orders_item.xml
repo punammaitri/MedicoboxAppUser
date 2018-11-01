@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorblack"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Rs278.00"
+                    android:text="\u20B9278.00"
                     android:layout_toLeftOf="@+id/img_arrow"
                     android:layout_marginRight="@dimen/height_10" />
                 <ImageView
