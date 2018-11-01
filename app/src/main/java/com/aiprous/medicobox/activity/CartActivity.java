@@ -43,6 +43,7 @@ import butterknife.OnClick;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
+import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class CartActivity extends AppCompatActivity {
@@ -103,11 +104,13 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             //get cart items through api
-            getCartItems();
+            getCartItems(MedicoboxApp.onGetAuthToken());
         }
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
@@ -212,25 +215,91 @@ public class CartActivity extends AppCompatActivity {
                 });
     }*/
 
-   private void getCartItems() {
+
+    private void getCartItems(final String bearerToken) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GETCARTITEMS)
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+        AndroidNetworking.post(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsString(new StringRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
 
-                        Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
-                           CustomProgressDialog.getInstance().dismissDialog();
+                       // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                            JSONArray getAllProductList = getAllObject.getJSONArray("res");//get the array with the key "response"
+
+                            if (getAllProductList != null) {
+                                cartModelArrayList.clear();
+                                for (int i = 0; i < getAllProductList.length(); i++) {
+                                    int item_id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                    String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
+                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                    String sale_price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                    String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                    String image = getAllProductList.getJSONObject(i).get("image").toString();
+                                    String prescription = getAllProductList.getJSONObject(i).get("prescription").toString();
+                                    int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
+
+
+                                    CartModel.Response listModel = new CartModel.Response(discount,prescription,image,short_description,sale_price,lquoteId,product_type,price,name,id,qty,sku,item_id);
+                                    listModel.setItem_id(item_id);
+                                    listModel.setSku(sku);
+                                    listModel.setQty(qty);
+                                    listModel.setId(id);
+                                    listModel.setName(name);
+                                    listModel.setPrice(price);
+                                    listModel.setProduct_type(product_type);
+                                    listModel.getQuote_id();
+                                    listModel.setSale_price(sale_price);
+                                    listModel.setShort_description(short_description);
+                                    listModel.setImage(image);
+                                    listModel.setPrescription(prescription);
+                                    listModel.setDiscount(discount);
+                                    cartModelArrayList.add(listModel);
+                                }
+                            }
+
+                            //visible cart layout
+                            if (!cartModelArrayList.isEmpty()) {
+                                tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+                                tv_cart_empty.setVisibility(View.GONE);
+                                nestedscroll_cart.setVisibility(View.VISIBLE);
+                                rlayout_cart.setVisibility(View.VISIBLE);
+                            }
+
+                            //set Adapter
+                            layoutManager = new LinearLayoutManager(mcontext);
+                            rc_cart.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
+                            rc_cart.setHasFixedSize(true);
+                            rc_cart.setAdapter(new CartAdapter(mcontext, cartModelArrayList));
+
+                            CustomProgressDialog.getInstance().dismissDialog();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
-                    public void onError(ANError anError) {
-
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(CartActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
     }
-
 }

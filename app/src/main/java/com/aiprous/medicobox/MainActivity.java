@@ -28,17 +28,20 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
 import com.aiprous.medicobox.activity.SettingActivity;
+import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
+import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.NavItemClicked;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -141,7 +144,15 @@ public class MainActivity extends AppCompatActivity
         //navigation drawer for pharmacist
         //navigationItemPharmacist(true);
 
-        getCartItems();
+        getCartItems(MedicoboxApp.onGetAuthToken());
+
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
+            rlayout_cart.setVisibility(View.GONE);
+        } else {
+            rlayout_cart.setVisibility(View.VISIBLE);
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
 
     }
 
@@ -390,20 +401,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void getCartItems() {
+    private void getCartItems(final String bearerToken) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GETCARTITEMS)
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+        AndroidNetworking.post(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
+
+                        // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+                            JSONArray getAllProductList = getAllObject.getJSONArray("res");//get the array with the key "response"
 
 
                             if (getAllProductList != null) {
@@ -443,20 +456,21 @@ public class MainActivity extends AppCompatActivity
                                 rlayout_cart.setVisibility(View.GONE);
                             } else {
                                 rlayout_cart.setVisibility(View.VISIBLE);
-                                tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+                                tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
                             }
-
-                            CustomProgressDialog.getInstance().dismissDialog();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(MainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

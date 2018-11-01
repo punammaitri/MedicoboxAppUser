@@ -74,7 +74,7 @@
                             android:layout_marginTop="@dimen/height_4"
                             android:background="@drawable/border_circle"
                             android:gravity="center"
-                            android:text="2"
+                            android:text="0"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorwhite" />
 

@@ -67,6 +67,20 @@ public class DrugInformationActivity extends AppCompatActivity {
     @BindView(R.id.txtMoreInfo)
     TextView txtMoreInfo;
 
+    //info
+    private String mUses;
+    private String mwork;
+    private String mHow_to_use;
+    private String mDrug_interactions;
+    private String mSide_effects;
+    private String mDriving_and_using_machines;
+    private String mKidney;
+    private String lactation;
+    private String mLiver;
+    private String mPregnancy_and_breast_feeding;
+    private  String mMore_info;
+
+
 
     private Context mcontext = this;
 
@@ -95,19 +109,36 @@ public class DrugInformationActivity extends AppCompatActivity {
         llWarning.setVisibility(View.GONE);
         llMoreInformation.setVisibility(View.GONE);
 
+        //info
 
-        //Pass value
-        txtUsage.setText("");
-        txtWork.setText("");
-        txtHowToUse.setText("");
-        txtDrugInteraction.setText("");
-        txtSideEffect.setText("");
-        txtDrivingAndMachine.setText("");
-        txtKidney.setText("");
-        txtLactation.setText("");
-        txtLiver.setText("");
-        txtPregnancy.setText("");
-        txtMoreInfo.setText("");
+
+        if(getIntent().getStringExtra("mUses")!=null) {
+            mUses = getIntent().getStringExtra("mUses");
+            mwork = getIntent().getStringExtra("mwork");
+            mHow_to_use = getIntent().getStringExtra("mHow_to_use");
+            mDrug_interactions = getIntent().getStringExtra("mDrug_interactions");
+            mSide_effects = getIntent().getStringExtra("mSide_effects");
+            mDriving_and_using_machines = getIntent().getStringExtra("mDriving_and_using_machines");
+            mKidney = getIntent().getStringExtra("mKidney");
+            lactation=getIntent().getStringExtra("lactation");
+            mLiver = getIntent().getStringExtra("mLiver");
+            mPregnancy_and_breast_feeding = getIntent().getStringExtra("mPregnancy_and_breast_feeding");
+            mMore_info = getIntent().getStringExtra("mMore_info");
+
+
+            //Pass value
+            txtUsage.setText(mUses);
+            txtWork.setText(mwork);
+            txtHowToUse.setText(mHow_to_use);
+            txtDrugInteraction.setText(mDrug_interactions);
+            txtSideEffect.setText(mSide_effects);
+            txtDrivingAndMachine.setText(mDriving_and_using_machines);
+            txtKidney.setText(mKidney);
+            txtLactation.setText("");
+            txtLiver.setText(mLiver);
+            txtPregnancy.setText(mPregnancy_and_breast_feeding);
+            txtMoreInfo.setText(mMore_info);
+        }
     }
 
     @Override

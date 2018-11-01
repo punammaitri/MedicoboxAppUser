@@ -124,6 +124,21 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mPrescription;
     private String mMrpPrice;
 
+    //info
+    private String mUses;
+    private String mwork;
+    private String mHow_to_use;
+    private String mDrug_interactions;
+    private String mSide_effects;
+    private String mDriving_and_using_machines;
+    private String mKidney;
+    private String lactation;
+    private String mLiver;
+    private String mPregnancy_and_breast_feeding;
+    private  String mMore_info;
+
+
+
 
 
     @Override
@@ -207,6 +222,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
         }
         else {
             tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+            rlayout_cart.setVisibility(View.VISIBLE);
         }
 
         if(getIntent().getStringExtra("productId")!=null)
@@ -220,7 +236,9 @@ public class ProductDetailBActivity extends AppCompatActivity {
             mValue=getIntent().getStringExtra("value");
             mPrice=getIntent().getStringExtra("price");
             mPrescription=getIntent().getStringExtra("prescription");
-            mMrpPrice=getIntent().getStringExtra("MrpPrice");
+            mMrp=getIntent().getStringExtra("MrpPrice");
+            mdiscount=getIntent().getStringExtra("discount");
+
 
             tv_value.setText(""+mQty);
             tv_medicine_name.setText(mMedicineName);
@@ -325,6 +343,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                 JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
                                 JSONArray getImageURLList = getAllObject.getJSONArray("images");//get the array with the key "response"
                                 tv_company_name.setText(response.getString("company_name"));
+                                mImagelist.clear();
                                 for (int i = 0; i < getImageURLList.length(); i++) {
 
                                     if (getImageURLList.getString(i).contains("https")) {
@@ -336,24 +355,25 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                 setviewPagerAdapter();
 
                                 JSONObject uses_n_work = response.getJSONObject("uses_n_work");
-                                String luses = uses_n_work.getString("uses");
-                                String lwork = uses_n_work.getString("work");
-                                String lhow_to_use = uses_n_work.getString("how_to_use");
+                                 mUses = uses_n_work.getString("uses");
+                                 mwork = uses_n_work.getString("work");
+                                 mHow_to_use = uses_n_work.getString("how_to_use");
 
                                 JSONObject interaction_n_side_effect = response.getJSONObject("interaction_n_side_effect");
-                                String ldrug_interactions = interaction_n_side_effect.getString("drug_interactions");
-                                String side_effects = interaction_n_side_effect.getString("side_effects");
+                                 mDrug_interactions = interaction_n_side_effect.getString("drug_interactions");
+                                 mSide_effects = interaction_n_side_effect.getString("side_effects");
 
 
                                 JSONObject warning_n_precaution = response.getJSONObject("warning_n_precaution");
-                                String driving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
-                                String kidney = warning_n_precaution.getString("kidney");
-                                String liver = warning_n_precaution.getString("liver");
-                                String pregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
+                                 mDriving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
+                                 mKidney = warning_n_precaution.getString("kidney");
+                                 lactation = warning_n_precaution.getString("lactation");
+                                 mLiver = warning_n_precaution.getString("liver");
+                                 mPregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
 
 
                                 JSONObject more_information = response.getJSONObject("more_information");
-                                String more_info = more_information.getString("more_info");
+                                 mMore_info = more_information.getString("more_info");
 
 
 
@@ -660,7 +680,19 @@ public class ProductDetailBActivity extends AppCompatActivity {
     @OnClick(R.id.llayout_drug_information)
     public void onClickDrugInfo()
     {
-        startActivity(new Intent(this,DrugInformationActivity.class));
+
+        startActivity(new Intent(this,DrugInformationActivity.class)
+        .putExtra("mUses",mUses)
+        .putExtra("mwork",mwork)
+        .putExtra("mHow_to_use",mHow_to_use)
+        .putExtra("mDrug_interactions",mDrug_interactions)
+        .putExtra("mSide_effects",mSide_effects)
+        .putExtra("mDriving_and_using_machines",mDriving_and_using_machines)
+        .putExtra("mKidney",mKidney)
+        .putExtra("lactation",lactation)
+        .putExtra("mLiver",mLiver)
+         .putExtra("mPregnancy_and_breast_feeding",mPregnancy_and_breast_feeding)
+        .putExtra("mMore_info",mMore_info));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 

@@ -112,12 +112,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     holder.rlayout_number_of_item.setVisibility(View.VISIBLE);
                     holder.rlayout_add.setVisibility(View.GONE);
 
-                    // holder.img_medicine.setImageResource(ItemModelList.get(position).getImage_url());
+
+                    Picasso.with(mContext)
+                            .load(ItemModelList.get(i).getImage())
+                            .into(holder.img_medicine, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                            });
+
                     holder.tv_medicine_name.setText(ItemModelList.get(i).getMedicineName());
-                   // holder.tv_content.setText(ItemModelList.get(position).getShort_description());
-                    // holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getMrp());
+                    holder.tv_content.setText(ItemModelList.get(i).getValue());
+                    holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getMrp());
                     holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    //  holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
+                    holder.tv_discount.setText(""+ItemModelList.get(i).getDiscount()+" OFF");
                     holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getPrice());
                     holder.tv_value.setText(ItemModelList.get(i).getQty());
 
@@ -177,7 +191,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         }
 
-
         holder.llayout_listing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +213,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 intent.putExtra("price", mDataArrayList.get(position).getSale_price());
                 intent.putExtra("prescription",mDataArrayList.get(position).getPrescription_required());
                 intent.putExtra("MrpPrice",mDataArrayList.get(position).getPrice());
+                intent.putExtra("discount",mDataArrayList.get(position).getDiscount());
 
                 Activity activity = (Activity) mContext;
                 activity.startActivity(intent);

@@ -157,6 +157,7 @@ public class ListActivity extends AppCompatActivity {
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+            rlayout_cart.setVisibility(View.VISIBLE);
         }
     }
 
