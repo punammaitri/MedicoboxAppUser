@@ -40,7 +40,7 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GETBEARERTOKEN;
+import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.UPDATEUSERINFO;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
@@ -179,7 +179,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void GetProfileInfoUsingAuthKey(final String bearerToken) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GETBEARERTOKEN)
+        AndroidNetworking.get(GETUSERINFO)
                 .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -188,17 +188,20 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         try {
-                            String getId = response.getString("id");
-                            String getGroupId = response.getString("group_id");
-                            String getEmail = response.getString("email");
-                            String getFirstname = response.getString("firstname");
-                            String getLastname = response.getString("lastname");
-                            String getStoreId = response.getString("store_id");
-                            String getWebsiteId = response.getString("website_id");
+                            JSONObject jsonObject = new JSONObject(response.getString("response"));
+                            String getId = jsonObject.get("id").toString();
+                            String getGroupId = jsonObject.get("group_id").toString();
+                            String getEmail = jsonObject.get("email").toString();
+                            String getFirstname = jsonObject.get("firstname").toString();
+                            String getLastname = jsonObject.get("lastname").toString();
+                            String getStoreId = jsonObject.get("store_id").toString();
+                            String getWebsiteId = jsonObject.get("website_id").toString();
+                            String getMobile = jsonObject.get("mobile").toString();
 
                             edtFirstName.setText(getFirstname);
                             edtLastName.setText(getLastname);
                             edtEmailId.setText(getEmail);
+                            edtMobileNo.setText(getMobile);
 
                             CustomProgressDialog.getInstance().dismissDialog();
 
@@ -239,7 +242,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         // handle error
-                        Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Failed to Update data", Toast.LENGTH_SHORT).show();
                         CustomProgressDialog.getInstance().dismissDialog();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());

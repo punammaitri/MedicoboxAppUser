@@ -31,7 +31,7 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:text="My Account"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorblack"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -60,7 +60,7 @@
                     android:gravity="end"
                     android:text="EDIT"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/colorblack"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -95,11 +95,11 @@
                         android:weightSum="1">
 
                         <TextView
+                            android:id="@+id/txtMobileNumber"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="+91 8833748362"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack" />
 
@@ -150,7 +150,7 @@
                     android:gravity="end"
                     android:text="EDIT"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/colorblack"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -221,7 +221,7 @@
                     android:gravity="end"
                     android:text="CHANGE"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/colorblack"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
             </LinearLayout>
 

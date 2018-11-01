@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
-                    android:text="Rs151"
+                    android:text="\u20B9151"
                     android:layout_marginLeft="@dimen/height_10"
                     android:layout_marginRight="@dimen/height_10"/>
                 <TextView
@@ -109,7 +109,7 @@
                 android:layout_marginTop="@dimen/height_3"
                 android:layout_toLeftOf="@+id/txt_add_to_insta_list"
                 android:gravity="center|start"
-                android:text="Rs135"
+                android:text="\u20B9135"
                 android:fontFamily="@font/open_sans_regular"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"

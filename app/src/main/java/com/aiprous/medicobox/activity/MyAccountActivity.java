@@ -29,7 +29,8 @@ public class MyAccountActivity extends AppCompatActivity {
     TextView tv_cart_size;
     @BindView(R.id.txtEmail)
     TextView txtEmail;
-
+    @BindView(R.id.txtMobileNumber)
+    TextView txtMobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MyAccountActivity extends AppCompatActivity {
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
+        txtMobileNumber.setText(MedicoboxApp.onGetMobileNo());
         txtEmail.setText(MedicoboxApp.onGetEmail());
     }
 
