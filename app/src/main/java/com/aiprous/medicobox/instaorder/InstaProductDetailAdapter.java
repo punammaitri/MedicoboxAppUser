@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.instaorder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -53,7 +54,10 @@ public class InstaProductDetailAdapter extends RecyclerView.Adapter<InstaProduct
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, InstaAddNewListActivity.class));
+                Intent intent = new Intent(mContext, InstaAddNewListActivity.class);
+                Activity activity = (Activity) mContext;
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
     }

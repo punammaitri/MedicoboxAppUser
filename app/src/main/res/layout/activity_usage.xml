@@ -70,15 +70,16 @@
                         android:paddingLeft="@dimen/height_10"
                         android:text="Usage"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtUsage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
@@ -88,15 +89,16 @@
                         android:paddingLeft="@dimen/height_10"
                         android:text="Works"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtWork"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
@@ -105,21 +107,23 @@
                         android:paddingLeft="@dimen/height_10"
                         android:text="How to use?"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtHowToUse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/height_5"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -159,17 +163,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="Usage"
+                        android:text="Drug Interactions"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtDrugInteraction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
@@ -177,40 +182,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="Works"
+                        android:text="Side Effects"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtSideEffect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/height_10"
-                        android:text="How to use"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/height_5"
-                        android:layout_marginBottom="@dimen/height_5"
-                        android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/height_5"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -250,17 +240,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="Usage"
+                        android:text="Driving And Using Machines"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtDrivingAndMachine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
@@ -268,40 +259,81 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="Works"
+                        android:text="Kidney"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtKidney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="How to use"
+                        android:text="Lactation"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtLactation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/height_10"
+                        android:text="Liver"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtLiver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:layout_marginBottom="@dimen/height_5"
+                        android:paddingLeft="@dimen/height_10"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/height_10"
+                        android:text="Pregnancy And Breast Feeding"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtPregnancy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:layout_marginBottom="@dimen/height_5"
+                        android:paddingLeft="@dimen/height_10"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/height_5"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -325,9 +357,9 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/viewSeparatorMore"
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"
-                    android:id="@+id/viewSeparatorMore"
                     android:layout_marginTop="@dimen/height_5"
                     android:layout_marginBottom="@dimen/height_5"
                     android:background="@android:color/black" />
@@ -342,52 +374,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="Usage"
+                        android:text="More Information"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtMoreInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_5"
                         android:layout_marginBottom="@dimen/height_5"
                         android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/height_10"
-                        android:text="Works"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/height_5"
-                        android:layout_marginBottom="@dimen/height_5"
-                        android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/height_10"
-                        android:text="How to use"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/height_5"
-                        android:layout_marginBottom="@dimen/height_5"
-                        android:paddingLeft="@dimen/height_10"
-                        android:text="usage"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </LinearLayout>

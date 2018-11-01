@@ -1,14 +1,10 @@
 package com.aiprous.medicobox.prescription;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +26,7 @@ public class ThankYouActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,22 +46,20 @@ public class ThankYouActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
-        }
-    }
-    @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
+    @OnClick(R.id.rlayout_cart)
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
 }

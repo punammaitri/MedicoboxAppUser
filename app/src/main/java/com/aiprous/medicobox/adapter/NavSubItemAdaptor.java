@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
+import com.aiprous.medicobox.activity.OrderDetailsActivity;
 import com.aiprous.medicobox.model.NavItemClicked;
 
 import butterknife.BindView;
@@ -38,7 +40,7 @@ public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.Vi
 
     public NavSubItemAdaptor(Context mContext, NavAdaptor navItemClicked, String[] Titles, int[] Icons) {
         this.mContext = mContext;
-      //  this.navItemClicked = navItemClicked;
+        //  this.navItemClicked = navItemClicked;
         mNavTitles = Titles;
         mIcons = Icons;
     }
@@ -58,16 +60,18 @@ public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.Vi
         holder.llSubNavItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (position==0)
-                {
-                   // Toast.makeText(mContext, "Medicine", Toast.LENGTH_SHORT).show();
-                    mContext.startActivity(new Intent(mContext,MyOrdersActivity.class));
+                if (position == 0) {
+                    // Toast.makeText(mContext, "Medicine", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MyOrdersActivity.class);
+                    Activity activity = (Activity) mContext;
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
-                }else {
+                } else {
                     Toast.makeText(mContext, "Test Lab", Toast.LENGTH_SHORT).show();
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
-               // rvSubMenuNavigation.setVisibility(View.INVISIBLE);
+                // rvSubMenuNavigation.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -91,12 +95,13 @@ public class NavSubItemAdaptor extends RecyclerView.Adapter<NavSubItemAdaptor.Vi
         ImageView ivForMenuItem;
         @BindView(R.id.llSubNavItem)
         LinearLayout llSubNavItem;
-       // @BindView(R.id.viewForDivider)
-      //  View viewForDivider;
+        // @BindView(R.id.viewForDivider)
+        //  View viewForDivider;
         @BindView(R.id.cart_badge)
         TextView cartBadge;
-       // @BindView(R.id.cardViewMain)
-       // CardView cardView;
+
+        // @BindView(R.id.cardViewMain)
+        // CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

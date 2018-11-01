@@ -44,6 +44,30 @@ public class DrugInformationActivity extends AppCompatActivity {
     ImageView imgMoreInfo;
     @BindView(R.id.viewSeparatorMore)
     View viewSeparatorMore;
+    @BindView(R.id.txtUsage)
+    TextView txtUsage;
+    @BindView(R.id.txtWork)
+    TextView txtWork;
+    @BindView(R.id.txtHowToUse)
+    TextView txtHowToUse;
+    @BindView(R.id.txtDrugInteraction)
+    TextView txtDrugInteraction;
+    @BindView(R.id.txtSideEffect)
+    TextView txtSideEffect;
+    @BindView(R.id.txtDrivingAndMachine)
+    TextView txtDrivingAndMachine;
+    @BindView(R.id.txtKidney)
+    TextView txtKidney;
+    @BindView(R.id.txtLactation)
+    TextView txtLactation;
+    @BindView(R.id.txtLiver)
+    TextView txtLiver;
+    @BindView(R.id.txtPregnancy)
+    TextView txtPregnancy;
+    @BindView(R.id.txtMoreInfo)
+    TextView txtMoreInfo;
+
+
     private Context mcontext = this;
 
     @Override
@@ -70,6 +94,20 @@ public class DrugInformationActivity extends AppCompatActivity {
         llInteraction.setVisibility(View.GONE);
         llWarning.setVisibility(View.GONE);
         llMoreInformation.setVisibility(View.GONE);
+
+
+        //Pass value
+        txtUsage.setText("");
+        txtWork.setText("");
+        txtHowToUse.setText("");
+        txtDrugInteraction.setText("");
+        txtSideEffect.setText("");
+        txtDrivingAndMachine.setText("");
+        txtKidney.setText("");
+        txtLactation.setText("");
+        txtLiver.setText("");
+        txtPregnancy.setText("");
+        txtMoreInfo.setText("");
     }
 
     @Override
@@ -83,18 +121,7 @@ public class DrugInformationActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.rlayout_cart)
-    public void ShowCart() {
-        startActivity(new Intent(this, CartActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
-    @OnClick(R.id.rlayout_back_button)
-    public void BackPressSDescription() {
-        finish();
-    }
-
-    @OnClick({R.id.llusage, R.id.llInteraction, R.id.llWarning, R.id.llMoreInformation,
+    @OnClick({R.id.rlayout_back_button, R.id.rlayout_cart,
             R.id.imgUsage, R.id.imgInteraction, R.id.imgWarning, R.id.imgMoreInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -189,6 +216,13 @@ public class DrugInformationActivity extends AppCompatActivity {
                     imgMoreInfo.setImageResource(R.drawable.arrow_yellow);
                     viewSeparatorMore.setVisibility(View.GONE);
                 }
+                break;
+            case R.id.rlayout_back_button:
+                finish();
+                break;
+            case R.id.rlayout_cart:
+                startActivity(new Intent(this, CartActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
         }
     }

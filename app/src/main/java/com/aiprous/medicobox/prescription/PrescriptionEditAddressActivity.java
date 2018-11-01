@@ -79,38 +79,37 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_save)
     public void ButtonSave() {
-        String lname=edtName.getText().toString();
-        String lPhone=edtPhone.getText().toString();
-        String lFlatNo=edtFlatNo.getText().toString();
-        String lStreet=edtStreet.getText().toString();
-        String lLandmark=edtLandmark.getText().toString();
-        String lPincode=edtPincde.getText().toString();
-        String lState=edtState.getText().toString();
-        String lCity=edtCity.getText().toString();
+        String lname = edtName.getText().toString();
+        String lPhone = edtPhone.getText().toString();
+        String lFlatNo = edtFlatNo.getText().toString();
+        String lStreet = edtStreet.getText().toString();
+        String lLandmark = edtLandmark.getText().toString();
+        String lPincode = edtPincde.getText().toString();
+        String lState = edtState.getText().toString();
+        String lCity = edtCity.getText().toString();
 
 
-        if(lname.length()==0&&lPhone.length()==0&&lFlatNo.length()==0&&lStreet.length()==0&&lLandmark.length()==0&&lPincode.length()==0&&lState.length()==0&&lCity.length()==0)
-        {
+        if (lname.length() == 0 && lPhone.length() == 0 && lFlatNo.length() == 0 && lStreet.length() == 0 && lLandmark.length() == 0 && lPincode.length() == 0 && lState.length() == 0 && lCity.length() == 0) {
             Toast.makeText(this, "All fields are required ", Toast.LENGTH_SHORT).show();
-        }else if(lname.length()==0){
+        } else if (lname.length() == 0) {
             edtName.setError("Please enter name");
-        }else if(lPhone.length()==0){
+        } else if (lPhone.length() == 0) {
             edtPhone.setError("Please enter phone number");
-        }else if(lFlatNo.length()==0){
+        } else if (lFlatNo.length() == 0) {
             edtFlatNo.setError("Please enter flat number or building name");
-        }else if(lStreet.length()==0){
+        } else if (lStreet.length() == 0) {
             edtStreet.setError("Please enter Street / Road Name");
-        }else if(lLandmark.length()==0){
+        } else if (lLandmark.length() == 0) {
             edtLandmark.setError("Please enter landmark");
-        }else if(lPincode.length()==0){
+        } else if (lPincode.length() == 0) {
             edtPincde.setError("Please enter pincode");
-        }else if(lState.length()==0){
+        } else if (lState.length() == 0) {
             edtState.setError("Please enter state");
-        }else if(lCity.length()==0){
+        } else if (lCity.length() == 0) {
             edtCity.setError("Please enter city");
-        }else if(lPhone.length()<=9){
+        } else if (lPhone.length() <= 9) {
             edtPhone.setError("Phone number should be 10 digit");
-        }else {
+        } else {
             startActivity(new Intent(this, PrescriptionBillingAddressActivity.class));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
