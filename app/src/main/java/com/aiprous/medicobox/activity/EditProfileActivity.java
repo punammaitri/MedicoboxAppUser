@@ -1,13 +1,14 @@
 package com.aiprous.medicobox.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,16 +24,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker;
-import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,8 +68,10 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText edtConfirmPassword;
     CustomProgressDialog mAlert;
     private Context mContext = this;
-    SingleDateAndTimePickerDialog.Builder singleBuilder;
-    SimpleDateFormat simpleDateFormat;
+    private DatePickerDialog datePickerDialog;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void init() {
         searchview_medicine.setFocusable(false);
-
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
@@ -145,8 +142,8 @@ public class EditProfileActivity extends AppCompatActivity {
         } else if (!lPassword.equals(lConfirm_password)) {
             Toast.makeText(this, "Password mismatch", Toast.LENGTH_SHORT).show();
         } else {
-            //API call
 
+            //Call Update profile API
             try {
                 JSONObject object = new JSONObject();
                 object.put("confirmation", "");
@@ -212,7 +209,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError error) {
-                        // handle error
+                        // Handle error
                         CustomProgressDialog.getInstance().dismissDialog();
                         Toast.makeText(EditProfileActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
@@ -254,37 +251,24 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.edt_dob)
     public void onViewClicked() {
-        openDateAndTimePicker();
+        setDateTimeField();
     }
 
-    public void openDateAndTimePicker() {
-        //////////////for pick up date and time /////////////////////////////////
-        simpleDateFormat = new SimpleDateFormat("HH:mm EEE dd MM yyyy", Locale.getDefault());
-        final Calendar calendar = Calendar.getInstance();
+    private void setDateTimeField() {
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        calendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
-        calendar.setTimeInMillis(System.currentTimeMillis() - 1000);
 
-        final Date minDate = calendar.getTime();
-
-        singleBuilder = new SingleDateAndTimePickerDialog.Builder(this)
-                .bottomSheet()
-                .curved()
-                .minutesStep(1)
-                .backgroundColor(Color.WHITE)
-                .minDateRange(minDate)
-
-                .displayListener(new SingleDateAndTimePickerDialog.DisplayListener() {
+        datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDisplayed(SingleDateAndTimePicker picker) {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        edtDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                     }
-                })
-                .listener(new SingleDateAndTimePickerDialog.Listener() {
-                    @Override
-                    public void onDateSelected(Date date) {
-                        edtDob.setText(simpleDateFormat.format(date));
-                    }
-                });
-        singleBuilder.display();
+                }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show();
     }
 }
