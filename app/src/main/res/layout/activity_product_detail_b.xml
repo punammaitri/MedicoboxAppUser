@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_medicine_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
@@ -42,6 +43,7 @@
                 android:textColor="@color/colorPrimary" />
 
             <TextView
+                android:id="@+id/tv_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
@@ -50,6 +52,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout
+                android:id="@+id/llayout_prescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
@@ -146,7 +149,7 @@
                                 android:layout_marginLeft="@dimen/height_5"
                                 android:layout_toRightOf="@+id/tv_mrp_price"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="(Rs.6.86/Tablet SR)" />
+                                android:text="" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -216,6 +219,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_item_description"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_regular"

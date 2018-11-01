@@ -85,6 +85,16 @@ public class ProductDetailBActivity extends AppCompatActivity {
     RelativeLayout rlayout_plus_minus;
     @BindView(R.id.btn_add_to_cart)
     Button btn_add_to_cart;
+    @BindView(R.id.tv_medicine_name)
+    TextView tv_medicine_name;
+    @BindView(R.id.tv_company_name)
+    TextView tv_company_name;
+    @BindView(R.id.tv_item_description)
+    TextView tv_item_description;
+    @BindView(R.id.llayout_prescription)
+    LinearLayout llayout_prescription;
+
+
 
 
     ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
@@ -112,6 +122,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
     ArrayList<String> mImagelist=new ArrayList<>();
     private String mPrescription;
+    private String mMrpPrice;
 
 
 
@@ -124,7 +135,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     }
 
     private void init() {
-        tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs) + "68.60");
+       // tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs) + "68.60");
         tv_per_tablet_price.setText("(" + mcontext.getResources().getString(R.string.Rs) + "6.86/Tablet SR" + ")");
 
         searchview_medicine.setFocusable(false);
@@ -145,8 +156,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spinner_count.setAdapter(aa);
-        //add underline to text
-        tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -210,8 +220,24 @@ public class ProductDetailBActivity extends AppCompatActivity {
             mValue=getIntent().getStringExtra("value");
             mPrice=getIntent().getStringExtra("price");
             mPrescription=getIntent().getStringExtra("prescription");
+            mMrpPrice=getIntent().getStringExtra("MrpPrice");
 
             tv_value.setText(""+mQty);
+            tv_medicine_name.setText(mMedicineName);
+            tv_medicine_contains.setText(mValue);
+            tv_mrp_price.setText(mMrpPrice);
+            tv_item_description.setText(mValue);
+
+            if(mPrescription.equals("0"))
+            {
+                llayout_prescription.setVisibility(View.GONE);
+            }else {
+                llayout_prescription.setVisibility(View.VISIBLE);
+            }
+
+            //add underline to text
+            tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
             getSingleproducts(mProductId);
         }
 
@@ -298,6 +324,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
                                 JSONArray getImageURLList = getAllObject.getJSONArray("images");//get the array with the key "response"
+                                tv_company_name.setText(response.getString("company_name"));
                                 for (int i = 0; i < getImageURLList.length(); i++) {
 
                                     if (getImageURLList.getString(i).contains("https")) {
@@ -320,13 +347,15 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
                                 JSONObject warning_n_precaution = response.getJSONObject("warning_n_precaution");
                                 String driving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
-                                String kidney = uses_n_work.getString("kidney");
-                                String liver = uses_n_work.getString("liver");
-                                String pregnancy_and_breast_feeding = uses_n_work.getString("pregnancy_and_breast_feeding");
+                                String kidney = warning_n_precaution.getString("kidney");
+                                String liver = warning_n_precaution.getString("liver");
+                                String pregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
 
 
                                 JSONObject more_information = response.getJSONObject("more_information");
                                 String more_info = more_information.getString("more_info");
+
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

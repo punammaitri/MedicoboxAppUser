@@ -95,7 +95,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         mAlert = CustomProgressDialog.getInstance();
 
         //remove double qoute
-        String getCartId = MedicoboxApp.onGetCartID();
+        final String getCartId = MedicoboxApp.onGetCartID();
         String lCartId=getCartId;
         mCartId=lCartId.replace("\"", "");
 
@@ -197,8 +197,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 intent.putExtra("imageUrl", mDataArrayList.get(position).getImage());
                 intent.putExtra("MedicineName", mDataArrayList.get(position).getTitle());
                 intent.putExtra("value", mDataArrayList.get(position).getShort_description());
-                intent.putExtra("price", mDataArrayList.get(position).getPrice());
+                intent.putExtra("price", mDataArrayList.get(position).getSale_price());
                 intent.putExtra("prescription",mDataArrayList.get(position).getPrescription_required());
+                intent.putExtra("MrpPrice",mDataArrayList.get(position).getPrice());
 
                 Activity activity = (Activity) mContext;
                 activity.startActivity(intent);

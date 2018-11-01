@@ -135,17 +135,19 @@ public class CartActivity extends AppCompatActivity {
     }
 
 
-   /* private void getCartItems() {
+/* private void getCartItems() {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.post(GETCARTITEMS)
+        AndroidNetworking.get(GETCARTITEMS)
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
                         // do anything with response
-                        try {
+                      try {
 
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
@@ -186,7 +188,7 @@ public class CartActivity extends AppCompatActivity {
                                     cartModelArrayList.add(listModel);
                                 }
                             }
-                            CustomProgressDialog.getInstance().dismissDialog();
+
                             layoutManager = new LinearLayoutManager(mcontext);
                             rc_cart.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
                             rc_cart.setHasFixedSize(true);
@@ -196,6 +198,7 @@ public class CartActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
@@ -209,9 +212,9 @@ public class CartActivity extends AppCompatActivity {
                 });
     }*/
 
-    private void getCartItems() {
+   private void getCartItems() {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.post(GETCARTITEMS)
+        AndroidNetworking.get(GETCARTITEMS)
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -219,7 +222,8 @@ public class CartActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Toast.makeText(mcontext, response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                           CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
