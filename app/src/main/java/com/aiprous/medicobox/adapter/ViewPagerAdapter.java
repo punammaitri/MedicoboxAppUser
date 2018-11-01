@@ -9,21 +9,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.aiprous.medicobox.R;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 
 public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer[] images = {R.drawable.bannerimage,R.drawable.contactus,R.drawable.bannerimage};
+    //private Integer[] imagesList = {R.drawable.bannerimage,R.drawable.contactus,R.drawable.bannerimage};
+    ArrayList<String> imagesList=new ArrayList<>();
 
-    public ViewPagerAdapter(Context context) {
+    public ViewPagerAdapter(Context context, ArrayList<String> imagesList) {
         this.context = context;
+        this.imagesList=imagesList;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return imagesList.size();
     }
 
     @Override
@@ -37,7 +43,23 @@ public class ViewPagerAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.custom_layout, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-        imageView.setImageResource(images[position]);
+
+        /*imageView.setImageResource(images[position]);*/
+
+        Picasso.with(context)
+                .load(imagesList.get(position))
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+
 
         ViewPager vp = (ViewPager) container;
         vp.addView(view, 0);

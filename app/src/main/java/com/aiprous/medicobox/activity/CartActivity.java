@@ -26,6 +26,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -134,7 +135,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
 
-    private void getCartItems() {
+   /* private void getCartItems() {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(GETCARTITEMS)
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
@@ -206,5 +207,26 @@ public class CartActivity extends AppCompatActivity {
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
+    }*/
+
+    private void getCartItems() {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(mcontext, response, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
     }
+
 }
