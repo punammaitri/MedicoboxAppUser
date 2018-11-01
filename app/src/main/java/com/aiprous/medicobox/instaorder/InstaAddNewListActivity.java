@@ -3,9 +3,7 @@ package com.aiprous.medicobox.instaorder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,7 +73,7 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new InstaAddNewListAdapter(mContext, mlistModelsArray,mSubListModelsArray));
+        rc_medicine_list.setAdapter(new InstaAddNewListAdapter(mContext, mlistModelsArray, mSubListModelsArray));
 
 
     }
@@ -83,19 +81,16 @@ public class InstaAddNewListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
 
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
@@ -105,7 +100,7 @@ public class InstaAddNewListActivity extends AppCompatActivity {
     }
 
     private void ShowNewInstaListAlert(final InstaAddNewListActivity mActivityContext) {
-        dialog = new Dialog(mActivityContext,R.style.Dialog);
+        dialog = new Dialog(mActivityContext, R.style.Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
@@ -135,9 +130,8 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         });
     }
 
-     @OnClick(R.id.rlayout_back_button)
-     public void BackPressSDescription()
-    {
+    @OnClick(R.id.rlayout_back_button)
+    public void BackPressSDescription() {
         finish();
     }
 

@@ -59,8 +59,6 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
         }else {
             holder.view_sublist.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     private void ShowProductInfoAlert(Context mContext) {

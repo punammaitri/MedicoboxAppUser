@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.prescription;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -18,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 
 import java.util.ArrayList;
 
@@ -73,7 +75,10 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         mLinearEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext,PrescriptionBillingAddressActivity.class));
+                Intent intent = new Intent(mContext, PrescriptionBillingAddressActivity.class);
+                Activity activity = (Activity) mContext;
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 popup.dismiss();
             }
         });

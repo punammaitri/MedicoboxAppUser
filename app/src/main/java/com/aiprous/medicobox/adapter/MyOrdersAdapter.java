@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.OrderDetailsActivity;
 
@@ -65,7 +65,12 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
         holder.cardview_my_orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, OrderDetailsActivity.class));
+                //mContext.startActivity(new Intent(mContext, OrderDetailsActivity.class));
+
+                Intent intent = new Intent(mContext, OrderDetailsActivity.class);
+                Activity activity = (Activity) mContext;
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
     }

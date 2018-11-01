@@ -240,14 +240,17 @@ public class HomeFragment extends Fragment {
         switch (view.getId()) {
             case R.id.btn_upload:
                 startActivity(new Intent(getActivity(), PrescriptionUploadActivity.class));
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_medicines:
                 startActivity(new Intent(getActivity(), ListActivity.class));
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_lab_tests:
                 break;
             case R.id.relInstaOrder:
                 startActivity(new Intent(getActivity(), InstaAddNewListActivity.class));
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_econsultation:
                 break;

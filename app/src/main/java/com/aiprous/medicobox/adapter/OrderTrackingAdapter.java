@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.OrderDetailsActivity;
 import com.aiprous.medicobox.activity.OrderTrackingActivity;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 
@@ -48,7 +50,10 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, InstaAddNewListActivity.class));
+                Intent intent = new Intent(mContext, InstaAddNewListActivity.class);
+                Activity activity = (Activity) mContext;
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
     }
