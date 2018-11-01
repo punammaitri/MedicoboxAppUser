@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -188,15 +189,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     mVisibiltyFlag="2";
                 }
 
-                    mContext.startActivity(new Intent(mContext,ProductDetailBActivity.class)
-                            .putExtra("productId",mDataArrayList.get(position).getId())
-                            .putExtra("VisibiltyFlag",mVisibiltyFlag)
-                            .putExtra("SKU",mDataArrayList.get(position).getSku())
-                            .putExtra("Qty",holder.tv_value.getText().toString())
-                            .putExtra("imageUrl",mDataArrayList.get(position).getImage())
-                            .putExtra("MedicineName",mDataArrayList.get(position).getTitle())
-                            .putExtra("value",mDataArrayList.get(position).getShort_description())
-                            .putExtra("price",mDataArrayList.get(position).getPrice()));
+                Intent intent = new Intent(mContext, ProductDetailBActivity.class);
+                intent.putExtra("productId", mDataArrayList.get(position).getId());
+                intent.putExtra("VisibiltyFlag", mVisibiltyFlag);
+                intent.putExtra("SKU", mDataArrayList.get(position).getSku());
+                intent.putExtra("Qty", holder.tv_value.getText().toString());
+                intent.putExtra("imageUrl", mDataArrayList.get(position).getImage());
+                intent.putExtra("MedicineName", mDataArrayList.get(position).getTitle());
+                intent.putExtra("value", mDataArrayList.get(position).getShort_description());
+                intent.putExtra("price", mDataArrayList.get(position).getPrice());
+                intent.putExtra("prescription",mDataArrayList.get(position).getPrescription_required());
+
+                Activity activity = (Activity) mContext;
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
 
             }

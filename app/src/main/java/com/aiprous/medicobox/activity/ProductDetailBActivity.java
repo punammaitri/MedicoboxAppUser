@@ -35,7 +35,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,6 +109,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mdiscount;
     private String mPrice;
     int setValuePosition = 1;
+    ViewPagerAdapter viewPagerAdapter;
+    ArrayList<String> mImagelist=new ArrayList<>();
+    private String mPrescription;
+
 
 
     @Override
@@ -140,25 +147,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
         spinner_count.setAdapter(aa);
         //add underline to text
         tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        //set view pager
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
-        viewPager.setAdapter(viewPagerAdapter);
-        dotscount = viewPagerAdapter.getCount();
-        dots = new ImageView[dotscount];
 
-        for (int i = 0; i < dotscount; i++) {
-
-            dots[i] = new ImageView(this);
-            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            params.setMargins(8, 0, 8, 0);
-
-            SliderDots.addView(dots[i], params);
-
-        }
-        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -220,6 +209,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             mMedicineName=getIntent().getStringExtra("MedicineName");
             mValue=getIntent().getStringExtra("value");
             mPrice=getIntent().getStringExtra("price");
+            mPrescription=getIntent().getStringExtra("prescription");
 
             tv_value.setText(""+mQty);
             getSingleproducts(mProductId);
@@ -301,7 +291,48 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                          //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                         //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+
+
+                            try {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                                JSONArray getImageURLList = getAllObject.getJSONArray("images");//get the array with the key "response"
+                                for (int i = 0; i < getImageURLList.length(); i++) {
+
+                                    if (getImageURLList.getString(i).contains("https")) {
+                                        String url = getImageURLList.getString(i).replace("https", "http");
+                                        mImagelist.add(url);
+                                    }
+                                }
+                                //set view pager
+                                setviewPagerAdapter();
+
+                                JSONObject uses_n_work = response.getJSONObject("uses_n_work");
+                                String luses = uses_n_work.getString("uses");
+                                String lwork = uses_n_work.getString("work");
+                                String lhow_to_use = uses_n_work.getString("how_to_use");
+
+                                JSONObject interaction_n_side_effect = response.getJSONObject("interaction_n_side_effect");
+                                String ldrug_interactions = interaction_n_side_effect.getString("drug_interactions");
+                                String side_effects = interaction_n_side_effect.getString("side_effects");
+
+
+                                JSONObject warning_n_precaution = response.getJSONObject("warning_n_precaution");
+                                String driving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
+                                String kidney = uses_n_work.getString("kidney");
+                                String liver = uses_n_work.getString("liver");
+                                String pregnancy_and_breast_feeding = uses_n_work.getString("pregnancy_and_breast_feeding");
+
+
+                                JSONObject more_information = response.getJSONObject("more_information");
+                                String more_info = more_information.getString("more_info");
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
                             CustomProgressDialog.getInstance().dismissDialog();
                         }
 
@@ -315,6 +346,28 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void setviewPagerAdapter() {
+
+        viewPagerAdapter = new ViewPagerAdapter(mcontext,mImagelist);
+        viewPager.setAdapter(viewPagerAdapter);
+        dotscount = viewPagerAdapter.getCount();
+        dots = new ImageView[dotscount];
+
+        for (int i = 0; i < dotscount; i++) {
+
+            dots[i] = new ImageView(mcontext);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            params.setMargins(8, 0, 8, 0);
+
+            SliderDots.addView(dots[i], params);
+
+        }
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
     }
 
 
@@ -578,7 +631,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     @OnClick(R.id.llayout_drug_information)
     public void onClickDrugInfo()
     {
-        startActivity(new Intent(this,DrugInformationTabActivity.class));
+        startActivity(new Intent(this,DrugInformationActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
