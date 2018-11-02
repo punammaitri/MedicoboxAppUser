@@ -134,7 +134,7 @@ public class DrugInformationActivity extends AppCompatActivity {
             txtSideEffect.setText(mSide_effects);
             txtDrivingAndMachine.setText(mDriving_and_using_machines);
             txtKidney.setText(mKidney);
-            txtLactation.setText("");
+            txtLactation.setText(lactation);
             txtLiver.setText(mLiver);
             txtPregnancy.setText(mPregnancy_and_breast_feeding);
             txtMoreInfo.setText(mMore_info);

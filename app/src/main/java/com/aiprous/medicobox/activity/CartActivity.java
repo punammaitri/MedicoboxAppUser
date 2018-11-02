@@ -118,6 +118,8 @@ public class CartActivity extends AppCompatActivity {
             nestedscroll_cart.setVisibility(View.GONE);
             rlayout_cart.setVisibility(View.GONE);
         }
+
+        rlayout_cart.setClickable(false);
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -242,7 +244,7 @@ public class CartActivity extends AppCompatActivity {
                                     int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
                                     String id = getAllProductList.getJSONObject(i).get("id").toString();
                                     String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                    int price = Integer.parseInt(getAllProductList.getJSONObject(i).get("price").toString());
+                                    String price = getAllProductList.getJSONObject(i).get("price").toString();
                                     String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
                                     String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
                                     String sale_price = getAllProductList.getJSONObject(i).get("sale_price").toString();

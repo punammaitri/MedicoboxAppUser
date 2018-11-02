@@ -136,7 +136,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mLiver;
     private String mPregnancy_and_breast_feeding;
     private  String mMore_info;
-
+    private float mCalculatePrice;
 
 
 
@@ -167,10 +167,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
         //set spinner
         //Creating the ArrayAdapter instance having the value list
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mValueStrip);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter lstripArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mValueStrip);
+        lstripArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
-        spinner_count.setAdapter(aa);
+        spinner_count.setAdapter(lstripArrayAdapter);
 
 
 
@@ -234,7 +234,13 @@ public class ProductDetailBActivity extends AppCompatActivity {
             mImageURL=getIntent().getStringExtra("imageUrl");
             mMedicineName=getIntent().getStringExtra("MedicineName");
             mValue=getIntent().getStringExtra("value");
-            mPrice=getIntent().getStringExtra("price");
+            if(getIntent().getStringExtra("price").isEmpty())
+            {
+                mPrice=getIntent().getStringExtra("MrpPrice");
+            }else {
+                mPrice=getIntent().getStringExtra("price");
+            }
+
             mPrescription=getIntent().getStringExtra("prescription");
             mMrp=getIntent().getStringExtra("MrpPrice");
             mdiscount=getIntent().getStringExtra("discount");
@@ -243,8 +249,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
             tv_value.setText(""+mQty);
             tv_medicine_name.setText(mMedicineName);
             tv_medicine_contains.setText(mValue);
-            tv_mrp_price.setText(mMrpPrice);
+            tv_mrp_price.setText(mMrp);
             tv_item_description.setText(mValue);
+
+            mCalculatePrice=mQty*Float.parseFloat(mPrice);
 
             if(mPrescription.equals("0"))
             {
@@ -269,8 +277,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
             btn_add_to_cart.setClickable(true);
             btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
         }
-
-
 
     }
 
@@ -365,8 +371,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
 
                                 JSONObject warning_n_precaution = response.getJSONObject("warning_n_precaution");
+
                                  mDriving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
-                                 mKidney = warning_n_precaution.getString("kidney");
+                                // mKidney = warning_n_precaution.getString("kidney");
+
                                  lactation = warning_n_precaution.getString("lactation");
                                  mLiver = warning_n_precaution.getString("liver");
                                  mPregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
@@ -529,7 +537,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
     //Add to cart API
     private void AttemptAddToCart(JSONObject jsonObject) {
-        // mAlert.onShowProgressDialog(this, true);
+        CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
         if (!isNetworkAvailable(mcontext)) {
             Toast.makeText(mcontext, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
@@ -543,6 +551,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             // do anything with response
 
+                          //make add to cart disable and not clickable
+                            btn_add_to_cart.setClickable(false);
+                            btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
+
                             rlayout_plus_minus.setVisibility(View.VISIBLE);
                             tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
                             rlayout_cart.setVisibility(View.VISIBLE);
@@ -553,13 +565,17 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             BaseActivity.printLog("response-success : ", response.toString());
+                            Toast.makeText(mcontext, "Product added to cart", Toast.LENGTH_SHORT).show();
                             //save item id into itemid variable
                             addItemsSingleton();
+                            CustomProgressDialog.getInstance().dismissDialog();
+
                         }
 
                         @Override
                         public void onError(ANError error) {
                             // handle error
+                            CustomProgressDialog.getInstance().dismissDialog();
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());
                             Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
@@ -628,7 +644,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId,mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -638,6 +654,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                 md.setQty("" + mQty);
                 md.setSku(mSku);
                 md.setItem_id(mItemId);
+                md.setCalculatePrice(mCalculatePrice);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
@@ -657,7 +674,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId,mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -667,6 +684,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                 md.setQty("" + mQty);
                 md.setSku(mSku);
                 md.setItem_id(mItemId);
+                md.setCalculatePrice(mCalculatePrice);
                 singletonOptionData.option.add(md);
             }
         }
