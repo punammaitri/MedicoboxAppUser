@@ -26,6 +26,15 @@ repositories {
         url 'https://maven.google.com/'
         name 'Google'
     }
+    maven {
+        url 'https://maven.fabric.io/public'
+    }
+}
+
+repositories {
+    maven {
+        url 'https://maven.fabric.io/public'
+    }
 }
 
 dependencies {
@@ -33,7 +42,8 @@ dependencies {
 
     //multidex
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.android.support:appcompat-v7:26.+'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -61,8 +71,13 @@ dependencies {
     implementation 'com.github.cazaea:sweet-alert-dialog:1.0.0'
     // for android networking api call
     implementation 'com.amitshekhar.android:jackson-android-networking:1.0.0'
+    //for firebase
+    implementation "com.google.firebase:firebase-core:16.0.4"
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
     //bar chart
     implementation 'com.github.PhilJay:MPAndroidChart:v2.0.9'
     testImplementation 'junit:junit:4.12'
+
 }
 apply plugin: 'com.google.gms.google-services'

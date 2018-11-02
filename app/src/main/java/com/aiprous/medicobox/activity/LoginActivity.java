@@ -29,6 +29,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -66,6 +67,7 @@ import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.LOGIN;
+import static com.aiprous.medicobox.utils.BaseActivity.firebaseAnalytics;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
 import static com.aiprous.medicobox.utils.BaseActivity.showToast;
@@ -80,22 +82,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     TextView tv_forgot_password;
     @BindView(R.id.tv_sign_up_here)
     TextView tv_sign_up_here;
-
-    Uri facebookProfile_url;
     @BindView(R.id.edt_mobile_email)
     EditText edtMobileEmail;
     @BindView(R.id.edt_password)
     EditText edtPassword;
+
     private String gmailProfileUrl;
-    private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 1;
     private static final String TAG = LoginActivity.class.getSimpleName();
-    boolean GpsStatus;
-    private String mgoogleusername;
-    private String twitterProfileImageUrl;
-    private String googleUsername;
-    private String googleLastname;
-    private String getFirebaseToken;
+    private String mgoogleusername,twitterProfileImageUrl,googleUsername,googleLastname,getFirebaseToken;
     GoogleApiClient mGoogleApiClient;
     private String lLoginwithGooglegmailId;
     private CallbackManager callbackManager;
@@ -104,8 +99,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private AccessToken accessToken;
     private String mfacebookFlag = "facebook";
     private String mgmailFlag = "gmail";
-    private String mfacebookusername;
-    private String mfacebookUserLastname;
     LoginButton btnfblogin;
     LinearLayout fb_login_layout;
     LinearLayout goglayout;
@@ -114,8 +107,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private String lPass;
     private Context mContext = this;
 
-    //@BindView(R.id.btn_sign_in_withotp)
-    //Button btn_sign_in_withotp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
         init();
     }
 
@@ -141,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         mAlert = CustomProgressDialog.getInstance();
 
+        //firebaseAnalytics(this.getClass().getSimpleName());
         btnfblogin = (LoginButton) findViewById(R.id.btnfblogin);
         goglayout = (LinearLayout) findViewById(R.id.goglayout);
         fb_login_layout = (LinearLayout) findViewById(R.id.fb_login_layout);
@@ -189,12 +180,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         };
 
-       /* if (accessToken != null) {
-            getProfileData();
-        } else {
-            //rlProfileArea.setVisibility(View.GONE);
-        }*/
-
         // Callback registration
         btnfblogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -204,13 +189,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onCancel() {
-                // App code
                 Log.d(TAG, "User cancel login");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
                 Log.d(TAG, "Problem for login");
             }
         });
@@ -261,7 +244,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         } else {
-            ///////// activityresult for facebook/////////
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -325,7 +307,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onResume();
     }
 
-
     private void updateUI(boolean isLogin) {
         if (isLogin) {
             Toast.makeText(this, "Login With Gmail is successful", Toast.LENGTH_SHORT).show();
@@ -378,7 +359,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         finish();
     }
 
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -386,6 +366,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.btn_signup)
     public void onViewClicked() {
+
         lEmail = edtMobileEmail.getText().toString().trim();
         lPass = edtPassword.getText().toString().trim();
 

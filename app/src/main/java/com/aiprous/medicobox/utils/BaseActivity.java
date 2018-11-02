@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -124,6 +126,12 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /*Change Status bar color*/
+    public static void firebaseAnalytics(String mActivityName) {
+        FirebaseCrash.logcat(Log.ERROR,mActivityName,"Firebase Crash Analytics");
+        Throwable exception = null;
+        FirebaseCrash.report(exception);
+    }
     //---Function to check network connection---//
     public static boolean isNetworkAvailable(@NonNull Context context) {
         try {
