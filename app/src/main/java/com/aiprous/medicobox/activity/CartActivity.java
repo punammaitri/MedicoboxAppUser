@@ -304,4 +304,23 @@ public class CartActivity extends AppCompatActivity {
                     }
                 });
     }
+
+   /* private void getCartItems(final String bearerToken) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(GETCARTITEMS)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                    }
+                });
+    }*/
 }

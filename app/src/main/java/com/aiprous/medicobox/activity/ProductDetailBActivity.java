@@ -270,12 +270,17 @@ public class ProductDetailBActivity extends AppCompatActivity {
         if(mVisibiltyFlag.equals("1")){
             rlayout_plus_minus.setVisibility(View.VISIBLE);
             btn_add_to_cart.setClickable(false);
-            btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
+           // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
+            //make button disable
+            btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg_disable);
+
 
         }else {
             rlayout_plus_minus.setVisibility(View.GONE);
             btn_add_to_cart.setClickable(true);
-            btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
+           // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
+            //Unable the cart button
+            btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg);
         }
 
     }
