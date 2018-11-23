@@ -419,52 +419,58 @@ public class MainActivity extends AppCompatActivity
                             JSONArray getAllProductList = getAllObject.getJSONArray("res");//get the array with the key "response"
 
 
-                            if (getAllProductList != null) {
-                                //clear singleton array
-                                SingletonAddToCart.getGsonInstance().option.clear();
-                                SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
-                                for (int i = 0; i < getAllProductList.length(); i++) {
-                                    int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
-                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                    int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
-                                    String name = getAllProductList.getJSONObject(i).get("name").toString();
-                                    String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
-                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
-                                    String image = getAllProductList.getJSONObject(i).get("image").toString();
-                                    String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
-                                    String mrp = getAllProductList.getJSONObject(i).get("price").toString();
-                                    int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
-                                    String price = getAllProductList.getJSONObject(i).get("sale_price").toString();
-                                    if(price.isEmpty())
-                                    {
-                                        price = getAllProductList.getJSONObject(i).get("price").toString();
-                                    }else {
-                                         price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                            try {
+                                if (getAllProductList != null) {
+                                    //clear singleton array
+                                    SingletonAddToCart.getGsonInstance().option.clear();
+                                    SingletonAddToCart singletonOptionData = SingletonAddToCart.getGsonInstance();
+                                    for (int i = 0; i < getAllProductList.length(); i++) {
+                                        int id = Integer.parseInt(getAllProductList.getJSONObject(i).get("item_id").toString());
+                                        String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                        int qty = Integer.parseInt(getAllProductList.getJSONObject(i).get("qty").toString());
+                                        String name = getAllProductList.getJSONObject(i).get("name").toString();
+                                        String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
+                                        String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                        String image = getAllProductList.getJSONObject(i).get("image").toString();
+                                        String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                        String mrp = getAllProductList.getJSONObject(i).get("price").toString();
+                                        int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
+                                        String price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                        if(price.isEmpty())
+                                        {
+                                            price = getAllProductList.getJSONObject(i).get("price").toString();
+                                        }else {
+                                             price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                        }
+                                        float lcalculatePrice=qty*Float.parseFloat(price);
+
+
+                                        AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel(image, name, short_description, mrp, ""+discount, price, "" + qty, sku, "" + id,lcalculatePrice);
+                                        listModel.setImage(image);
+                                        listModel.setMedicineName(name);
+                                        listModel.setValue(short_description);
+                                        listModel.setMrp(mrp);
+                                        listModel.setDiscount(""+discount);
+                                        listModel.setPrice("" + price);
+                                        listModel.setQty("" + qty);
+                                        listModel.setSku(sku);
+                                        listModel.setItem_id("" + id);
+                                        listModel.setCalculatePrice(lcalculatePrice);
+                                        singletonOptionData.option.add(listModel);
+
                                     }
-                                    float lcalculatePrice=qty*Float.parseFloat(price);
-
-
-                                    AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel(image, name, short_description, mrp, ""+discount, price, "" + qty, sku, "" + id,lcalculatePrice);
-                                    listModel.setImage(image);
-                                    listModel.setMedicineName(name);
-                                    listModel.setValue(short_description);
-                                    listModel.setMrp(mrp);
-                                    listModel.setDiscount(""+discount);
-                                    listModel.setPrice("" + price);
-                                    listModel.setQty("" + qty);
-                                    listModel.setSku(sku);
-                                    listModel.setItem_id("" + id);
-                                    listModel.setCalculatePrice(lcalculatePrice);
-                                    singletonOptionData.option.add(listModel);
-
                                 }
-                            }
 
-                            if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-                                rlayout_cart.setVisibility(View.GONE);
-                            } else {
-                                rlayout_cart.setVisibility(View.VISIBLE);
-                                tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+                                if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
+                                    rlayout_cart.setVisibility(View.GONE);
+                                } else {
+                                    rlayout_cart.setVisibility(View.VISIBLE);
+                                    tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+                                }
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
                         } catch (JSONException e) {
