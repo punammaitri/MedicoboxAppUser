@@ -63,11 +63,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private String mPrice;
     int mQty;
     String mImageURL;
-    public int mTotalMRPprice = 0;
-    private int mTotalPrice = 0;
+    public float mTotalMRPprice = 0;
+    private float mTotalPrice = 0;
     private String mSku;
     private String mItemId;
     CustomProgressDialog mAlert;
+    private float mCalculatePrice;
 
 
     public CartAdapter(Context mContext, ArrayList<CartModel.Response> mCartArrayList) {
@@ -90,20 +91,35 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.tv_item_name.setText(mCartArrayList.get(position).getName());
          holder.tv_medicine_contains.setText(mCartArrayList.get(position).getShort_description());
          holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
-        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
+
+
+        if(mCartArrayList.get(position).getSale_price().isEmpty())
+        {
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
+        }else {
+            holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getSale_price());
+        }
+
 
         //set number of items
         holder.tv_value.setText("" + mCartArrayList.get(position).getQty());
 
         //Add to cart
-        mMedicineName = mCartArrayList.get(position).getName();
-        mValue=mCartArrayList.get(position).getShort_description();
+         mMedicineName = mCartArrayList.get(position).getName();
+         mValue=mCartArrayList.get(position).getShort_description();
          mMrp= String.valueOf(mCartArrayList.get(position).getPrice());
          mdiscount= String.valueOf(mCartArrayList.get(position).getDiscount());
-        mPrice = String.valueOf(mCartArrayList.get(position).getSale_price());
+
+         if(mCartArrayList.get(position).getSale_price().isEmpty())
+         {
+             mPrice = String.valueOf(mCartArrayList.get(position).getPrice());
+         }else {
+             mPrice = String.valueOf(mCartArrayList.get(position).getSale_price());
+         }
         mImageURL=mCartArrayList.get(position).getImage();
         mQty = Integer.parseInt(holder.tv_value.getText().toString());
+        mCalculatePrice=mQty*Float.parseFloat(mPrice);
 
         AddItemsToSingleton();
 
@@ -122,8 +138,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                  mValue=mCartArrayList.get(lItemIndex).getShort_description();
                  mMrp= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
                  mdiscount= String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
-                 mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
-                 mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                 if(String.valueOf(mCartArrayList.get(lItemIndex).getSale_price()).isEmpty())
+                {
+                    mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                }else{
+                     mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
+                }
+
+
+                mCalculatePrice=mQty+Float.parseFloat(mPrice);
+
+                mImageURL=mCartArrayList.get(lItemIndex).getImage();
                 mSku = mCartArrayList.get(lItemIndex).getSku();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty = setValuePosition;
@@ -169,7 +194,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     mValue=mCartArrayList.get(lItemIndex).getShort_description();
                     mMrp= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
                     mdiscount= String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
-                    mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
+                    if(String.valueOf(mCartArrayList.get(lItemIndex).getSale_price()).isEmpty())
+                    {
+                        mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                    }else {
+                        mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
+                    }
+                    mCalculatePrice=mQty*Float.parseFloat(mPrice);
                     mImageURL=mCartArrayList.get(lItemIndex).getImage();
                     mSku = mCartArrayList.get(lItemIndex).getSku();
                     if (holder.tv_value.getText().equals("0")) {
@@ -269,12 +300,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if (tempObj.getMedicineName() != null && mMedicineName != null && tempObj.getMedicineName().equalsIgnoreCase(mMedicineName)) {
                     //  tempObj.setPrice("" + total);
                     tempObj.setQty("" + mQty);
+                    tempObj.setCalculatePrice(mCalculatePrice);
                     // tempObj.setUrl(image_url);
                     foundduplicateItem = true;
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId,mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -284,6 +316,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 md.setQty("" + mQty);
                 md.setSku(mSku);
                 md.setImage(mItemId);
+                md.setCalculatePrice(mCalculatePrice);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
@@ -308,7 +341,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId,mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -318,6 +351,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 md.setQty("" + mQty);
                 md.setSku(mSku);
                 md.setItem_id(mItemId);
+                md.setCalculatePrice(mCalculatePrice);
                 singletonOptionData.option.add(md);
             }
         }
@@ -338,17 +372,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 AddToCartOptionDetailModel tempObj = iterator.next();
                 if (tempObj.getMrp() != null && !tempObj.getMrp().isEmpty()) {
                     try {
+                        Float lqty= Float.valueOf(tempObj.getQty());
                         String tempMRPCost = tempObj.getMrp();
-                        String tempPrice = tempObj.getPrice();
-                        mTotalMRPprice = mTotalMRPprice + Integer.parseInt(tempMRPCost);
-                        mTotalPrice = mTotalPrice + Integer.parseInt(tempPrice);
+                        Float tempPrice = tempObj.getCalculatePrice();
+                        mTotalMRPprice = mTotalMRPprice +(Float.parseFloat(tempMRPCost)*lqty);
+                        mTotalPrice = mTotalPrice + tempPrice;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
             CartActivity.tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "" + mTotalMRPprice);
-            int lPriceDiscount = mTotalMRPprice - mTotalPrice;
+             Float lPriceDiscount = mTotalMRPprice - mTotalPrice;
+
+           /*  float lprice=mTotalMRPprice-mTotalPrice;
+             Float getTotalDiscount = (lprice / mTotalMRPprice) * 100;*/
+
             CartActivity.tv_price_discount.setText(mContext.getResources().getString(R.string.Rs) + "" + lPriceDiscount);
             CartActivity.tv_to_be_paid.setText(mContext.getResources().getString(R.string.Rs) + "" + mTotalPrice);
             CartActivity.tv_total_saving.setText(mContext.getResources().getString(R.string.Rs) + "" + lPriceDiscount);
@@ -398,10 +437,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        CustomProgressDialog.getInstance().dismissDialog();
+
                         BaseActivity.printLog("response-success : ", response.toString());
                         //save item id into itemid variable
                         AddItemsToSingleton();
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override

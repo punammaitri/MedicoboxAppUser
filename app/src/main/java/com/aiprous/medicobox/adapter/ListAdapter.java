@@ -74,6 +74,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     CustomProgressDialog mAlert;
      private String mItemId;
      private String mVisibiltyFlag;
+    private float mCalculatePrice;
 
 
     public ListAdapter(Context mContext, ArrayList<ListModel> mDataArrayList) {
@@ -130,9 +131,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     holder.tv_medicine_name.setText(ItemModelList.get(i).getMedicineName());
                     holder.tv_content.setText(ItemModelList.get(i).getValue());
                     holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getMrp());
-                    holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    holder.tv_discount.setText(""+ItemModelList.get(i).getDiscount()+" OFF");
-                    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getPrice());
+                    if(ItemModelList.get(i).getDiscount().equals("0"))
+                    {
+                        holder.tv_discount.setVisibility(View.GONE);
+                    }else {
+                        holder.tv_discount.setVisibility(View.VISIBLE);
+                        holder.tv_discount.setText(""+ItemModelList.get(i).getDiscount()+"%"+" OFF");
+
+                    }
+
+                    if(ItemModelList.get(i).getPrice().isEmpty())
+                    {
+                        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getMrp());
+                    }else {
+                        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+ItemModelList.get(i).getPrice());
+                        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
+
                     holder.tv_value.setText(ItemModelList.get(i).getQty());
 
                    // addItemsSingleton();
@@ -156,9 +171,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
                     holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
                     holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
-                    holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
-                    holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getSale_price());
+
+                    if(mDataArrayList.get(position).getDiscount().equals("0"))
+                    {
+                        holder.tv_discount.setVisibility(View.GONE);
+                    }else {
+                        holder.tv_discount.setVisibility(View.VISIBLE);
+                        holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+"%"+" OFF");
+                    }
+
+                    if(mDataArrayList.get(position).getSale_price().isEmpty())
+                    {
+                        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+                    }else {
+                        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getSale_price());
+                        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
+
 
                     //make add button visible
                     holder.rlayout_number_of_item.setVisibility(View.GONE);
@@ -185,9 +214,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
             holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
             holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
-            holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-             holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+" OFF");
-            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getSale_price());
+            if(mDataArrayList.get(position).getDiscount().equals("0"))
+            {
+                holder.tv_discount.setVisibility(View.GONE);
+            }else {
+                holder.tv_discount.setVisibility(View.VISIBLE);
+                holder.tv_discount.setText(mDataArrayList.get(position).getDiscount()+"%"+" OFF");
+            }
+
+            if(mDataArrayList.get(position).getSale_price().isEmpty())
+            {
+                holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
+            }else {
+                holder.tv_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getSale_price());
+                holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+
 
         }
 
@@ -235,19 +277,25 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
                 mMedicineName=mDataArrayList.get(lItemIndex).getTitle();
                 mValue=mDataArrayList.get(lItemIndex).getShort_description();
-                 mMrp=mDataArrayList.get(lItemIndex).getPrice();
-                 mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
+                mMrp=mDataArrayList.get(lItemIndex).getPrice();
+                mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                 mSku=mDataArrayList.get(lItemIndex).getSku();
-                mPrice=mDataArrayList.get(lItemIndex).getSale_price();
+
+                if(mDataArrayList.get(lItemIndex).getSale_price().isEmpty()){
+                    mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                }else {
+                    mPrice=mDataArrayList.get(lItemIndex).getSale_price();
+                }
                 mImageURL=mDataArrayList.get(lItemIndex).getImage();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
-               // AddItemsToCart();
+                mCalculatePrice=mQty*Float.parseFloat(mPrice);
 
+               // AddItemsToCart();
                 String getCartId = MedicoboxApp.onGetCartID();
                 String lCartId=getCartId;
-                 mCartId=lCartId.replace("\"", "");
+                mCartId=lCartId.replace("\"", "");
 
                 //call guest add to cart api
                 try {
@@ -283,11 +331,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 mMrp=mDataArrayList.get(lItemIndex).getPrice();
                 mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                 mSku=mDataArrayList.get(lItemIndex).getSku();
-                mPrice=mDataArrayList.get(lItemIndex).getSale_price();
+                if(mDataArrayList.get(lItemIndex).getSale_price().isEmpty())
+                {
+                    mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                }else {
+                    mPrice=mDataArrayList.get(lItemIndex).getSale_price();
+                }
+
                 mImageURL=mDataArrayList.get(lItemIndex).getImage();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty=setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
+                mCalculatePrice=mQty*Float.parseFloat(mPrice);
 
                 //call edit cart api
                try {
@@ -336,7 +391,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     mMrp=mDataArrayList.get(lItemIndex).getPrice();
                     mdiscount=mDataArrayList.get(lItemIndex).getDiscount();
                     mSku=mDataArrayList.get(lItemIndex).getSku();
-                    mPrice=mDataArrayList.get(lItemIndex).getSale_price();
+                    if(mDataArrayList.get(lItemIndex).getSale_price().isEmpty())
+                    {
+                        mPrice=mDataArrayList.get(lItemIndex).getPrice();
+                    }else {
+                        mPrice=mDataArrayList.get(lItemIndex).getSale_price();
+                    }
                     mImageURL=mDataArrayList.get(lItemIndex).getImage();
                     if (holder.tv_value.getText().equals("0")) {
 
@@ -402,7 +462,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId,mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -412,6 +472,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 md.setQty("" + mQty);
                 md.setSku(mSku);
                 md.setItem_id(mItemId);
+                md.setCalculatePrice(mCalculatePrice);
                 singletonOptionData.option.add(md);
             } else if (foundduplicateItem && mQty == 0 && total == 0) {
 
@@ -431,7 +492,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId,mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -441,6 +502,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 md.setQty("" + mQty);
                 md.setSku(mSku);
                 md.setItem_id(mItemId);
+                md.setCalculatePrice(mCalculatePrice);
                 singletonOptionData.option.add(md);
             }
         }
@@ -453,7 +515,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     //Add to cart API
     private void AttemptAddToCart(JSONObject jsonObject) {
-       // mAlert.onShowProgressDialog(this, true);
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         if (!isNetworkAvailable(mContext)) {
             Toast.makeText(mContext, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
@@ -476,10 +538,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             BaseActivity.printLog("response-success : ", response.toString());
                             //save item id into itemid variable
                             addItemsSingleton();
+                            CustomProgressDialog.getInstance().dismissDialog();
                         }
 
                         @Override
                         public void onError(ANError error) {
+                            CustomProgressDialog.getInstance().dismissDialog();
                             // handle error
                             Log.e("Error", "onError errorCode : " + error.getErrorCode());
                             Log.e("Error", "onError errorBody : " + error.getErrorBody());

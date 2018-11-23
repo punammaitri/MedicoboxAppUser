@@ -98,7 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edt_gender"
@@ -116,7 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edt_dob"
@@ -133,7 +135,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edt_password"
@@ -148,7 +151,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextLabel">
+                app:hintTextAppearance="@style/TextLabel"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edt_confirm_password"

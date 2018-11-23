@@ -11,9 +11,10 @@ public class AddToCartOptionDetailModel {
     String Qty;
     String sku;
     String item_id;
+    float CalculatePrice;
 
 
-    public AddToCartOptionDetailModel(String image, String medicineName, String value, String mrp, String discount, String price, String qty,String sku,String item_id) {
+    public AddToCartOptionDetailModel(String image, String medicineName, String value, String mrp, String discount, String price, String qty,String sku,String item_id,Float CalculatePrice) {
         this.image = image;
         this.medicineName = medicineName;
         this.value = value;
@@ -23,6 +24,7 @@ public class AddToCartOptionDetailModel {
         Qty = qty;
         this.sku=sku;
         this.item_id=item_id;
+        this.CalculatePrice=CalculatePrice;
     }
 
     public String getImage() {
@@ -95,5 +97,13 @@ public class AddToCartOptionDetailModel {
 
     public void setItem_id(String item_id) {
         this.item_id = item_id;
+    }
+
+    public float getCalculatePrice() {
+        return CalculatePrice;
+    }
+
+    public void setCalculatePrice(float calculatePrice) {
+        CalculatePrice = calculatePrice;
     }
 }

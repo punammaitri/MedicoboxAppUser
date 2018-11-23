@@ -46,7 +46,7 @@ public class CartModel {
         private String product_type;
         @Expose
         @SerializedName("price")
-        private int price;
+        private String price;
         @Expose
         @SerializedName("name")
         private String name;
@@ -119,11 +119,11 @@ public class CartModel {
             this.product_type = product_type;
         }
 
-        public int getPrice() {
+        public String getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(String price) {
             this.price = price;
         }
 
@@ -167,7 +167,7 @@ public class CartModel {
             this.item_id = item_id;
         }
 
-        public Response(int discount, String prescription, String image, String short_description, String sale_price, String quote_id, String product_type, int price, String name, String id, int qty, String sku, int item_id) {
+        public Response(int discount, String prescription, String image, String short_description, String sale_price, String quote_id, String product_type, String price, String name, String id, int qty, String sku, int item_id) {
             this.discount = discount;
             this.prescription = prescription;
             this.image = image;

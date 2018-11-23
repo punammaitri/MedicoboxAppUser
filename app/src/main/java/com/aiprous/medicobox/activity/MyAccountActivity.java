@@ -31,6 +31,8 @@ public class MyAccountActivity extends AppCompatActivity {
     TextView txtEmail;
     @BindView(R.id.txtMobileNumber)
     TextView txtMobileNumber;
+    @BindView(R.id.txt_user_name)
+    TextView txt_user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class MyAccountActivity extends AppCompatActivity {
         baseActivity.changeStatusBarColor(this);
         txtMobileNumber.setText(MedicoboxApp.onGetMobileNo());
         txtEmail.setText(MedicoboxApp.onGetEmail());
+        txt_user_name.setText(MedicoboxApp.onGetFirstName()+" "+MedicoboxApp.onGetLastName());
     }
 
     @Override
