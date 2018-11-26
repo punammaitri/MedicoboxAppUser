@@ -14,22 +14,23 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
@@ -39,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,8 +49,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PrescriptionUploadActivity extends AppCompatActivity {
 
@@ -81,11 +81,20 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     int CROPING_CODE = 3;
     private String picturePath = "";
     public String mProfilePicName = "";
+    static String strFileCamera = "";
+    public int RESULT_TAKE_IMAGE = 1;
+    public int RESULT_UPLOAD_IMAGE = 2;
+    public int RESULT_CROPING_CODE = 3;
+    public int RESULT_ORGANIZTION = 4;
+    public String imageBinaryString = "";
+    public static int activityCalled = 0;
+    public static final int RESULT_OK = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_prescription);
+
         ButterKnife.bind(this);
         init();
     }
@@ -104,11 +113,18 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
             if (!checkAppPermission()) requestPermission();
         }
 
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         //set list adapter
         setListAdapter();
-
     }
-
     private void setListAdapter() {
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -148,16 +164,36 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cardview_take_photo:
-                // startCamera();
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, TAKE_IMAGE);
-                }
+                selectImage("take_photo");
                 break;
             case R.id.cardview_gallery:
-                Intent intent2 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent2, UPLOAD_IMAGE);
+                selectImage("open_gallery");
                 break;
+        }
+    }
+
+    public void selectImage(String type) {
+        if (type.equalsIgnoreCase("take_photo")){
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            strFileCamera = getImageName() + ".jpg";
+            File filename = new File(Environment.getExternalStorageDirectory(), strFileCamera);
+            mImageCaptureUri = Uri.fromFile(filename);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+            startActivityForResult(intent, RESULT_TAKE_IMAGE);
+        }else {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, RESULT_UPLOAD_IMAGE);
+        }
+    }
+
+    private String getImageName() {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            Date now = new Date();
+            String fileName = "IMG_" + formatter.format(now);
+            return fileName;
+        } catch (Exception e) {
+            return "IMG_temp";
         }
     }
 
@@ -187,169 +223,37 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         bitmapCamera = null;
         try {
             if (resultCode == RESULT_OK) {
-                if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+                if (requestCode == RESULT_TAKE_IMAGE) {
+                    bitmapCamera = getCapturedImage(strFileCamera);
+                    cropingIMG();
+                    /*mBitmap = (Bitmap) data.getExtras().get("data");
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);*/
+                } else if (requestCode == RESULT_UPLOAD_IMAGE) {
 
-
-                    Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-                    mlistModelsArray.add(new ListModel(imageBitmap));
-                    setListAdapter();
-                    // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-                    mImageCaptureUri = getImageUri(getApplicationContext(), imageBitmap);
-                    flagVariableImageEmpty = mImageCaptureUri.toString();
-
-                }
-                else if (requestCode == UPLOAD_IMAGE) {
                     mImageCaptureUri = data.getData();
                     cropingIMG();
-                    flagVariableImageEmpty = mImageCaptureUri.toString();
-                    mBitmap = getSelectedImage(mImageCaptureUri);
-
-                    mlistModelsArray.add(new ListModel(mBitmap));
-                    setListAdapter();
-
-                }
-
-            }else if (requestCode == CROPING_CODE) {
-                try {
-                    if (outPutFile.exists()) {
-                        mBitmap = decodeFile(outPutFile);
-
-                        mlistModelsArray.add(new ListModel(mBitmap));
-                        setListAdapter();
-
-                        //imageBinaryString = convertBitmapToString(mBitmap);
-                    } else {
-                        Toast.makeText(mContext, "Error while save image", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    Log.e("Crop image", e.toString());
-                }
-            }
-
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    private void cropingIMG() {
-        final ArrayList<CropingOption> cropOptions = new ArrayList<CropingOption>();
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setType("image/*");
-
-        List<ResolveInfo> list = mContext.getPackageManager().queryIntentActivities(intent, 0);
-        int size = list.size();
-        if (size == 0) {
-            setInitialImage();
-            return;
-        } else {
-            intent.setData(mImageCaptureUri);
-            intent.putExtra("outputX", 512);
-            intent.putExtra("outputY", 512);
-            intent.putExtra("aspectX", 1);
-            intent.putExtra("aspectY", 1);
-            intent.putExtra("scale", true);
-
-            //TODO: don't use return-data tag because it's not return large image data and crash not given any message
-            //intent.putExtra("return-data", true);
-
-            //Create output file here
-            outPutFile = new File(Environment.getExternalStorageDirectory(), getImageName() + ".jpg");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outPutFile));
-
-            if (size >= 1) {
-                Intent i = new Intent(intent);
-                ResolveInfo res = (ResolveInfo) list.get(0);
-                i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-                startActivityForResult(i, CROPING_CODE);
-            } else {
-                for (ResolveInfo res : list) {
-                    final CropingOption co = new CropingOption();
-                    co.title = mContext.getPackageManager().getApplicationLabel(res.activityInfo.applicationInfo);
-                    co.icon = mContext.getPackageManager().getApplicationIcon(res.activityInfo.applicationInfo);
-                    co.appIntent = new Intent(intent);
-                    co.appIntent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-                    cropOptions.add(co);
-                }
-                CropingOption co = new CropingOption();
-                co.title = "Cancel";
-                co.icon = getResources().getDrawable(R.drawable.cross_black);
-                cropOptions.add(co);
-                final CropingOptionAdapter adapter = new CropingOptionAdapter(getApplicationContext(), cropOptions);
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Choose Croping App");
-                builder.setCancelable(false);
-                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        if (item != adapter.getLastIndex()) {
-                            startActivityForResult(cropOptions.get(item).appIntent, CROPING_CODE);
+                    //mBitmap = getSelectedImage(mImageCaptureUri);
+                } else if (requestCode == RESULT_CROPING_CODE) {
+                    try {
+                        if (outPutFile.exists()) {
+                            mBitmap = decodeFile(outPutFile);
+                            //ivProfile.setImageBitmap(mBitmap);
+                            mlistModelsArray.add(new ListModel(mBitmap));
+                            setListAdapter();
+                            imageBinaryString = convertBitmapToString(mBitmap);
                         } else {
-                            setInitialImage();
+
+                            Toast.makeText(mContext, "error while save file", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (Exception e) {
+
                     }
-                });
-
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        setInitialImage();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
+                }
             }
-        }
-    }
 
-    private void setInitialImage() {
-        if (mImageCaptureUri != null) {
-            try {
-                if (bitmapCamera != null)
-                    mBitmap = bitmapCamera;
-                else
-                    mBitmap = getSelectedImage(mImageCaptureUri);
-                //imageViewSelectedImage.setImageBitmap(mBitmap);
-                mlistModelsArray.add(new ListModel(mBitmap));
-                setListAdapter();
-                /////////////////////////circularProfileInfo.setImageBitmap(mBitmap);
-                //imageBinaryString = convertBitmapToString(mBitmap);
-            } catch (Exception e) {
-                Log.e("Crop Image", e.toString());
-            }
-        }
-    }
-
-    private Bitmap getSelectedImage(Uri selectedImage) throws Exception {
-        String[] filePath = {MediaStore.Images.Media.DATA};
-        Cursor c =mContext.getContentResolver().query(selectedImage, filePath, null, null, null);
-        c.moveToFirst();
-        int columnIndex = c.getColumnIndex(filePath[0]);
-        picturePath = "";
-        picturePath = c.getString(columnIndex);
-        mProfilePicName = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-        c.close();
-        Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-        return thumbnail;
-    }
-
-    private String getImageName() {
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            Date now = new Date();
-            String fileName = "IMG_" + formatter.format(now);
-            return fileName;
         } catch (Exception e) {
-            return "IMG_temp";
+
         }
     }
 
@@ -358,11 +262,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
             // decode image size
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
-            try {
-                BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
             // Find the correct scale value. It should be the power of 2.
             final int REQUIRED_SIZE = 512;
             int width_tmp = o.outWidth, height_tmp = o.outHeight;
@@ -383,15 +283,115 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         return null;
     }
 
+    public String convertBitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
 
+
+    private Bitmap getCapturedImage(String imageName) {
+        Bitmap bitmap = null;
+        try {
+            File f = new File(Environment.getExternalStorageDirectory().toString());
+            for (File temp : f.listFiles()) {
+                if (temp.getName().equals(imageName)) {
+                    f = temp;
+                    mImageCaptureUri = FileProvider.getUriForFile(mContext,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            temp);
+                    break;
+                }
+            }
+
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+        } catch (Exception e) {
+        }
+        return bitmap;
+    }
+
+    private void cropingIMG() {
+        final ArrayList<CropingOption> cropOptions = new ArrayList<CropingOption>();
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, 0);
+        int size = list.size();
+        if (size == 0) {
+            setInitialImage();
+            return;
+        } else {
+            intent.setData(mImageCaptureUri);
+            intent.putExtra("outputX", 512);
+            intent.putExtra("outputY", 512);
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("scale", true);
+
+            //TODO: don't use return-data tag because it's not return large image data and crash not given any message
+            //intent.putExtra("return-data", true);
+
+            //Create output file here
+            mProfilePicName = getImageName() + ".jpg";
+            outPutFile = new File(android.os.Environment.getExternalStorageDirectory(), mProfilePicName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outPutFile));
+            Intent i = new Intent(intent);
+            boolean isAppFound = false;
+            for (ResolveInfo res : list) {
+                String strAppTitle = mContext.getPackageManager().getApplicationLabel(res.activityInfo.applicationInfo).toString();
+                if (strAppTitle.equalsIgnoreCase("Gallery") || strAppTitle.equalsIgnoreCase("Photos")) {
+                    i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+                    isAppFound = true;
+                    break;
+                }
+            }
+            if (isAppFound) {
+                activityCalled = RESULT_CROPING_CODE;
+                startActivityForResult(i, RESULT_CROPING_CODE);
+            } else {
+                setInitialImage();
+            }
+        }
+    }
+
+    private void setInitialImage() {
+        if (mImageCaptureUri != null) {
+            try {
+                if (bitmapCamera != null)
+                    mBitmap = bitmapCamera;
+                else
+                    mBitmap = getSelectedImage(mImageCaptureUri);
+                //ivProfile.setImageBitmap(mBitmap);
+                mlistModelsArray.add(new ListModel(mBitmap));
+                setListAdapter();
+                imageBinaryString = convertBitmapToString(mBitmap);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    private Bitmap getSelectedImage(Uri selectedImage) throws Exception {
+        String[] filePath = {MediaStore.Images.Media.DATA};
+        Cursor c = mContext.getContentResolver().query(selectedImage, filePath, null, null, null);
+        c.moveToFirst();
+        int columnIndex = c.getColumnIndex(filePath[0]);
+        String picturePath = c.getString(columnIndex);
+        mProfilePicName = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+        c.close();
+        Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+        return thumbnail;
+    }
 
     public class ListModel {
         // int image;
-      //  String medicineName;
-       // String value;
-       // String mrp;
-       // String discount;
-       // String price;
+        //  String medicineName;
+        // String value;
+        // String mrp;
+        // String discount;
+        // String price;
         Bitmap Imagebitmap;
 
         public ListModel(Bitmap imagebitmap) {
