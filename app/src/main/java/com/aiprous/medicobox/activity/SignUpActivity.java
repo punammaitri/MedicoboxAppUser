@@ -92,10 +92,11 @@ public class SignUpActivity extends AppCompatActivity {
             edtMobile.setError("Mobile number must be greater 10 digit");
         } else if (!isValidEmailId(edtEmail)) {
             edtEmail.setError("Invalid email address");
+        } else if (!passwordValidation(mContext, lPass, edtPassword)) {
+            Toast.makeText(mContext, "Password contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_SHORT).show();
         } else if (!lPass.equals(lConfirm_password)) {
             Toast.makeText(mContext, "Password mismatch", Toast.LENGTH_SHORT).show();
-        } else if (passwordValidation(mContext, lPass, edtPassword)) {
-
+        } else {
             try {
                 JSONObject objCustomer = new JSONObject();
                 objCustomer.put("email", lEmail);

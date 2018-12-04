@@ -29,7 +29,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -67,7 +66,6 @@ import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.LOGIN;
-import static com.aiprous.medicobox.utils.BaseActivity.firebaseAnalytics;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
 import static com.aiprous.medicobox.utils.BaseActivity.showToast;
@@ -407,11 +405,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             if (getResponse.contains("{")) {
                                 // for removing braces
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                String responsewithBrace = getResponse.replace("{", "").replace("}", "");
-                                StringTokenizer getMessage = new StringTokenizer(responsewithBrace, ":");
+                                String afterRemoveBrace = getResponse.replace("{", "").replace("}", "");
+                                StringTokenizer getMessage = new StringTokenizer(afterRemoveBrace, ":");
                                 String msg = getMessage.nextToken();
-                                String responseWithoutBrace = getMessage.nextToken();
-                                Toast.makeText(mContext, "" + responseWithoutBrace, Toast.LENGTH_SHORT).show();
+                                String error_msg = getMessage.nextToken();
+                                Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (!isNetworkAvailable(LoginActivity.this)) {
                                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
@@ -428,7 +426,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
-                        Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

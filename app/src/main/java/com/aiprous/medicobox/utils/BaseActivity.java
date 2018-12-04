@@ -25,10 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.crash.FirebaseCrash;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("ALL")
@@ -97,24 +95,18 @@ public class BaseActivity extends AppCompatActivity {
         String specialChars = "(.*[,~,!,@,#,$,^,&,*,(,),-,_,=,+,[,{,],},|,;,:,<,>,/,?].*$)";
 
         if (password.length() <= 7) {
-            edtPassword.setError("Password should be more than 7 characters.");
             valid = false;
         } else if (!password.matches(upperCaseChars)) {
-            edtPassword.setError("Password should contain atleast one upper case letter");
             valid = false;
         } else if (!password.matches(lowerCaseChars)) {
-            edtPassword.setError("Password should contain atleast one lower case letter");
             valid = false;
         } else if (!password.matches(numbers)) {
-            edtPassword.setError("Password should contain atleast one number.");
             valid = false;
         } else if (!password.matches(specialChars)) {
-            edtPassword.setError("Password should contain atleast one special character");
             valid = false;
         }
         return valid;
     }
-
     /*Change Status bar color*/
     public static void changeStatusBarColor(Activity mActivity) {
         //set status bar color

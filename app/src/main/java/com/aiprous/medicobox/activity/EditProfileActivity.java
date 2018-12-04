@@ -136,10 +136,8 @@ public class EditProfileActivity extends AppCompatActivity {
         } else if (!isValidEmailId(edtEmailId)) {
             edtEmailId.setError("Invalid email address");
         } else if (!passwordValidation(mContext, lPassword, edtPassword)) {
-            edtPassword.setError("Please enter proper password");
-        } else if (!passwordValidation(mContext, lConfirm_password, edtConfirmPassword)) {
-            edtConfirmPassword.setError("Please enter confirm password");
-        } else if (!lPassword.equals(lConfirm_password)) {
+            Toast.makeText(mContext, "Password contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_SHORT).show();
+        }else if (!lPassword.equals(lConfirm_password)) {
             Toast.makeText(this, "Password mismatch", Toast.LENGTH_SHORT).show();
         } else {
 
