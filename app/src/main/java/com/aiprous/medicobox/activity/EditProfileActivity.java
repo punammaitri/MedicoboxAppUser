@@ -135,11 +135,15 @@ public class EditProfileActivity extends AppCompatActivity {
             edtMobileNo.setError("Mobile number must be greater 10 digit");
         } else if (!isValidEmailId(edtEmailId)) {
             edtEmailId.setError("Invalid email address");
-        } else if (!passwordValidation(mContext, lPassword, edtPassword)) {
+        }
+
+      /*  else if (!passwordValidation(mContext, lPassword, edtPassword)) {
             Toast.makeText(mContext, "Password contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_SHORT).show();
         }else if (!lPassword.equals(lConfirm_password)) {
             Toast.makeText(this, "Password mismatch", Toast.LENGTH_SHORT).show();
-        } else {
+        } */
+
+        else {
 
             //Call Update profile API
             try {
