@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.activity.MainCategoryActivity;
 import com.aiprous.medicobox.adapter.FeatureProductAdapter;
 import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
@@ -253,6 +254,7 @@ public class HomeFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_econsultation:
+                startActivity(new Intent(getActivity(),MainCategoryActivity.class));
                 break;
         }
     }

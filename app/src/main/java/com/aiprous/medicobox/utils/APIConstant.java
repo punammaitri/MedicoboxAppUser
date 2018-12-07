@@ -16,6 +16,7 @@ public class APIConstant {
     public static String UPDATEUSERINFO = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me";
     public static String GETCARTID = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
     public static String ADDTOCART = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items";
+    //old API
     public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/API/get_cart_item.php";
     //public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
 
@@ -24,6 +25,8 @@ public class APIConstant {
     public static String EDITCARTITEM = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
   //  public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
     public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/API/single_product.php?product_id=";
+    //Updated API
+    public static String UPDATEDGETCATEGORY="http://user8.itsindev.com/medibox/API/categories_new.php";
 
 
     //Response Status Code
