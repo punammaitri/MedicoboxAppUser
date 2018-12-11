@@ -80,8 +80,10 @@ public class MainCategoryActivity extends AppCompatActivity {
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
                             JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
 
+
                             for(int i=0;i<getAllProductList.length();i++)
                             {
+
                                 String lcategoryName=getAllProductList.getJSONObject(i).get("categoryName").toString();
                                 String lCategoryId=getAllProductList.getJSONObject(i).get("CategoryId").toString();
                                 String limage_url=getAllProductList.getJSONObject(i).get("image_url").toString();

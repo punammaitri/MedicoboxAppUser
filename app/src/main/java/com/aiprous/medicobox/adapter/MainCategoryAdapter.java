@@ -34,7 +34,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.notification_item, parent, false);
+                .inflate(R.layout.main_category_item, parent, false);
         return new ViewHolder(view);
     }
 
