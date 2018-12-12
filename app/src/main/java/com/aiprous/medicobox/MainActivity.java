@@ -21,12 +21,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +48,9 @@ import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.model.CartModel;
+import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.model.NavItemClicked;
+import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -59,6 +67,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -70,11 +79,14 @@ import butterknife.Unbinder;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
+import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavItemClicked {
 
+    @BindView(R.id.autocomplete_all_medicine)
+    AutoCompleteTextView autocomplete_all_medicine;
     @BindView(R.id.nav_view)
     NavigationView navView;
     @BindView(R.id.sideView)
@@ -105,6 +117,8 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.txtEmail)
     TextView txtEmail;
     TrackGPS gps;
+    ArrayList<SearchModel> searchModelsArrayList=new ArrayList<>();
+    ArrayAdapter<SearchModel> mAdapterSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +146,54 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment(this);
         setDrawerToggle();
         addFragment();
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", "");
+            searchAllProduct(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        autocomplete_all_medicine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                SearchModel selected = (SearchModel) arg0.getAdapter().getItem(arg2);
+                Toast.makeText(MainActivity.this,
+                        "Clicked " + arg2 + " title: " + selected.title,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //searchview_all_medicine.setFocusable(false);
+       /* autocomplete_all_medicine.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("name", s);
+                    searchAllProduct(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });*/
+
+
     }
 
     @Override
@@ -436,21 +498,20 @@ public class MainActivity extends AppCompatActivity
                                         String mrp = getAllProductList.getJSONObject(i).get("price").toString();
                                         int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
                                         String price = getAllProductList.getJSONObject(i).get("sale_price").toString();
-                                        if(price.isEmpty())
-                                        {
+                                        if (price.isEmpty()) {
                                             price = getAllProductList.getJSONObject(i).get("price").toString();
-                                        }else {
-                                             price = getAllProductList.getJSONObject(i).get("sale_price").toString();
+                                        } else {
+                                            price = getAllProductList.getJSONObject(i).get("sale_price").toString();
                                         }
-                                        float lcalculatePrice=qty*Float.parseFloat(price);
+                                        float lcalculatePrice = qty * Float.parseFloat(price);
 
 
-                                        AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel(image, name, short_description, mrp, ""+discount, price, "" + qty, sku, "" + id,lcalculatePrice);
+                                        AddToCartOptionDetailModel listModel = new AddToCartOptionDetailModel(image, name, short_description, mrp, "" + discount, price, "" + qty, sku, "" + id, lcalculatePrice);
                                         listModel.setImage(image);
                                         listModel.setMedicineName(name);
                                         listModel.setValue(short_description);
                                         listModel.setMrp(mrp);
-                                        listModel.setDiscount(""+discount);
+                                        listModel.setDiscount("" + discount);
                                         listModel.setPrice("" + price);
                                         listModel.setQty("" + qty);
                                         listModel.setSku(sku);
@@ -465,13 +526,67 @@ public class MainActivity extends AppCompatActivity
                                     rlayout_cart.setVisibility(View.GONE);
                                 } else {
                                     rlayout_cart.setVisibility(View.VISIBLE);
-                                    tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+                                    tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
                                 }
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(MainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+    private void searchAllProduct(final JSONObject productname) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(SEARCHPRODUCT)
+                .addJSONObjectBody(productname)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+
+                        // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+
+                            for (int i = 0; i < getAllProductList.length(); i++) {
+                                String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                String title = getAllProductList.getJSONObject(i).get("title").toString();
+
+                                SearchModel searchModel=new SearchModel(id,title);
+                                searchModel.setId(id);
+                                searchModel.setTitle(title);
+                                searchModelsArrayList.add(searchModel);
+
+                            }
+
+                            ArrayAdapter<SearchModel> adapter = new ArrayAdapter<SearchModel>(
+                                    mContext, android.R.layout.simple_list_item_1, searchModelsArrayList);
+                            autocomplete_all_medicine.setThreshold(1);
+                            autocomplete_all_medicine.setAdapter(adapter);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

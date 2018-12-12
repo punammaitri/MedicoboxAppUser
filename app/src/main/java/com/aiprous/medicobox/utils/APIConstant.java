@@ -27,6 +27,7 @@ public class APIConstant {
     public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/API/single_product.php?product_id=";
     //Updated API
     public static String UPDATEDGETCATEGORY="http://user8.itsindev.com/medibox/API/categories_new.php";
+    public static String SEARCHPRODUCT="http://user8.itsindev.com/medibox/API/filter-product.php";
 
 
     //Response Status Code

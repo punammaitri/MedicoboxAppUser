@@ -21,12 +21,12 @@ import butterknife.ButterKnife;
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.ViewHolder> {
 
 
-    private ArrayList<MainCategoryModel> mainCategoryArrayList;
+    private ArrayList<MainCategoryModel.SubCat> SubCategoryArrayList;
     private Context mContext;
 
-    public SubCategoryAdapter(Context mContext, ArrayList<MainCategoryModel> mainCategoryArrayList) {
+    public SubCategoryAdapter(Context mContext, ArrayList<MainCategoryModel.SubCat> SubCategoryArrayList) {
         this.mContext = mContext;
-        this.mainCategoryArrayList = mainCategoryArrayList;
+        this.SubCategoryArrayList = SubCategoryArrayList;
     }
 
     @NonNull
@@ -42,12 +42,12 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     //holder.tv_notification_text.setText(mNotificationArrayList.get(position).getNotfication_text());
 
-       holder.tv_sub_category_name.setText(mainCategoryArrayList.get(position).getCategoryName());
+       holder.tv_sub_category_name.setText(SubCategoryArrayList.get(position).getCategoryName());
 
     }
     @Override
     public int getItemCount() {
-        return (mainCategoryArrayList == null) ? 0 : mainCategoryArrayList.size();
+        return (SubCategoryArrayList == null) ? 0 : SubCategoryArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

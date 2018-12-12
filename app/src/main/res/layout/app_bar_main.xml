@@ -113,14 +113,13 @@
                         android:background="@drawable/searchbar"
                         android:padding="4dp" />
 
-                    <EditText
-                        android:id="@+id/edit_pickup_address"
+                    <AutoCompleteTextView
+                        android:id="@+id/autocomplete_all_medicine"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/height_5"
                         android:layout_toRightOf="@+id/searchPickup"
                         android:background="@null"
-                        android:cursorVisible="false"
                         android:hint="Search Medicine or Disposables or consumable.."
                         android:imeOptions="actionDone"
                         android:maxLines="1"
