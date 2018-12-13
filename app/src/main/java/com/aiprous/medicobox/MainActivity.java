@@ -40,6 +40,7 @@ import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
+import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.activity.SettingActivity;
 import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.NavAdaptor;
@@ -117,8 +118,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.txtEmail)
     TextView txtEmail;
     TrackGPS gps;
-    ArrayList<SearchModel> searchModelsArrayList=new ArrayList<>();
-    ArrayAdapter<SearchModel> mAdapterSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,52 +147,12 @@ public class MainActivity extends AppCompatActivity
         setDrawerToggle();
         addFragment();
 
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name", "");
-            searchAllProduct(jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        autocomplete_all_medicine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        autocomplete_all_medicine.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                SearchModel selected = (SearchModel) arg0.getAdapter().getItem(arg2);
-                Toast.makeText(MainActivity.this,
-                        "Clicked " + arg2 + " title: " + selected.title,
-                        Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                startActivity(new Intent(mContext,SearchViewActivity.class));
             }
         });
-
-        //searchview_all_medicine.setFocusable(false);
-       /* autocomplete_all_medicine.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("name", s);
-                    searchAllProduct(jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });*/
-
 
     }
 
@@ -533,60 +493,6 @@ public class MainActivity extends AppCompatActivity
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        CustomProgressDialog.getInstance().dismissDialog();
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        CustomProgressDialog.getInstance().dismissDialog();
-                        Toast.makeText(MainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                    }
-                });
-    }
-
-
-    private void searchAllProduct(final JSONObject productname) {
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.post(SEARCHPRODUCT)
-                .addJSONObjectBody(productname)
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-
-                        // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
-                        try {
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
-
-                            for (int i = 0; i < getAllProductList.length(); i++) {
-                                String id = getAllProductList.getJSONObject(i).get("id").toString();
-                                String title = getAllProductList.getJSONObject(i).get("title").toString();
-
-                                SearchModel searchModel=new SearchModel(id,title);
-                                searchModel.setId(id);
-                                searchModel.setTitle(title);
-                                searchModelsArrayList.add(searchModel);
-
-                            }
-
-                            ArrayAdapter<SearchModel> adapter = new ArrayAdapter<SearchModel>(
-                                    mContext, android.R.layout.simple_list_item_1, searchModelsArrayList);
-                            autocomplete_all_medicine.setThreshold(1);
-                            autocomplete_all_medicine.setAdapter(adapter);
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

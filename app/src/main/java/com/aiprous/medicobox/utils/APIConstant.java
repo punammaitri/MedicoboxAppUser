@@ -29,6 +29,14 @@ public class APIConstant {
     public static String UPDATEDGETCATEGORY="http://user8.itsindev.com/medibox/API/categories_new.php";
     public static String SEARCHPRODUCT="http://user8.itsindev.com/medibox/API/filter-product.php";
 
+    //login with otp
+    public static String SIGN_IN_WITH_OTP_VERIFY_MOBILE_NUMBER="http://user8.itsindev.com/medibox/API/otp_login.php";
+    public static String SIGN_IN_WITH_OTP_VERIFY_OTP="http://user8.itsindev.com/medibox/API/verify-login-otp.php";
+
+    //forgot password
+    public static String FORGOT_PASSWORD_VERIFY_MOBILE_NUMBER="http://user8.itsindev.com/medibox/API/otp-fogot-password.php";
+    public static String FORGOT_PASSWORD_VERIFY_OTP="http://user8.itsindev.com/medibox/API/verify-forgot-password-otp.php";
+    public static String SET_NEW_PASSWORD="http://user8.itsindev.com/medibox/API/set-new-password.php";
 
     //Response Status Code
     public static final int SUCCESS_CODE = 200;

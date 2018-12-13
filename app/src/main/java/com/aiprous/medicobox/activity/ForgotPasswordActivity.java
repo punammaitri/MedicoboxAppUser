@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.CONFIRMKEY;
+import static com.aiprous.medicobox.utils.APIConstant.FORGOT_PASSWORD_VERIFY_OTP;
+import static com.aiprous.medicobox.utils.APIConstant.SET_NEW_PASSWORD;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
@@ -34,11 +36,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @BindView(R.id.btn_set_password)
     Button btn_set_password;
     CustomProgressDialog mAlert;
-    @BindView(R.id.edt_verification_code)
-    EditText edtVerificationCode;
-    @BindView(R.id.edt_new_password)
-    EditText edtNewPassword;
+    @BindView(R.id.edt_password)
+    EditText edt_password;
+    @BindView(R.id.edt_confirm_password)
+    EditText edt_confirm_password;
     private Context mContext = this;
+    private String mMobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,22 +57,24 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         baseActivity.changeStatusBarColor(this);
         mAlert = CustomProgressDialog.getInstance();
 
-        //Add Json Object
-        JSONObject jsonObject = new JSONObject();
+        if (getIntent().getStringExtra("MobileNumber") != null) {
+            mMobileNumber = getIntent().getStringExtra("MobileNumber");
+        }
+
+        //Add parameters to json for confirmation Key
+        JSONObject jsonObjectconfirmationKey = new JSONObject();
         try {
-            jsonObject.put("confirmationKey", "1");
+            jsonObjectconfirmationKey.put("confirmationKey", "1");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        if (!isNetworkAvailable(this)) {
-            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-        }else {
-            AttemptToConfirmKey(jsonObject);
-        }
+
+
+
     }
 
-    private void AttemptToConfirmKey(JSONObject jsonObject) {
+   /* private void AttemptToConfirmKey(JSONObject jsonObject) {
 
         AndroidNetworking.post(CONFIRMKEY)
                 .addJSONObjectBody(jsonObject) // posting json
@@ -93,22 +98,91 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     }
                 });
     }
-
+*/
 
     @OnClick(R.id.btn_set_password)
     public void onClickSetPassword() {
 
-        String lVerification_code = edtVerificationCode.getText().toString();
-        String lNew_Password = edtNewPassword.getText().toString();
+        String lPassword = edt_password.getText().toString();
+        String lConfirm_Password = edt_confirm_password.getText().toString();
 
-        if (lVerification_code.length() == 0) {
-            edtVerificationCode.setError("Please enter verification code");
-        } else if (lNew_Password.length() == 0) {
-            edtNewPassword.setError("Please enter new password");
-        } else {
-            startActivity(new Intent(this, LoginActivity.class));
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-            finish();
+        if (lPassword.length() == 0) {
+            edt_password.setError("Please New Password");
+        } else if (lConfirm_Password.length() == 0) {
+            edt_confirm_password.setError("Please confirm password");
+        }else if(!lPassword.equals(lConfirm_Password))
+        {
+            Toast.makeText(mContext, "Password mismatch", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //Add parameters to json for set new password
+            JSONObject jsonSetNewPassword = new JSONObject();
+            try {
+                jsonSetNewPassword.put("mobile", mMobileNumber);
+                jsonSetNewPassword.put("password",lPassword );
+                jsonSetNewPassword.put("confirm_password",lConfirm_Password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (!isNetworkAvailable(this)) {
+                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+            }else {
+                //AttemptToConfirmKey(jsonObject);
+                setNewPassword(jsonSetNewPassword);
+            }
+
+
         }
     }
+
+
+    private void setNewPassword(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
+        AndroidNetworking.post(SET_NEW_PASSWORD)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response.toString());
+                            JSONObject responseJSONObject=jsonResponse.getJSONObject("response");
+                            String status=responseJSONObject.get("status").toString();
+                            String message=responseJSONObject.get("message").toString();
+
+                            if(status.equalsIgnoreCase("success"))
+                            {
+                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(mContext, LoginActivity.class));
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                finish();
+                            }else {
+                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                            /*startActivity(new Intent(MobileNumberActivity.this, ForgotPasswordActivity.class));
+                            finish();*/
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+
 }

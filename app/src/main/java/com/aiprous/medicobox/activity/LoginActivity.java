@@ -338,7 +338,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.tv_forgot_password)
     public void onClickPassword() {
-        startActivity(new Intent(this, SetPasswordActivity.class));
+        startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag","forgotpassword"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
@@ -352,7 +352,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.tv_sign_in_withotp)
     public void onClickSignInWithOtp() {
-        startActivity(new Intent(this, OTPActivity.class));
+       // startActivity(new Intent(this, OTPActivity.class));
+        startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag","SignWithOTP"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
@@ -454,10 +455,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             String getWebsiteId = jsonObject.get("website_id").toString();
                             String getMobile = jsonObject.get("mobile").toString();
 
+                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobile, getEmail, getStoreId);
+                            Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                     .putExtra("email", "" + getEmail));
                             overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobile, getEmail, getStoreId);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

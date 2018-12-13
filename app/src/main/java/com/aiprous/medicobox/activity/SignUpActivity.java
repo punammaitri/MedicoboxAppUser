@@ -19,6 +19,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -93,12 +94,12 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (!isValidEmailId(edtEmail)) {
             edtEmail.setError("Invalid email address");
         } else if (!passwordValidation(mContext, lPass, edtPassword)) {
-            Toast.makeText(mContext, "Password contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Password should contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_SHORT).show();
         } else if (!lPass.equals(lConfirm_password)) {
             Toast.makeText(mContext, "Password mismatch", Toast.LENGTH_SHORT).show();
         } else {
             try {
-                JSONObject objCustomer = new JSONObject();
+              /*  JSONObject objCustomer = new JSONObject();
                 objCustomer.put("email", lEmail);
                 objCustomer.put("firstname", lFirstname);
                 objCustomer.put("lastname", lLastname);
@@ -109,12 +110,37 @@ public class SignUpActivity extends AppCompatActivity {
                 jsonObject.put("customer", objCustomer);
                 jsonObject.put("password", lPass);
                 jsonObject.put("mobile", lMobile);
+*/
+
+                //Add Json Object
+                JSONObject jsonObjectAttribute = new JSONObject();
+                jsonObjectAttribute.put("attributeCode", "mobile_number");
+                jsonObjectAttribute.put("value", lMobile);
+
+
+                JSONArray jsonArrayAttribute = new JSONArray();
+                jsonArrayAttribute.put(jsonObjectAttribute);
+
+
+                JSONObject objCustomer = new JSONObject();
+                objCustomer.put("email", lEmail);
+                objCustomer.put("firstname", lFirstname);
+                objCustomer.put("lastname", lLastname);
+                objCustomer.put("storeId", 1);
+                objCustomer.put("customAttributes",jsonArrayAttribute);
+
+
+                JSONObject jsonObjectReg = new JSONObject();
+
+                jsonObjectReg.put("customer",objCustomer);
+                jsonObjectReg.put("password",lPass);
+
 
                 if (!isNetworkAvailable(this)) {
                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
                 } else {
                     CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-                    AttemptToRegister(jsonObject);
+                    AttemptToRegister(jsonObjectReg);
                 }
 
             } catch (JSONException e) {
