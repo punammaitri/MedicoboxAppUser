@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment {
         this.mainActivity = mainActivity;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
