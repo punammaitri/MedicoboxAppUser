@@ -88,7 +88,7 @@
 
 
                 <Button
-                    android:id="@+id/btn_order_checkout"
+                    android:id="@+id/btn_share_wishlist"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:fontFamily="@font/open_sans_regular"
@@ -99,7 +99,7 @@
                     android:paddingLeft="@dimen/height_5"
                     android:paddingRight="@dimen/height_5"
                     android:singleLine="true"
-                    android:text="@string/order_checkout"
+                    android:text="Share Wishlist"
                     android:textAllCaps="true"
                     android:textSize="12dp"
                     android:textColor="@android:color/white" />

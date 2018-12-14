@@ -109,17 +109,18 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         popup.setBackgroundDrawable(new ColorDrawable());
         popup.showAtLocation(popup_view, Gravity.TOP | Gravity.LEFT, r.right, r.bottom);
 
-        LinearLayout mLinearEdit = popup_view.findViewById(R.id.linearEdit);
-        LinearLayout mLinearAdd = popup_view.findViewById(R.id.linearAdd);
+        LinearLayout mlinearMoveAllToWishlist = popup_view.findViewById(R.id.linearMoveAllToWishlist);
+        LinearLayout mlinearDeleteWishlist = popup_view.findViewById(R.id.linearDeleteWishlist);
 
-        mLinearEdit.setOnClickListener(new View.OnClickListener() {
+        mlinearMoveAllToWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popup.dismiss();
             }
         });
 
-        mLinearAdd.setOnClickListener(new View.OnClickListener() {
+
+        mlinearDeleteWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mContext.startActivity(new Intent(mContext,InstaProductDetailActivity.class));
@@ -159,8 +160,8 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         TextView tvMedicineType;
         @BindView(R.id.btn_add_to_cart)
         Button btnAddToCart;
-        @BindView(R.id.btn_order_checkout)
-        Button btnOrderCheckout;
+        @BindView(R.id.btn_share_wishlist)
+        Button btn_share_wishlist;
         @BindView(R.id.list)
         RecyclerView list;
         @BindView(R.id.relOptionDots)

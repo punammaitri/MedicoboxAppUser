@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     LinearLayout fb_login_layout;
     LinearLayout goglayout;
     CustomProgressDialog mAlert;
-    private String lEmail;
+    private String lEmailMobile;
     private String lPass;
     private Context mContext = this;
 
@@ -366,29 +366,54 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @OnClick(R.id.btn_signup)
     public void onViewClicked() {
 
-        lEmail = edtMobileEmail.getText().toString().trim();
+        lEmailMobile = edtMobileEmail.getText().toString().trim();
         lPass = edtPassword.getText().toString().trim();
 
-        if (isValidEmailId(edtMobileEmail) && lPass.length() > 0) {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("username", lEmail);
-                jsonObject.put("password", lPass);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
-            if (!isNetworkAvailable(this)) {
-                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-            } else {
-                CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-                AttemptLogin(jsonObject);
-            }
-
-        } else if (lEmail.length() == 0) {
+        if (lEmailMobile.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
             showToast(this, getResources().getString(R.string.error_pass));
+        }else  {
+            if(lEmailMobile.toString().matches("[a-zA-Z ]+")) {
+                if (!isValidEmailId(edtMobileEmail)){
+                    showToast(this, "Please enter valid email id");
+                } else {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("username", lEmailMobile);
+                        jsonObject.put("password", lPass);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (!isNetworkAvailable(this)) {
+                        CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                    } else {
+                        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                        AttemptLogin(jsonObject);
+                    }
+                }
+            }else {
+                 if(edtMobileEmail.length() <= 9) {
+                    showToast(this, "Mobile number must be  10 digit");
+                }else {
+                     JSONObject jsonObject = new JSONObject();
+                     try {
+                         jsonObject.put("username", lEmailMobile);
+                         jsonObject.put("password", lPass);
+                     } catch (JSONException e) {
+                         e.printStackTrace();
+                     }
+
+                     if (!isNetworkAvailable(this)) {
+                         CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                     } else {
+                         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                         AttemptLogin(jsonObject);
+                     }
+                 }
+            }
         }
     }
 

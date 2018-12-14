@@ -39,7 +39,9 @@ import android.widget.Toast;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
+import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.NotificationActivity;
+import com.aiprous.medicobox.activity.OrderDetailsActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.activity.SettingActivity;
 import com.aiprous.medicobox.adapter.CartAdapter;
@@ -47,6 +49,7 @@ import com.aiprous.medicobox.adapter.NavAdaptor;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.fragment.HomeFragment;
+import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.ListModel;
@@ -252,8 +255,8 @@ public class MainActivity extends AppCompatActivity
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
-        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_cart))) {
-            startActivity(new Intent(this, CartActivity.class));
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_wishlist))) {
+            startActivity(new Intent(this, InstaAddNewListActivity.class));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
@@ -272,6 +275,11 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             return;
+        }else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
+            startActivity(new Intent(mContext, MyOrdersActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
         }
     }
 
@@ -284,7 +292,7 @@ public class MainActivity extends AppCompatActivity
                 mContext.getResources().getString(R.string.txt_home),
                 mContext.getResources().getString(R.string.txt_orders),
                 mContext.getResources().getString(R.string.txt_account),
-                mContext.getResources().getString(R.string.txt_cart),
+                mContext.getResources().getString(R.string.txt_wishlist),
                 mContext.getResources().getString(R.string.txt_notification),
                 mContext.getResources().getString(R.string.txt_settings),
                 mContext.getResources().getString(R.string.txt_logout)};

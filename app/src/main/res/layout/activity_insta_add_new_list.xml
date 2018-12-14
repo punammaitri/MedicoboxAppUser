@@ -15,7 +15,6 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/rlayout_list_toolbar"
-        android:layout_above="@+id/btn_insta_list"
         android:layout_height="match_parent">
 
         <RelativeLayout
@@ -32,7 +31,7 @@
                 android:id="@+id/txtInstaOrder"
                 android:fontFamily="@font/open_sans_regular"
                 android:layout_marginLeft="@dimen/height_8"
-                android:text="Insta Orders"
+                android:text="wishlist"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
@@ -49,7 +48,7 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <Button
+  <!--  <Button
         android:id="@+id/btn_insta_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +63,6 @@
         android:textSize="@dimen/height_16"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"/>-->
 
 </RelativeLayout>

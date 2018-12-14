@@ -80,13 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_gravity="center"
+        android:visibility="gone"
         android:background="@color/colorfaintblack" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvSubMenuNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:paddingBottom="@dimen/height_4"
-        android:visibility="gone" />
+
 </LinearLayout>

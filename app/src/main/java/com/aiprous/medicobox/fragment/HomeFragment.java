@@ -244,7 +244,8 @@ public class HomeFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_medicines:
-                startActivity(new Intent(getActivity(), ListActivity.class));
+                //startActivity(new Intent(getActivity(), ListActivity.class));
+                startActivity(new Intent(getActivity(),MainCategoryActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_lab_tests:
@@ -254,7 +255,7 @@ public class HomeFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_econsultation:
-                startActivity(new Intent(getActivity(),MainCategoryActivity.class));
+                //startActivity(new Intent(getActivity(),MainCategoryActivity.class));
                 break;
         }
     }

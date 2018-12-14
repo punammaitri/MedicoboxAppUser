@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/height_3"
     android:layout_marginBottom="@dimen/height_5"
-    app:cardCornerRadius="@dimen/height_8"
-    app:cardElevation="@dimen/height_4">
+    app:cardCornerRadius="@dimen/height_8">
 
 
     <LinearLayout
@@ -14,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/height_10"
+        android:padding="@dimen/height_5"
         android:weightSum="1">
 
 
@@ -37,6 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:text="abc"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/colorblack"
             android:layout_gravity="center"/>
 
         <RelativeLayout

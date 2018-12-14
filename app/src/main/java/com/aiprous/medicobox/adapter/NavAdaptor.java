@@ -50,57 +50,30 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        if (position == 1) {
-            holder.tv_arrow.setVisibility(View.VISIBLE);
-            String title[];
-            int icon[];
 
-            title = new String[]{
-                    mContext.getResources().getString(R.string.txt_medicines),
-                    mContext.getResources().getString(R.string.txt_lab_test)};
-
-            icon = new int[]{
-                    R.drawable.capsules,
-                    R.drawable.syringe};
-
-
-            holder.rvSubMenuNavigation.setLayoutManager(new LinearLayoutManager(mContext));
-            holder.rvSubMenuNavigation.setAdapter(new NavSubItemAdaptor(mContext, this, title, icon));
-
-        } else {
-            holder.tv_arrow.setVisibility(View.INVISIBLE);
-        }
 
 
         holder.tvForMenuItem.setText(mNavTitles[holder.getAdapterPosition()]);
         holder.ivForMenuItem.setImageResource(mIcons[position]);
+
         holder.llForNavItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (position == 1) {
-
-                    if (holder.rvSubMenuNavigation.getVisibility() != View.GONE) {
-                        holder.rvSubMenuNavigation.setVisibility(View.GONE);
-                    } else {
-                        holder.rvSubMenuNavigation.setVisibility(View.VISIBLE);
-                    }
-                }
                 navItemClicked.navItemClicked(mNavTitles[holder.getAdapterPosition()], holder.getAdapterPosition());
             }
         });
-//        if (position == 3) {
-//            if (EhealthCardApplication.getNotificationCount() != 0) {
-//                holder.cartBadge.setText(String.valueOf(EhealthCardApplication.getNotificationCount()));
-//                if (holder.cartBadge.getVisibility() != View.VISIBLE) {
-//                    holder.cartBadge.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        }
+
         holder.ivForMenuItem.setBackgroundColor(Color.TRANSPARENT);
 
-        if (position == 6) {
-            holder.viewForDivider.setVisibility(View.GONE);
-        }
+
+       if(position==3)
+       {
+           holder.viewForDivider.setVisibility(View.VISIBLE);
+       }else {
+           holder.viewForDivider.setVisibility(View.GONE);
+       }
+
+
     }
 
     @Override
@@ -128,10 +101,6 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
         // TextView cartBadge;
         // @BindView(R.id.cardViewMain)
         // CardView cardView;
-
-
-        @BindView(R.id.rvSubMenuNavigation)
-        RecyclerView rvSubMenuNavigation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

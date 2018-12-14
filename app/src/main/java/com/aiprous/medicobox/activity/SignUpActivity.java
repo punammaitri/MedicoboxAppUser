@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (lFirstname.length() <= 2) {
             edt_first_name.setError("Firstname must be greater than 2 character");
         } else if (lMobile.length() <= 9) {
-            edtMobile.setError("Mobile number must be greater 10 digit");
+            edtMobile.setError("Mobile number must be  10 digit");
         } else if (!isValidEmailId(edtEmail)) {
             edtEmail.setError("Invalid email address");
         } else if (!passwordValidation(mContext, lPass, edtPassword)) {

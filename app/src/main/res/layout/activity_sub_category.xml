@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.SubCategoryActivity"
     android:orientation="vertical"
-    >
+    android:background="@color/color_gray_bg">
 
     <include
         android:id="@+id/rlayout_category_toolbar"
@@ -20,12 +20,14 @@
         android:text="SHOP BY CATEGORY"
         android:textColor="@color/colorblack"
         android:textStyle="bold"
-        android:padding="@dimen/height_10"/>
+        android:fontFamily="@font/open_sans_regular"
+        android:padding="@dimen/height_10"
+        android:layout_marginLeft="@dimen/height_10"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_subcategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/height_10"/>
+        android:layout_margin="@dimen/height_3"/>
 
 </LinearLayout>

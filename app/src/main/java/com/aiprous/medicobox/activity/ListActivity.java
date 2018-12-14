@@ -59,6 +59,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ListAdapter mlistAdapter;
     CustomProgressDialog mAlert;
+    private String mCategoryId;
 
 
     @Override
@@ -128,11 +129,14 @@ public class ListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (getIntent().getStringExtra("subcategoryId") != null) {
+            mCategoryId=getIntent().getStringExtra("subcategoryId");
+        }
 
         //Add Json Object
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("category_id", "38");
+            jsonObject.put("category_id", mCategoryId);
         } catch (JSONException e) {
             e.printStackTrace();
         }

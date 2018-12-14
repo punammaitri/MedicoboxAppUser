@@ -94,10 +94,10 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-    @OnClick(R.id.btn_insta_list)
+   /* @OnClick(R.id.btn_insta_list)
     public void onViewInstaListClicked() {
         ShowNewInstaListAlert(this);
-    }
+    }*/
 
     private void ShowNewInstaListAlert(final InstaAddNewListActivity mActivityContext) {
         dialog = new Dialog(mActivityContext, R.style.Dialog);

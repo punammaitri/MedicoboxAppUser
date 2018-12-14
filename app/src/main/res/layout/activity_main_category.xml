@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainCategoryActivity">
+    tools:context=".activity.MainCategoryActivity"
+    android:background="@color/color_gray_bg">
 
 
     <include
@@ -34,13 +35,16 @@
             android:gravity="center|left"
             android:text="SHOP BY CATEGORY"
             android:textColor="@color/colorblack"
-            android:textStyle="bold"/>
+            android:fontFamily="@font/open_sans_regular"
+            android:textStyle="bold"
+            android:layout_marginLeft="3dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_main_category"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.6"/>
+            android:layout_weight="0.6"
+            android:layout_margin="@dimen/height_3"/>
 
 
     </LinearLayout>

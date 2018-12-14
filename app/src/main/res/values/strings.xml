@@ -18,7 +18,7 @@
     <string name="txt_home">Home</string>
     <string name="txt_orders">Orders</string>
     <string name="txt_account">Account</string>
-    <string name="txt_cart">Cart</string>
+    <string name="txt_wishlist">Wishlist</string>
     <string name="txt_notification">Notifications</string>
     <string name="txt_settings">Settings</string>
     <string name="txt_logout">Logout</string>
@@ -51,7 +51,7 @@
     <string name="facebook_app_id">250490452280914</string>
     <string name="location_service">Location Service is OFF</string>
     <string name="location_service_message">Can\'t determine your location.\nYour current location not determine</string>
-    <string name="error_email">Please provide Email.</string>
+    <string name="error_email">Please enter emial or mobile number</string>
     <string name="error_pass">Please provide password.</string>
 
 
