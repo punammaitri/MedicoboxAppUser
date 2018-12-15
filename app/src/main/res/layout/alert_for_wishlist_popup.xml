@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/height_8"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/height_5"
+        app:cardElevation="@dimen/height_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/height_6"
+                android:padding="@dimen/height_5">
+
+                <ImageView
+                    android:id="@+id/imgCancel"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/height_15"
+                    android:background="@drawable/cross_black" />
+
+            </RelativeLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_5"
+                android:layout_marginRight="@dimen/height_5"
+                android:layout_marginBottom="@dimen/height_5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_30"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center"
+                        android:text="Add to Wish List"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorblack"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/height_15"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:layout_marginRight="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center|start"
+                        android:text="Select list below to add items."
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorred"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_all_wishlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/height_15"
+                        android:layout_marginTop="@dimen/height_15"
+                        android:layout_marginRight="@dimen/height_15"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.2"
+                            android:background="@color/colorGray" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:gravity="center"
+                            android:text="OR"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.2"
+                            android:background="@color/colorGray" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtTabSubName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/height_15"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:layout_marginRight="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:gravity="center|start"
+                        android:text="Add a list below and select."
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorred"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_40"
+                        android:layout_marginLeft="@dimen/height_15"
+                        android:layout_marginTop="@dimen/height_15"
+                        android:layout_marginRight="@dimen/height_15"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+
+                        <EditText
+                            android:id="@+id/edt_wishlist_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:hint="Enter Wishlist Name"
+                            android:inputType="textEmailAddress"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <Button
+                            android:id="@+id/btnAdd"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            android:background="@color/colorPrimary"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Add"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/height_16"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/height_25"
+                        android:layout_marginBottom="@dimen/height_25"
+                        android:background="@color/colorPrimary"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:paddingLeft="@dimen/height_50"
+                        android:paddingRight="@dimen/height_50"
+                        android:text="Save"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/height_16"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

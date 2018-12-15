@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,8 +17,23 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.adapter.GetWishListAdapter;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.GetWishListModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,23 +41,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_WISHLIST;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
-public class InstaAddNewListActivity extends AppCompatActivity {
 
-    // @BindView(R.id.rc_medicine_list)
+public class InstaAddNewListActivity extends AppCompatActivity implements InstaAddNewListAdapter.DeleteInterface {
+
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
-    RecyclerView rc_medicine_list;
+    public RecyclerView rc_medicine_list;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-    ArrayList<ListModel> mlistModelsArray = new ArrayList<>();
-    ArrayList<SubListModel> mSubListModelsArray = new ArrayList<>();
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     private Dialog dialog;
     private TextView txtSave, txtCancel;
+    ArrayList<GetWishListModel> mGetWishListModels = new ArrayList<GetWishListModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,22 +77,6 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         baseActivity.changeStatusBarColor(this);
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
-        //add static data into List array list
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "Diabetes", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "Monthly", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.ic_menu_manage, "Priyanka", "Bottle of 60 tablet", "150", "30%", "135"));
-
-        //add static data into Sub List array list
-        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Tab Evion 400mg", "1"));
-        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Inj Emcet 4mg", "2"));
-        mSubListModelsArray.add(new SubListModel(R.drawable.ic_menu_manage, "Otrivin Spray", "1"));
-
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new InstaAddNewListAdapter(mContext, mlistModelsArray, mSubListModelsArray));
-
-
     }
 
     @Override
@@ -86,6 +87,13 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
+
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CallGetAllWishListAPI();
+        }
+
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -94,10 +102,6 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-   /* @OnClick(R.id.btn_insta_list)
-    public void onViewInstaListClicked() {
-        ShowNewInstaListAlert(this);
-    }*/
 
     private void ShowNewInstaListAlert(final InstaAddNewListActivity mActivityContext) {
         dialog = new Dialog(mActivityContext, R.style.Dialog);
@@ -135,105 +139,68 @@ public class InstaAddNewListActivity extends AppCompatActivity {
         finish();
     }
 
-    public class ListModel {
-        int image;
-        String medicineName;
-        String value;
-        String mrp;
-        String discount;
-        String price;
+    private void CallGetAllWishListAPI() {
+        if (!isNetworkAvailable(mContext)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
-        public ListModel(int image, String medicineName, String value, String mrp, String discount, String price) {
-            this.image = image;
-            this.medicineName = medicineName;
-            this.value = value;
-            this.mrp = mrp;
-            this.discount = discount;
-            this.price = price;
-        }
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("user_id", MedicoboxApp.onGetId());
+                Log.e("url", "" + jsonObject.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        public int getImage() {
-            return image;
-        }
+            AndroidNetworking.post(GET_ALL_WISHLIST)
+                    .addJSONObjectBody(jsonObject) // posting json
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
 
-        public void setImage(int image) {
-            this.image = image;
-        }
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonArray asJsonArray = getAllResponse.getAsJsonArray("response");
 
-        public String getMedicineName() {
-            return medicineName;
-        }
+                            if (asJsonArray != null) {
+                                mGetWishListModels.clear();
+                                for (int i = 0; i < asJsonArray.size(); i++) {
+                                    String wishlist_name_id = ((JsonObject) asJsonArray.get(i)).get("wishlist_name_id").getAsString();
+                                    String wishlist_name = ((JsonObject) asJsonArray.get(i)).get("wishlist_name").getAsString();
+                                    JsonArray items = ((JsonObject) asJsonArray.get(i)).get("items").getAsJsonArray();
 
-        public void setMedicineName(String medicineName) {
-            this.medicineName = medicineName;
-        }
+                                    GetWishListModel getWishListModel = new GetWishListModel(wishlist_name_id, wishlist_name, items);
+                                    getWishListModel.setWishlist_name_id(wishlist_name_id);
+                                    getWishListModel.setWishlist_name(wishlist_name);
+                                    getWishListModel.setItems(items);
+                                    mGetWishListModels.add(getWishListModel);
+                                }
+                            }
 
-        public String getValue() {
-            return value;
-        }
+                            //set all wishlist adapter
+                            layoutManager = new LinearLayoutManager(mContext);
+                            rc_medicine_list.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+                            rc_medicine_list.setHasFixedSize(true);
+                            rc_medicine_list.setAdapter(new InstaAddNewListAdapter(InstaAddNewListActivity.this, mGetWishListModels));
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        }
 
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getMrp() {
-            return mrp;
-        }
-
-        public void setMrp(String mrp) {
-            this.mrp = mrp;
-        }
-
-        public String getDiscount() {
-            return discount;
-        }
-
-        public void setDiscount(String discount) {
-            this.discount = discount;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
+                        @Override
+                        public void onError(ANError anError) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    });
         }
     }
 
-    public class SubListModel {
-        int image;
-        String medicineName;
-        String price;
-
-        public SubListModel(int image, String medicineName, String price) {
-            this.image = image;
-            this.medicineName = medicineName;
-            this.price = price;
-        }
-
-        public int getImage() {
-            return image;
-        }
-
-        public void setImage(int image) {
-            this.image = image;
-        }
-
-        public String getMedicineName() {
-            return medicineName;
-        }
-
-        public void setMedicineName(String medicineName) {
-            this.medicineName = medicineName;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
+    @Override
+    public void Delete() {
+       CallGetAllWishListAPI();
     }
 }

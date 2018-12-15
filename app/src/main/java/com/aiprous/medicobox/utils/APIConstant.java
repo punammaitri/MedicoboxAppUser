@@ -23,20 +23,26 @@ public class APIConstant {
 
     public static String DELETECARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String EDITCARTITEM = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
-  //  public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
+    //  public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
     public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/API/single_product.php?product_id=";
     //Updated API
-    public static String UPDATEDGETCATEGORY="http://user8.itsindev.com/medibox/API/categories_new.php";
-    public static String SEARCHPRODUCT="http://user8.itsindev.com/medibox/API/filter-product.php";
+    public static String UPDATEDGETCATEGORY = "http://user8.itsindev.com/medibox/API/categories_new.php";
+    public static String SEARCHPRODUCT = "http://user8.itsindev.com/medibox/API/filter-product.php";
 
     //login with otp
-    public static String SIGN_IN_WITH_OTP_VERIFY_MOBILE_NUMBER="http://user8.itsindev.com/medibox/API/otp_login.php";
-    public static String SIGN_IN_WITH_OTP_VERIFY_OTP="http://user8.itsindev.com/medibox/API/verify-login-otp.php";
+    public static String SIGN_IN_WITH_OTP_VERIFY_MOBILE_NUMBER = "http://user8.itsindev.com/medibox/API/otp_login.php";
+    public static String SIGN_IN_WITH_OTP_VERIFY_OTP = "http://user8.itsindev.com/medibox/API/verify-login-otp.php";
 
     //forgot password
-    public static String FORGOT_PASSWORD_VERIFY_MOBILE_NUMBER="http://user8.itsindev.com/medibox/API/otp-fogot-password.php";
-    public static String FORGOT_PASSWORD_VERIFY_OTP="http://user8.itsindev.com/medibox/API/verify-forgot-password-otp.php";
-    public static String SET_NEW_PASSWORD="http://user8.itsindev.com/medibox/API/set-new-password.php";
+    public static String FORGOT_PASSWORD_VERIFY_MOBILE_NUMBER = "http://user8.itsindev.com/medibox/API/otp-fogot-password.php";
+    public static String FORGOT_PASSWORD_VERIFY_OTP = "http://user8.itsindev.com/medibox/API/verify-forgot-password-otp.php";
+    public static String SET_NEW_PASSWORD = "http://user8.itsindev.com/medibox/API/set-new-password.php";
+
+    //wishlist api
+    public static String CREATE_WISHLIST = "http://user8.itsindev.com/medibox/API/create_wishlist.php";
+    public static String GET_ALL_WISHLIST = "http://user8.itsindev.com/medibox/API/get_user_wishlist_products.php";
+    public static String ADD_ITEM_WISHLIST = "http://user8.itsindev.com/medibox/API/add_item_wishlist.php";
+    public static String DELETE_WISHLIST = " http://user8.itsindev.com/medibox/API/delete_wishlist.php";
 
     //Response Status Code
     public static final int SUCCESS_CODE = 200;

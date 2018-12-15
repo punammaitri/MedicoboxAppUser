@@ -1,12 +1,12 @@
 package com.aiprous.medicobox.instaorder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,28 +17,42 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.application.MedicoboxApp;
+import com.aiprous.medicobox.model.GetWishListModel;
+import com.aiprous.medicobox.utils.APIConstant;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.aiprous.medicobox.utils.APIConstant.DELETE_WISHLIST;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewListAdapter.ViewHolder> {
 
-
-    private ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList;
-    private Context mContext;
-    private ArrayList<InstaAddNewListActivity.SubListModel> mSubListModelArray;
+    private ArrayList<GetWishListModel> mDataArrayList;
+    private InstaAddNewListActivity mContext;
     private PopupWindow window;
+    private DeleteInterface mDeleteWishList;
 
-    public InstaAddNewListAdapter(Context mContext, ArrayList<InstaAddNewListActivity.ListModel> mDataArrayList, ArrayList<InstaAddNewListActivity.SubListModel> mSubListModel) {
+    public InstaAddNewListAdapter(InstaAddNewListActivity mContext, ArrayList<GetWishListModel> mGetWishListModels) {
         this.mContext = mContext;
-        this.mDataArrayList = mDataArrayList;
-        this.mSubListModelArray = mSubListModel;
+        this.mDataArrayList = mGetWishListModels;
+        this.mDeleteWishList =mContext;
     }
 
     @NonNull
@@ -50,13 +64,17 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         //holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
-        holder.tvMedicineType.setText(mDataArrayList.get(position).getMedicineName());
+        holder.tvMedicineType.setText(mDataArrayList.get(position).getWishlist_name());
 
         holder.list.setLayoutManager(new LinearLayoutManager(mContext));
-        holder.list.setAdapter(new InstaProductSubListDetailAdapter(mContext, mSubListModelArray));
+
+        if (!(mDataArrayList.get(position).getItems().size() == 0)) {
+            holder.list.setAdapter(new InstaProductSubListDetailAdapter(mContext, mDataArrayList.get(position).getItems()));
+        }
+
 
         /*holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
@@ -95,12 +113,12 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowPopupWindow(view);
+                ShowPopupWindow(view, position);
             }
         });
     }
 
-    private void ShowPopupWindow(View view) {
+    private void ShowPopupWindow(View view, final int position) {
         Rect r = locateView(view);
         LayoutInflater lInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popup_view = lInflater.inflate(R.layout.popupwindow, null);
@@ -119,17 +137,67 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
             }
         });
 
-
         mlinearDeleteWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext,InstaProductDetailActivity.class));
-
-                popup.dismiss();
+                //mContext.startActivity(new Intent(mContext, InstaProductDetailActivity.class));
+                //popup.dismiss();
+                CallGetAllWishListAPI(mDataArrayList.get(position).getWishlist_name_id(), popup);
             }
         });
+    }
 
+    private void CallGetAllWishListAPI(String wishlistNameId, final PopupWindow popup) {
+        if (!isNetworkAvailable(mContext)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("user_id", MedicoboxApp.onGetId());
+                jsonObject.put("wishlist_name_id", "" + wishlistNameId);
+                Log.e("url", "" + jsonObject.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            AndroidNetworking.post(DELETE_WISHLIST)
+                    .addJSONObjectBody(jsonObject) // posting json
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsString(new StringRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            if (response.contains("{")) {
+                                // for removing braces
+                                CustomProgressDialog.getInstance().dismissDialog();
+                                String afterRemoveBrace = response.replace("{", "").replace("}", "");
+                                StringTokenizer getMessage = new StringTokenizer(afterRemoveBrace, ":");
+                                String msg = getMessage.nextToken();
+                                String error_msg = getMessage.nextToken();
+
+                                //replace double quote
+                                String lGetMesage = error_msg.replace("\"", "");
+                                Toast.makeText(mContext, "" + lGetMesage, Toast.LENGTH_SHORT).show();
+                                //Delete method to reload data
+                                mDeleteWishList.Delete();
+                            }
+                            popup.dismiss();
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    });
+        }
     }
 
     public static Rect locateView(View v) {
@@ -167,10 +235,13 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         @BindView(R.id.relOptionDots)
         RelativeLayout relOptionDots;
 
-
         ViewHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface DeleteInterface {
+        public void Delete();
     }
 }

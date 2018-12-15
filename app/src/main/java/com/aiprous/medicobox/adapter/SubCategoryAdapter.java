@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -68,7 +69,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         @BindView(R.id.tv_sub_category_name)
         TextView tv_sub_category_name;
         @BindView(R.id.llayout_subcategory)
-        TextView llayout_subcategory;
+        LinearLayout llayout_subcategory;
 
 
         ViewHolder(@NonNull View view) {

@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +63,6 @@ public class ListActivity extends AppCompatActivity {
     private ListAdapter mlistAdapter;
     CustomProgressDialog mAlert;
     private String mCategoryId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,7 +224,7 @@ public class ListActivity extends AppCompatActivity {
                                 layoutManager = new LinearLayoutManager(mContext);
                                 rc_medicine_list.setLayoutManager(new LinearLayoutManager(ListActivity.this, LinearLayoutManager.VERTICAL, false));
                                 rc_medicine_list.setHasFixedSize(true);
-                                rc_medicine_list.setAdapter(new ListAdapter(mContext, mListModelArray));
+                                rc_medicine_list.setAdapter(new ListAdapter(ListActivity.this, mListModelArray));
                             }
 
                         } catch (JSONException e) {
@@ -266,5 +268,4 @@ public class ListActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

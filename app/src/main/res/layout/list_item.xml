@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/height_3"
     android:layout_marginLeft="@dimen/height_5"
+    android:layout_marginTop="@dimen/height_3"
     android:layout_marginRight="@dimen/height_5"
     android:layout_marginBottom="@dimen/height_5"
+    android:background="@color/color_gray_bg"
     app:cardCornerRadius="@dimen/height_8"
-    app:cardElevation="@dimen/height_8"
-    android:background="@color/color_gray_bg">
+    app:cardElevation="@dimen/height_8">
 
 
     <LinearLayout
@@ -17,21 +17,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="1"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.18"
-            android:gravity="center"
-            android:layout_gravity="center">
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/img_medicine"
                 android:layout_width="@dimen/height_50"
                 android:layout_height="@dimen/height_50"
-                android:src="@drawable/bottle"/>
+                android:src="@drawable/bottle" />
 
 
         </RelativeLayout>
@@ -46,43 +46,47 @@
                 android:id="@+id/tv_medicine_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="abc"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="abc"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="wrap_content"
-                android:text="Bottle of 60 tablet"
-                />
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Bottle of 60 tablet" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tv_mrp"
                     android:layout_width="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
                     android:layout_height="wrap_content"
-                    android:text="MRP"/>
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="MRP" />
+
                 <TextView
                     android:id="@+id/tv_mrp_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rs151"
-                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginLeft="@dimen/height_5"
-                    android:layout_marginRight="@dimen/height_5"/>
+                    android:layout_marginRight="@dimen/height_5"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="Rs151" />
+
                 <TextView
                     android:id="@+id/tv_discount"
-                    android:fontFamily="@font/open_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="10%OFF"
-                    android:textColor="@color/colorred"/>
+                    android:textColor="@color/colorred" />
 
             </LinearLayout>
 
@@ -91,11 +95,11 @@
                 android:id="@+id/tv_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rs135"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="Rs135"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -108,9 +112,10 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/img_wishlist"
                 android:layout_width="@dimen/height_25"
                 android:layout_height="@dimen/height_25"
-                android:src="@drawable/heart_active"/>
+                android:src="@drawable/heart_inactive" />
 
             <RelativeLayout
                 android:id="@+id/rlayout_add"
@@ -120,14 +125,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="ADD"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorblack"
-                    android:gravity="bottom|center"
                     android:layout_marginBottom="@dimen/height_5"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:gravity="bottom|center"
+                    android:text="ADD"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    />
+                    android:textColor="@color/colorblack"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -179,7 +183,6 @@
 
             </RelativeLayout>
         </LinearLayout>
-
 
 
     </LinearLayout>

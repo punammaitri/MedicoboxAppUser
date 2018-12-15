@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-
-import java.util.ArrayList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,12 +23,12 @@ import butterknife.ButterKnife;
 
 public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<InstaProductSubListDetailAdapter.ViewHolder> {
 
-    private ArrayList<InstaAddNewListActivity.SubListModel> mSubListArray;
+    private JsonArray mSubListArray;
     private Context mContext;
     private Dialog dialog;
     private TextView txtOk;
 
-    public InstaProductSubListDetailAdapter(Context mContext, ArrayList<InstaAddNewListActivity.SubListModel> mDataArrayList) {
+    public InstaProductSubListDetailAdapter(Context mContext, JsonArray mDataArrayList) {
         this.mContext = mContext;
         this.mSubListArray = mDataArrayList;
     }
@@ -44,8 +44,14 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        holder.cb_tab_name.setText(mSubListArray.get(position).medicineName);
-        holder.tv_value.setText(mSubListArray.get(position).price);
+        JsonArray getItemData = mSubListArray.getAsJsonArray();
+
+        JsonObject jsonObject = (JsonObject) getItemData.get(position);
+        String name = jsonObject.get("name").getAsString();
+        String product_id = jsonObject.get("product_id").getAsString();
+
+        holder.cb_tab_name.setText(name);
+        holder.tv_value.setText("0");
 
         holder.img_Info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,9 +60,9 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
             }
         });
 
-        if(position==getItemCount()-1) {
+        if (position == getItemCount() - 1) {
             holder.view_sublist.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.view_sublist.setVisibility(View.VISIBLE);
         }
     }
