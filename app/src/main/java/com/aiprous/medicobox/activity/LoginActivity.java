@@ -440,7 +440,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 if (!isNetworkAvailable(LoginActivity.this)) {
                                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
                                 } else {
-                                    CallGetBearerTokenAPi(getResponse);
+                                    getUserInfo(getResponse);
                                 }
                             }
                         } catch (JSONException e) {
@@ -460,7 +460,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
-    private void CallGetBearerTokenAPi(final String bearerToken) {
+    private void getUserInfo(final String bearerToken) {
         AndroidNetworking.get(GETUSERINFO)
                 .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)

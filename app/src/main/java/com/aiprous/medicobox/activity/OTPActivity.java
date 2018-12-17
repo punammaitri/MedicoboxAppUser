@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -28,7 +29,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.FORGOT_PASSWORD_VERIFY_OTP;
+import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.SIGN_IN_WITH_OTP_VERIFY_OTP;
 
 
@@ -48,6 +52,7 @@ public class OTPActivity extends AppCompatActivity {
     private Context mContext=this;
     private String mMobileNumber;
     private String mFlag;
+    private String mToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,11 +178,14 @@ public class OTPActivity extends AppCompatActivity {
 
                             if(status.equalsIgnoreCase("success"))
                             {
-                                //need to send token to next screen
-                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                 mToken=responseJSONObject.get("response_token").toString();
+                                 //call get profile API
+                                getUserInfo(mToken);
+
+                               /* Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(mContext, MainActivity.class));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                                finish();
+                                finish();*/
                             }else {
                                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                             }
@@ -242,6 +250,51 @@ public class OTPActivity extends AppCompatActivity {
                             /*startActivity(new Intent(MobileNumberActivity.this, ForgotPasswordActivity.class));
                             finish();*/
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+    private void getUserInfo(final String bearerToken) {
+        AndroidNetworking.get(GETUSERINFO)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.getString("response"));
+                            String getId = jsonObject.get("id").toString();
+                            String getGroupId = jsonObject.get("group_id").toString();
+                            String getEmail = jsonObject.get("email").toString();
+                            String getFirstname = jsonObject.get("firstname").toString();
+                            String getLastname = jsonObject.get("lastname").toString();
+                            String getStoreId = jsonObject.get("store_id").toString();
+                            String getWebsiteId = jsonObject.get("website_id").toString();
+                            String getMobile = jsonObject.get("mobile").toString();
+
+                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobile, getEmail, getStoreId);
+                            Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(OTPActivity.this, MainActivity.class)
+                                    .putExtra("email", "" + getEmail));
+                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(OTPActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error",
+                                "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
