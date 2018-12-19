@@ -7,20 +7,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
+import static com.aiprous.medicobox.utils.APIConstant.USERORDER;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class MyOrdersActivity extends AppCompatActivity {
 
@@ -115,6 +134,50 @@ public class MyOrdersActivity extends AppCompatActivity {
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
+
+        //call my order API
+        if (!isNetworkAvailable(MyOrdersActivity.this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            getMyOrderAPI(MedicoboxApp.onGetAuthToken());
+        }
+    }
+
+    private void getMyOrderAPI(String bearerToken) {
+        AndroidNetworking.get(USERORDER)
+                .addHeaders(Authorization, BEARER + bearerToken)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                      /*  try {
+                            JSONObject jsonObject = new JSONObject(response.getString("response"));
+                            String getId = jsonObject.get("id").toString();
+                            String getGroupId = jsonObject.get("group_id").toString();
+                            String getEmail = jsonObject.get("email").toString();
+                            String getFirstname = jsonObject.get("firstname").toString();
+                            String getLastname = jsonObject.get("lastname").toString();
+                            String getStoreId = jsonObject.get("store_id").toString();
+                            String getWebsiteId = jsonObject.get("website_id").toString();
+                            String getMobile = jsonObject.get("mobile").toString();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }*/
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     @OnClick(R.id.rlayout_cart)

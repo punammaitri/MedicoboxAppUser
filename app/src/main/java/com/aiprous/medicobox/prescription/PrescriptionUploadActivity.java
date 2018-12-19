@@ -3,7 +3,6 @@ package com.aiprous.medicobox.prescription;
 import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -24,8 +23,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +35,17 @@ import android.widget.Toast;
 import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,6 +61,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.UPLOAD_PRESCRIPTION;
+
 public class PrescriptionUploadActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
@@ -63,6 +78,14 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     @BindView(R.id.img_valid_prescription)
     ImageView img_valid_prescription;
     ArrayList<ListModel> mlistModelsArray = new ArrayList<>();
+    @BindView(R.id.radioButtonYes)
+    RadioButton radioButtonYes;
+    @BindView(R.id.radioButtonNo)
+    RadioButton radioButtonNo;
+    @BindView(R.id.edt_patient_name)
+    EditText edtPatientName;
+    @BindView(R.id.edt_additional_comment)
+    EditText edtAdditionalComment;
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -106,6 +129,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
+        edtPatientName.setText(MedicoboxApp.onGetFirstName() + " " + MedicoboxApp.onGetLastName());
         //rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
         //check is device above lollipop
@@ -121,10 +145,8 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-        //set list adapter
-        setListAdapter();
     }
+
     private void setListAdapter() {
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -142,25 +164,8 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.rlayout_cart)
-    public void ShowCart() {
-        startActivity(new Intent(this, CartActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
-
-    @OnClick(R.id.rlayout_back_button)
-    public void BackPressSDescription() {
-        finish();
-    }
-
-    @OnClick(R.id.btnContinue)
-    public void ButtonContinue() {
-        startActivity(new Intent(this, PrescriptionUploadOptionActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
-    @OnClick({R.id.cardview_take_photo, R.id.cardview_gallery})
+    @OnClick({R.id.cardview_take_photo, R.id.cardview_gallery, R.id.radioButtonYes, R.id.radioButtonNo,
+            R.id.rlayout_back_button, R.id.btnContinue, R.id.rlayout_cart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cardview_take_photo:
@@ -169,18 +174,35 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
             case R.id.cardview_gallery:
                 selectImage("open_gallery");
                 break;
+            case R.id.radioButtonYes:
+                edtPatientName.setText(MedicoboxApp.onGetFirstName() + " " + MedicoboxApp.onGetLastName());
+                break;
+            case R.id.radioButtonNo:
+                edtPatientName.setText("");
+                break;
+            case R.id.rlayout_back_button:
+                finish();
+                break;
+            case R.id.btnContinue:
+                startActivity(new Intent(this, PrescriptionUploadOptionActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                break;
+            case R.id.rlayout_cart:
+                startActivity(new Intent(this, CartActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                break;
         }
     }
 
     public void selectImage(String type) {
-        if (type.equalsIgnoreCase("take_photo")){
+        if (type.equalsIgnoreCase("take_photo")) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             strFileCamera = getImageName() + ".jpg";
             File filename = new File(Environment.getExternalStorageDirectory(), strFileCamera);
             mImageCaptureUri = Uri.fromFile(filename);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
             startActivityForResult(intent, RESULT_TAKE_IMAGE);
-        }else {
+        } else {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, RESULT_UPLOAD_IMAGE);
         }
@@ -221,40 +243,83 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         bitmapCamera = null;
+
         try {
             if (resultCode == RESULT_OK) {
                 if (requestCode == RESULT_TAKE_IMAGE) {
                     bitmapCamera = getCapturedImage(strFileCamera);
                     cropingIMG();
-                    /*mBitmap = (Bitmap) data.getExtras().get("data");
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);*/
+                        /*mBitmap = (Bitmap) data.getExtras().get("data");
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);*/
                 } else if (requestCode == RESULT_UPLOAD_IMAGE) {
 
                     mImageCaptureUri = data.getData();
                     cropingIMG();
                     //mBitmap = getSelectedImage(mImageCaptureUri);
                 } else if (requestCode == RESULT_CROPING_CODE) {
+
                     try {
                         if (outPutFile.exists()) {
                             mBitmap = decodeFile(outPutFile);
                             //ivProfile.setImageBitmap(mBitmap);
                             mlistModelsArray.add(new ListModel(mBitmap));
-                            setListAdapter();
                             imageBinaryString = convertBitmapToString(mBitmap);
+                            //Call  upload prescription API
+                            callUploadPrescriptionAPI(imageBinaryString);
                         } else {
-
                             Toast.makeText(mContext, "error while save file", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
             }
-
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
+    }
+
+    private void callUploadPrescriptionAPI(String imageBinaryString) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("image", "" + imageBinaryString);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post(UPLOAD_PRESCRIPTION)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            if (response.has("data")) {
+                                JSONObject jsonObject = new JSONObject(response.getString("data"));
+                                String getImageUrl = jsonObject.get("images").toString();
+                                setListAdapter();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(PrescriptionUploadActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     private Bitmap decodeFile(File f) {
@@ -336,7 +401,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
 
             //Create output file here
             mProfilePicName = getImageName() + ".jpg";
-            outPutFile = new File(android.os.Environment.getExternalStorageDirectory(), mProfilePicName);
+            outPutFile = new File(Environment.getExternalStorageDirectory(), mProfilePicName);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outPutFile));
             Intent i = new Intent(intent);
             boolean isAppFound = false;
@@ -366,8 +431,10 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                     mBitmap = getSelectedImage(mImageCaptureUri);
                 //ivProfile.setImageBitmap(mBitmap);
                 mlistModelsArray.add(new ListModel(mBitmap));
-                setListAdapter();
+
                 imageBinaryString = convertBitmapToString(mBitmap);
+                //Call  upload prescription API
+                callUploadPrescriptionAPI(imageBinaryString);
             } catch (Exception e) {
             }
         }
@@ -384,6 +451,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
         return thumbnail;
     }
+
 
     public class ListModel {
         // int image;

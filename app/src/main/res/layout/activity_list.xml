@@ -33,19 +33,33 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_medicine_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtNoDataFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/open_sans_regular"
+        android:gravity="center"
+        android:padding="@dimen/height_10"
+        android:text="No data found"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorblack"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/llayout_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/height_15"
         android:layout_marginLeft="@dimen/height_15"
-        android:layout_marginRight="@dimen/height_15"
         android:layout_marginTop="@dimen/height_15"
+        android:layout_marginRight="@dimen/height_15"
+        android:layout_marginBottom="@dimen/height_15"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="1">
@@ -74,8 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="Sort by"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="Sort by"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
@@ -105,8 +119,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="Filter"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="Filter"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />

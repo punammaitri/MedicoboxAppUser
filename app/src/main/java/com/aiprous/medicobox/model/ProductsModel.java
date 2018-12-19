@@ -5,37 +5,54 @@ import com.google.gson.annotations.SerializedName;
 
 public class ProductsModel {
 
-
-    public ProductsModel(String id, String sku, String title, String price, String image_url) {
-        this.id = id;
-        this.sku = sku;
-        this.title = title;
-        this.price = price;
-        this.image_url = image_url;
-    }
-
     @Expose
-    @SerializedName("id")
-    private String id;
+    @SerializedName("item_id")
+    private String item_id;
+    @Expose
+    @SerializedName("order_id")
+    private String order_id;
     @Expose
     @SerializedName("sku")
     private String sku;
     @Expose
-    @SerializedName("title")
-    private String title;
+    @SerializedName("name")
+    private String name;
     @Expose
     @SerializedName("price")
     private String price;
-    @Expose
-    @SerializedName("image_url")
-    private String image_url;
 
-    public String getId() {
-        return id;
+    @Expose
+    @SerializedName("image")
+    private String image;
+
+    @Expose
+    @SerializedName("mrp_total")
+    private String mrp_total;
+
+    public ProductsModel(String item_id, String order_id, String sku, String name, String price, String image, String mrp_total) {
+        this.item_id = item_id;
+        this.order_id = order_id;
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.mrp_total = mrp_total;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getSku() {
@@ -46,12 +63,12 @@ public class ProductsModel {
         this.sku = sku;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPrice() {
@@ -62,11 +79,19 @@ public class ProductsModel {
         this.price = price;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImage() {
+        return image;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getMrp_total() {
+        return mrp_total;
+    }
+
+    public void setMrp_total(String mrp_total) {
+        this.mrp_total = mrp_total;
     }
 }

@@ -93,7 +93,6 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
         } else {
             CallGetAllWishListAPI();
         }
-
     }
 
     @OnClick(R.id.rlayout_cart)

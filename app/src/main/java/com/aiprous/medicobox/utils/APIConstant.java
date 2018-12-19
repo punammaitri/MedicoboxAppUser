@@ -20,7 +20,6 @@ public class APIConstant {
     public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/API/get_cart_item.php";
     //public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
 
-
     public static String DELETECARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String EDITCARTITEM = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     //  public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
@@ -42,7 +41,14 @@ public class APIConstant {
     public static String CREATE_WISHLIST = "http://user8.itsindev.com/medibox/API/create_wishlist.php";
     public static String GET_ALL_WISHLIST = "http://user8.itsindev.com/medibox/API/get_user_wishlist_products.php";
     public static String ADD_ITEM_WISHLIST = "http://user8.itsindev.com/medibox/API/add_item_wishlist.php";
-    public static String DELETE_WISHLIST = " http://user8.itsindev.com/medibox/API/delete_wishlist.php";
+    public static String DELETE_WISHLIST = "http://user8.itsindev.com/medibox/API/delete_wishlist.php";
+
+    //upload prescription
+    public static String UPLOAD_PRESCRIPTION = "http://user8.itsindev.com/medibox/API/upload-prescription/image_action.php";
+
+    //user order
+    public static String USERORDER = "http://user8.itsindev.com/medibox/API/user_orders.php";
+    public static String SINGLE_ORDER = "http://user8.itsindev.com/medibox/API/single-order.php";
 
     //Response Status Code
     public static final int SUCCESS_CODE = 200;

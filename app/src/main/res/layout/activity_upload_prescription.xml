@@ -246,16 +246,19 @@
                         android:layout_alignParentRight="true">
 
                         <RadioButton
+                            android:id="@+id/radioButtonYes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:theme="@style/MyRadioButton"
                             android:textColor="@color/colorblack"
                             android:text="Yes"
+                            android:checked="true"
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textStyle="bold"/>
 
                         <RadioButton
+                            android:id="@+id/radioButtonNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:theme="@style/MyRadioButton"
@@ -267,14 +270,15 @@
                     </RadioGroup>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/edt_patient_name"
                         android:layout_width="match_parent"
+                        android:id="@+id/textInput"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtOrderingHeading"
                         android:layout_marginTop="@dimen/height_5"
                         app:hintTextAppearance="@style/TextLabel">
 
                         <EditText
+                            android:id="@+id/edt_patient_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Patient's Name"
@@ -286,12 +290,13 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/edt_patient_name"
+                        android:layout_below="@+id/textInput"
                         android:layout_marginBottom="@dimen/height_5"
                         android:layout_marginTop="@dimen/height_1"
                         app:hintTextAppearance="@style/TextLabel">
 
                         <EditText
+                            android:id="@+id/edt_additional_comment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Additional comments"

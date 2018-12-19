@@ -478,9 +478,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             String getLastname = jsonObject.get("lastname").toString();
                             String getStoreId = jsonObject.get("store_id").toString();
                             String getWebsiteId = jsonObject.get("website_id").toString();
-                            String getMobile = jsonObject.get("mobile").toString();
+                            String custom_attributes = jsonObject.get("custom_attributes").toString();
 
-                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobile, getEmail, getStoreId);
+
+                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, "", getEmail, getStoreId);
                             Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                     .putExtra("email", "" + getEmail));

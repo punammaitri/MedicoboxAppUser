@@ -43,6 +43,7 @@ public class SubCategoryActivity extends AppCompatActivity {
      ArrayList<MainCategoryModel.SubCat> subCatArrayList=new ArrayList<>();
     public static RelativeLayout rlayout_cart;
     public static TextView tv_cart_size;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

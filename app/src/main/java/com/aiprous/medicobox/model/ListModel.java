@@ -5,17 +5,39 @@ import com.google.gson.annotations.SerializedName;
 
 public class ListModel {
 
-    String id;
-    String sku;
-    String title;
-    String price;
-    String sale_price;
-    String discount;
-    String short_description;
-    String prescription_required;
-    String image;
+    @Expose
+    @SerializedName("id")
+    private String id;
+    @Expose
+    @SerializedName("sku")
+    private String sku;
+    @Expose
+    @SerializedName("title")
+    private String title;
+    @Expose
+    @SerializedName("price")
+    private String price;
+    @Expose
+    @SerializedName("sale_price")
+    private String sale_price;
+    @Expose
+    @SerializedName("discount")
+    private String discount;
+    @Expose
+    @SerializedName("short_description")
+    private String short_description;
+    @Expose
+    @SerializedName("prescription_required")
+    private String prescription_required;
+    @Expose
+    @SerializedName("image")
+    private String image;
+    @Expose
+    @SerializedName("wishlist")
+    private String wishlist;
 
-    public ListModel(String id, String sku, String title, String price, String sale_price, String discount, String short_description, String prescription_required, String image) {
+
+    public ListModel(String id, String sku, String title, String price, String sale_price, String discount, String short_description, String prescription_required, String image, String wishlist) {
         this.id = id;
         this.sku = sku;
         this.title = title;
@@ -25,7 +47,9 @@ public class ListModel {
         this.short_description = short_description;
         this.prescription_required = prescription_required;
         this.image = image;
+        this.wishlist = wishlist;
     }
+
 
     public String getId() {
         return id;
@@ -97,5 +121,13 @@ public class ListModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(String wishlist) {
+        this.wishlist = wishlist;
     }
 }

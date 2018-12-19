@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/height_8"
             android:layout_marginRight="@dimen/height_8"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/height_5"
             android:orientation="horizontal">
 
@@ -52,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:layout_marginTop="@dimen/height_8"
+            android:visibility="gone"
             android:background="@color/colorlightlightGray" />
 
 

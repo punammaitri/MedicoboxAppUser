@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.model.ProductsModel;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -25,6 +27,8 @@ import butterknife.ButterKnife;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
     private ArrayList<ProductsModel> mDataArrayList;
     private Context mContext;
+
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     public ProductListAdapter(Context mContext, ArrayList<ProductsModel> mDataArrayList) {
         this.mContext = mContext;
@@ -42,20 +46,22 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
+        holder.tv_medicine_name.setText(mDataArrayList.get(position).getName());
         holder.tv_item_contains.setText(mDataArrayList.get(position).getSku());
         holder.tv_mrp.setText("MRP ");
-        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mDataArrayList.get(position).getPrice());
-        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
 
+        //remove digit after dot & set value
+        double input = Double.parseDouble(mDataArrayList.get(position).getPrice());
+        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + df2.format(input));
+        holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + df2.format(input));
 
         if (position == getItemCount() - 1) {
             holder.view_order_details.setVisibility(View.GONE);
         }
 
         Picasso.with(mContext)
-                .load(mDataArrayList.get(position).getImage_url())
+                .load(mDataArrayList.get(position).getImage())
                 .into(holder.img_medicine, new Callback() {
                     @Override
                     public void onSuccess() {

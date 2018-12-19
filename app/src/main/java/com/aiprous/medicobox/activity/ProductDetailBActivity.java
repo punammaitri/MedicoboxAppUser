@@ -95,8 +95,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
     LinearLayout llayout_prescription;
 
 
-
-
     ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
     private Context mcontext = this;
     private int dotscount;
@@ -120,7 +118,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mPrice;
     int setValuePosition = 1;
     ViewPagerAdapter viewPagerAdapter;
-    ArrayList<String> mImagelist=new ArrayList<>();
+    ArrayList<String> mImagelist = new ArrayList<>();
     private String mPrescription;
     private String mMrpPrice;
 
@@ -135,11 +133,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String lactation;
     private String mLiver;
     private String mPregnancy_and_breast_feeding;
-    private  String mMore_info;
+    private String mMore_info;
     private float mCalculatePrice;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +145,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     }
 
     private void init() {
-       // tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs) + "68.60");
+        // tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs) + "68.60");
         tv_per_tablet_price.setText("(" + mcontext.getResources().getString(R.string.Rs) + "6.86/Tablet SR" + ")");
 
         searchview_medicine.setFocusable(false);
@@ -162,8 +157,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
         //remove back slash
         String getCartId = MedicoboxApp.onGetCartID();
-        String lCartId=getCartId;
-        mCartId=lCartId.replace("\"", "");
+        String lCartId = getCartId;
+        mCartId = lCartId.replace("\"", "");
 
         //set spinner
         //Creating the ArrayAdapter instance having the value list
@@ -171,7 +166,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
         lstripArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spinner_count.setAdapter(lstripArrayAdapter);
-
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -216,48 +210,44 @@ public class ProductDetailBActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(SingletonAddToCart.getGsonInstance().getOptionList().isEmpty())
-        {
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
-        }
-        else {
-            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
             rlayout_cart.setVisibility(View.VISIBLE);
         }
 
-        if(getIntent().getStringExtra("productId")!=null)
-        {
-            mProductId=getIntent().getStringExtra("productId");
-            mVisibiltyFlag=getIntent().getStringExtra("VisibiltyFlag");
-            mSku=getIntent().getStringExtra("SKU");
-            mQty= Integer.parseInt(getIntent().getStringExtra("Qty"));
-            mImageURL=getIntent().getStringExtra("imageUrl");
-            mMedicineName=getIntent().getStringExtra("MedicineName");
-            mValue=getIntent().getStringExtra("value");
-            if(getIntent().getStringExtra("price").isEmpty())
-            {
-                mPrice=getIntent().getStringExtra("MrpPrice");
-            }else {
-                mPrice=getIntent().getStringExtra("price");
+        if (getIntent().getStringExtra("productId") != null) {
+            mProductId = getIntent().getStringExtra("productId");
+
+            mVisibiltyFlag = getIntent().getStringExtra("VisibiltyFlag");
+            mSku = getIntent().getStringExtra("SKU");
+            mQty = Integer.parseInt(getIntent().getStringExtra("Qty"));
+            mImageURL = getIntent().getStringExtra("imageUrl");
+            mMedicineName = getIntent().getStringExtra("MedicineName");
+            mValue = getIntent().getStringExtra("value");
+            if (getIntent().getStringExtra("price").isEmpty()) {
+                mPrice = getIntent().getStringExtra("MrpPrice");
+            } else {
+                mPrice = getIntent().getStringExtra("price");
             }
 
-            mPrescription=getIntent().getStringExtra("prescription");
-            mMrp=getIntent().getStringExtra("MrpPrice");
-            mdiscount=getIntent().getStringExtra("discount");
+            mPrescription = getIntent().getStringExtra("prescription");
+            mMrp = getIntent().getStringExtra("MrpPrice");
+            mdiscount = getIntent().getStringExtra("discount");
 
 
-            tv_value.setText(""+mQty);
+            tv_value.setText("" + mQty);
             tv_medicine_name.setText(mMedicineName);
             tv_medicine_contains.setText(mValue);
             tv_mrp_price.setText(mMrp);
             tv_item_description.setText(mValue);
 
-            mCalculatePrice=mQty*Float.parseFloat(mPrice);
+            mCalculatePrice = mQty * Float.parseFloat(mPrice);
 
-            if(mPrescription.equals("0"))
-            {
+            if (mPrescription.equals("0")) {
                 llayout_prescription.setVisibility(View.GONE);
-            }else {
+            } else {
                 llayout_prescription.setVisibility(View.VISIBLE);
             }
 
@@ -267,18 +257,18 @@ public class ProductDetailBActivity extends AppCompatActivity {
             getSingleproducts(mProductId);
         }
 
-        if(mVisibiltyFlag.equals("1")){
+        if (mVisibiltyFlag.equals("1")) {
             rlayout_plus_minus.setVisibility(View.VISIBLE);
             btn_add_to_cart.setClickable(false);
-           // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
+            // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
             //make button disable
             btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg_disable);
 
 
-        }else {
+        } else {
             rlayout_plus_minus.setVisibility(View.GONE);
             btn_add_to_cart.setClickable(true);
-           // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
+            // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
             //Unable the cart button
             btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg);
         }
@@ -286,9 +276,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.rlayout_cart)
-    public void ShowCart()
-    {
-        startActivity(new Intent(this,CartActivity.class));
+    public void ShowCart() {
+        startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
@@ -338,7 +327,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
             CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.get(SINGLEPRODUCT+productId)
+            AndroidNetworking.get(SINGLEPRODUCT + productId)
                     .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -346,7 +335,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             // do anything with response
-                         //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                            //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
 
 
                             try {
@@ -366,28 +355,27 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                 setviewPagerAdapter();
 
                                 JSONObject uses_n_work = response.getJSONObject("uses_n_work");
-                                 mUses = uses_n_work.getString("uses");
-                                 mwork = uses_n_work.getString("work");
-                                 mHow_to_use = uses_n_work.getString("how_to_use");
+                                mUses = uses_n_work.getString("uses");
+                                mwork = uses_n_work.getString("work");
+                                mHow_to_use = uses_n_work.getString("how_to_use");
 
                                 JSONObject interaction_n_side_effect = response.getJSONObject("interaction_n_side_effect");
-                                 mDrug_interactions = interaction_n_side_effect.getString("drug_interactions");
-                                 mSide_effects = interaction_n_side_effect.getString("side_effects");
+                                mDrug_interactions = interaction_n_side_effect.getString("drug_interactions");
+                                mSide_effects = interaction_n_side_effect.getString("side_effects");
 
 
                                 JSONObject warning_n_precaution = response.getJSONObject("warning_n_precaution");
 
-                                 mDriving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
+                                mDriving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
                                 // mKidney = warning_n_precaution.getString("kidney");
 
-                                 lactation = warning_n_precaution.getString("lactation");
-                                 mLiver = warning_n_precaution.getString("liver");
-                                 mPregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
+                                lactation = warning_n_precaution.getString("lactation");
+                                mLiver = warning_n_precaution.getString("liver");
+                                mPregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
 
 
                                 JSONObject more_information = response.getJSONObject("more_information");
-                                 mMore_info = more_information.getString("more_info");
-
+                                mMore_info = more_information.getString("more_info");
 
 
                             } catch (JSONException e) {
@@ -412,7 +400,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
     private void setviewPagerAdapter() {
 
-        viewPagerAdapter = new ViewPagerAdapter(mcontext,mImagelist);
+        viewPagerAdapter = new ViewPagerAdapter(mcontext, mImagelist);
         viewPager.setAdapter(viewPagerAdapter);
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];
@@ -434,18 +422,17 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
 
     @OnClick(R.id.btn_add_to_cart)
-    public void onClickAddTocart()
-    {
+    public void onClickAddTocart() {
 
         //call guest add to cart api
         try {
 
             setValuePosition = Integer.parseInt(tv_value.getText().toString()) + 1;
-            mQty=setValuePosition;
+            mQty = setValuePosition;
             tv_value.setText("" + setValuePosition);
 
             JSONObject object = new JSONObject();
-            object.put("quote_id",mCartId);
+            object.put("quote_id", mCartId);
             object.put("sku", mSku);
             object.put("qty", tv_value.getText());
 
@@ -462,26 +449,23 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
 
     @OnClick(R.id.tv_plus)
-    public void onClickPlus()
-    {
+    public void onClickPlus() {
         setValuePosition = Integer.parseInt(tv_value.getText().toString()) + 1;
-        mQty=setValuePosition;
+        mQty = setValuePosition;
         tv_value.setText("" + setValuePosition);
 
         SingletonAddToCart singletonAddToCart = SingletonAddToCart.getGsonInstance();
         ItemModelList = singletonAddToCart.getOptionList();
         //call edit cart api
         try {
-            for(int i=0;i<ItemModelList.size();i++)
-            {
-                if(mMedicineName.equals(ItemModelList.get(i).getMedicineName()))
-                {
-                    mItemId=ItemModelList.get(i).getItem_id();
+            for (int i = 0; i < ItemModelList.size(); i++) {
+                if (mMedicineName.equals(ItemModelList.get(i).getMedicineName())) {
+                    mItemId = ItemModelList.get(i).getItem_id();
                 }
             }
 
             JSONObject object = new JSONObject();
-            object.put("quote_id",mCartId);
+            object.put("quote_id", mCartId);
             object.put("item_id", mItemId);
             object.put("qty", mQty);
 
@@ -490,7 +474,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("cart_item", object);
 
-            callEditCartItem(jsonObject,MedicoboxApp.onGetAuthToken());
+            callEditCartItem(jsonObject, MedicoboxApp.onGetAuthToken());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -513,11 +497,9 @@ public class ProductDetailBActivity extends AppCompatActivity {
                 SingletonAddToCart singletonAddToCart = SingletonAddToCart.getGsonInstance();
                 ItemModelList = singletonAddToCart.getOptionList();
 
-                for(int i=0;i<ItemModelList.size();i++)
-                {
-                    if(mMedicineName.equals(ItemModelList.get(i).getMedicineName()))
-                    {
-                        mItemId=ItemModelList.get(i).getItem_id();
+                for (int i = 0; i < ItemModelList.size(); i++) {
+                    if (mMedicineName.equals(ItemModelList.get(i).getMedicineName())) {
+                        mItemId = ItemModelList.get(i).getItem_id();
                     }
                 }
 
@@ -556,17 +538,17 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             // do anything with response
 
-                          //make add to cart disable and not clickable
+                            //make add to cart disable and not clickable
                             btn_add_to_cart.setClickable(false);
                             btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
 
                             rlayout_plus_minus.setVisibility(View.VISIBLE);
-                            tv_cart_size.setText(""+SingletonAddToCart.getGsonInstance().getOptionList().size());
+                            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
                             rlayout_cart.setVisibility(View.VISIBLE);
-                            try{
+                            try {
                                 mItemId = response.getString("item_id");
 
-                            }catch (JSONException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                             BaseActivity.printLog("response-success : ", response.toString());
@@ -595,7 +577,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             Toast.makeText(mcontext, "Check Your Network", Toast.LENGTH_SHORT).show();
         } else {
             CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
-            AndroidNetworking.put(EDITCARTITEM+mItemId)
+            AndroidNetworking.put(EDITCARTITEM + mItemId)
                     .addJSONObjectBody(jsonObject)
                     .addHeaders(Authorization, BEARER + bearerToken)
                     .setPriority(Priority.MEDIUM)
@@ -605,10 +587,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             // do anything with response
 
-                            try{
+                            try {
                                 mItemId = response.getString("item_id");
 
-                            }catch (JSONException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                             BaseActivity.printLog("response-success : ", response.toString());
@@ -649,7 +631,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId,mCalculatePrice);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId, mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -666,11 +648,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
                 for (int i = 0; i < ItemModelList.size(); i++) {
                     if (ItemModelList.get(i).getQty().equals("0")) {
                         ItemModelList.remove(i);
-                        if(!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()){
+                        if (!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                             //this is for make cart icon visible
                             rlayout_cart.setVisibility(View.VISIBLE);
-                        }
-                        else {
+                        } else {
                             // rlayout_cart.setVisibility(View.GONE);
                         }
                     }
@@ -679,7 +660,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount,mPrice,""+mQty,mSku,mItemId,mCalculatePrice);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId, mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -701,21 +682,20 @@ public class ProductDetailBActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.llayout_drug_information)
-    public void onClickDrugInfo()
-    {
+    public void onClickDrugInfo() {
 
-        startActivity(new Intent(this,DrugInformationActivity.class)
-        .putExtra("mUses",mUses)
-        .putExtra("mwork",mwork)
-        .putExtra("mHow_to_use",mHow_to_use)
-        .putExtra("mDrug_interactions",mDrug_interactions)
-        .putExtra("mSide_effects",mSide_effects)
-        .putExtra("mDriving_and_using_machines",mDriving_and_using_machines)
-        .putExtra("mKidney",mKidney)
-        .putExtra("lactation",lactation)
-        .putExtra("mLiver",mLiver)
-         .putExtra("mPregnancy_and_breast_feeding",mPregnancy_and_breast_feeding)
-        .putExtra("mMore_info",mMore_info));
+        startActivity(new Intent(this, DrugInformationActivity.class)
+                .putExtra("mUses", mUses)
+                .putExtra("mwork", mwork)
+                .putExtra("mHow_to_use", mHow_to_use)
+                .putExtra("mDrug_interactions", mDrug_interactions)
+                .putExtra("mSide_effects", mSide_effects)
+                .putExtra("mDriving_and_using_machines", mDriving_and_using_machines)
+                .putExtra("mKidney", mKidney)
+                .putExtra("lactation", lactation)
+                .putExtra("mLiver", mLiver)
+                .putExtra("mPregnancy_and_breast_feeding", mPregnancy_and_breast_feeding)
+                .putExtra("mMore_info", mMore_info));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 

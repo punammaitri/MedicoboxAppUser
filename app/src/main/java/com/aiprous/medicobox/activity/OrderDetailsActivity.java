@@ -23,6 +23,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -30,13 +31,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
+import static com.aiprous.medicobox.utils.APIConstant.SINGLE_ORDER;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class OrderDetailsActivity extends AppCompatActivity {
@@ -59,11 +66,22 @@ public class OrderDetailsActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
+    @BindView(R.id.txtStatus)
+    TextView txtStatus;
+    @BindView(R.id.txtOrderId)
+    TextView txtOrderId;
+    @BindView(R.id.txtorderDate)
+    TextView txtorderDate;
+
+    @BindView(R.id.txtShippingAmount)
+    TextView txtShippingAmount;
+
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     CustomProgressDialog mAlert;
     ArrayList<ProductsModel> mProductsModel = new ArrayList<ProductsModel>();
     ArrayList<ProductModel> mproductArrayList = new ArrayList<ProductModel>();
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +101,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
         mAlert = CustomProgressDialog.getInstance();
 
         //set text default
-        tv_total_product_price.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
+
         tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
-        tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + "30");
-        tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
+
         tv_total_saved.setText(mContext.getResources().getString(R.string.Rs) + "30.0");
 
     }
@@ -104,7 +121,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         //Add Json Object
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("category_id", "38");
+            jsonObject.put("order_id", "76");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,7 +129,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
-            getAllproducts(jsonObject);
+            getSingleOrderAPI(jsonObject);
+            CustomProgressDialog.getInstance().dismissDialog();
         }
     }
 
@@ -123,9 +141,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
 
-    private void getAllproducts(JSONObject jsonObject) {
+    private void getSingleOrderAPI(JSONObject jsonObject) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.post(GETPRODUCT)
+        AndroidNetworking.post(SINGLE_ORDER)
                 .addJSONObjectBody(jsonObject)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -134,29 +152,68 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         try {
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+                            String success = response.getString("status");
 
-                            if (getAllProductList != null) {
-                                mProductsModel.clear();
-                                for (int i = 0; i < getAllProductList.length(); i++) {
-                                    String id = getAllProductList.getJSONObject(i).get("id").toString();
-                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                    String title = getAllProductList.getJSONObject(i).get("title").toString();
-                                    String price = getAllProductList.getJSONObject(i).get("price").toString();
-                                    String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
+                            if (success.equals("success")) {
+                                JsonObject getJsonObject1 = (JsonObject) new JsonParser().parse(response.getString("order_data"));
+                                String entity_id = getJsonObject1.get("entity_id").getAsString();
+                                String status = getJsonObject1.get("status").getAsString();
+                                String increment_id = getJsonObject1.get("increment_id").getAsString();
+                                String grand_total = getJsonObject1.get("grand_total").getAsString();
+                                String total_due = getJsonObject1.get("total_due").getAsString();
 
-                                    ProductsModel registerModel = new ProductsModel(id, sku, title, price, imageUrl);
-                                    registerModel.setId(id);
-                                    registerModel.setSku(sku);
-                                    registerModel.setTitle(title);
-                                    registerModel.setPrice(price);
-                                    registerModel.setImage_url(imageUrl);
-                                    mProductsModel.add(registerModel);
+                                //for showing date
+                                String created_at = getJsonObject1.get("created_at").getAsString();
+                                StringTokenizer splitDate = new StringTokenizer(created_at, " ");
+                                String date = splitDate.nextToken();
+                                String time = splitDate.nextToken();
+                                txtorderDate.setText("Order Date:" + date);
+
+                                Double price_discount = getJsonObject1.get("discount_amount").getAsDouble();
+                                Double shipping_amount = getJsonObject1.get("shipping_amount").getAsDouble();
+                                tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + price_discount);
+                                txtShippingAmount.setText(mContext.getResources().getString(R.string.Rs) + shipping_amount);
+                                //for amount paid
+                                Double grand_total_int = getJsonObject1.get("grand_total").getAsDouble();
+                                Double total_due_int = getJsonObject1.get("total_due").getAsDouble();
+                                Double amount_paid = grand_total_int - total_due_int;
+
+                                tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + amount_paid);
+
+                                //remove digit after dot
+                                double input = Double.parseDouble(grand_total);
+                                // for set value
+                                tv_total_product_price.setText(mContext.getResources().getString(R.string.Rs) + df2.format(input));
+                                txtOrderId.setText("Order ID: " + increment_id);
+                                txtStatus.setText(status);
+
+                                JsonArray itemArrayJson = getJsonObject1.get("items").getAsJsonArray();
+                                if (itemArrayJson != null) {
+                                    mProductsModel.clear();
+                                    for (int i = 0; i < itemArrayJson.size(); i++) {
+
+                                        JsonObject jsonObjectForItems = itemArrayJson.get(i).getAsJsonObject();
+                                        String item_id = jsonObjectForItems.get("item_id").getAsString();
+                                        String order_id = jsonObjectForItems.get("order_id").getAsString();
+                                        String sku = jsonObjectForItems.get("sku").getAsString();
+                                        String name = jsonObjectForItems.get("name").getAsString();
+                                        String price = jsonObjectForItems.get("price").getAsString();
+                                        String mrp_total = jsonObjectForItems.get("base_price").getAsString();
+                                        String image = jsonObjectForItems.get("image").getAsString();
+
+                                        ProductsModel productsModel = new ProductsModel(item_id, order_id, sku, name, price, image, mrp_total);
+                                        productsModel.setItem_id(item_id);
+                                        productsModel.setOrder_id(order_id);
+                                        productsModel.setSku(sku);
+                                        productsModel.setName(name);
+                                        productsModel.setPrice(price);
+                                        productsModel.setImage(image);
+                                        productsModel.setMrp_total(mrp_total);
+                                        mProductsModel.add(productsModel);
+                                    }
                                 }
                             }
-                            CustomProgressDialog.getInstance().dismissDialog();
+
                             layoutManager = new LinearLayoutManager(mContext);
                             rc_product.setLayoutManager(new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false));
                             rc_product.setHasFixedSize(true);

@@ -56,9 +56,9 @@
                         android:padding="@dimen/height_10">
 
                         <TextView
+                            android:id="@+id/txtOrderId"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Order ID: MB12838492829"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
@@ -71,31 +71,30 @@
                             android:weightSum="1">
 
                             <TextView
+                                android:id="@+id/txtorderDate"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.8"
+                                android:layout_weight="0.65"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="Order Date:29/09/2018"
                                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
                             <TextView
                                 android:id="@+id/tv_total_product_price"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.2"
+                                android:layout_weight="0.35"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:gravity="end"
-                                android:text="Rs350"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/txtStatus"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_10"
-                            android:text="Intransit"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/coloryellow" />
                     </LinearLayout>
@@ -329,6 +328,7 @@
                             android:text="Shipping Charges" />
 
                         <TextView
+                            android:id="@+id/txtShippingAmount"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"

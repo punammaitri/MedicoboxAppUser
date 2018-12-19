@@ -48,6 +48,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -71,7 +72,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private static String mId;
-    private static String getWishListId;
+    private static String getWishListId = "";
     private ArrayList<ListModel> mDataArrayList;
     private ArrayList<AddToCartOptionDetailModel> ItemModelList;
     private static Context mContext;
@@ -233,6 +234,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             holder.tv_medicine_name.setText(mDataArrayList.get(position).getTitle());
             holder.tv_content.setText(mDataArrayList.get(position).getShort_description());
             holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
+
             if (mDataArrayList.get(position).getDiscount().equals("0")) {
                 holder.tv_discount.setVisibility(View.GONE);
             } else {
@@ -246,6 +248,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getSale_price());
                 holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
+        }
+
+        if (mDataArrayList.get(position).getWishlist().equals("1")) {
+            holder.img_wishlist.setImageResource(R.drawable.heart_active);
+        } else {
+            holder.img_wishlist.setImageResource(R.drawable.heart_inactive);
         }
 
         //add item to wishlist
@@ -283,8 +291,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 Activity activity = (Activity) mContext;
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
-
             }
         });
 
@@ -701,8 +707,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!getWishListId.isEmpty()) {
-                    CallAddProductToWishListAPI(itemId, getWishListId);
+                try {
+                    if (!getWishListId.isEmpty()) {
+                        CallAddProductToWishListAPI(itemId, getWishListId);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -730,28 +740,35 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         @Override
                         public void onResponse(String response) {
 
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JsonArray asJsonArray = getAllResponse.getAsJsonArray("response");
+                            if (response.contains("There is no wishlist")) {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                String responseMsg = getAllResponse.get("response").getAsString();
+                                CustomProgressDialog.getInstance().dismissDialog();
+                                Toast.makeText(mContext, "" + responseMsg, Toast.LENGTH_SHORT).show();
+                            } else {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JsonArray asJsonArray = getAllResponse.getAsJsonArray("response");
 
-                            if (asJsonArray != null) {
-                                mGetWishListModels.clear();
-                                for (int i = 0; i < asJsonArray.size(); i++) {
-                                    String wishlist_name_id = ((JsonObject) asJsonArray.get(i)).get("wishlist_name_id").getAsString();
-                                    String wishlist_name = ((JsonObject) asJsonArray.get(i)).get("wishlist_name").getAsString();
-                                    JsonArray items = ((JsonObject) asJsonArray.get(i)).get("items").getAsJsonArray();
+                                if (asJsonArray != null) {
+                                    mGetWishListModels.clear();
+                                    for (int i = 0; i < asJsonArray.size(); i++) {
+                                        String wishlist_name_id = ((JsonObject) asJsonArray.get(i)).get("wishlist_name_id").getAsString();
+                                        String wishlist_name = ((JsonObject) asJsonArray.get(i)).get("wishlist_name").getAsString();
+                                        JsonArray items = ((JsonObject) asJsonArray.get(i)).get("items").getAsJsonArray();
 
-                                    GetWishListModel getWishListModel = new GetWishListModel(wishlist_name_id, wishlist_name, items);
-                                    getWishListModel.setWishlist_name_id(wishlist_name_id);
-                                    getWishListModel.setWishlist_name(wishlist_name);
-                                    getWishListModel.setItems(items);
-                                    mGetWishListModels.add(getWishListModel);
+                                        GetWishListModel getWishListModel = new GetWishListModel(wishlist_name_id, wishlist_name, items);
+                                        getWishListModel.setWishlist_name_id(wishlist_name_id);
+                                        getWishListModel.setWishlist_name(wishlist_name);
+                                        getWishListModel.setItems(items);
+                                        mGetWishListModels.add(getWishListModel);
+                                    }
                                 }
+                                //set all wishlist adapter
+                                recycler_view_all_wishlist.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+                                recycler_view_all_wishlist.setHasFixedSize(true);
+                                recycler_view_all_wishlist.setAdapter(new GetWishListAdapter(mContext, mGetWishListModels));
+                                CustomProgressDialog.getInstance().dismissDialog();
                             }
-                            //set all wishlist adapter
-                            recycler_view_all_wishlist.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-                            recycler_view_all_wishlist.setHasFixedSize(true);
-                            recycler_view_all_wishlist.setAdapter(new GetWishListAdapter(mContext, mGetWishListModels));
-                            CustomProgressDialog.getInstance().dismissDialog();
                         }
 
                         @Override
@@ -811,7 +828,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
     }
 
-    private void CallAddProductToWishListAPI(String itemId, String getWishListId) {
+    private void CallAddProductToWishListAPI(final String itemId, String getWishListId) {
         if (!isNetworkAvailable(mContext)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
@@ -834,19 +851,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         @Override
                         public void onResponse(String response) {
 
-                            if (response.contains("{")) {
-                                // for removing braces
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject jsonObject = getAllResponse.get("response").getAsJsonObject();
+                            String responseMsg = jsonObject.get("status").getAsString();
+
+                            if (responseMsg.equals("success")) {
+                                String msg = jsonObject.get("msg").getAsString();
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                String afterRemoveBrace = response.replace("{", "").replace("}", "");
-                                StringTokenizer getMessage = new StringTokenizer(afterRemoveBrace, ":");
-                                String msg = getMessage.nextToken();
-                                String error_msg = getMessage.nextToken();
-
-                                //replace double quote
-                                String lGetMesage =error_msg.replace("\"", "");
-
-                                Toast.makeText(mContext, ""+lGetMesage , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                            } else {
+                                CustomProgressDialog.getInstance().dismissDialog();
+                                Toast.makeText(mContext, "Item not added", Toast.LENGTH_SHORT).show();
                             }
+                            CallGetAllWishListAPI(itemId);
                         }
 
                         @Override

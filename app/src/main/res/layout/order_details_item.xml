@@ -25,24 +25,23 @@
 
                 <ImageView
                     android:id="@+id/img_medicine"
-                    android:layout_width="@dimen/height_50"
-                    android:layout_height="@dimen/height_50"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bottle" />
+                    android:layout_width="@dimen/height_60"
+                    android:layout_height="@dimen/height_60"
+                    android:scaleType="fitXY" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="@dimen/height_10"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.55"
                 android:layout_marginLeft="@dimen/height_5"
+                android:layout_weight="0.55"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -64,11 +63,11 @@
                         android:id="@+id/tv_item_contains"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_medicine_name"
                         android:layout_marginRight="@dimen/height_5"
                         android:fontFamily="@font/open_sans_regular"
                         android:maxLines="1"
                         android:text="gggggggg"
-                        android:layout_below="@+id/tv_medicine_name"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 </RelativeLayout>
@@ -78,37 +77,38 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/height_5"
                 android:layout_weight="0.3"
-                android:gravity="left"
-                android:layout_marginLeft="@dimen/height_5">
-
+                android:gravity="left">
 
                 <TextView
                     android:id="@+id/tv_mrp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="MRP"
-                    />
+                    android:text="MRP" />
+
                 <TextView
                     android:id="@+id/tv_mrp_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_mrp"
                     android:singleLine="true"
-                    android:text="123"
-                    android:layout_toRightOf="@+id/tv_mrp"/>
+                    android:text="123" />
+
                 <TextView
                     android:id="@+id/tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_mrp_price"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="left"
                     android:text="djjjj"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/tv_mrp_price"/>
+                    android:textStyle="bold" />
 
             </RelativeLayout>
         </LinearLayout>

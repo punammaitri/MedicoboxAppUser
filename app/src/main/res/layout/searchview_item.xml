@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/height_3"
-    android:layout_marginBottom="@dimen/height_5"
+    android:layout_margin="@dimen/height_5"
     app:cardCornerRadius="@dimen/height_8"
     app:cardElevation="@dimen/height_4">
-
 
     <LinearLayout
         android:id="@+id/llayout_medicine_name"

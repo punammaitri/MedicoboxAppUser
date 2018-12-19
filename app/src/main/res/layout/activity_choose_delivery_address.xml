@@ -61,6 +61,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/height_8"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/height_8"
         android:background="@drawable/custom_btn_bg"
         android:fontFamily="@font/open_sans_regular"

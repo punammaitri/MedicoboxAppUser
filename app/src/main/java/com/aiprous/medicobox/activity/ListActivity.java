@@ -1,6 +1,5 @@
 package com.aiprous.medicobox.activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.ListAdapter;
@@ -29,8 +25,10 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +56,9 @@ public class ListActivity extends AppCompatActivity {
     public static RelativeLayout rlayout_cart;
     public static TextView tv_cart_size;
     ArrayList<ListModel> mListModelArray = new ArrayList<ListModel>();
+    @BindView(R.id.txtNoDataFound)
+    TextView txtNoDataFound;
+
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     private ListAdapter mlistAdapter;
@@ -131,22 +132,22 @@ public class ListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (getIntent().getStringExtra("subcategoryId") != null) {
-            mCategoryId=getIntent().getStringExtra("subcategoryId");
-        }
-
-        //Add Json Object
-        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("category_id", mCategoryId);
+            if (getIntent().getStringExtra("subcategoryId") != null) {
+                mCategoryId = getIntent().getStringExtra("subcategoryId");
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("user_id", MedicoboxApp.onGetId());
+                jsonObject.put("category_id", mCategoryId);
+
+                if (!isNetworkAvailable(this)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    getAllproducts(jsonObject);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-
-        if (!isNetworkAvailable(this)) {
-            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-        } else {
-            getAllproducts(jsonObject);
         }
 
 
@@ -187,38 +188,40 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
+                        txtNoDataFound.setVisibility(View.GONE);
+
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
-
-                            if (getAllProductList != null) {
+                            JsonObject jsonObject = getAllResponse.get("response").getAsJsonObject();
+                            JsonArray jsonProductArray = jsonObject.getAsJsonArray("products");
+                            if (jsonProductArray != null) {
                                 mListModelArray.clear();
-                                for (int i = 0; i < getAllProductList.length(); i++) {
-                                    String id = getAllProductList.getJSONObject(i).get("id").toString();
-                                    String sku = getAllProductList.getJSONObject(i).get("sku").toString();
-                                    String title = getAllProductList.getJSONObject(i).get("title").toString();
-                                    String price = getAllProductList.getJSONObject(i).get("price").toString();
-                                    String imageUrl = getAllProductList.getJSONObject(i).get("image").toString();
-                                    String sales_price = getAllProductList.getJSONObject(i).get("sale_price").toString();
-                                    String discount=getAllProductList.getJSONObject(i).get("discount").toString();
-                                    String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
-                                    String prescription_required=getAllProductList.getJSONObject(i).get("prescription_required").toString();
+                                for (int i = 0; i < jsonProductArray.size(); i++) {
+                                    String id = jsonProductArray.get(i).getAsJsonObject().get("id").getAsString();
+                                    String sku = jsonProductArray.get(i).getAsJsonObject().get("sku").getAsString();
+                                    String title = jsonProductArray.get(i).getAsJsonObject().get("title").getAsString();
+                                    String price = jsonProductArray.get(i).getAsJsonObject().get("price").getAsString();
+                                    String sale_price = jsonProductArray.get(i).getAsJsonObject().get("sale_price").getAsString();
+                                    String discount = jsonProductArray.get(i).getAsJsonObject().get("discount").getAsString();
+                                    String short_description = jsonProductArray.get(i).getAsJsonObject().get("short_description").getAsString();
+                                    String prescription_required = jsonProductArray.get(i).getAsJsonObject().get("prescription_required").getAsString();
+                                    String image = jsonProductArray.get(i).getAsJsonObject().get("image").getAsString();
+                                    String wishlist = jsonProductArray.get(i).getAsJsonObject().get("wishlist").getAsString();
 
-                                    ListModel listModel = new ListModel(id, sku, title, price, sales_price,discount, short_description,prescription_required, imageUrl);
+                                    ListModel listModel = new ListModel(id, sku, title, price, sale_price, discount, short_description, prescription_required, image, wishlist);
                                     listModel.setId(id);
                                     listModel.setSku(sku);
                                     listModel.setTitle(title);
                                     listModel.setPrice(price);
-                                    listModel.setSale_price(sales_price);
+                                    listModel.setSale_price(sale_price);
                                     listModel.setDiscount(discount);
                                     listModel.setShort_description(short_description);
                                     listModel.setPrescription_required(prescription_required);
-                                    listModel.setImage(imageUrl);
+                                    listModel.setImage(image);
+                                    listModel.setWishlist(wishlist);
                                     mListModelArray.add(listModel);
                                 }
                             }
-                            CustomProgressDialog.getInstance().dismissDialog();
 
                             if (!mListModelArray.isEmpty()) {
                                 layoutManager = new LinearLayoutManager(mContext);
@@ -226,8 +229,8 @@ public class ListActivity extends AppCompatActivity {
                                 rc_medicine_list.setHasFixedSize(true);
                                 rc_medicine_list.setAdapter(new ListAdapter(ListActivity.this, mListModelArray));
                             }
-
-                        } catch (JSONException e) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
                     }
@@ -236,6 +239,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onError(ANError error) {
                         CustomProgressDialog.getInstance().dismissDialog();
                         // handle error
+                        txtNoDataFound.setVisibility(View.VISIBLE);
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

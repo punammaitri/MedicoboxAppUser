@@ -15,6 +15,7 @@ import com.aiprous.medicobox.adapter.SearchViewAdapter;
 import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
+import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -41,7 +42,7 @@ public class SearchViewActivity extends AppCompatActivity {
     android.support.v7.widget.SearchView searchview_all_medicine;
     @BindView(R.id.rc_common_search)
     RecyclerView rc_common_search;
-    ArrayList<SearchModel> searchModelsArrayList=new ArrayList<>();
+    ArrayList<SearchModel> searchModelsArrayList = new ArrayList<>();
     ArrayAdapter<SearchModel> mAdapterSearch;
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -56,7 +57,6 @@ public class SearchViewActivity extends AppCompatActivity {
     }
 
     private void init() {
-
 
         try {
             searchview_all_medicine.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
@@ -104,9 +104,6 @@ public class SearchViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -125,8 +122,8 @@ public class SearchViewActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
-
                         // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                        searchModelsArrayList.clear();
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
@@ -134,27 +131,33 @@ public class SearchViewActivity extends AppCompatActivity {
 
                             for (int i = 0; i < getAllProductList.length(); i++) {
                                 String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                String sku = getAllProductList.getJSONObject(i).get("sku").toString();
                                 String title = getAllProductList.getJSONObject(i).get("title").toString();
+                                String price = getAllProductList.getJSONObject(i).get("price").toString();
+                                String discount = getAllProductList.getJSONObject(i).get("discount").toString();
+                                String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                String image = getAllProductList.getJSONObject(i).get("image").toString();
 
-                                SearchModel searchModel=new SearchModel(id,title);
+                                SearchModel searchModel = new SearchModel(id, sku, title, price, discount, short_description, image);
                                 searchModel.setId(id);
+                                searchModel.setSku(sku);
                                 searchModel.setTitle(title);
+                                searchModel.setPrice(price);
+                                searchModel.setDiscount(discount);
+                                searchModel.setShort_description(short_description);
+                                searchModel.setImage(image);
                                 searchModelsArrayList.add(searchModel);
-
                             }
 
-                          //set adapter
+                            //set adapter
                             layoutManager = new LinearLayoutManager(mContext);
                             rc_common_search.setLayoutManager(new LinearLayoutManager(SearchViewActivity.this, LinearLayoutManager.VERTICAL, false));
                             rc_common_search.setHasFixedSize(true);
-                            mSearchViewAdapter=new SearchViewAdapter(mContext, searchModelsArrayList);
+                            mSearchViewAdapter = new SearchViewAdapter(mContext, searchModelsArrayList);
                             rc_common_search.setAdapter(mSearchViewAdapter);
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         CustomProgressDialog.getInstance().dismissDialog();
                     }
 
@@ -169,5 +172,4 @@ public class SearchViewActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

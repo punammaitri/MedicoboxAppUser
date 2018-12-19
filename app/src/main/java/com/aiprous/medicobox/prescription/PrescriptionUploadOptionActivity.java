@@ -4,27 +4,51 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.SearchViewActivity;
+import com.aiprous.medicobox.adapter.SearchProductViewAdapter;
+import com.aiprous.medicobox.adapter.SearchViewAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.SearchModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
 
 
 public class PrescriptionUploadOptionActivity extends AppCompatActivity {
@@ -33,14 +57,14 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     SearchView searchview_medicine;
     @BindView(R.id.txt_duration_of_dose)
     TextView txtDurationOfDose;
+    @BindView(R.id.txtCartItems)
+    TextView txtCartItems;
     @BindView(R.id.txt_duration_example)
     TextView txtDurationExample;
     @BindView(R.id.linear_order_everything)
     LinearLayout linearOrderEverything;
-    @BindView(R.id.txt_specify_medicine)
-    TextView txtSpecifyMedicine;
-    @BindView(R.id.txt_specify_meds)
-    TextView txtSpecifyMeds;
+    @BindView(R.id.edt_specify_medicine)
+    AutoCompleteTextView edt_specify_medicine;
     @BindView(R.id.linear_specify_medicine)
     LinearLayout linearSpecifyMedicine;
     @BindView(R.id.rb_order_everything)
@@ -57,12 +81,17 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-
+    @BindView(R.id.recyclerspecifyMedicine)
+    RecyclerView recyclerspecifyMedicine;
+    @BindView(R.id.linSearchProduct)
+    LinearLayout linSearchProduct;
     RecyclerView rc_medicine_list;
     ArrayList<PrescriptionUploadOptionActivity.ListModel> mlistModelsArray = new ArrayList<>();
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
+    ArrayList<SearchModel> searchModelsArrayList = new ArrayList<>();
+    private SearchProductViewAdapter mSearchViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +120,52 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rc_medicine_list.setHasFixedSize(true);
         rc_medicine_list.setAdapter(new PrescriptionUploadOptionAdapter(mContext, mlistModelsArray));
+
+
+        edt_specify_medicine.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence newText, int start, int before, int count) {
+
+                String ff = String.valueOf(newText);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("name", ff);
+                    searchAllProduct(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (searchModelsArrayList != null && !searchModelsArrayList.isEmpty()) {
+                    ArrayList<SearchModel> filteredModelList = filter(searchModelsArrayList, ff);
+                    mSearchViewAdapter.setFilter(filteredModelList);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private ArrayList<SearchModel> filter(ArrayList<SearchModel> models, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<SearchModel> filteredModelList = new ArrayList<>();
+
+        for (SearchModel model : models) {
+            final String text = model.getTitle().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
     @Override
@@ -117,18 +192,26 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 rc_medicine_list.setVisibility(View.GONE);
                 linearSpecifyMedicine.setVisibility(View.GONE);
                 img_attach_arrow.setImageResource(R.drawable.arrow_yellow);
+
+                linSearchProduct.setVisibility(View.GONE);
+                txtCartItems.setVisibility(View.GONE);
+
                 break;
             case R.id.rb_specify_medicine:
                 linearSpecifyMedicine.setVisibility(View.VISIBLE);
                 linearOrderEverything.setVisibility(View.GONE);
                 rc_medicine_list.setVisibility(View.GONE);
                 img_attach_arrow.setImageResource(R.drawable.arrow_yellow);
+
                 break;
             case R.id.rb_call_me:
                 linearSpecifyMedicine.setVisibility(View.GONE);
                 linearOrderEverything.setVisibility(View.GONE);
                 rc_medicine_list.setVisibility(View.VISIBLE);
                 img_attach_arrow.setImageResource(R.drawable.arrow_yellow_up);
+
+                linSearchProduct.setVisibility(View.GONE);
+                txtCartItems.setVisibility(View.GONE);
                 break;
             case R.id.btnContinue:
                 startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));
@@ -204,5 +287,69 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
         public void setPrice(String price) {
             this.price = price;
         }
+    }
+
+    private void searchAllProduct(final JSONObject productname) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(SEARCHPRODUCT)
+                .addJSONObjectBody(productname)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                        searchModelsArrayList.clear();
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
+                            JSONArray getAllProductList = getAllObject.getJSONArray("response");//get the array with the key "response"
+
+                            for (int i = 0; i < getAllProductList.length(); i++) {
+                                String id = getAllProductList.getJSONObject(i).get("id").toString();
+                                String sku = getAllProductList.getJSONObject(i).get("sku").toString();
+                                String title = getAllProductList.getJSONObject(i).get("title").toString();
+                                String price = getAllProductList.getJSONObject(i).get("price").toString();
+                                String discount = getAllProductList.getJSONObject(i).get("discount").toString();
+                                String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
+                                String image = getAllProductList.getJSONObject(i).get("image").toString();
+
+                                SearchModel searchModel = new SearchModel(id, sku, title, price, discount, short_description, image);
+                                searchModel.setId(id);
+                                searchModel.setSku(sku);
+                                searchModel.setTitle(title);
+                                searchModel.setPrice(price);
+                                searchModel.setDiscount(discount);
+                                searchModel.setShort_description(short_description);
+                                searchModel.setImage(image);
+                                searchModelsArrayList.add(searchModel);
+                            }
+
+                            linSearchProduct.setVisibility(View.VISIBLE);
+                            txtCartItems.setVisibility(View.VISIBLE);
+
+                            //set adapter
+                            layoutManager = new LinearLayoutManager(mContext);
+                            recyclerspecifyMedicine.setLayoutManager(new LinearLayoutManager(PrescriptionUploadOptionActivity.this, LinearLayoutManager.VERTICAL, false));
+                            recyclerspecifyMedicine.setHasFixedSize(true);
+                            mSearchViewAdapter = new SearchProductViewAdapter(mContext, searchModelsArrayList);
+                            recyclerspecifyMedicine.setAdapter(mSearchViewAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(PrescriptionUploadOptionActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 }

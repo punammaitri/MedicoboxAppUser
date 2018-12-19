@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -52,7 +53,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
     public InstaAddNewListAdapter(InstaAddNewListActivity mContext, ArrayList<GetWishListModel> mGetWishListModels) {
         this.mContext = mContext;
         this.mDataArrayList = mGetWishListModels;
-        this.mDeleteWishList =mContext;
+        this.mDeleteWishList = mContext;
     }
 
     @NonNull
@@ -69,10 +70,10 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         //holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
         holder.tvMedicineType.setText(mDataArrayList.get(position).getWishlist_name());
 
-        holder.list.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.recyclerList.setLayoutManager(new LinearLayoutManager(mContext));
 
         if (!(mDataArrayList.get(position).getItems().size() == 0)) {
-            holder.list.setAdapter(new InstaProductSubListDetailAdapter(mContext, mDataArrayList.get(position).getItems()));
+            holder.recyclerList.setAdapter(new InstaProductSubListDetailAdapter(mContext, mDataArrayList.get(position).getItems()));
         }
 
 
@@ -109,6 +110,27 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 optionsMenu.show();
             }
         });*/
+
+        holder.img_down_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.img_down_arrow.setVisibility(View.GONE);
+                holder.img_up_arrow.setVisibility(View.VISIBLE);
+                holder.relSelectAll.setVisibility(View.GONE);
+                holder.recyclerList.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.img_up_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.img_up_arrow.setVisibility(View.GONE);
+                holder.img_down_arrow.setVisibility(View.VISIBLE);
+                holder.relSelectAll.setVisibility(View.GONE);
+                holder.recyclerList.setVisibility(View.GONE);
+            }
+        });
+
 
         holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,20 +192,22 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                         @Override
                         public void onResponse(String response) {
 
-                            if (response.contains("{")) {
-                                // for removing braces
-                                CustomProgressDialog.getInstance().dismissDialog();
-                                String afterRemoveBrace = response.replace("{", "").replace("}", "");
-                                StringTokenizer getMessage = new StringTokenizer(afterRemoveBrace, ":");
-                                String msg = getMessage.nextToken();
-                                String error_msg = getMessage.nextToken();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONObject jsonResponse = new JSONObject(jsonObject.get("response").toString());
+                                String getStatus = String.valueOf(jsonResponse.get("status"));
 
-                                //replace double quote
-                                String lGetMesage = error_msg.replace("\"", "");
-                                Toast.makeText(mContext, "" + lGetMesage, Toast.LENGTH_SHORT).show();
-                                //Delete method to reload data
-                                mDeleteWishList.Delete();
+                                if (getStatus.equals("success")) {
+                                    String msg = String.valueOf(jsonResponse.get("msg"));
+                                    Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                                    mDeleteWishList.Delete();
+                                } else {
+                                    Toast.makeText(mContext, "Wishlist not deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
+
                             popup.dismiss();
                             CustomProgressDialog.getInstance().dismissDialog();
                         }
@@ -230,8 +254,14 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         Button btnAddToCart;
         @BindView(R.id.btn_share_wishlist)
         Button btn_share_wishlist;
-        @BindView(R.id.list)
-        RecyclerView list;
+        @BindView(R.id.recyclerList)
+        RecyclerView recyclerList;
+        @BindView(R.id.img_up_arrow)
+        ImageView img_up_arrow;
+        @BindView(R.id.img_down_arrow)
+        ImageView img_down_arrow;
+        @BindView(R.id.relSelectAll)
+        RelativeLayout relSelectAll;
         @BindView(R.id.relOptionDots)
         RelativeLayout relOptionDots;
 
