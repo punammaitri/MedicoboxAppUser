@@ -44,7 +44,7 @@
                     app:hintTextAppearance="@style/TextLabel">
 
                     <EditText
-                        android:id="@+id/edt_first_name"
+                        android:id="@+id/edt_firstname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_regular"

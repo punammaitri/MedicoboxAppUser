@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
@@ -160,30 +161,37 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
                         @Override
                         public void onResponse(String response) {
 
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JsonArray asJsonArray = getAllResponse.getAsJsonArray("response");
+                            if (response.contains("There is no wishlist")) {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                String responseMsg = getAllResponse.get("response").getAsString();
+                                CustomProgressDialog.getInstance().dismissDialog();
+                                Toast.makeText(mContext, "" + responseMsg, Toast.LENGTH_SHORT).show();
+                            } else {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JsonArray asJsonArray = getAllResponse.getAsJsonArray("response");
 
-                            if (asJsonArray != null) {
-                                mGetWishListModels.clear();
-                                for (int i = 0; i < asJsonArray.size(); i++) {
-                                    String wishlist_name_id = ((JsonObject) asJsonArray.get(i)).get("wishlist_name_id").getAsString();
-                                    String wishlist_name = ((JsonObject) asJsonArray.get(i)).get("wishlist_name").getAsString();
-                                    JsonArray items = ((JsonObject) asJsonArray.get(i)).get("items").getAsJsonArray();
+                                if (asJsonArray != null) {
+                                    mGetWishListModels.clear();
+                                    for (int i = 0; i < asJsonArray.size(); i++) {
+                                        String wishlist_name_id = ((JsonObject) asJsonArray.get(i)).get("wishlist_name_id").getAsString();
+                                        String wishlist_name = ((JsonObject) asJsonArray.get(i)).get("wishlist_name").getAsString();
+                                        JsonArray items = ((JsonObject) asJsonArray.get(i)).get("items").getAsJsonArray();
 
-                                    GetWishListModel getWishListModel = new GetWishListModel(wishlist_name_id, wishlist_name, items);
-                                    getWishListModel.setWishlist_name_id(wishlist_name_id);
-                                    getWishListModel.setWishlist_name(wishlist_name);
-                                    getWishListModel.setItems(items);
-                                    mGetWishListModels.add(getWishListModel);
+                                        GetWishListModel getWishListModel = new GetWishListModel(wishlist_name_id, wishlist_name, items);
+                                        getWishListModel.setWishlist_name_id(wishlist_name_id);
+                                        getWishListModel.setWishlist_name(wishlist_name);
+                                        getWishListModel.setItems(items);
+                                        mGetWishListModels.add(getWishListModel);
+                                    }
                                 }
-                            }
 
-                            //set all wishlist adapter
-                            layoutManager = new LinearLayoutManager(mContext);
-                            rc_medicine_list.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-                            rc_medicine_list.setHasFixedSize(true);
-                            rc_medicine_list.setAdapter(new InstaAddNewListAdapter(InstaAddNewListActivity.this, mGetWishListModels));
-                            CustomProgressDialog.getInstance().dismissDialog();
+                                //set all wishlist adapter
+                                layoutManager = new LinearLayoutManager(mContext);
+                                rc_medicine_list.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+                                rc_medicine_list.setHasFixedSize(true);
+                                rc_medicine_list.setAdapter(new InstaAddNewListAdapter(InstaAddNewListActivity.this, mGetWishListModels));
+                                CustomProgressDialog.getInstance().dismissDialog();
+                            }
                         }
 
                         @Override
@@ -200,6 +208,6 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
 
     @Override
     public void Delete() {
-       CallGetAllWishListAPI();
+        CallGetAllWishListAPI();
     }
 }

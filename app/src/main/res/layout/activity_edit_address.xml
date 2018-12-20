@@ -2,8 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/color_gray_bg"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_gray_bg">
 
     <include
         android:id="@+id/layout_custom_toolbar"
@@ -21,11 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/height_10"
-            android:layout_marginRight="@dimen/height_10"
             android:layout_marginTop="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_10"
             android:orientation="vertical">
 
             <RadioButton
+                android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-2dp"
@@ -34,9 +35,9 @@
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Set as billing address"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:theme="@style/MyRadioButton"
                 android:textColor="@color/colorblack"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:theme="@style/MyRadioButton" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -45,15 +46,31 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
-                    android:id="@+id/edt_name"
+                    android:id="@+id/edt_firstname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="Firstname"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:text="Akshay Shinde"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/edt_lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:hint="Lastname"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -65,11 +82,12 @@
                     android:id="@+id/edt_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone*"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="Phone*"
                     android:imeOptions="actionNext"
+                    android:inputType="number"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -81,11 +99,11 @@
                     android:id="@+id/edt_flat_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
                     android:hint="Flat Number, Building Name*"
                     android:imeOptions="actionNext"
-                    android:fontFamily="@font/open_sans_regular"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -97,12 +115,11 @@
                     android:id="@+id/edt_street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Street / Road Name"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="Street / Road Name"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -114,11 +131,11 @@
                     android:id="@+id/edt_landmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Landmark"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="Landmark"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -130,11 +147,12 @@
                     android:id="@+id/edt_pincde"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Pincode*"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="Pincode*"
+                    android:inputType="number"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -146,11 +164,11 @@
                     android:id="@+id/edt_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="State"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="State"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -162,11 +180,11 @@
                     android:id="@+id/edt_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="City"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
 
             <RadioGroup
@@ -180,32 +198,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:theme="@style/MyRadioButton"
-                    android:textColor="@color/colorblack"
                     android:checked="true"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="Home"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorblack"
+                    android:theme="@style/MyRadioButton" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_regular"
                     android:text="Office"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:theme="@style/MyRadioButton"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorblack" />
+                    android:textColor="@color/colorblack"
+                    android:theme="@style/MyRadioButton" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Other"
                     android:fontFamily="@font/open_sans_regular"
+                    android:text="Other"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:theme="@style/MyRadioButton"
-                    android:textColor="@color/colorblack" />
+                    android:textColor="@color/colorblack"
+                    android:theme="@style/MyRadioButton" />
 
             </RadioGroup>
 
@@ -214,17 +232,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_45"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/height_20"
                 android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginRight="@dimen/height_30"
                 android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_30"
+                android:layout_marginBottom="@dimen/height_20"
                 android:background="@drawable/custom_btn_bg"
-                android:text="Save"
                 android:fontFamily="@font/open_sans_regular"
+                android:text="Save"
                 android:textAllCaps="true"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/height_16"
-                android:textStyle="bold"
-                android:textColor="@android:color/white" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 

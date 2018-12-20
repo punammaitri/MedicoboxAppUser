@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.tv_sign_in_here)
     TextView tv_sign_in_here;
     CustomProgressDialog mAlert;
-    @BindView(R.id.edt_first_name)
+    @BindView(R.id.edt_firstname)
     EditText edt_first_name;
     @BindView(R.id.edt_last_name)
     EditText edt_last_name;

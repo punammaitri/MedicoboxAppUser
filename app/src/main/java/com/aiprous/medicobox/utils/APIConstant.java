@@ -50,6 +50,10 @@ public class APIConstant {
     public static String USERORDER = "http://user8.itsindev.com/medibox/API/user_orders.php";
     public static String SINGLE_ORDER = "http://user8.itsindev.com/medibox/API/single-order.php";
 
+    // add address
+    public static String ADD_ADDRESS = "http://user8.itsindev.com/medibox/API/add_address.php";
+    public static String GET_ALL_ADDRESS = "http://user8.itsindev.com/medibox/API/customer-addresses.php";
+
     //Response Status Code
     public static final int SUCCESS_CODE = 200;
     /*For Sweet alert*/

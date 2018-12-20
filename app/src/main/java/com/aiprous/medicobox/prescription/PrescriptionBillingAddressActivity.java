@@ -28,7 +28,7 @@ public class PrescriptionBillingAddressActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-    @BindView(R.id.edt_name)
+    @BindView(R.id.edt_firstname)
     EditText edtName;
     @BindView(R.id.edt_phone)
     EditText edtPhone;

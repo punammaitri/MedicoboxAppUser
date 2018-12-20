@@ -82,13 +82,14 @@
                             android:orientation="vertical"
                             android:visibility="gone">
 
-                            <TextView
-                                android:id="@+id/txt_duration_of_dose"
+                            <EditText
+                                android:id="@+id/edt_duration_of_dose"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/height_13"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="Duration of dosage in days"
+                                android:hint="Duration of dosage in days"
+                                android:inputType="number"
                                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
                             <View
@@ -136,6 +137,8 @@
                                 android:layout_marginTop="@dimen/height_13"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:hint="Medicine(s) name, quantity/duration"
+                                android:imeOptions="actionSearch"
+                                android:inputType="textAutoComplete|textAutoCorrect"
                                 android:textAppearance="?android:attr/textAppearanceSmall" />
                         </LinearLayout>
                     </RadioGroup>

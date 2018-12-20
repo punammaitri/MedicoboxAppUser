@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -12,8 +11,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -23,9 +24,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.adapter.SearchProductViewAdapter;
-import com.aiprous.medicobox.adapter.SearchViewAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
@@ -35,6 +34,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -55,8 +55,8 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
-    @BindView(R.id.txt_duration_of_dose)
-    TextView txtDurationOfDose;
+    @BindView(R.id.edt_duration_of_dose)
+    EditText edt_duration_of_dose;
     @BindView(R.id.txtCartItems)
     TextView txtCartItems;
     @BindView(R.id.txt_duration_example)
@@ -87,11 +87,19 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     LinearLayout linSearchProduct;
     RecyclerView rc_medicine_list;
     ArrayList<PrescriptionUploadOptionActivity.ListModel> mlistModelsArray = new ArrayList<>();
-
+    ArrayList<GetImageUrlModel> mGetImageUrlModel = new ArrayList<>();
+    ArrayList<GetImageUrlModel> mUpdateGetImageUrlModel = new ArrayList<>();
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<SearchModel> searchModelsArrayList = new ArrayList<>();
     private SearchProductViewAdapter mSearchViewAdapter;
+    private String getPatientname;
+    private String getAdditionalComment;
+    private String mFlag = "";
+    private String dataModel;
+    private String getDose;
+    private String getDoseparameter;
+    ArrayAdapter<SearchModel> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +130,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
         rc_medicine_list.setAdapter(new PrescriptionUploadOptionAdapter(mContext, mlistModelsArray));
 
 
+
         edt_specify_medicine.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -130,6 +139,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence newText, int start, int before, int count) {
+
 
                 String ff = String.valueOf(newText);
                 try {
@@ -140,10 +150,10 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if (searchModelsArrayList != null && !searchModelsArrayList.isEmpty()) {
+              /*  if (searchModelsArrayList != null && !searchModelsArrayList.isEmpty()) {
                     ArrayList<SearchModel> filteredModelList = filter(searchModelsArrayList, ff);
                     mSearchViewAdapter.setFilter(filteredModelList);
-                }
+                }*/
 
             }
 
@@ -176,6 +186,17 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
+
+        if (getIntent().getStringExtra("PrescriptionImageModel") != null) {
+            dataModel = getIntent().getStringExtra("PrescriptionImageModel");
+         /*   Type listOfItemData = new TypeToken<List<MainCategoryModel.SubCat>>() {
+            }.getType();
+
+            mGetImageUrlModel = gson.fromJson(dataModel, listOfItemData);*/
+            getPatientname = getIntent().getStringExtra("getPatientName");
+            getAdditionalComment = getIntent().getStringExtra("getAdditionalComment");
+
+        }
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -196,6 +217,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 linSearchProduct.setVisibility(View.GONE);
                 txtCartItems.setVisibility(View.GONE);
 
+                mFlag = "order_everything";
                 break;
             case R.id.rb_specify_medicine:
                 linearSpecifyMedicine.setVisibility(View.VISIBLE);
@@ -203,6 +225,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 rc_medicine_list.setVisibility(View.GONE);
                 img_attach_arrow.setImageResource(R.drawable.arrow_yellow);
 
+                mFlag = "specify_medicine";
                 break;
             case R.id.rb_call_me:
                 linearSpecifyMedicine.setVisibility(View.GONE);
@@ -212,15 +235,52 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
                 linSearchProduct.setVisibility(View.GONE);
                 txtCartItems.setVisibility(View.GONE);
+
+                mFlag = "call_me";
                 break;
             case R.id.btnContinue:
-                startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+                if (mFlag.equals("call_me")) {
+                    CallNextActivity(mFlag);
+                } else if (mFlag.equals("order_everything")) {
+                    if (edt_duration_of_dose.getText().length() == 0) {
+                        edt_duration_of_dose.setError("Please enter amount");
+                    } else {
+                        getDose = edt_duration_of_dose.getText().toString();
+                        CallNextActivity(mFlag);
+                    }
+                } else if (mFlag.equals("specify_medicine")) {
+                    CallNextActivity(mFlag);
+                }
                 break;
             case R.id.rlayout_back_button:
                 finish();
                 break;
         }
+    }
+
+    private void CallNextActivity(String mFlag) {
+
+        if (!getDose.isEmpty()) {
+            getDoseparameter = getDose;
+        } else {
+            getDoseparameter = "";
+        }
+
+        GetImageUrlModel getImageUrlModel = new GetImageUrlModel(dataModel, getPatientname, getAdditionalComment, mFlag, getDoseparameter);
+        getImageUrlModel.setImageUrl(dataModel);
+        getImageUrlModel.setPatientName(getPatientname);
+        getImageUrlModel.setAdditionalComment(getAdditionalComment);
+        getImageUrlModel.setUploadPrescriptionFlag(mFlag);
+        getImageUrlModel.setGetDoseParam(getDoseparameter);
+        mUpdateGetImageUrlModel.add(getImageUrlModel);
+
+        Gson gson = new Gson();
+        String newUpdatedmodel = gson.toJson(mUpdateGetImageUrlModel);
+        startActivity(new Intent(mContext, PrescriptionChooseDeliveryAddressActivity.class)
+                .putExtra("PrescriptionImageModel", newUpdatedmodel));
+
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     public class ListModel {
@@ -300,7 +360,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         // Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
-                        searchModelsArrayList.clear();
+                      //  searchModelsArrayList.clear();
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
@@ -329,12 +389,16 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                             linSearchProduct.setVisibility(View.VISIBLE);
                             txtCartItems.setVisibility(View.VISIBLE);
 
-                            //set adapter
+                             adapter = new ArrayAdapter<SearchModel>
+                                    (mContext, android.R.layout.simple_list_item_1, searchModelsArrayList);
+                            edt_specify_medicine.setAdapter(adapter);
+
+                        /*    //set adapter
                             layoutManager = new LinearLayoutManager(mContext);
                             recyclerspecifyMedicine.setLayoutManager(new LinearLayoutManager(PrescriptionUploadOptionActivity.this, LinearLayoutManager.VERTICAL, false));
                             recyclerspecifyMedicine.setHasFixedSize(true);
                             mSearchViewAdapter = new SearchProductViewAdapter(mContext, searchModelsArrayList);
-                            recyclerspecifyMedicine.setAdapter(mSearchViewAdapter);
+                            recyclerspecifyMedicine.setAdapter(mSearchViewAdapter);*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

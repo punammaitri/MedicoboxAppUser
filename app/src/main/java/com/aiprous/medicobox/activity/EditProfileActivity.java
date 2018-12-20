@@ -40,7 +40,6 @@ import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.UPDATEUSERINFO;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
-import static com.aiprous.medicobox.utils.BaseActivity.passwordValidation;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -50,7 +49,7 @@ public class EditProfileActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-    @BindView(R.id.edt_first_name)
+    @BindView(R.id.edt_firstname)
     EditText edtFirstName;
     @BindView(R.id.edt_last_name)
     EditText edtLastName;

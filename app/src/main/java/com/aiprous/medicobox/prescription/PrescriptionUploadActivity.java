@@ -2,6 +2,7 @@ package com.aiprous.medicobox.prescription;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -43,6 +44,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +53,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,7 +80,8 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     RecyclerView rc_medicine_list;
     @BindView(R.id.img_valid_prescription)
     ImageView img_valid_prescription;
-    ArrayList<ListModel> mlistModelsArray = new ArrayList<>();
+    ArrayList<ListModel> mBitmapModelsArray = new ArrayList<>();
+    ArrayList<ImageUrlModel> mlistModelsArray = new ArrayList<>();
     @BindView(R.id.radioButtonYes)
     RadioButton radioButtonYes;
     @BindView(R.id.radioButtonNo)
@@ -112,17 +116,20 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
     public String imageBinaryString = "";
     public static int activityCalled = 0;
     public static final int RESULT_OK = -1;
+    private Uri multipleImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_prescription);
-
         ButterKnife.bind(this);
         init();
     }
 
     private void init() {
+
+        mBitmapModelsArray.clear();
+        mlistModelsArray.clear();
 
         searchview_medicine.setFocusable(false);
         //Change status bar color
@@ -145,13 +152,16 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        //set list adapter
+        setListAdapter();
     }
 
     private void setListAdapter() {
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new PrescriptionUploadAdapter(mContext, mlistModelsArray));
+        rc_medicine_list.setAdapter(new PrescriptionUploadAdapter(mContext, mBitmapModelsArray));
     }
 
     @Override
@@ -184,8 +194,22 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.btnContinue:
-                startActivity(new Intent(this, PrescriptionUploadOptionActivity.class));
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                if (edtPatientName.getText().length() == 0) {
+                    edtPatientName.setError("add patient name");
+                } else if (edtAdditionalComment.getText().length() == 0) {
+                    Toast.makeText(mContext, "Add comment", Toast.LENGTH_SHORT).show();
+                } else {
+                    String getPatientName = edtPatientName.getText().toString().trim();
+                    String getAdditionalComment = edtAdditionalComment.getText().toString().trim();
+                    //send all data to prescription activity
+                    Gson gson = new Gson();
+                    String dataModel = gson.toJson(mlistModelsArray);
+                    startActivity(new Intent(mContext,PrescriptionUploadOptionActivity.class)
+                            .putExtra("PrescriptionImageModel", dataModel)
+                            .putExtra("getPatientName", getPatientName)
+                            .putExtra("getAdditionalComment", getAdditionalComment));
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
                 break;
             case R.id.rlayout_cart:
                 startActivity(new Intent(this, CartActivity.class));
@@ -203,8 +227,11 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
             startActivityForResult(intent, RESULT_TAKE_IMAGE);
         } else {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, RESULT_UPLOAD_IMAGE);
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), RESULT_UPLOAD_IMAGE);
         }
     }
 
@@ -254,19 +281,56 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);*/
                 } else if (requestCode == RESULT_UPLOAD_IMAGE) {
 
-                    mImageCaptureUri = data.getData();
-                    cropingIMG();
-                    //mBitmap = getSelectedImage(mImageCaptureUri);
+                    if (data.getClipData() != null) {
+                        int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
+                        for (int i = 0; i < count; i++) {
+                            multipleImageUrl = data.getClipData().getItemAt(i).getUri();
+                            // Create content resolver.
+                            ContentResolver contentResolver = getContentResolver();
+                            InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
+                            Bitmap imgBitmap = BitmapFactory.decodeStream(inputStream);
+                            imageBinaryString = convertBitmapToString(imgBitmap);
+                            //add to bitmap array
+                            mBitmapModelsArray.add(new ListModel(imgBitmap));
+                            setListAdapter();
+                            //Add image to image Array
+                            ImageUrlModel imageUrlModel = new ImageUrlModel(imageBinaryString);
+                            imageUrlModel.setImageUrl(imageBinaryString);
+                            mlistModelsArray.add(imageUrlModel);
+                            inputStream.close();
+                        }
+                    } else if (data.getData() != null) {
+                        multipleImageUrl =data.getData();
+                        // Create content resolver.
+                        ContentResolver contentResolver = getContentResolver();
+                        InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
+                        Bitmap imgBitmap = BitmapFactory.decodeStream(inputStream);
+                        imageBinaryString = convertBitmapToString(imgBitmap);
+                        //add to bitmap array
+                        mBitmapModelsArray.add(new ListModel(imgBitmap));
+                        setListAdapter();
+                        //Add image to image Array
+                        ImageUrlModel imageUrlModel = new ImageUrlModel(imageBinaryString);
+                        imageUrlModel.setImageUrl(imageBinaryString);
+                        mlistModelsArray.add(imageUrlModel);
+                        inputStream.close();
+                    }
                 } else if (requestCode == RESULT_CROPING_CODE) {
 
                     try {
                         if (outPutFile.exists()) {
                             mBitmap = decodeFile(outPutFile);
                             //ivProfile.setImageBitmap(mBitmap);
-                            mlistModelsArray.add(new ListModel(mBitmap));
                             imageBinaryString = convertBitmapToString(mBitmap);
+                            //add to bitmap array
+                            mBitmapModelsArray.add(new ListModel(mBitmap));
+                            setListAdapter();
+                            //Add image to image Array
+                            ImageUrlModel imageUrlModel = new ImageUrlModel(imageBinaryString);
+                            imageUrlModel.setImageUrl(imageBinaryString);
+                            mlistModelsArray.add(imageUrlModel);
                             //Call  upload prescription API
-                            callUploadPrescriptionAPI(imageBinaryString);
+                            //callUploadPrescriptionAPI(imageBinaryString);
                         } else {
                             Toast.makeText(mContext, "error while save file", Toast.LENGTH_SHORT).show();
                         }
@@ -355,7 +419,6 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-
     private Bitmap getCapturedImage(String imageName) {
         Bitmap bitmap = null;
         try {
@@ -430,11 +493,11 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                 else
                     mBitmap = getSelectedImage(mImageCaptureUri);
                 //ivProfile.setImageBitmap(mBitmap);
-                mlistModelsArray.add(new ListModel(mBitmap));
-
+                mBitmapModelsArray.add(new ListModel(mBitmap));
+                setListAdapter();
                 imageBinaryString = convertBitmapToString(mBitmap);
                 //Call  upload prescription API
-                callUploadPrescriptionAPI(imageBinaryString);
+                //callUploadPrescriptionAPI(imageBinaryString);
             } catch (Exception e) {
             }
         }
@@ -454,12 +517,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
 
 
     public class ListModel {
-        // int image;
-        //  String medicineName;
-        // String value;
-        // String mrp;
-        // String discount;
-        // String price;
+
         Bitmap Imagebitmap;
 
         public ListModel(Bitmap imagebitmap) {
