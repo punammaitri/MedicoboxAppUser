@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.adapter.GetWishListAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.GetWishListModel;
@@ -28,6 +27,7 @@ import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -43,10 +43,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_WISHLIST;
+import static com.aiprous.medicobox.utils.APIConstant.SHARE_WISHLIST;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
-public class InstaAddNewListActivity extends AppCompatActivity implements InstaAddNewListAdapter.DeleteInterface {
+public class InstaAddNewListActivity extends AppCompatActivity implements InstaAddNewListAdapter.InstaAddNewListInterface {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
@@ -209,5 +210,54 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
     @Override
     public void Delete() {
         CallGetAllWishListAPI();
+    }
+
+    @Override
+    public void shareWishList(String userId, String wishlist_name_id, String edt_emails, String edt_messages) {
+
+        if (!isNetworkAvailable(mContext)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("user_id",userId);
+                jsonObject.put("wishlistname_id",wishlist_name_id);
+                jsonObject.put("emails",edt_emails);
+                jsonObject.put("message", edt_messages);
+                Log.e("url", "" + jsonObject.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            AndroidNetworking.post(SHARE_WISHLIST)
+                    .addJSONObjectBody(jsonObject) // posting json
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            String responseStatus = getAllResponse.get("status").getAsString();
+                            if (responseStatus.equals("success")) {
+                                String responseMsg = getAllResponse.get("message").getAsString();
+                                CustomProgressDialog.getInstance().dismissDialog();
+                                Toast.makeText(mContext, "" + responseStatus, Toast.LENGTH_SHORT).show();
+                            } else {
+                                String responseMsg = getAllResponse.get("message").getAsString();
+                                Toast.makeText(mContext, "" + responseMsg, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    });
+        }
     }
 }

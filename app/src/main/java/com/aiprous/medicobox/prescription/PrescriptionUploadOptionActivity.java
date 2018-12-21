@@ -97,7 +97,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     private String getAdditionalComment;
     private String mFlag = "";
     private String dataModel;
-    private String getDose;
+    private String getDose= "";
     private String getDoseparameter;
     ArrayAdapter<SearchModel> adapter;
 
@@ -261,18 +261,12 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
 
     private void CallNextActivity(String mFlag) {
 
-        if (!getDose.isEmpty()) {
-            getDoseparameter = getDose;
-        } else {
-            getDoseparameter = "";
-        }
-
-        GetImageUrlModel getImageUrlModel = new GetImageUrlModel(dataModel, getPatientname, getAdditionalComment, mFlag, getDoseparameter);
+        GetImageUrlModel getImageUrlModel = new GetImageUrlModel(dataModel, getPatientname, getAdditionalComment, mFlag, getDose);
         getImageUrlModel.setImageUrl(dataModel);
         getImageUrlModel.setPatientName(getPatientname);
         getImageUrlModel.setAdditionalComment(getAdditionalComment);
         getImageUrlModel.setUploadPrescriptionFlag(mFlag);
-        getImageUrlModel.setGetDoseParam(getDoseparameter);
+        getImageUrlModel.setGetDoseParam(getDose);
         mUpdateGetImageUrlModel.add(getImageUrlModel);
 
         Gson gson = new Gson();

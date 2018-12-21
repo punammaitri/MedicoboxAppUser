@@ -7,14 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
-import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
 import com.aiprous.medicobox.prescription.PrescriptionEditAddressActivity;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -34,12 +33,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.aiprous.medicobox.utils.APIConstant.ADD_ADDRESS;
 import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_ADDRESS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class MyAccountActivity extends AppCompatActivity {
-
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
@@ -53,11 +50,30 @@ public class MyAccountActivity extends AppCompatActivity {
     TextView txtMobileNumber;
     @BindView(R.id.txt_user_name)
     TextView txt_user_name;
-    @BindView(R.id.txtEditAddAddress)
-    TextView txtEditAddAddress;
-    @BindView(R.id.tv_change_delivery_address)
-    TextView tvChangeDeliveryAddress;
+    @BindView(R.id.txtEditBillingAddress)
+    TextView txtEditBillingAddress;
+    @BindView(R.id.txt_shipping_address)
+    TextView txt_shipping_address;
+    @BindView(R.id.txtUsername)
+    TextView txtUsername;
+    @BindView(R.id.txtFullAddress)
+    TextView txtFullAddress;
+    @BindView(R.id.txtTelephone)
+    TextView txtTelephone;
+    @BindView(R.id.linearBillingAddress)
+    LinearLayout linearBillingAddress;
+    @BindView(R.id.linearShippingAddress)
+    LinearLayout linearShippingAddress;
+    @BindView(R.id.txtShippingName)
+    TextView txtShippingName;
+    @BindView(R.id.txtShippingAddress)
+    TextView txtShippingAddress;
+    @BindView(R.id.txtShippingMobile)
+    TextView txtShippingMobile;
+
     private Context mContext = this;
+    private String id, street, lastname, postcode, region_id;
+    private String country_id, city, firstname, telephone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +114,13 @@ public class MyAccountActivity extends AppCompatActivity {
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             callGetAddress(jsonObject);
+            CustomProgressDialog.getInstance().dismissDialog();
         }
     }
 
     private void callGetAddress(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(GET_ALL_ADDRESS)
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
@@ -113,25 +130,55 @@ public class MyAccountActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                        JsonArray responseArray = getAllResponse.get("address").getAsJsonArray();
+                        JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                        String status = responseArray.get("status").getAsString();
+                        if (status.equals("success")) {
+                            JsonArray jsonAddressArray = responseArray.get("address").getAsJsonArray();
+                            if (!(jsonAddressArray.size() == 0)) {
+                                for (int i = 0; i < jsonAddressArray.size(); i++) {
+                                    JsonObject asJsonObject = jsonAddressArray.get(i).getAsJsonObject();
+                                    if (asJsonObject.get("default_billing").getAsString().equalsIgnoreCase("true")) {
+                                        linearBillingAddress.setVisibility(View.VISIBLE);
+                                        id = asJsonObject.get("id").getAsString();
+                                        firstname = asJsonObject.get("firstname").getAsString();
+                                        lastname = asJsonObject.get("lastname").getAsString();
+                                        city = asJsonObject.get("city").getAsString();
+                                        country_id = asJsonObject.get("country_id").getAsString();
+                                        region_id = asJsonObject.get("region_id").getAsString();
+                                        postcode = asJsonObject.get("postcode").getAsString();
+                                        telephone = asJsonObject.get("telephone").getAsString();
+                                        JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                        JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                        street = streetInnerArray.get(0).getAsString();
 
+                                        String fullAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                        txtFullAddress.setText(fullAddress);
+                                        txtUsername.setText(firstname + " " + lastname);
+                                        txtTelephone.setText(telephone);
+                                        txtEditBillingAddress.setText("Edit");
+                                    } else {
+                                        linearShippingAddress.setVisibility(View.VISIBLE);
+                                        id = asJsonObject.get("id").getAsString();
+                                        firstname = asJsonObject.get("firstname").getAsString();
+                                        lastname = asJsonObject.get("lastname").getAsString();
+                                        city = asJsonObject.get("city").getAsString();
+                                        country_id = asJsonObject.get("country_id").getAsString();
+                                        region_id = asJsonObject.get("region_id").getAsString();
+                                        postcode = asJsonObject.get("postcode").getAsString();
+                                        telephone = asJsonObject.get("telephone").getAsString();
+                                        JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                        JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                        street = streetInnerArray.get(0).getAsString();
 
-                        CustomProgressDialog.getInstance().dismissDialog();
-                        // do anything with response
-                      /*  try {
-                            JSONObject jsonObject = new JSONObject(response.getString("response"));
-                            String getId = jsonObject.get("id").toString();
-                            String getGroupId = jsonObject.get("group_id").toString();
-                            String getEmail = jsonObject.get("email").toString();
-                            String getFirstname = jsonObject.get("firstname").toString();
-                            String getLastname = jsonObject.get("lastname").toString();
-                            String getStoreId = jsonObject.get("store_id").toString();
-                            String getWebsiteId = jsonObject.get("website_id").toString();
-                            String getMobile = jsonObject.get("mobile").toString();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
+                                        String fullAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                        txtShippingAddress.setText(fullAddress);
+                                        txtShippingName.setText(firstname + " " + lastname);
+                                        txtShippingMobile.setText(telephone);
+                                        txt_shipping_address.setText("Edit");
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     @Override
@@ -148,7 +195,6 @@ public class MyAccountActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
-
         startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
@@ -164,22 +210,39 @@ public class MyAccountActivity extends AppCompatActivity {
         finish();
     }
 
-    @OnClick(R.id.tv_change_delivery_address)
-    public void ChangeDeliveryAddress() {
-        startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
-    @OnClick({R.id.txtEditAddAddress, R.id.tv_change_delivery_address})
+    @OnClick({R.id.txtEditBillingAddress, R.id.txt_shipping_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.txtEditAddAddress:
-                startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
-                        .putExtra("billingFlag", "true"));
+            case R.id.txtEditBillingAddress:
+                if (txtEditBillingAddress.equals("Add")) {
+                    startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
+                            .putExtra("billingFlag", "true")
+                            .putExtra("id", id)
+                            .putExtra("firstname", firstname)
+                            .putExtra("lastname", lastname)
+                            .putExtra("city", city)
+                            .putExtra("country_id", country_id)
+                            .putExtra("region_id", region_id)
+                            .putExtra("postcode", postcode)
+                            .putExtra("telephone", telephone)
+                            .putExtra("street", street));
+                    finish();
+                }
+
                 break;
-            case R.id.tv_change_delivery_address:
-                startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
-                        .putExtra("billingFlag", "false"));
+            case R.id.txt_shipping_address:
+                if (txt_shipping_address.equals("Add")) {
+                    startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
+                            .putExtra("shippingFlag", "false"));
+                    finish();
+                } else {
+                    startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
+                            .putExtra("shippingFlag", "false"));
+                    finish();
+                }
                 break;
         }
     }

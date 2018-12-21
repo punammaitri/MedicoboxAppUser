@@ -7,14 +7,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.AllCustomerAddress;
+import com.aiprous.medicobox.model.ProductsModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,17 +40,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.DELETE_ADDRESS;
+import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_ADDRESS;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
-public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity {
+
+public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity implements PrescriptionChooseDeliveryAddressAdapter.DeleteInterface {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
+    @BindView(R.id.rc_medicine_list)
+    RecyclerView rc_medicine_list;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-    RecyclerView rc_medicine_list;
-    ArrayList<PrescriptionChooseDeliveryAddressActivity.ListModel> mlistModelsArray = new ArrayList<>();
+    ArrayList<AllCustomerAddress> mAllCustomerArrayList = new ArrayList<AllCustomerAddress>();
+
+    private String id, street, lastname, postcode, region_id;
+    private String country_id, city, firstname, telephone;
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -52,18 +78,6 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        rc_medicine_list = findViewById(R.id.rc_medicine_list);
-
-        //add static data into List array list
-        mlistModelsArray.add(new PrescriptionChooseDeliveryAddressActivity.ListModel(R.drawable.ic_menu_manage, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new PrescriptionChooseDeliveryAddressActivity.ListModel(R.drawable.ic_menu_manage, "Shubham pawar", "Bottle of 60 tablet", "150", "30%", "135"));
-
-
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new PrescriptionChooseDeliveryAddressAdapter(mContext, mlistModelsArray));
-
     }
 
     @Override
@@ -73,6 +87,25 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
+        CallGetAddressAPI();
+        CustomProgressDialog.getInstance().dismissDialog();
+    }
+
+    private void CallGetAddressAPI() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", MedicoboxApp.onGetId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+            callGetAddress(jsonObject);
         }
     }
 
@@ -84,7 +117,9 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
 
     @OnClick(R.id.tv_add_new)
     public void addNew() {
-        startActivity(new Intent(this, PrescriptionEditAddressActivity.class));
+        startActivity(new Intent(this, PrescriptionEditAddressActivity.class)
+                .putExtra("billingFlag", "true")
+                .putExtra("chooseDeliveryAddress", "true"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
@@ -101,70 +136,121 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     }
 
 
-    public class ListModel {
-        int image;
-        String medicineName;
-        String value;
-        String mrp;
-        String discount;
-        String price;
+    private void callGetAddress(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(GET_ALL_ADDRESS)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-        public ListModel(int image, String medicineName, String value, String mrp, String discount, String price) {
-            this.image = image;
-            this.medicineName = medicineName;
-            this.value = value;
-            this.mrp = mrp;
-            this.discount = discount;
-            this.price = price;
+                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                        JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                        String status = responseArray.get("status").getAsString();
+                        if (status.equals("success")) {
+                            JsonArray jsonAddressArray = responseArray.get("address").getAsJsonArray();
+                            if (jsonAddressArray != null) {
+                                for (int i = 0; i < jsonAddressArray.size(); i++) {
+                                    JsonObject asJsonObject = jsonAddressArray.get(i).getAsJsonObject();
+                                    id = asJsonObject.get("id").getAsString();
+                                    firstname = asJsonObject.get("firstname").getAsString();
+                                    lastname = asJsonObject.get("lastname").getAsString();
+                                    city = asJsonObject.get("city").getAsString();
+                                    country_id = asJsonObject.get("country_id").getAsString();
+                                    region_id = asJsonObject.get("region_id").getAsString();
+                                    postcode = asJsonObject.get("postcode").getAsString();
+                                    telephone = asJsonObject.get("telephone").getAsString();
+                                    JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                    JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                    street = streetInnerArray.get(0).getAsString();
+
+                                    AllCustomerAddress allCustomerAddress = new AllCustomerAddress(id, telephone, postcode, region_id, country_id,
+                                            city, street, lastname, firstname);
+                                    allCustomerAddress.setId(id);
+                                    allCustomerAddress.setTelephone(telephone);
+                                    allCustomerAddress.setPostcode(postcode);
+                                    allCustomerAddress.setRegion_id(region_id);
+                                    allCustomerAddress.setCountry_id(country_id);
+                                    allCustomerAddress.setCity(city);
+                                    allCustomerAddress.setStreet(street);
+                                    allCustomerAddress.setLastname(lastname);
+                                    allCustomerAddress.setFirstname(firstname);
+                                    mAllCustomerArrayList.add(allCustomerAddress);
+                                }
+
+                                layoutManager = new LinearLayoutManager(mContext);
+                                rc_medicine_list.setLayoutManager(new LinearLayoutManager(PrescriptionChooseDeliveryAddressActivity.this, LinearLayoutManager.VERTICAL, false));
+                                rc_medicine_list.setHasFixedSize(true);
+                                rc_medicine_list.setAdapter(new PrescriptionChooseDeliveryAddressAdapter(PrescriptionChooseDeliveryAddressActivity.this, mAllCustomerArrayList));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+    @Override
+    public void Delete(String id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", MedicoboxApp.onGetId());
+            jsonObject.put("address_id", id);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        public int getImage() {
-            return image;
-        }
-
-        public void setImage(int image) {
-            this.image = image;
-        }
-
-        public String getMedicineName() {
-            return medicineName;
-        }
-
-        public void setMedicineName(String medicineName) {
-            this.medicineName = medicineName;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getMrp() {
-            return mrp;
-        }
-
-        public void setMrp(String mrp) {
-            this.mrp = mrp;
-        }
-
-        public String getDiscount() {
-            return discount;
-        }
-
-        public void setDiscount(String discount) {
-            this.discount = discount;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CallDeleteAPI(jsonObject);
+            CustomProgressDialog.getInstance().dismissDialog();
         }
     }
 
+    private void CallDeleteAPI(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(DELETE_ADDRESS)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                        JsonObject jsonObject = getAllResponse.get("response").getAsJsonObject();
+                        String responseMsg = jsonObject.get("status").getAsString();
+
+                        if (responseMsg.equals("success")) {
+                            String msg = jsonObject.get("msg").getAsString();
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                            CallGetAddressAPI();
+                        } else {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            Toast.makeText(mContext, "Address not deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
 }

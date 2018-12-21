@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.instaorder;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -11,7 +12,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,13 +38,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.aiprous.medicobox.utils.APIConstant.DELETE_WISHLIST;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
+import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
 
 
 public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewListAdapter.ViewHolder> {
@@ -48,12 +52,13 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
     private ArrayList<GetWishListModel> mDataArrayList;
     private InstaAddNewListActivity mContext;
     private PopupWindow window;
-    private DeleteInterface mDeleteWishList;
+    private InstaAddNewListInterface mAddNewListInterface;
+    private Dialog dialog;
 
     public InstaAddNewListAdapter(InstaAddNewListActivity mContext, ArrayList<GetWishListModel> mGetWishListModels) {
         this.mContext = mContext;
         this.mDataArrayList = mGetWishListModels;
-        this.mDeleteWishList = mContext;
+        this.mAddNewListInterface = mContext;
     }
 
     @NonNull
@@ -131,6 +136,12 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
             }
         });
 
+        holder.btn_share_wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowShareWishListPopUp(mDataArrayList.get(position).getWishlist_name_id());
+            }
+        });
 
         holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +149,50 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 ShowPopupWindow(view, position);
             }
         });
+    }
+
+    //for share wishlist alert dialog
+    private void ShowShareWishListPopUp(final String wishlist_name_id) {
+        dialog = new Dialog(mContext, R.style.Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.dimAmount = 1f;
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        dialog.setContentView(R.layout.alert_for_share_wiselist);
+
+        dialog.show();
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+
+        ImageView imgCancel = dialog.findViewById(R.id.imgCancel);
+        final EditText edt_email = dialog.findViewById(R.id.edt_email);
+        final EditText edt_message = dialog.findViewById(R.id.edt_message);
+        Button btnSave = dialog.findViewById(R.id.btnSave);
+
+        imgCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String edt_emails = edt_email.getText().toString().trim();
+                String edt_messages = edt_message.getText().toString().trim();
+                if (!isValidEmailId(edt_email)) {
+                    Toast.makeText(mContext, "Invalid Email", Toast.LENGTH_SHORT).show();
+                } else if (edt_message.getText().length() == 0) {
+                    Toast.makeText(mContext, "please add message", Toast.LENGTH_SHORT).show();
+                } else {
+                    mAddNewListInterface.shareWishList(MedicoboxApp.onGetId(),wishlist_name_id,edt_emails,edt_messages);
+                }
+            }
+        });
+
     }
 
     private void ShowPopupWindow(View view, final int position) {
@@ -200,7 +255,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                                 if (getStatus.equals("success")) {
                                     String msg = String.valueOf(jsonResponse.get("msg"));
                                     Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
-                                    mDeleteWishList.Delete();
+                                    mAddNewListInterface.Delete();
                                 } else {
                                     Toast.makeText(mContext, "Wishlist not deleted", Toast.LENGTH_SHORT).show();
                                 }
@@ -271,7 +326,9 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         }
     }
 
-    public interface DeleteInterface {
+    public interface InstaAddNewListInterface {
         public void Delete();
+
+        public void shareWishList(String s, String wishlist_name_id, String edt_emails, String edt_messages);
     }
 }

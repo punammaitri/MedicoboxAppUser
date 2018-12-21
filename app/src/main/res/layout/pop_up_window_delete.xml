@@ -55,7 +55,7 @@
             android:background="@color/colorlightlightGray" />
 
         <LinearLayout
-            android:id="@+id/linearAdd"
+            android:id="@+id/linearDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/height_5"

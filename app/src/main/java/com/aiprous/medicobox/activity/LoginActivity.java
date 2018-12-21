@@ -49,6 +49,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private String gmailProfileUrl;
     private static final int RC_SIGN_IN = 1;
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private String mgoogleusername,twitterProfileImageUrl,googleUsername,googleLastname,getFirebaseToken;
+    private String mgoogleusername, twitterProfileImageUrl, googleUsername, googleLastname, getFirebaseToken;
     GoogleApiClient mGoogleApiClient;
     private String lLoginwithGooglegmailId;
     private CallbackManager callbackManager;
@@ -104,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private String lEmailMobile;
     private String lPass;
     private Context mContext = this;
+    private String getMobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -338,7 +343,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.tv_forgot_password)
     public void onClickPassword() {
-        startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag","forgotpassword"));
+        startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag", "forgotpassword"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
@@ -352,8 +357,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.tv_sign_in_withotp)
     public void onClickSignInWithOtp() {
-       // startActivity(new Intent(this, OTPActivity.class));
-        startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag","SignWithOTP"));
+        // startActivity(new Intent(this, OTPActivity.class));
+        startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag", "SignWithOTP"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
@@ -374,9 +379,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             showToast(this, getResources().getString(R.string.error_email));
         } else if (lPass.length() == 0) {
             showToast(this, getResources().getString(R.string.error_pass));
-        }else  {
-            if(lEmailMobile.toString().matches("[a-zA-Z ]+")) {
-                if (!isValidEmailId(edtMobileEmail)){
+        } else {
+            if (lEmailMobile.toString().matches("[a-zA-Z ]+")) {
+                if (!isValidEmailId(edtMobileEmail)) {
                     showToast(this, "Please enter valid email id");
                 } else {
                     JSONObject jsonObject = new JSONObject();
@@ -394,25 +399,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         AttemptLogin(jsonObject);
                     }
                 }
-            }else {
-                 if(edtMobileEmail.length() <= 9) {
+            } else {
+                if (edtMobileEmail.length() <= 9) {
                     showToast(this, "Mobile number must be  10 digit");
-                }else {
-                     JSONObject jsonObject = new JSONObject();
-                     try {
-                         jsonObject.put("username", lEmailMobile);
-                         jsonObject.put("password", lPass);
-                     } catch (JSONException e) {
-                         e.printStackTrace();
-                     }
+                } else {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("username", lEmailMobile);
+                        jsonObject.put("password", lPass);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                     if (!isNetworkAvailable(this)) {
-                         CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-                     } else {
-                         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-                         AttemptLogin(jsonObject);
-                     }
-                 }
+                    if (!isNetworkAvailable(this)) {
+                        CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                    } else {
+                        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                        AttemptLogin(jsonObject);
+                    }
+                }
             }
         }
     }
@@ -469,27 +474,40 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
+
                         try {
-                            JSONObject jsonObject = new JSONObject(response.getString("response"));
-                            String getId = jsonObject.get("id").toString();
-                            String getGroupId = jsonObject.get("group_id").toString();
-                            String getEmail = jsonObject.get("email").toString();
-                            String getFirstname = jsonObject.get("firstname").toString();
-                            String getLastname = jsonObject.get("lastname").toString();
-                            String getStoreId = jsonObject.get("store_id").toString();
-                            String getWebsiteId = jsonObject.get("website_id").toString();
-                            String custom_attributes = jsonObject.get("custom_attributes").toString();
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseObject.get("status").getAsString();
+                            if (status.equals("success")) {
+                                JsonObject responseObjects = responseObject.get("data").getAsJsonObject();
+                                String getId = responseObjects.get("id").getAsString();
+                                String getGroupId = responseObjects.get("group_id").getAsString();
+                                String getEmail = responseObjects.get("email").getAsString();
+                                String getFirstname = responseObjects.get("firstname").getAsString();
+                                String getLastname = responseObjects.get("lastname").getAsString();
+                                String getStoreId = responseObjects.get("store_id").getAsString();
+                                String getWebsiteId = responseObjects.get("website_id").getAsString();
+                                JsonArray custom_attributes_array = responseObjects.get("custom_attributes").getAsJsonArray();
 
-
-                            MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, "", getEmail, getStoreId);
-                            Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                    .putExtra("email", "" + getEmail));
-                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                            finish();
-                        } catch (JSONException e) {
+                                if (custom_attributes_array != null) {
+                                    for (int j = 0; j < custom_attributes_array.size(); j++) {
+                                        JsonObject customObject = custom_attributes_array.get(j).getAsJsonObject();
+                                        getMobileNumber = customObject.get("value").getAsString();
+                                    }
+                                }
+                                MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobileNumber, getEmail, getStoreId);
+                                Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                        .putExtra("email", "" + getEmail));
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                finish();
+                            }
+                        } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
+
+
                     }
 
                     @Override

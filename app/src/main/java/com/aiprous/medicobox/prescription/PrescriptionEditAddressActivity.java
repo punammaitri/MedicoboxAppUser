@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.APIConstant;
@@ -35,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.ADD_ADDRESS;
+import static com.aiprous.medicobox.utils.APIConstant.UPDATE_ADDRESS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
@@ -66,8 +69,15 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     EditText edtCity;
     @BindView(R.id.radioButton)
     RadioButton radioButton;
-    private String billingFlag = "";
+    @BindView(R.id.btn_save)
+    Button btnSave;
+    private String billingFlag = "", shippingFlag = "";
     private Context mContext = this;
+    private String id, street, postcode, telephone, country_id;
+    private String city, lastname, firstname;
+    private String region_id;
+    private String chooseDeliveryAddess = "";
+    private String setBillingAddress, setShippingAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +112,42 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                 radioButton.setVisibility(View.GONE);
             }
         }
+
+        if (getIntent().getStringExtra("shippingFlag") != null) {
+            shippingFlag = getIntent().getStringExtra("shippingFlag");
+            if (shippingFlag.equals("true")) {
+                radioButton.setVisibility(View.GONE);
+            } else {
+                radioButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        if (getIntent().getStringExtra("chooseDeliveryAddress") != null) {
+            chooseDeliveryAddess = getIntent().getStringExtra("chooseDeliveryAddress");
+        }
+
+        if (getIntent().getStringExtra("id") != null) {
+            id = getIntent().getStringExtra("id");
+            firstname = getIntent().getStringExtra("firstname");
+            lastname = getIntent().getStringExtra("lastname");
+            telephone = getIntent().getStringExtra("telephone");
+            street = getIntent().getStringExtra("street");
+            postcode = getIntent().getStringExtra("postcode");
+            city = getIntent().getStringExtra("city");
+            country_id = getIntent().getStringExtra("country_id");
+            region_id = getIntent().getStringExtra("region_id");
+
+            //set value
+            edt_firstname.setText(firstname);
+            edt_lastname.setText(lastname);
+            edtPhone.setText(telephone);
+            edtStreet.setText(street);
+            edtPincde.setText(postcode);
+            edtCity.setText(city);
+
+            btnSave.setText("Update");
+        }
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -121,6 +167,14 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         String lPincode = edtPincde.getText().toString();
         String lState = edtState.getText().toString();
         String lCity = edtCity.getText().toString();
+
+        if (billingFlag.equals("true")) {
+            setBillingAddress = "1";
+            setShippingAddress = "0";
+        } else {
+            setBillingAddress = "0";
+            setShippingAddress = "1";
+        }
 
 
         if (lFirstname.length() == 0 && lPhone.length() == 0 && lFlatNo.length() == 0 && lStreet.length() == 0 && lLandmark.length() == 0 && lPincode.length() == 0 && lState.length() == 0 && lCity.length() == 0) {
@@ -146,40 +200,111 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         } else if (lPhone.length() <= 9) {
             edtPhone.setError("Phone number should be 10 digit");
         } else {
-            // startActivity(new Intent(this, PrescriptionBillingAddressActivity.class));
 
-            JSONObject jsonObjectReg = null;
-            try {
-                JSONObject objCustomer = new JSONObject();
-                objCustomer.put("first_name", lFirstname);
-                objCustomer.put("last_name", lLastname);
-                objCustomer.put("city", lCity);
-                objCustomer.put("state_code", 1);
-                objCustomer.put("country_id", "IN");
-                objCustomer.put("postcode", lPincode);
-                objCustomer.put("telephone", lPhone);
-                objCustomer.put("company", "Company");
-                objCustomer.put("fax", "fax");
-                objCustomer.put("street", lState);
-                objCustomer.put("default_shipping", "1");
-                objCustomer.put("default_billing", "1");
+            if (btnSave.getText().equals("Save")) {
+                //for Add API
+                JSONObject jsonObjectReg = null;
+                try {
+                    JSONObject objCustomer = new JSONObject();
+                    objCustomer.put("first_name", lFirstname);
+                    objCustomer.put("last_name", lLastname);
+                    objCustomer.put("city", lCity);
+                    objCustomer.put("state_code", 1);
+                    objCustomer.put("country_id", "IN");
+                    objCustomer.put("postcode", lPincode);
+                    objCustomer.put("telephone", lPhone);
+                    objCustomer.put("company", "Company");
+                    objCustomer.put("fax", "fax");
+                    objCustomer.put("street", lStreet);
+                    objCustomer.put("default_shipping", setShippingAddress);
+                    objCustomer.put("default_billing", setBillingAddress);
 
-                jsonObjectReg = new JSONObject();
-                jsonObjectReg.put("user_id", MedicoboxApp.onGetId());
-                jsonObjectReg.put("address", objCustomer);
-                Log.e("url", jsonObjectReg.toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                    jsonObjectReg = new JSONObject();
+                    jsonObjectReg.put("user_id", MedicoboxApp.onGetId());
+                    jsonObjectReg.put("address", objCustomer);
+                    Log.e("url", jsonObjectReg.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-            if (!isNetworkAvailable(this)) {
-                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                if (!isNetworkAvailable(this)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                    CallAddAddressAPI(jsonObjectReg);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
             } else {
-                CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-                CallAddAddressAPI(jsonObjectReg);
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+                //for update API
+                JSONObject jsonObjectReg = null;
+                try {
+                    JSONObject objCustomer = new JSONObject();
+                    objCustomer.put("first_name", lFirstname);
+                    objCustomer.put("last_name", lLastname);
+                    objCustomer.put("city", lCity);
+                    objCustomer.put("state_code", 1);
+                    objCustomer.put("country_id", "IN");
+                    objCustomer.put("postcode", lPincode);
+                    objCustomer.put("telephone", lPhone);
+                    objCustomer.put("company", "Company");
+                    objCustomer.put("fax", "fax");
+                    objCustomer.put("street", lStreet);
+                    objCustomer.put("default_shipping", setShippingAddress);
+                    objCustomer.put("default_billing", setBillingAddress);
+
+                    jsonObjectReg = new JSONObject();
+                    jsonObjectReg.put("user_id", MedicoboxApp.onGetId());
+                    jsonObjectReg.put("address_id", id);
+                    jsonObjectReg.put("address", objCustomer);
+                    Log.e("url", jsonObjectReg.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (!isNetworkAvailable(this)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+                    CallUpdateAPI(jsonObjectReg);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                }
             }
         }
+    }
+
+    private void CallUpdateAPI(JSONObject jsonObjectReg) {
+        AndroidNetworking.post(UPDATE_ADDRESS)
+                .addJSONObjectBody(jsonObjectReg) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                        JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                        String responseMsg = responseArray.get("msg").getAsString();
+                        Toast.makeText(mContext, "Address update successfully.", Toast.LENGTH_SHORT).show();
+
+                        if (responseMsg.equals("address added successfully.")) {
+                            JsonObject data = responseArray.get("data").getAsJsonObject();
+                        }
+
+                        CustomProgressDialog.getInstance().dismissDialog();
+
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
     private void CallAddAddressAPI(JSONObject jsonObject) {
@@ -199,23 +324,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                         if (responseMsg.equals("address added successfully.")) {
                             JsonObject data = responseArray.get("data").getAsJsonObject();
                         }
-
                         CustomProgressDialog.getInstance().dismissDialog();
-                        // do anything with response
-                      /*  try {
-                            JSONObject jsonObject = new JSONObject(response.getString("response"));
-                            String getId = jsonObject.get("id").toString();
-                            String getGroupId = jsonObject.get("group_id").toString();
-                            String getEmail = jsonObject.get("email").toString();
-                            String getFirstname = jsonObject.get("firstname").toString();
-                            String getLastname = jsonObject.get("lastname").toString();
-                            String getStoreId = jsonObject.get("store_id").toString();
-                            String getWebsiteId = jsonObject.get("website_id").toString();
-                            String getMobile = jsonObject.get("mobile").toString();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
                     }
 
                     @Override
@@ -232,7 +341,22 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressSDescription() {
-        finish();
+        if (chooseDeliveryAddess.isEmpty()) {
+            startActivity(new Intent(mContext, MyAccountActivity.class));
+            finish();
+        } else {
+            finish();
+        }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (chooseDeliveryAddess.isEmpty()) {
+            startActivity(new Intent(mContext, MyAccountActivity.class));
+            finish();
+        } else {
+            finish();
+        }
+    }
 }

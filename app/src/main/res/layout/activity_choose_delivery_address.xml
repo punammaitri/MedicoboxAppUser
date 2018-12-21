@@ -24,8 +24,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/height_4"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Choose Delivery Address"
             android:gravity="center|start"
+            android:text="Choose Delivery Address"
             android:textColor="@color/colorPrimary"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -35,14 +35,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/height_10"
-            android:gravity="center|start"
             android:fontFamily="@font/open_sans_regular"
+            android:gravity="center|start"
             android:text="+ ADD NEW"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
             android:textStyle="bold" />
-
 
     </RelativeLayout>
 
@@ -60,17 +60,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/height_8"
-        android:visibility="gone"
+        android:layout_marginLeft="@dimen/height_30"
         android:layout_marginTop="@dimen/height_8"
+        android:layout_marginRight="@dimen/height_30"
+        android:layout_marginBottom="@dimen/height_8"
         android:background="@drawable/custom_btn_bg"
         android:fontFamily="@font/open_sans_regular"
-        android:layout_marginLeft="@dimen/height_30"
-        android:layout_marginRight="@dimen/height_30"
         android:text="Continue"
         android:textAllCaps="true"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/height_16"
         android:textStyle="bold"
-        android:textColor="@android:color/white" />
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/txt_order_summary"
-    android:layout_marginBottom="@dimen/height_4"
     android:layout_marginLeft="@dimen/height_4"
-    android:layout_marginRight="@dimen/height_4"
     android:layout_marginTop="@dimen/height_4"
+    android:layout_marginRight="@dimen/height_4"
+    android:layout_marginBottom="@dimen/height_4"
     app:cardCornerRadius="@dimen/height_8"
     app:cardElevation="@dimen/height_10">
 
@@ -27,15 +27,14 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/height_3"
-                android:layout_marginTop="@dimen/height_6">
+                android:layout_marginTop="@dimen/height_6"
+                android:layout_marginBottom="@dimen/height_3">
 
                 <RadioButton
                     android:id="@+id/rb_checked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
-                    android:text="Shreya Saran"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold"
@@ -48,6 +47,7 @@
                 android:layout_width="@dimen/height_20"
                 android:layout_height="@dimen/height_20"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/height_35"
@@ -61,17 +61,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/height_30"
             android:fontFamily="@font/open_sans_regular"
-            android:text="@string/address"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
+            android:id="@+id/txtMobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/height_5"
             android:layout_marginLeft="@dimen/height_30"
             android:layout_marginTop="@dimen/height_5"
+            android:layout_marginBottom="@dimen/height_5"
             android:fontFamily="@font/open_sans_regular"
-            android:text="+91 8833748362"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorPrimary" />
 

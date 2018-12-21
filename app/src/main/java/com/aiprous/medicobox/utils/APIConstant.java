@@ -42,6 +42,7 @@ public class APIConstant {
     public static String GET_ALL_WISHLIST = "http://user8.itsindev.com/medibox/API/get_user_wishlist_products.php";
     public static String ADD_ITEM_WISHLIST = "http://user8.itsindev.com/medibox/API/add_item_wishlist.php";
     public static String DELETE_WISHLIST = "http://user8.itsindev.com/medibox/API/delete_wishlist.php";
+    public static String SHARE_WISHLIST = "http://user8.itsindev.com/medibox/API/share-wishlist.php";
 
     //upload prescription
     public static String UPLOAD_PRESCRIPTION = "http://user8.itsindev.com/medibox/API/upload-prescription/image_action.php";
@@ -51,8 +52,13 @@ public class APIConstant {
     public static String SINGLE_ORDER = "http://user8.itsindev.com/medibox/API/single-order.php";
 
     // add address
+    public static String SHIPPING_ADDRESS = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/shippingAddress";
+    public static String BILLING_ADDRESS = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/billingAddress";
+
     public static String ADD_ADDRESS = "http://user8.itsindev.com/medibox/API/add_address.php";
     public static String GET_ALL_ADDRESS = "http://user8.itsindev.com/medibox/API/customer-addresses.php";
+    public static String UPDATE_ADDRESS = "http://user8.itsindev.com/medibox/API/update-address.php";
+    public static String DELETE_ADDRESS = "http://user8.itsindev.com/medibox/API/delete-address.php";
 
     //Response Status Code
     public static final int SUCCESS_CODE = 200;

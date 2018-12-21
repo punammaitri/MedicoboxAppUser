@@ -75,6 +75,4 @@ public class GetWishListAdapter extends RecyclerView.Adapter<GetWishListAdapter.
             ButterKnife.bind(this, view);
         }
     }
-
-
 }

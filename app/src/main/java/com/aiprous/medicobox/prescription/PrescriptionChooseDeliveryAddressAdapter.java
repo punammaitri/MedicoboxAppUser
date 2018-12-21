@@ -19,7 +19,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
+import com.aiprous.medicobox.activity.MyAccountActivity;
+import com.aiprous.medicobox.instaorder.InstaAddNewListAdapter;
+import com.aiprous.medicobox.model.AllCustomerAddress;
 
 import java.util.ArrayList;
 
@@ -29,13 +31,14 @@ import butterknife.ButterKnife;
 
 public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapter<PrescriptionChooseDeliveryAddressAdapter.ViewHolder> {
 
+    private ArrayList<AllCustomerAddress> mDataArrayList;
+    private PrescriptionChooseDeliveryAddressActivity mContext;
+    private DeleteInterface mDeleteWishList;
 
-    private ArrayList<PrescriptionChooseDeliveryAddressActivity.ListModel> mDataArrayList;
-    private Context mContext;
-
-    public PrescriptionChooseDeliveryAddressAdapter(Context mContext, ArrayList<PrescriptionChooseDeliveryAddressActivity.ListModel> mDataArrayList) {
+    public PrescriptionChooseDeliveryAddressAdapter(PrescriptionChooseDeliveryAddressActivity mContext, ArrayList<AllCustomerAddress> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
+        this.mDeleteWishList = mContext;
     }
 
     @NonNull
@@ -47,20 +50,27 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         //holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
-        holder.rb_checked.setText(mDataArrayList.get(position).getMedicineName());
+        holder.rb_checked.setText(mDataArrayList.get(position).getFirstname() + " " + mDataArrayList.get(position).getLastname());
+        holder.txtMobile.setText(mDataArrayList.get(position).getTelephone());
+        holder.txtAddress.setText(mDataArrayList.get(position).getStreet() + "," + mDataArrayList.get(position).getCity() + "," +
+                mDataArrayList.get(position).getCountry_id() + "\n" + mDataArrayList.get(position).getPostcode());
 
         holder.imgOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowPopupWindow(view);
+                ShowPopupWindow(view, mDataArrayList.get(position).getId(), mDataArrayList.get(position).getFirstname(), mDataArrayList.get(position).getLastname()
+                        , mDataArrayList.get(position).getCity(), mDataArrayList.get(position).getCountry_id(), mDataArrayList.get(position).getRegion_id(),
+                        mDataArrayList.get(position).getPostcode(), mDataArrayList.get(position).getTelephone(), mDataArrayList.get(position).getStreet());
             }
         });
+
     }
 
-    private void ShowPopupWindow(View view) {
+    private void ShowPopupWindow(View view, final String id, final String firstname, final String lastname, final String city,
+                                 final String country_id, final String region_id, final String postcode, final String telephone, final String street) {
         Rect r = locateView(view);
         LayoutInflater lInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popup_view = lInflater.inflate(R.layout.pop_up_window_delete, null);
@@ -70,27 +80,35 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         popup.showAtLocation(popup_view, Gravity.TOP | Gravity.LEFT, r.right, r.bottom);
 
         LinearLayout mLinearEdit = popup_view.findViewById(R.id.linearEdit);
-        LinearLayout mLinearAdd = popup_view.findViewById(R.id.linearAdd);
+        LinearLayout mLinearDelete = popup_view.findViewById(R.id.linearDelete);
 
         mLinearEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, PrescriptionBillingAddressActivity.class);
-                Activity activity = (Activity) mContext;
-                activity.startActivity(intent);
-                activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                mContext.startActivity(new Intent(mContext, PrescriptionEditAddressActivity.class)
+                        .putExtra("billingFlag", "true")
+                        .putExtra("id", id)
+                        .putExtra("firstname", firstname)
+                        .putExtra("lastname", lastname)
+                        .putExtra("city", city)
+                        .putExtra("country_id", country_id)
+                        .putExtra("region_id", region_id)
+                        .putExtra("postcode", postcode)
+                        .putExtra("telephone", telephone)
+                        .putExtra("street", street));
+                ((Activity) mContext).finish();
+                mContext.overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 popup.dismiss();
             }
         });
 
-        mLinearAdd.setOnClickListener(new View.OnClickListener() {
+        mLinearDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popup.dismiss();
+                mDeleteWishList.Delete(id);
             }
         });
-
-
     }
 
     public static Rect locateView(View v) {
@@ -121,6 +139,8 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         RadioButton rb_checked;
         @BindView(R.id.txtAddress)
         TextView txtAddress;
+        @BindView(R.id.txtMobile)
+        TextView txtMobile;
         @BindView(R.id.imgOption)
         ImageView imgOption;
 
@@ -129,5 +149,9 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface DeleteInterface {
+        public void Delete(String id);
     }
 }
