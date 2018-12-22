@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +19,6 @@ import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AllCustomerAddress;
-import com.aiprous.medicobox.model.ProductsModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -56,12 +56,16 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
     ArrayList<AllCustomerAddress> mAllCustomerArrayList = new ArrayList<AllCustomerAddress>();
+    @BindView(R.id.btn_insta_list)
+    Button btnInstaList;
 
     private String id, street, lastname, postcode, region_id;
     private String country_id, city, firstname, telephone;
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
+    private String chooseDeliveryAddess;
+    private boolean isChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,6 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
-
     }
 
     @Override
@@ -87,6 +90,11 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
+        if (getIntent().getStringExtra("choose_delivery_address") != null) {
+            chooseDeliveryAddess = getIntent().getStringExtra("choose_delivery_address");
+            btnInstaList.setVisibility(View.VISIBLE);
         }
 
         CallGetAddressAPI();
@@ -118,11 +126,9 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @OnClick(R.id.tv_add_new)
     public void addNew() {
         startActivity(new Intent(this, PrescriptionEditAddressActivity.class)
-                .putExtra("billingFlag", "true")
-                .putExtra("chooseDeliveryAddress", "true"));
+                .putExtra("billingFlag", "true"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
-
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressSDescription() {
@@ -131,10 +137,13 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
 
     @OnClick(R.id.btn_insta_list)
     public void ButtonInstaList() {
-        startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        if (isChecked) {
+            startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        } else {
+            Toast.makeText(mContext, "Please select delivery address", Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     private void callGetAddress(JSONObject jsonObject) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
@@ -145,7 +154,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        mAllCustomerArrayList.clear();
                         JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                         JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
                         String status = responseArray.get("status").getAsString();
@@ -216,6 +225,11 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
             CallDeleteAPI(jsonObject);
             CustomProgressDialog.getInstance().dismissDialog();
         }
+    }
+
+    @Override
+    public void RadioButtonCheck(boolean value) {
+        isChecked = value;
     }
 
     private void CallDeleteAPI(JSONObject jsonObject) {

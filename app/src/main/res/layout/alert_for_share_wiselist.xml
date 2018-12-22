@@ -82,7 +82,7 @@
                 <Button
                     android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/height_45"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/height_15"
                     android:layout_marginBottom="@dimen/height_15"
@@ -90,8 +90,8 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:paddingLeft="@dimen/height_50"
                     android:paddingRight="@dimen/height_50"
-                    android:text="Save"
-                    android:textAllCaps="true"
+                    android:text="Share"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/height_16"
                     android:textStyle="bold" />

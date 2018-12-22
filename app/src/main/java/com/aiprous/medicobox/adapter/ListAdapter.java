@@ -18,14 +18,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
-import com.aiprous.medicobox.activity.LoginActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
@@ -48,15 +46,12 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 import static com.aiprous.medicobox.activity.ListActivity.rlayout_cart;
 import static com.aiprous.medicobox.activity.ListActivity.tv_cart_size;
@@ -64,7 +59,6 @@ import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
 import static com.aiprous.medicobox.utils.APIConstant.ADD_ITEM_WISHLIST;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-
 import static com.aiprous.medicobox.utils.APIConstant.CREATE_WISHLIST;
 import static com.aiprous.medicobox.utils.APIConstant.EDITCARTITEM;
 import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_WISHLIST;
@@ -100,10 +94,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private GetWishListAdapter mGetWishListAdapter;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<GetWishListModel> mGetWishListModels = new ArrayList<GetWishListModel>();
+    private DismissAlertInterface mDismissAlert;
 
     public ListAdapter(ListActivity mContext, ArrayList<ListModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
+        this.mDismissAlert = mContext;
     }
 
     @NonNull
@@ -143,12 +139,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             .into(holder.img_medicine, new Callback() {
                                 @Override
                                 public void onSuccess() {
-
                                 }
 
                                 @Override
                                 public void onError() {
-
                                 }
                             });
 
@@ -688,7 +682,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         imgCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
+                mDismissAlert.DismissAlert(dialog);
             }
         });
 
@@ -709,7 +703,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View view) {
                 try {
                     if (!getWishListId.isEmpty()) {
-                        CallAddProductToWishListAPI(itemId, getWishListId);
+                        CallAddProductToWishListAPI(itemId, getWishListId,dialog);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -828,7 +822,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
     }
 
-    private void CallAddProductToWishListAPI(final String itemId, String getWishListId) {
+    private void CallAddProductToWishListAPI(final String itemId, String getWishListId, final Dialog dialog) {
         if (!isNetworkAvailable(mContext)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
@@ -858,12 +852,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             if (responseMsg.equals("success")) {
                                 String msg = jsonObject.get("msg").getAsString();
                                 CustomProgressDialog.getInstance().dismissDialog();
+                                mDismissAlert.DismissAlert(dialog);
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
                             } else {
                                 CustomProgressDialog.getInstance().dismissDialog();
                                 Toast.makeText(mContext, "Item not added", Toast.LENGTH_SHORT).show();
                             }
-                            CallGetAllWishListAPI(itemId);
+                           CallGetAllWishListAPI(itemId);
                         }
 
                         @Override
@@ -876,5 +871,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         }
                     });
         }
+    }
+
+    public interface DismissAlertInterface {
+        public void DismissAlert(Dialog id);
     }
 }

@@ -36,6 +36,7 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
+    private String chooseDeliveryAddess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +67,13 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
+
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -157,5 +160,4 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
             this.price = price;
         }
     }
-
 }

@@ -202,13 +202,17 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                     String getPatientName = edtPatientName.getText().toString().trim();
                     String getAdditionalComment = edtAdditionalComment.getText().toString().trim();
                     //send all data to prescription activity
-                    Gson gson = new Gson();
-                    String dataModel = gson.toJson(mlistModelsArray);
-                    startActivity(new Intent(mContext,PrescriptionUploadOptionActivity.class)
-                            .putExtra("PrescriptionImageModel", dataModel)
-                            .putExtra("getPatientName", getPatientName)
-                            .putExtra("getAdditionalComment", getAdditionalComment));
-                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    try {
+                        Gson gson = new Gson();
+                        String dataModel = gson.toJson(mlistModelsArray);
+                        startActivity(new Intent(mContext,PrescriptionUploadOptionActivity.class)
+                                .putExtra("PrescriptionImageModel", dataModel)
+                                .putExtra("getPatientName", getPatientName)
+                                .putExtra("getAdditionalComment", getAdditionalComment));
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case R.id.rlayout_cart:

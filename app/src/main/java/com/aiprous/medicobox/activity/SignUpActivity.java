@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -89,52 +90,37 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (lFirstname.length() <= 2) {
             edt_first_name.setError("Firstname must be greater than 2 character");
+        } else if (lLastname.length() <= 2) {
+            edt_last_name.setError("Lastname must be greater than 2 character");
         } else if (lMobile.length() <= 9) {
             edtMobile.setError("Mobile number must be  10 digit");
         } else if (!isValidEmailId(edtEmail)) {
             edtEmail.setError("Invalid email address");
         } else if (!passwordValidation(mContext, lPass, edtPassword)) {
-            Toast.makeText(mContext, "Password should contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Password should contains one uppercase,lowercase,special character,number & should be greater than 7 character .", Toast.LENGTH_LONG).show();
         } else if (!lPass.equals(lConfirm_password)) {
             Toast.makeText(mContext, "Password mismatch", Toast.LENGTH_SHORT).show();
         } else {
             try {
-              /*  JSONObject objCustomer = new JSONObject();
-                objCustomer.put("email", lEmail);
-                objCustomer.put("firstname", lFirstname);
-                objCustomer.put("lastname", lLastname);
-                objCustomer.put("storeId", 1);
-
-                //Add Json Object
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("customer", objCustomer);
-                jsonObject.put("password", lPass);
-                jsonObject.put("mobile", lMobile);
-*/
 
                 //Add Json Object
                 JSONObject jsonObjectAttribute = new JSONObject();
                 jsonObjectAttribute.put("attributeCode", "mobile_number");
                 jsonObjectAttribute.put("value", lMobile);
 
-
                 JSONArray jsonArrayAttribute = new JSONArray();
                 jsonArrayAttribute.put(jsonObjectAttribute);
-
 
                 JSONObject objCustomer = new JSONObject();
                 objCustomer.put("email", lEmail);
                 objCustomer.put("firstname", lFirstname);
                 objCustomer.put("lastname", lLastname);
                 objCustomer.put("storeId", 1);
-                objCustomer.put("customAttributes",jsonArrayAttribute);
-
+                objCustomer.put("customAttributes", jsonArrayAttribute);
 
                 JSONObject jsonObjectReg = new JSONObject();
-
-                jsonObjectReg.put("customer",objCustomer);
-                jsonObjectReg.put("password",lPass);
-
+                jsonObjectReg.put("customer", objCustomer);
+                jsonObjectReg.put("password", lPass);
 
                 if (!isNetworkAvailable(this)) {
                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
@@ -168,7 +154,9 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(mContext, "" + errorMessage, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 finish();
                             }

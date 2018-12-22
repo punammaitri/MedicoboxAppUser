@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ListAdapter.DismissAlertInterface {
 
     // @BindView(R.id.rc_medicine_list)
     @BindView(R.id.searchview_medicine)
@@ -132,6 +133,26 @@ public class ListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (MedicoboxApp.onGetCartID().isEmpty()) {
+            if (!isNetworkAvailable(this)) {
+                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+            } else {
+                AttemptGetCartId();
+            }
+        }
+
+        //set cart value
+        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
+            rlayout_cart.setVisibility(View.GONE);
+        } else {
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+            rlayout_cart.setVisibility(View.VISIBLE);
+        }
+
+        attemptToCallGetAllProductAPI();
+    }
+
+    private void attemptToCallGetAllProductAPI() {
         try {
             if (getIntent().getStringExtra("subcategoryId") != null) {
                 mCategoryId = getIntent().getStringExtra("subcategoryId");
@@ -148,23 +169,6 @@ public class ListActivity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-
-
-        if (MedicoboxApp.onGetCartID().isEmpty()) {
-            if (!isNetworkAvailable(this)) {
-                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-            } else {
-                AttemptGetCartId();
-            }
-        }
-
-        //set cart value
-        if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
-        } else {
-            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
-            rlayout_cart.setVisibility(View.VISIBLE);
         }
     }
 
@@ -271,5 +275,11 @@ public class ListActivity extends AppCompatActivity {
                         Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
                     }
                 });
+    }
+
+    @Override
+    public void DismissAlert(Dialog dialog) {
+        dialog.dismiss();
+        attemptToCallGetAllProductAPI();
     }
 }

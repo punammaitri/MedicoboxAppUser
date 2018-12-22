@@ -112,6 +112,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
         } else {
@@ -130,7 +132,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             getSingleOrderAPI(jsonObject);
-            CustomProgressDialog.getInstance().dismissDialog();
         }
     }
 
@@ -142,7 +143,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
 
     private void getSingleOrderAPI(JSONObject jsonObject) {
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(SINGLE_ORDER)
                 .addJSONObjectBody(jsonObject)
                 .setPriority(Priority.MEDIUM)
@@ -222,6 +222,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override

@@ -78,9 +78,24 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         holder.recyclerList.setLayoutManager(new LinearLayoutManager(mContext));
 
         if (!(mDataArrayList.get(position).getItems().size() == 0)) {
+            holder.btn_share_wishlist.setVisibility(View.VISIBLE);
+            holder.btnAddToCart.setVisibility(View.VISIBLE);
+            holder.img_up_arrow.setVisibility(View.GONE);
+            holder.img_down_arrow.setVisibility(View.VISIBLE);
+            holder.relRecyclerList.setVisibility(View.GONE);
             holder.recyclerList.setAdapter(new InstaProductSubListDetailAdapter(mContext, mDataArrayList.get(position).getItems()));
         }
 
+        //hide all view if item not inserted to wishlist
+        if (mDataArrayList.get(position).getItems().size() == 0) {
+            holder.btn_share_wishlist.setVisibility(View.GONE);
+            holder.btnAddToCart.setVisibility(View.GONE);
+            holder.img_up_arrow.setVisibility(View.GONE);
+            holder.img_down_arrow.setVisibility(View.GONE);
+            holder.relRecyclerList.setVisibility(View.VISIBLE);
+            holder.recyclerList.setVisibility(View.GONE);
+            holder.txt_no_data.setVisibility(View.VISIBLE);
+        }
 
         /*holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
@@ -122,7 +137,8 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 holder.img_down_arrow.setVisibility(View.GONE);
                 holder.img_up_arrow.setVisibility(View.VISIBLE);
                 holder.relSelectAll.setVisibility(View.GONE);
-                holder.recyclerList.setVisibility(View.VISIBLE);
+                holder.relRecyclerList.setVisibility(View.VISIBLE);
+                holder.txt_no_data.setVisibility(View.GONE);
             }
         });
 
@@ -132,10 +148,11 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 holder.img_up_arrow.setVisibility(View.GONE);
                 holder.img_down_arrow.setVisibility(View.VISIBLE);
                 holder.relSelectAll.setVisibility(View.GONE);
-                holder.recyclerList.setVisibility(View.GONE);
+                holder.relRecyclerList.setVisibility(View.GONE);
             }
         });
 
+        //btn to share wishlist
         holder.btn_share_wishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,7 +205,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 } else if (edt_message.getText().length() == 0) {
                     Toast.makeText(mContext, "please add message", Toast.LENGTH_SHORT).show();
                 } else {
-                    mAddNewListInterface.shareWishList(MedicoboxApp.onGetId(),wishlist_name_id,edt_emails,edt_messages);
+                    mAddNewListInterface.shareWishList(MedicoboxApp.onGetId(), wishlist_name_id, edt_emails, edt_messages,dialog);
                 }
             }
         });
@@ -319,6 +336,10 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         RelativeLayout relSelectAll;
         @BindView(R.id.relOptionDots)
         RelativeLayout relOptionDots;
+        @BindView(R.id.relRecyclerList)
+        RelativeLayout relRecyclerList;
+        @BindView(R.id.txt_no_data)
+        TextView txt_no_data;
 
         ViewHolder(@NonNull View view) {
             super(view);
@@ -329,6 +350,6 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
     public interface InstaAddNewListInterface {
         public void Delete();
 
-        public void shareWishList(String s, String wishlist_name_id, String edt_emails, String edt_messages);
+        public void shareWishList(String s, String wishlist_name_id, String edt_emails, String edt_messages, Dialog dialog);
     }
 }

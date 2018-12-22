@@ -81,6 +81,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_regular"
                         android:hint="Mobile"
+                        android:maxLength="10"
                         android:inputType="number"
                         android:textAppearance="?android:attr/textAppearanceSmall"/>
 

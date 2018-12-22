@@ -11,9 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
@@ -26,7 +24,6 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,7 +34,6 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GETUSERINFO;
 import static com.aiprous.medicobox.utils.APIConstant.USERORDER;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -144,7 +140,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     }
 
     private void getMyOrderAPI(String bearerToken) {
-        AndroidNetworking.get(USERORDER)
+        AndroidNetworking.post(USERORDER)
                 .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)
                 .build()

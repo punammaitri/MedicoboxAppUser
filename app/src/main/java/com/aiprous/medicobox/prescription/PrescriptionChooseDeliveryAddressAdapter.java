@@ -11,11 +11,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
@@ -57,6 +59,14 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         holder.txtMobile.setText(mDataArrayList.get(position).getTelephone());
         holder.txtAddress.setText(mDataArrayList.get(position).getStreet() + "," + mDataArrayList.get(position).getCity() + "," +
                 mDataArrayList.get(position).getCountry_id() + "\n" + mDataArrayList.get(position).getPostcode());
+
+        holder.rb_checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mDeleteWishList.RadioButtonCheck(isChecked);
+            }
+        });
+
 
         holder.imgOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,5 +163,7 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
 
     public interface DeleteInterface {
         public void Delete(String id);
+
+        public void RadioButtonCheck(boolean v);
     }
 }

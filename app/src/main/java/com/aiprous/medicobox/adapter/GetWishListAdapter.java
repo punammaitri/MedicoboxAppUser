@@ -3,6 +3,7 @@ package com.aiprous.medicobox.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,7 @@ public class GetWishListAdapter extends RecyclerView.Adapter<GetWishListAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.cb_name)
-        CheckBox cbName;
+        AppCompatCheckBox cbName;
 
         ViewHolder(@NonNull View view) {
             super(view);

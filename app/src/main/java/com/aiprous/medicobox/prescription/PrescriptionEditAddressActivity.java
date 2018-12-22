@@ -122,11 +122,6 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             }
         }
 
-
-        if (getIntent().getStringExtra("chooseDeliveryAddress") != null) {
-            chooseDeliveryAddess = getIntent().getStringExtra("chooseDeliveryAddress");
-        }
-
         if (getIntent().getStringExtra("id") != null) {
             id = getIntent().getStringExtra("id");
             firstname = getIntent().getStringExtra("firstname");

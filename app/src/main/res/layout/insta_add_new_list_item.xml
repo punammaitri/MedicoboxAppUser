@@ -126,9 +126,9 @@
                     android:layout_width="@dimen/height_25"
                     android:layout_height="@dimen/height_25"
                     android:layout_centerInParent="true"
-                    android:visibility="gone"
                     android:layout_marginRight="@dimen/height_15"
-                    android:src="@drawable/arrow_yellow_up" />
+                    android:src="@drawable/arrow_yellow_up"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -156,12 +156,33 @@
 
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerList"
+        <RelativeLayout
+            android:id="@+id/relRecyclerList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/height_5"
-            android:visibility="gone" />
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_5" />
+
+            <TextView
+                android:id="@+id/txt_no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_8"
+                android:fontFamily="@font/open_sans_regular"
+                android:maxLines="1"
+                android:text="This Wishlist is empty."
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorPrimary" />
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 

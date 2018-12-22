@@ -56,6 +56,10 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
+    @BindView(R.id.txt_no_data_found)
+    TextView txtNoDataFound;
+    @BindView(R.id.txtInstaOrder)
+    TextView txtInstaOrder;
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     private Dialog dialog;
@@ -102,7 +106,6 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
         startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
-
 
     private void ShowNewInstaListAlert(final InstaAddNewListActivity mActivityContext) {
         dialog = new Dialog(mActivityContext, R.style.Dialog);
@@ -163,11 +166,14 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
                         public void onResponse(String response) {
 
                             if (response.contains("There is no wishlist")) {
-                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                                String responseMsg = getAllResponse.get("response").getAsString();
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                Toast.makeText(mContext, "" + responseMsg, Toast.LENGTH_SHORT).show();
+                                txtNoDataFound.setVisibility(View.VISIBLE);
+                                rc_medicine_list.setVisibility(View.GONE);
+                                txtInstaOrder.setVisibility(View.GONE);
                             } else {
+                                txtNoDataFound.setVisibility(View.GONE);
+                                rc_medicine_list.setVisibility(View.VISIBLE);
+                                txtInstaOrder.setVisibility(View.VISIBLE);
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 JsonArray asJsonArray = getAllResponse.getAsJsonArray("response");
 
@@ -213,8 +219,7 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
     }
 
     @Override
-    public void shareWishList(String userId, String wishlist_name_id, String edt_emails, String edt_messages) {
-
+    public void shareWishList(String userId, String wishlist_name_id, String edt_emails, String edt_messages, final Dialog dialog) {
         if (!isNetworkAvailable(mContext)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
@@ -222,9 +227,9 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
 
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("user_id",userId);
-                jsonObject.put("wishlistname_id",wishlist_name_id);
-                jsonObject.put("emails",edt_emails);
+                jsonObject.put("user_id", userId);
+                jsonObject.put("wishlistname_id", wishlist_name_id);
+                jsonObject.put("emails", edt_emails);
                 jsonObject.put("message", edt_messages);
                 Log.e("url", "" + jsonObject.toString());
             } catch (JSONException e) {
@@ -243,7 +248,8 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
                             if (responseStatus.equals("success")) {
                                 String responseMsg = getAllResponse.get("message").getAsString();
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                Toast.makeText(mContext, "" + responseStatus, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "" + responseMsg, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                             } else {
                                 String responseMsg = getAllResponse.get("message").getAsString();
                                 Toast.makeText(mContext, "" + responseMsg, Toast.LENGTH_SHORT).show();

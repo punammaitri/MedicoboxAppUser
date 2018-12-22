@@ -242,7 +242,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -268,7 +267,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 } else {
                     gmailProfileUrl = String.valueOf(Uri.parse("R.drawable.profileimage"));
                 }
-
                 //gmailProfileUrl = "https://pikmail.herokuapp.com/" + lLoginwithGooglegmailId + "?size=50";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -345,14 +343,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onClickPassword() {
         startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag", "forgotpassword"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        finish();
     }
 
     @OnClick(R.id.tv_sign_up_here)
     public void onCLickSignUpHere() {
         startActivity(new Intent(this, SignUpActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        finish();
     }
 
     @OnClick(R.id.tv_sign_in_withotp)
@@ -360,7 +356,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // startActivity(new Intent(this, OTPActivity.class));
         startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag", "SignWithOTP"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
-        finish();
     }
 
     @Override
@@ -373,7 +368,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         lEmailMobile = edtMobileEmail.getText().toString().trim();
         lPass = edtPassword.getText().toString().trim();
-
 
         if (lEmailMobile.length() == 0) {
             showToast(this, getResources().getString(R.string.error_email));
@@ -506,8 +500,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
-
-
                     }
 
                     @Override
