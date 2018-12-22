@@ -214,7 +214,7 @@ public class MyAccountActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txtEditBillingAddress:
-                if (txtEditBillingAddress.equals("ADD")) {
+                if (txtEditBillingAddress.getText().equals("ADD")) {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class));
                     finish();
                 } else {
@@ -234,13 +234,23 @@ public class MyAccountActivity extends AppCompatActivity {
 
                 break;
             case R.id.txt_shipping_address:
-                if (txt_shipping_address.equals("ADD")) {
+                if (txt_shipping_address.getText().equals("ADD")) {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
-                            .putExtra("shippingFlag", "false"));
+                            .putExtra("shippingFlag", "false")
+                    );
                     finish();
                 } else {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
-                            .putExtra("shippingFlag", "false"));
+                            .putExtra("shippingFlag", "true")
+                            .putExtra("id", id)
+                            .putExtra("firstname", firstname)
+                            .putExtra("lastname", lastname)
+                            .putExtra("city", city)
+                            .putExtra("country_id", country_id)
+                            .putExtra("region_id", region_id)
+                            .putExtra("postcode", postcode)
+                            .putExtra("telephone", telephone)
+                            .putExtra("street", street));
                     finish();
                 }
                 break;
