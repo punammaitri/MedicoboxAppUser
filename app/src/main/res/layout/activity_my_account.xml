@@ -139,6 +139,7 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"
                     android:text="Add"
+                    android:textAllCaps="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
@@ -212,6 +213,7 @@
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"
                     android:text="Add"
+                    android:textAllCaps="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />

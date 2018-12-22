@@ -76,8 +76,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private String id, street, postcode, telephone, country_id;
     private String city, lastname, firstname;
     private String region_id;
-    private String chooseDeliveryAddess = "";
     private String setBillingAddress, setShippingAddress;
+    private String chooseDelivery="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +111,11 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             } else {
                 radioButton.setVisibility(View.GONE);
             }
+        }
+
+
+        if (getIntent().getStringExtra("fromchooseDelivery") != null) {
+            chooseDelivery = getIntent().getStringExtra("fromchooseDelivery");
         }
 
         if (getIntent().getStringExtra("shippingFlag") != null) {
@@ -336,7 +341,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressSDescription() {
-        if (chooseDeliveryAddess.isEmpty()) {
+        if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
         } else {
@@ -347,7 +352,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (chooseDeliveryAddess.isEmpty()) {
+        if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
         } else {

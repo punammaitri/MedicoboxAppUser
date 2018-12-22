@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
@@ -24,6 +25,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +76,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private int mYear;
     private int mMonth;
     private int mDay;
+    private String getMobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +192,40 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
+
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseObject.get("status").getAsString();
+                            if (status.equals("success")) {
+                                JsonObject responseObjects = responseObject.get("data").getAsJsonObject();
+                                String getId = responseObjects.get("id").getAsString();
+                                String getGroupId = responseObjects.get("group_id").getAsString();
+                                String getEmail = responseObjects.get("email").getAsString();
+                                String getFirstname = responseObjects.get("firstname").getAsString();
+                                String getLastname = responseObjects.get("lastname").getAsString();
+                                String getStoreId = responseObjects.get("store_id").getAsString();
+                                String getWebsiteId = responseObjects.get("website_id").getAsString();
+                                JsonArray custom_attributes_array = responseObjects.get("custom_attributes").getAsJsonArray();
+
+                                if (custom_attributes_array != null) {
+                                    for (int j = 0; j < custom_attributes_array.size(); j++) {
+                                        JsonObject customObject = custom_attributes_array.get(j).getAsJsonObject();
+                                        getMobileNumber = customObject.get("value").getAsString();
+                                    }
+                                }
+
+                                edtFirstName.setText(getFirstname);
+                                edtLastName.setText(getLastname);
+                                edtEmailId.setText(getEmail);
+                                edtMobileNo.setText(getMobileNumber);
+
+                                CustomProgressDialog.getInstance().dismissDialog();
+                            }
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+
                         try {
                             JSONObject jsonObject = new JSONObject(response.getString("response"));
                             String getId = jsonObject.get("id").toString();

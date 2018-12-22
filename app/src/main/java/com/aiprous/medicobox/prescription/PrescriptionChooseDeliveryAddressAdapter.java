@@ -105,7 +105,8 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
                         .putExtra("region_id", region_id)
                         .putExtra("postcode", postcode)
                         .putExtra("telephone", telephone)
-                        .putExtra("street", street));
+                        .putExtra("street", street)
+                        .putExtra("fromchooseDelivery", "true"));
                 ((Activity) mContext).finish();
                 mContext.overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 popup.dismiss();

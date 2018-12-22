@@ -155,7 +155,7 @@ public class MyAccountActivity extends AppCompatActivity {
                                         txtFullAddress.setText(fullAddress);
                                         txtUsername.setText(firstname + " " + lastname);
                                         txtTelephone.setText(telephone);
-                                        txtEditBillingAddress.setText("Edit");
+                                        txtEditBillingAddress.setText("EDIT");
                                     } else {
                                         linearShippingAddress.setVisibility(View.VISIBLE);
                                         id = asJsonObject.get("id").getAsString();
@@ -174,7 +174,7 @@ public class MyAccountActivity extends AppCompatActivity {
                                         txtShippingAddress.setText(fullAddress);
                                         txtShippingName.setText(firstname + " " + lastname);
                                         txtShippingMobile.setText(telephone);
-                                        txt_shipping_address.setText("Edit");
+                                        txt_shipping_address.setText("EDIT");
                                     }
                                 }
                             }
@@ -214,7 +214,7 @@ public class MyAccountActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txtEditBillingAddress:
-                if (txtEditBillingAddress.equals("Add")) {
+                if (txtEditBillingAddress.equals("ADD")) {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class));
                     finish();
                 } else {
@@ -234,7 +234,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
                 break;
             case R.id.txt_shipping_address:
-                if (txt_shipping_address.equals("Add")) {
+                if (txt_shipping_address.equals("ADD")) {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("shippingFlag", "false"));
                     finish();
