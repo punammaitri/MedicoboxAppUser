@@ -27,22 +27,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SINGLE_ORDER;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -75,6 +70,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.txtShippingAmount)
     TextView txtShippingAmount;
+    @BindView(R.id.txtShippingAddressUsername)
+    TextView txtShippingAddressUsername;
+    @BindView(R.id.txtShippingAddress)
+    TextView txtShippingAddress;
+    @BindView(R.id.txtBillingAddressUsername)
+    TextView txtBillingAddressUsername;
+    @BindView(R.id.txtBillingAddress)
+    TextView txtBillingAddress;
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -161,6 +164,38 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 String increment_id = getJsonObject1.get("increment_id").getAsString();
                                 String grand_total = getJsonObject1.get("grand_total").getAsString();
                                 String total_due = getJsonObject1.get("total_due").getAsString();
+                                JsonObject shipping_address_object = getJsonObject1.get("shipping_address").getAsJsonObject();
+                                JsonObject billing_address_object = getJsonObject1.get("billing_address").getAsJsonObject();
+
+                                //for shipping address
+                                if (shipping_address_object != null) {
+                                    String firstname = shipping_address_object.get("firstname").getAsString();
+                                    String lastname = shipping_address_object.get("lastname").getAsString();
+                                    String street = shipping_address_object.get("street").getAsString();
+                                    String city = shipping_address_object.get("city").getAsString();
+                                    String telephone = shipping_address_object.get("telephone").getAsString();
+                                    String country_id = shipping_address_object.get("country_id").getAsString();
+                                    String postcode = shipping_address_object.get("postcode").getAsString();
+
+                                    txtShippingAddressUsername.setText(firstname+" "+lastname);
+                                    String fullShippingAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                    txtShippingAddress.setText(fullShippingAddress);
+                                }
+
+                                //for billing address
+                                if (billing_address_object != null) {
+                                    String firstname = billing_address_object.get("firstname").getAsString();
+                                    String lastname = billing_address_object.get("lastname").getAsString();
+                                    String street = billing_address_object.get("street").getAsString();
+                                    String city = billing_address_object.get("city").getAsString();
+                                    String telephone = billing_address_object.get("telephone").getAsString();
+                                    String country_id = billing_address_object.get("country_id").getAsString();
+                                    String postcode = billing_address_object.get("postcode").getAsString();
+
+                                    txtBillingAddressUsername.setText(firstname+" "+lastname);
+                                    String fullBillingAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                    txtBillingAddress.setText(fullBillingAddress);
+                                }
 
                                 //for showing date
                                 String created_at = getJsonObject1.get("created_at").getAsString();

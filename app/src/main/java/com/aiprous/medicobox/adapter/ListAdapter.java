@@ -848,15 +848,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JsonObject jsonObject = getAllResponse.get("response").getAsJsonObject();
                             String responseMsg = jsonObject.get("status").getAsString();
+                            String msg = jsonObject.get("msg").getAsString();
 
                             if (responseMsg.equals("success")) {
-                                String msg = jsonObject.get("msg").getAsString();
                                 CustomProgressDialog.getInstance().dismissDialog();
                                 mDismissAlert.DismissAlert(dialog);
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
                             } else {
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                Toast.makeText(mContext, "Item not added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
                             }
                            CallGetAllWishListAPI(itemId);
                         }

@@ -115,7 +115,7 @@ public class MyAccountActivity extends AppCompatActivity {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             callGetAddress(jsonObject);
-            CustomProgressDialog.getInstance().dismissDialog();
+
         }
     }
 
@@ -179,6 +179,7 @@ public class MyAccountActivity extends AppCompatActivity {
                                 }
                             }
                         }
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override

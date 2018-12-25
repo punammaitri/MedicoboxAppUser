@@ -380,8 +380,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 } else {
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("username", lEmailMobile);
-                        jsonObject.put("password", lPass);
+                        jsonObject.put("username", "geetbasakare@gmail.com");
+                        jsonObject.put("password", "Geet@789");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

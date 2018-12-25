@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Order Details"
                 android:paddingLeft="@dimen/height_3"
+                android:text="Order Details"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
@@ -122,20 +122,20 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtShippingAddressUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_10"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="Shreya Saran"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtShippingAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_10"
-                            android:fontFamily="@font/open_sans_regular"
-                            android:text="@string/address" />
+                            android:fontFamily="@font/open_sans_regular" />
                     </LinearLayout>
 
                     <View
@@ -162,20 +162,20 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtBillingAddressUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_10"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="Shreya Saran"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtBillingAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_10"
-                            android:fontFamily="@font/open_sans_regular"
-                            android:text="@string/address" />
+                            android:fontFamily="@font/open_sans_regular" />
                     </LinearLayout>
 
                     <View

@@ -35,8 +35,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,7 +95,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
     TextView tv_item_description;
     @BindView(R.id.llayout_prescription)
     LinearLayout llayout_prescription;
-
 
     ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
     private Context mcontext = this;
@@ -219,25 +220,25 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
         if (getIntent().getStringExtra("productId") != null) {
             mProductId = getIntent().getStringExtra("productId");
+            getSingleproducts(mProductId);
 
-            mVisibiltyFlag = getIntent().getStringExtra("VisibiltyFlag");
-            mSku = getIntent().getStringExtra("SKU");
-            mQty = Integer.parseInt(getIntent().getStringExtra("Qty"));
-            mImageURL = getIntent().getStringExtra("imageUrl");
-            mMedicineName = getIntent().getStringExtra("MedicineName");
-            mValue = getIntent().getStringExtra("value");
-            if (getIntent().getStringExtra("price").isEmpty()) {
+            //mVisibiltyFlag = getIntent().getStringExtra("VisibiltyFlag");
+            //mSku = getIntent().getStringExtra("SKU");
+            //mQty = Integer.parseInt(getIntent().getStringExtra("Qty"));
+            //mImageURL = getIntent().getStringExtra("imageUrl");
+            //mMedicineName = getIntent().getStringExtra("MedicineName");
+            //mValue = getIntent().getStringExtra("value");
+            /*if (getIntent().getStringExtra("price").isEmpty()) {
                 mPrice = getIntent().getStringExtra("MrpPrice");
             } else {
                 mPrice = getIntent().getStringExtra("price");
-            }
+            }*/
 
-            mPrescription = getIntent().getStringExtra("prescription");
-            mMrp = getIntent().getStringExtra("MrpPrice");
+            //mPrescription = getIntent().getStringExtra("prescription");
+            //mMrp = getIntent().getStringExtra("MrpPrice");
             mdiscount = getIntent().getStringExtra("discount");
 
-
-            tv_value.setText("" + mQty);
+           /* tv_value.setText("" + mQty);
             tv_medicine_name.setText(mMedicineName);
             tv_medicine_contains.setText(mValue);
             tv_mrp_price.setText(mMrp);
@@ -252,18 +253,15 @@ public class ProductDetailBActivity extends AppCompatActivity {
             }
 
             //add underline to text
-            tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-            getSingleproducts(mProductId);
+            tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);*/
         }
 
-        if (mVisibiltyFlag.equals("1")) {
+      /*  if (mVisibiltyFlag.equals("1")) {
             rlayout_plus_minus.setVisibility(View.VISIBLE);
             btn_add_to_cart.setClickable(false);
             // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
             //make button disable
             btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg_disable);
-
 
         } else {
             rlayout_plus_minus.setVisibility(View.GONE);
@@ -271,7 +269,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
             // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
             //Unable the cart button
             btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg);
-        }
+        }*/
 
     }
 
@@ -337,51 +335,104 @@ public class ProductDetailBActivity extends AppCompatActivity {
                             // do anything with response
                             //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
 
-
                             try {
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                                JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                                JSONArray getImageURLList = getAllObject.getJSONArray("images");//get the array with the key "response"
-                                tv_company_name.setText(response.getString("company_name"));
-                                mImagelist.clear();
-                                for (int i = 0; i < getImageURLList.length(); i++) {
+                                JsonObject asJsonObject = getAllResponse.get("response").getAsJsonObject();
+                                String status = asJsonObject.get("status").getAsString();
 
-                                    if (getImageURLList.getString(i).contains("https")) {
-                                        String url = getImageURLList.getString(i).replace("https", "http");
-                                        mImagelist.add(url);
+                                if (status.equals("success")) {
+                                    JsonObject data = asJsonObject.get("data").getAsJsonObject();
+                                    mMedicineName = data.get("title").getAsString();
+                                    mValue = data.get("short_description").getAsString();
+                                    String company_name = data.get("company_name").getAsString();
+                                    mPrescription = data.get("prescription_required").getAsString();
+                                    JsonArray images = data.get("images").getAsJsonArray();
+                                    mMrp = data.get("price").getAsString();
+                                    String sale_price = data.get("sale_price").getAsString();
+                                    mSku = data.get("sku").getAsString();
+                                    String qty = data.get("qty").getAsString();
+
+                                    mQty = Integer.parseInt(qty);
+
+                                    if (sale_price.isEmpty()) {
+                                        mPrice = mMrp;
+                                    } else {
+                                        mPrice = sale_price;
                                     }
+
+                                    tv_value.setText("" + mQty);
+                                    tv_medicine_name.setText(mMedicineName);
+                                    tv_medicine_contains.setText(mValue);
+                                    tv_mrp_price.setText(mMrp);
+                                    tv_item_description.setText(mValue);
+
+                                    mCalculatePrice = mQty * Float.parseFloat(mPrice);
+
+                                    if (mPrescription.equals("0")) {
+                                        llayout_prescription.setVisibility(View.GONE);
+                                    } else {
+                                        llayout_prescription.setVisibility(View.VISIBLE);
+                                    }
+
+                                    //add underline to text
+                                    tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                                    if (qty.isEmpty()) {
+                                        rlayout_plus_minus.setVisibility(View.GONE);
+                                        btn_add_to_cart.setClickable(true);
+                                        // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
+                                        //Unable the cart button
+                                        btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg);
+                                    } else {
+                                        rlayout_plus_minus.setVisibility(View.VISIBLE);
+                                        btn_add_to_cart.setClickable(false);
+                                        // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
+                                        //make button disable
+                                        btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg_disable);
+                                    }
+
+                                    tv_company_name.setText(company_name);
+
+                                    mImagelist.clear();
+                                    for (int i = 0; i < images.size(); i++) {
+                                        if (images.get(i).getAsString().contains("https")) {
+                                            String url = images.get(i).getAsString().replace("https", "http");
+                                            mImagelist.add(url);
+                                        }
+                                    }
+
+
+                                    if (!mImagelist.isEmpty()) {
+                                        mImageURL = mImagelist.get(0);
+                                    } else {
+                                        mImageURL = "";
+                                    }
+                                    //set view pager
+                                    setviewPagerAdapter();
+
+                                    JsonObject uses_n_work = data.get("uses_n_work").getAsJsonObject();
+                                    mUses = uses_n_work.get("uses").getAsString();
+                                    mwork = uses_n_work.get("work").getAsString();
+                                    mHow_to_use = uses_n_work.get("how_to_use").getAsString();
+
+                                    //interaction  object
+                                    JsonObject interaction_n_side_effect = data.get("interaction_n_side_effect").getAsJsonObject();
+                                    mDrug_interactions = interaction_n_side_effect.get("drug_interactions").getAsString();
+                                    mSide_effects = interaction_n_side_effect.get("side_effects").getAsString();
+
+                                    //warning presc object
+                                    JsonObject warning_n_precaution = data.get("warning_n_precaution").getAsJsonObject();
+                                    mDriving_and_using_machines = warning_n_precaution.get("driving_and_using_machines").getAsString();
+                                    lactation = warning_n_precaution.get("lactation").getAsString();
+                                    mLiver = warning_n_precaution.get("liver").getAsString();
+                                    mPregnancy_and_breast_feeding = warning_n_precaution.get("pregnancy_and_breast_feeding").getAsString();
+
+                                    JsonObject more_information = data.get("more_information").getAsJsonObject();
+                                    mMore_info = more_information.get("more_info").getAsString();
                                 }
-                                //set view pager
-                                setviewPagerAdapter();
-
-                                JSONObject uses_n_work = response.getJSONObject("uses_n_work");
-                                mUses = uses_n_work.getString("uses");
-                                mwork = uses_n_work.getString("work");
-                                mHow_to_use = uses_n_work.getString("how_to_use");
-
-                                JSONObject interaction_n_side_effect = response.getJSONObject("interaction_n_side_effect");
-                                mDrug_interactions = interaction_n_side_effect.getString("drug_interactions");
-                                mSide_effects = interaction_n_side_effect.getString("side_effects");
-
-
-                                JSONObject warning_n_precaution = response.getJSONObject("warning_n_precaution");
-
-                                mDriving_and_using_machines = warning_n_precaution.getString("driving_and_using_machines");
-                                // mKidney = warning_n_precaution.getString("kidney");
-
-                                lactation = warning_n_precaution.getString("lactation");
-                                mLiver = warning_n_precaution.getString("liver");
-                                mPregnancy_and_breast_feeding = warning_n_precaution.getString("pregnancy_and_breast_feeding");
-
-
-                                JSONObject more_information = response.getJSONObject("more_information");
-                                mMore_info = more_information.getString("more_info");
-
-
-                            } catch (JSONException e) {
+                            } catch (JsonSyntaxException e) {
                                 e.printStackTrace();
                             }
-
 
                             CustomProgressDialog.getInstance().dismissDialog();
                         }
