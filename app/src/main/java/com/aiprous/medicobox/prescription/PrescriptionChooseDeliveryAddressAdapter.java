@@ -57,8 +57,12 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         //holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
         holder.rb_checked.setText(mDataArrayList.get(position).getFirstname() + " " + mDataArrayList.get(position).getLastname());
         holder.txtMobile.setText(mDataArrayList.get(position).getTelephone());
-        holder.txtAddress.setText(mDataArrayList.get(position).getStreet() + "," + mDataArrayList.get(position).getCity() + "," +
-                mDataArrayList.get(position).getCountry_id() + "\n" + mDataArrayList.get(position).getPostcode());
+
+        String fullAddress = mDataArrayList.get(position).getFlat() + "," + mDataArrayList.get(position).getStreet() + ","
+                + mDataArrayList.get(position).getLandmark() + "," +"\n" + mDataArrayList.get(position).getCity() + ","
+                + mDataArrayList.get(position).getCountry_id() +  mDataArrayList.get(position).getPostcode();
+
+        holder.txtAddress.setText(fullAddress);
 
         holder.rb_checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -73,14 +77,15 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
             public void onClick(View view) {
                 ShowPopupWindow(view, mDataArrayList.get(position).getId(), mDataArrayList.get(position).getFirstname(), mDataArrayList.get(position).getLastname()
                         , mDataArrayList.get(position).getCity(), mDataArrayList.get(position).getCountry_id(), mDataArrayList.get(position).getRegion_id(),
-                        mDataArrayList.get(position).getPostcode(), mDataArrayList.get(position).getTelephone(), mDataArrayList.get(position).getStreet());
+                        mDataArrayList.get(position).getPostcode(), mDataArrayList.get(position).getTelephone(), mDataArrayList.get(position).getStreet(),
+                        mDataArrayList.get(position).getFlat(),mDataArrayList.get(position).getLandmark());
             }
         });
 
     }
 
     private void ShowPopupWindow(View view, final String id, final String firstname, final String lastname, final String city,
-                                 final String country_id, final String region_id, final String postcode, final String telephone, final String street) {
+                                 final String country_id, final String region_id, final String postcode, final String telephone, final String street, final String flat, final String landmark) {
         Rect r = locateView(view);
         LayoutInflater lInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popup_view = lInflater.inflate(R.layout.pop_up_window_delete, null);
@@ -105,7 +110,9 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
                         .putExtra("region_id", region_id)
                         .putExtra("postcode", postcode)
                         .putExtra("telephone", telephone)
+                        .putExtra("flat", flat)
                         .putExtra("street", street)
+                        .putExtra("landmark", landmark)
                         .putExtra("fromchooseDelivery", "true"));
                 ((Activity) mContext).finish();
                 mContext.overridePendingTransition(R.anim.right_in, R.anim.left_out);

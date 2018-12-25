@@ -42,6 +42,12 @@ public  class AllCustomerAddress {
     @SerializedName("city")
     private String city;
     @Expose
+    @SerializedName("flat")
+    private String flat;
+    @Expose
+    @SerializedName("landmark")
+    private String landmark;
+    @Expose
     @SerializedName("street")
     private String street;
     @Expose
@@ -56,7 +62,7 @@ public  class AllCustomerAddress {
 
 
     public AllCustomerAddress(String id,String telephone, String postcode, String region_id,
-                              String country_id, String city, String street, String lastname, String firstname) {
+                              String country_id, String city, String street, String lastname, String firstname,String flat,String landmark) {
         this.id = id;
         this.telephone = telephone;
         this.postcode = postcode;
@@ -66,6 +72,8 @@ public  class AllCustomerAddress {
         this.street = street;
         this.lastname = lastname;
         this.firstname = firstname;
+        this.flat = flat;
+        this.landmark = landmark;
     }
 
     public boolean isDefault_shipping() {
@@ -186,5 +194,21 @@ public  class AllCustomerAddress {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public void setFlat(String flat) {
+        this.flat = flat;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
     }
 }

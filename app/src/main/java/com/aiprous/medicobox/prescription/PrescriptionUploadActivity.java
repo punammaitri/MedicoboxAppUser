@@ -66,7 +66,7 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.UPLOAD_PRESCRIPTION;
+import static com.aiprous.medicobox.utils.APIConstant.UPLOAD_PRESCRIPTION_IMAGE;
 
 public class PrescriptionUploadActivity extends AppCompatActivity {
 
@@ -205,7 +205,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                     try {
                         Gson gson = new Gson();
                         String dataModel = gson.toJson(mlistModelsArray);
-                        startActivity(new Intent(mContext,PrescriptionUploadOptionActivity.class)
+                        startActivity(new Intent(mContext, PrescriptionUploadOptionActivity.class)
                                 .putExtra("PrescriptionImageModel", dataModel)
                                 .putExtra("getPatientName", getPatientName)
                                 .putExtra("getAdditionalComment", getAdditionalComment));
@@ -301,10 +301,11 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                             ImageUrlModel imageUrlModel = new ImageUrlModel(imageBinaryString);
                             imageUrlModel.setImageUrl(imageBinaryString);
                             mlistModelsArray.add(imageUrlModel);
+                            callDeleteImageAPI(imageBinaryString);
                             inputStream.close();
                         }
                     } else if (data.getData() != null) {
-                        multipleImageUrl =data.getData();
+                        multipleImageUrl = data.getData();
                         // Create content resolver.
                         ContentResolver contentResolver = getContentResolver();
                         InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
@@ -317,6 +318,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                         ImageUrlModel imageUrlModel = new ImageUrlModel(imageBinaryString);
                         imageUrlModel.setImageUrl(imageBinaryString);
                         mlistModelsArray.add(imageUrlModel);
+                        callDeleteImageAPI(imageBinaryString);
                         inputStream.close();
                     }
                 } else if (requestCode == RESULT_CROPING_CODE) {
@@ -334,7 +336,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                             imageUrlModel.setImageUrl(imageBinaryString);
                             mlistModelsArray.add(imageUrlModel);
                             //Call  upload prescription API
-                            //callUploadPrescriptionAPI(imageBinaryString);
+                            callDeleteImageAPI(imageBinaryString);
                         } else {
                             Toast.makeText(mContext, "error while save file", Toast.LENGTH_SHORT).show();
                         }
@@ -348,7 +350,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
         }
     }
 
-    private void callUploadPrescriptionAPI(String imageBinaryString) {
+    private void callDeleteImageAPI(String imageBinaryString) {
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -358,7 +360,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        AndroidNetworking.post(UPLOAD_PRESCRIPTION)
+        AndroidNetworking.post(UPLOAD_PRESCRIPTION_IMAGE)
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
@@ -501,7 +503,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity {
                 setListAdapter();
                 imageBinaryString = convertBitmapToString(mBitmap);
                 //Call  upload prescription API
-                //callUploadPrescriptionAPI(imageBinaryString);
+                callDeleteImageAPI(imageBinaryString);
             } catch (Exception e) {
             }
         }

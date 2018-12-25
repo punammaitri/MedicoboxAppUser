@@ -66,6 +66,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layoutManager;
     private String chooseDeliveryAddess;
     private boolean isChecked = false;
+    private String flat,landmark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,6 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
-            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             callGetAddress(jsonObject);
         }
     }
@@ -173,10 +173,12 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                     telephone = asJsonObject.get("telephone").getAsString();
                                     JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
                                     JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                    street = streetInnerArray.get(0).getAsString();
+                                    flat = streetInnerArray.get(0).getAsString();
+                                    street = streetInnerArray.get(1).getAsString();
+                                    landmark = streetInnerArray.get(2).getAsString();
 
                                     AllCustomerAddress allCustomerAddress = new AllCustomerAddress(id, telephone, postcode, region_id, country_id,
-                                            city, street, lastname, firstname);
+                                            city, street, lastname, firstname,flat,landmark);
                                     allCustomerAddress.setId(id);
                                     allCustomerAddress.setTelephone(telephone);
                                     allCustomerAddress.setPostcode(postcode);
@@ -186,6 +188,8 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                     allCustomerAddress.setStreet(street);
                                     allCustomerAddress.setLastname(lastname);
                                     allCustomerAddress.setFirstname(firstname);
+                                    allCustomerAddress.setFlat(flat);
+                                    allCustomerAddress.setLandmark(landmark);
                                     mAllCustomerArrayList.add(allCustomerAddress);
                                 }
 
@@ -223,7 +227,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             CallDeleteAPI(jsonObject);
-            CustomProgressDialog.getInstance().dismissDialog();
+
         }
     }
 
@@ -249,6 +253,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                             String msg = jsonObject.get("msg").getAsString();
                             CustomProgressDialog.getInstance().dismissDialog();
                             Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                            CustomProgressDialog.getInstance().dismissDialog();
                             CallGetAddressAPI();
                         } else {
                             CustomProgressDialog.getInstance().dismissDialog();

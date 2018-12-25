@@ -74,6 +74,8 @@ public class MyAccountActivity extends AppCompatActivity {
     private Context mContext = this;
     private String id, street, lastname, postcode, region_id;
     private String country_id, city, firstname, telephone;
+    private String landmark;
+    private String flat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,11 +149,14 @@ public class MyAccountActivity extends AppCompatActivity {
                                         region_id = asJsonObject.get("region_id").getAsString();
                                         postcode = asJsonObject.get("postcode").getAsString();
                                         telephone = asJsonObject.get("telephone").getAsString();
+
                                         JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
                                         JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                        street = streetInnerArray.get(0).getAsString();
+                                        flat = streetInnerArray.get(0).getAsString();
+                                        street = streetInnerArray.get(1).getAsString();
+                                        landmark = streetInnerArray.get(2).getAsString();
 
-                                        String fullAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                        String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
                                         txtFullAddress.setText(fullAddress);
                                         txtUsername.setText(firstname + " " + lastname);
                                         txtTelephone.setText(telephone);
@@ -168,9 +173,11 @@ public class MyAccountActivity extends AppCompatActivity {
                                         telephone = asJsonObject.get("telephone").getAsString();
                                         JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
                                         JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                        street = streetInnerArray.get(0).getAsString();
+                                        flat = streetInnerArray.get(0).getAsString();
+                                        street = streetInnerArray.get(1).getAsString();
+                                        landmark = streetInnerArray.get(2).getAsString();
 
-                                        String fullAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                        String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
                                         txtShippingAddress.setText(fullAddress);
                                         txtShippingName.setText(firstname + " " + lastname);
                                         txtShippingMobile.setText(telephone);
@@ -216,7 +223,8 @@ public class MyAccountActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.txtEditBillingAddress:
                 if (txtEditBillingAddress.getText().equals("ADD")) {
-                    startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class));
+                    startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
+                            .putExtra("billingFlag", "true"));
                     finish();
                 } else {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
@@ -229,7 +237,9 @@ public class MyAccountActivity extends AppCompatActivity {
                             .putExtra("region_id", region_id)
                             .putExtra("postcode", postcode)
                             .putExtra("telephone", telephone)
-                            .putExtra("street", street));
+                            .putExtra("flat", flat)
+                            .putExtra("street", street)
+                            .putExtra("landmark", landmark));
                     finish();
                 }
 
@@ -237,7 +247,7 @@ public class MyAccountActivity extends AppCompatActivity {
             case R.id.txt_shipping_address:
                 if (txt_shipping_address.getText().equals("ADD")) {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
-                            .putExtra("shippingFlag", "false")
+                            .putExtra("shippingFlag", "true")
                     );
                     finish();
                 } else {
@@ -251,7 +261,9 @@ public class MyAccountActivity extends AppCompatActivity {
                             .putExtra("region_id", region_id)
                             .putExtra("postcode", postcode)
                             .putExtra("telephone", telephone)
-                            .putExtra("street", street));
+                            .putExtra("flat", flat)
+                            .putExtra("street", street)
+                            .putExtra("landmark", landmark));
                     finish();
                 }
                 break;

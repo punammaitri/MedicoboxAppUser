@@ -45,7 +45,12 @@ public class APIConstant {
     public static String SHARE_WISHLIST = "http://user8.itsindev.com/medibox/API/share-wishlist.php";
 
     //upload prescription
-    public static String UPLOAD_PRESCRIPTION = "http://user8.itsindev.com/medibox/API/upload-prescription/image_action.php";
+    public static String UPLOAD_PRESCRIPTION_IMAGE = "https://user8.itsindev.com/medibox/API/upload-prescription/image_action.php";
+    public static String DELETE_IMAGE_PRESCRIPTION = "https://user8.itsindev.com/medibox/API/upload-prescription/image_action.php";
+    public static String GET_UPLOADED_PRESCRIPTION = "https://user8.itsindev.com/medibox/API/upload-prescription/uploaded_prescriptions.php";
+    public static String UPLOADED_PRESCRIPTION_ADD_CART = "https://user8.itsindev.com/medibox/API/upload-prescription/cart_action.php";
+    public static String UPLOADED_PRESCRIPTION_DELETE_CART = "https://user8.itsindev.com/medibox/API/upload-prescription/cart_action.php";
+    public static String UPLOADED_PRESCRIPTION_PLACE_ORDER = "https://user8.itsindev.com/medibox/API/upload-prescription/finalorder_step.php";
 
     //user order
     public static String USERORDER = "http://user8.itsindev.com/medibox/API/user_orders.php";

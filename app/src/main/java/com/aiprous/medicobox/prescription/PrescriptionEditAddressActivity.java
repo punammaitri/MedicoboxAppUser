@@ -29,8 +29,11 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +80,11 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private String city, lastname, firstname;
     private String region_id;
     private String setBillingAddress, setShippingAddress;
-    private String chooseDelivery="";
+    private String chooseDelivery = "";
+    private JSONArray jsonArray;
+    ArrayList<String> mStreetArray = new ArrayList<String>();
+    private String flat;
+    private String landmark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +111,14 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
+
+        //get billing flag
         if (getIntent().getStringExtra("billingFlag") != null) {
             billingFlag = getIntent().getStringExtra("billingFlag");
             if (billingFlag.equals("true")) {
                 radioButton.setVisibility(View.VISIBLE);
+                setBillingAddress = "1";
+                setShippingAddress = "0";
             } else {
                 radioButton.setVisibility(View.GONE);
             }
@@ -117,10 +128,13 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             chooseDelivery = getIntent().getStringExtra("fromchooseDelivery");
         }
 
+        //get shipping flag
         if (getIntent().getStringExtra("shippingFlag") != null) {
             shippingFlag = getIntent().getStringExtra("shippingFlag");
             if (shippingFlag.equals("true")) {
                 radioButton.setVisibility(View.GONE);
+                setBillingAddress = "0";
+                setShippingAddress = "1";
             } else {
                 radioButton.setVisibility(View.VISIBLE);
             }
@@ -132,6 +146,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             lastname = getIntent().getStringExtra("lastname");
             telephone = getIntent().getStringExtra("telephone");
             street = getIntent().getStringExtra("street");
+            flat = getIntent().getStringExtra("flat");
+            landmark = getIntent().getStringExtra("landmark");
             postcode = getIntent().getStringExtra("postcode");
             city = getIntent().getStringExtra("city");
             country_id = getIntent().getStringExtra("country_id");
@@ -142,6 +158,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             edt_lastname.setText(lastname);
             edtPhone.setText(telephone);
             edtStreet.setText(street);
+            edtFlatNo.setText(flat);
+            edtLandmark.setText(landmark);
             edtPincde.setText(postcode);
             edtCity.setText(city);
 
@@ -166,14 +184,6 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         String lPincode = edtPincde.getText().toString();
         String lState = edtState.getText().toString();
         String lCity = edtCity.getText().toString();
-
-        if (billingFlag.equals("true")) {
-            setBillingAddress = "1";
-            setShippingAddress = "0";
-        } else {
-            setBillingAddress = "0";
-            setShippingAddress = "1";
-        }
 
 
         if (lFirstname.length() == 0 && lPhone.length() == 0 && lFlatNo.length() == 0 && lStreet.length() == 0 && lLandmark.length() == 0 && lPincode.length() == 0 && lState.length() == 0 && lCity.length() == 0) {
@@ -203,6 +213,17 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             if (btnSave.getText().equals("Save")) {
                 //for Add API
                 JSONObject jsonObjectReg = null;
+                mStreetArray.clear();
+
+                String getFlatNo = edtFlatNo.getText().toString().trim();
+                String getStreet = edtStreet.getText().toString().trim();
+                String getLandmark = edtLandmark.getText().toString().trim();
+
+                mStreetArray.add(getFlatNo);
+                mStreetArray.add(getStreet);
+                mStreetArray.add(getLandmark);
+                jsonArray = new JSONArray(mStreetArray);
+
                 try {
                     JSONObject objCustomer = new JSONObject();
                     objCustomer.put("first_name", lFirstname);
@@ -214,7 +235,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     objCustomer.put("telephone", lPhone);
                     objCustomer.put("company", "Company");
                     objCustomer.put("fax", "fax");
-                    objCustomer.put("street", lStreet);
+                    objCustomer.put("street", jsonArray);
                     objCustomer.put("default_shipping", setShippingAddress);
                     objCustomer.put("default_billing", setBillingAddress);
 
