@@ -62,4 +62,10 @@ public class CancelOrderActivity extends AppCompatActivity {
     public void BackPressDetail() {
         finish();
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

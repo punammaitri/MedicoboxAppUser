@@ -327,4 +327,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
             this.medicine_price = medicine_price;
         }
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

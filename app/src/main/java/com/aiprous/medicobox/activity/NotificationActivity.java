@@ -116,4 +116,10 @@ public class NotificationActivity extends AppCompatActivity {
             this.time = time;
         }
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

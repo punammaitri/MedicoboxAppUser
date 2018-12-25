@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -159,6 +160,12 @@ public class MainCategoryActivity extends AppCompatActivity {
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
+    }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
     }
 
 }

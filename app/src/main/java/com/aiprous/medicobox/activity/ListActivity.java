@@ -282,4 +282,10 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
         dialog.dismiss();
         attemptToCallGetAllProductAPI();
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

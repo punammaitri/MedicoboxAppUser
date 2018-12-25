@@ -101,4 +101,11 @@ public class OrderPlacedActivity extends AppCompatActivity {
         startActivity(new Intent(this, MyOrdersActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
+
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

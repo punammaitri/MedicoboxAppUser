@@ -481,4 +481,10 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

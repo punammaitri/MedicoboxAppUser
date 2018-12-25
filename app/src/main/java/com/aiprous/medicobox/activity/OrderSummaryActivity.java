@@ -154,4 +154,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
             this.product_price = product_price;
         }
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

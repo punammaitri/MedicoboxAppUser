@@ -257,4 +257,10 @@ public class DrugInformationActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }

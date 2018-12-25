@@ -87,4 +87,10 @@ public class SubCategoryActivity extends AppCompatActivity {
     public void BackPressList() {
         finish();
     }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 }
