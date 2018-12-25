@@ -45,6 +45,7 @@
                 android:textColor="@color/colorblack" />
 
             <ImageView
+                android:id="@+id/img_delete_item"
                 android:layout_width="@dimen/height_20"
                 android:layout_height="@dimen/height_20"
                 android:layout_alignParentEnd="true"
