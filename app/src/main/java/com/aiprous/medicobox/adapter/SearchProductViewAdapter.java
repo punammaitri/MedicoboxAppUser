@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.model.SearchModel;
+import com.aiprous.medicobox.prescription.PrescriptionUploadOptionActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,11 +26,13 @@ public class SearchProductViewAdapter extends RecyclerView.Adapter<SearchProduct
 
 
     private ArrayList<SearchModel> mSearchResultArrayList;
-    private Context mContext;
+    private PrescriptionUploadOptionActivity mContext;
+    private DeleteCartItemInterface mDeleteCartItemInterface;
 
-    public SearchProductViewAdapter(Context mContext, ArrayList<SearchModel> mSearchResultArrayList) {
+    public SearchProductViewAdapter(PrescriptionUploadOptionActivity mContext, ArrayList<SearchModel> mSearchResultArrayList) {
         this.mContext = mContext;
         this.mSearchResultArrayList = mSearchResultArrayList;
+        this.mDeleteCartItemInterface=mContext;
     }
 
     @NonNull
@@ -66,6 +70,14 @@ public class SearchProductViewAdapter extends RecyclerView.Adapter<SearchProduct
                 mContext.startActivity(intent);*//*
             }
         });*/
+
+        holder.img_delete_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDeleteCartItemInterface.DeleteCartItem(mSearchResultArrayList.get(position).getId());
+            }
+        });
+
     }
 
     @Override
@@ -81,6 +93,8 @@ public class SearchProductViewAdapter extends RecyclerView.Adapter<SearchProduct
         TextView tv_main_category_name;
         @BindView(R.id.img_main_category)
         ImageView img_main_category;
+        @BindView(R.id.img_delete_item)
+        ImageView img_delete_item;
 
         ViewHolder(@NonNull View view) {
             super(view);
@@ -88,9 +102,14 @@ public class SearchProductViewAdapter extends RecyclerView.Adapter<SearchProduct
         }
     }
 
-    public void setFilter(ArrayList<SearchModel> Models) {
-        mSearchResultArrayList = new ArrayList<>();
-        mSearchResultArrayList.addAll(Models);
-        notifyDataSetChanged();
-    }
+//    public void setFilter(ArrayList<SearchModel> Models) {
+//        mSearchResultArrayList = new ArrayList<>();
+//        mSearchResultArrayList.addAll(Models);
+//        notifyDataSetChanged();
+//    }
+ public interface DeleteCartItemInterface {
+    public void DeleteCartItem(String id);
+ }
+
+
 }

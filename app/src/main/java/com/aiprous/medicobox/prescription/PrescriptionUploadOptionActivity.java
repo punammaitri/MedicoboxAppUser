@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.prescription;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +26,12 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.adapter.SearchProductViewAdapter;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -36,8 +41,10 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,10 +56,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
+import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_ADD_CART;
+import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_DELETE_CART;
 
 
-public class PrescriptionUploadOptionActivity extends AppCompatActivity {
+public class PrescriptionUploadOptionActivity extends AppCompatActivity implements SearchProductViewAdapter.DeleteCartItemInterface {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
@@ -102,6 +112,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
     private String getDose = "";
     private String getDoseparameter;
     ArrayAdapter<SearchModel> adapter;
+    String mProductIdForDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +174,16 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                         searchModel.setImage(image);
                         searchModelFinalArrayList.add(searchModel);
                         edt_specify_medicine.setText("");
+                        //call upload prescription add to cart API
+
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("product_id",id);
+                            jsonObject.put("qty", "1");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        CallUploadPrescriptionAddTocart(jsonObject);
                         break;
                     }
                 }
@@ -173,7 +194,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 layoutManager = new LinearLayoutManager(mContext);
                 recyclerspecifyMedicine.setLayoutManager(new LinearLayoutManager(PrescriptionUploadOptionActivity.this, LinearLayoutManager.VERTICAL, false));
                 recyclerspecifyMedicine.setHasFixedSize(true);
-                mSearchViewAdapter = new SearchProductViewAdapter(mContext, searchModelFinalArrayList);
+                mSearchViewAdapter = new SearchProductViewAdapter(PrescriptionUploadOptionActivity.this, searchModelFinalArrayList);
                 recyclerspecifyMedicine.setAdapter(mSearchViewAdapter);
             }
 
@@ -291,6 +312,20 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                 .putExtra("choose_delivery_address", "true"));
 
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+    @Override
+    public void DeleteCartItem(String id) {
+
+        mProductIdForDelete=id;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("action","delete");
+            jsonObject.put("product_id", id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        CallUploadPrescriptionDeleteItem(jsonObject);
     }
 
     public class ListModel {
@@ -422,4 +457,95 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    private void CallUploadPrescriptionAddTocart(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(UPLOADED_PRESCRIPTION_ADD_CART)
+                .addJSONObjectBody(jsonObject)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            String status=getAllResponse.get("status").toString();
+                            if(status.equals("success"))
+                            {
+                                Toast.makeText(mContext, "Item added to cart successfully", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(mContext, "failure", Toast.LENGTH_SHORT).show();
+                            }
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        // handle error
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+
+    private void CallUploadPrescriptionDeleteItem(JSONObject jsonObject) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(UPLOADED_PRESCRIPTION_DELETE_CART)
+                .addJSONObjectBody(jsonObject)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            String status=getAllResponse.get("status").toString();
+                            if(status.equals("success"))
+                            {
+                                for(int i=0;i<searchModelFinalArrayList.size();i++)
+                                {
+                                    if(mProductIdForDelete.equals(searchModelFinalArrayList.get(i).getId()))
+                                    {
+                                        searchModelFinalArrayList.remove(i);
+                                        mSearchViewAdapter = new SearchProductViewAdapter(PrescriptionUploadOptionActivity.this, searchModelFinalArrayList);
+                                        recyclerspecifyMedicine.setAdapter(mSearchViewAdapter);
+                                        break;
+                                    }
+                                }
+
+                                Toast.makeText(mContext, "Item Deleted from cart successfully", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(mContext, "failure", Toast.LENGTH_SHORT).show();
+                            }
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        // handle error
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+
+
+
 }
