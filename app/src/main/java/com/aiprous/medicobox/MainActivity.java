@@ -177,8 +177,6 @@ public class MainActivity extends AppCompatActivity
             rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
-
-
     }
 
     public void addFragment() {

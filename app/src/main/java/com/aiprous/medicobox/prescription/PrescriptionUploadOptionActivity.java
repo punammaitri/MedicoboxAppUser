@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.ListActivity;
+import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.adapter.SearchProductViewAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
@@ -108,7 +109,6 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
     private String getPatientname;
     private String getAdditionalComment;
     private String mFlag = "";
-    private String dataModel;
     private String getDose = "";
     private String getDoseparameter;
     ArrayAdapter<SearchModel> adapter;
@@ -178,7 +178,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
 
                         JSONObject jsonObject = new JSONObject();
                         try {
-                            jsonObject.put("product_id",id);
+                            jsonObject.put("product_id", id);
                             jsonObject.put("qty", "1");
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -213,12 +213,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
-        if (getIntent().getStringExtra("PrescriptionImageModel") != null) {
-            dataModel = getIntent().getStringExtra("PrescriptionImageModel");
-         /*   Type listOfItemData = new TypeToken<List<MainCategoryModel.SubCat>>() {
-            }.getType();
-
-            mGetImageUrlModel = gson.fromJson(dataModel, listOfItemData);*/
+        if (getIntent().getStringExtra("getPatientName") != null) {
             getPatientname = getIntent().getStringExtra("getPatientName");
             getAdditionalComment = getIntent().getStringExtra("getAdditionalComment");
         }
@@ -297,8 +292,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
 
     private void CallNextActivity(String mFlag) {
 
-        GetImageUrlModel getImageUrlModel = new GetImageUrlModel(dataModel, getPatientname, getAdditionalComment, mFlag, getDose);
-        getImageUrlModel.setImageUrl(dataModel);
+        GetImageUrlModel getImageUrlModel = new GetImageUrlModel(getPatientname, getAdditionalComment, mFlag, getDose);
         getImageUrlModel.setPatientName(getPatientname);
         getImageUrlModel.setAdditionalComment(getAdditionalComment);
         getImageUrlModel.setUploadPrescriptionFlag(mFlag);
@@ -317,10 +311,10 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
     @Override
     public void DeleteCartItem(String id) {
 
-        mProductIdForDelete=id;
+        mProductIdForDelete = id;
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("action","delete");
+            jsonObject.put("action", "delete");
             jsonObject.put("product_id", id);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -471,11 +465,10 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                         // do anything with response
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            String status=getAllResponse.get("status").toString();
-                            if(status.equals("success"))
-                            {
+                            String status = getAllResponse.get("status").toString();
+                            if (status.equals("success")) {
                                 Toast.makeText(mContext, "Item added to cart successfully", Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 Toast.makeText(mContext, "failure", Toast.LENGTH_SHORT).show();
                             }
                             CustomProgressDialog.getInstance().dismissDialog();
@@ -494,7 +487,6 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                     }
                 });
     }
-
 
 
     private void CallUploadPrescriptionDeleteItem(JSONObject jsonObject) {
@@ -509,13 +501,10 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                         // do anything with response
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            String status=getAllResponse.get("status").toString();
-                            if(status.equals("success"))
-                            {
-                                for(int i=0;i<searchModelFinalArrayList.size();i++)
-                                {
-                                    if(mProductIdForDelete.equals(searchModelFinalArrayList.get(i).getId()))
-                                    {
+                            String status = getAllResponse.get("status").toString();
+                            if (status.equals("success")) {
+                                for (int i = 0; i < searchModelFinalArrayList.size(); i++) {
+                                    if (mProductIdForDelete.equals(searchModelFinalArrayList.get(i).getId())) {
                                         searchModelFinalArrayList.remove(i);
                                         mSearchViewAdapter = new SearchProductViewAdapter(PrescriptionUploadOptionActivity.this, searchModelFinalArrayList);
                                         recyclerspecifyMedicine.setAdapter(mSearchViewAdapter);
@@ -524,7 +513,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                                 }
 
                                 Toast.makeText(mContext, "Item Deleted from cart successfully", Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 Toast.makeText(mContext, "failure", Toast.LENGTH_SHORT).show();
                             }
                             CustomProgressDialog.getInstance().dismissDialog();
@@ -544,8 +533,10 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                 });
     }
 
-
-
-
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
+    }
 
 }

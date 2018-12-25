@@ -4,26 +4,16 @@ import java.util.ArrayList;
 
 public class GetImageUrlModel {
 
-    String imageUrl;
     String patientName;
     String additionalComment;
     String uploadPrescriptionFlag;
     String getDoseParam;
 
-    public GetImageUrlModel(String imageUrl, String patientName, String additionalComment, String uploadPrescriptionFlag, String getDoseParam) {
-        this.imageUrl = imageUrl;
+    public GetImageUrlModel(String patientName, String additionalComment, String uploadPrescriptionFlag, String getDoseParam) {
         this.patientName = patientName;
         this.additionalComment = additionalComment;
         this.uploadPrescriptionFlag = uploadPrescriptionFlag;
         this.getDoseParam = getDoseParam;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getPatientName() {

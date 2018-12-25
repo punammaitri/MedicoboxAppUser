@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
+import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.APIConstant;
@@ -389,5 +390,11 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
     }
 }

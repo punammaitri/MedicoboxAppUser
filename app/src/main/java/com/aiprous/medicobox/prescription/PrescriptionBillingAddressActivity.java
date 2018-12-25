@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
@@ -118,6 +119,12 @@ public class PrescriptionBillingAddressActivity extends AppCompatActivity {
             startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
+    }
+
+    @OnClick(R.id.searchview_medicine)
+    public void onClicksearch()
+    {
+        startActivity(new Intent(this,SearchViewActivity.class));
     }
 
 }
