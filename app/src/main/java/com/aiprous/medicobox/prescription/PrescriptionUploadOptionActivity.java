@@ -57,6 +57,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_ADD_CART;
@@ -457,6 +459,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
     private void CallUploadPrescriptionAddTocart(JSONObject jsonObject) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(UPLOADED_PRESCRIPTION_ADD_CART)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .addJSONObjectBody(jsonObject)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -466,7 +469,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                         // do anything with response
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            String status = getAllResponse.get("status").toString();
+                            String status = getAllResponse.get("status").getAsString();
                             if (status.equals("success")) {
                                 Toast.makeText(mContext, "Item added to cart successfully", Toast.LENGTH_SHORT).show();
                             } else {
@@ -493,6 +496,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
     private void CallUploadPrescriptionDeleteItem(JSONObject jsonObject) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(UPLOADED_PRESCRIPTION_DELETE_CART)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .addJSONObjectBody(jsonObject)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -502,7 +506,7 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                         // do anything with response
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            String status = getAllResponse.get("status").toString();
+                            String status = getAllResponse.get("status").getAsString();
                             if (status.equals("success")) {
                                 for (int i = 0; i < searchModelFinalArrayList.size(); i++) {
                                     if (mProductIdForDelete.equals(searchModelFinalArrayList.get(i).getId())) {
