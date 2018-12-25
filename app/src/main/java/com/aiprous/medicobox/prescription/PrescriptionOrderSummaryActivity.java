@@ -25,6 +25,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -54,6 +55,7 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     TextView tv_cart_size;
     RecyclerView rc_medicine_list;
     ArrayList<PrescriptionOrderSummaryActivity.ListModel> mlistModelsArray = new ArrayList<>();
+    ArrayList<FinalOrderImageModel> mFinalModelsArray = new ArrayList<>();
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -100,7 +102,6 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
-        //get billing flag
         if (getIntent().getStringExtra("mAddressId") != null) {
             mAddressId = getIntent().getStringExtra("mAddressId");
             choose_delivery_address = getIntent().getStringExtra("choose_delivery_address");
@@ -116,7 +117,6 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-
     @OnClick(R.id.rlayout_back_button)
     public void BackPressSDescription() {
         finish();
@@ -124,7 +124,6 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnConfirmOrder)
     public void ButtonConfirmOrder() {
-
         CallFinalOrder();
     }
 
@@ -153,11 +152,29 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         try {
-                            if (response.has("data")) {
-                                mlistModelsArray.clear();
+                            if (response.has("status")) {
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 String status = getAllResponse.get("status").getAsString();
                                 if (status.equals("success")) {
+                                    mFinalModelsArray.clear();
+                                    JsonObject data = getAllResponse.get("data").getAsJsonObject();
+                                    String id = data.get("id").getAsString();
+                                    String order_type = data.get("order_type").getAsString();
+                                    String patient_name = data.get("patient_name").getAsString();
+                                    String additional_comment = data.get("additional_comment").getAsString();
+                                    String shiping_address = data.get("shiping_address").getAsString();
+                                    String billing_address = data.get("billing_address").getAsString();
+                                    String final_cart = data.get("final_cart").getAsString();
+                                    String cart_total = data.get("cart_total").getAsString();
+                                    JsonArray imagesjsonArray = data.get("images").getAsJsonArray();
+
+                                    for (int i = 0; i < imagesjsonArray.size(); i++) {
+                                        String getUrl = imagesjsonArray.get(i).getAsString();
+                                        FinalOrderImageModel imageUrlModel = new FinalOrderImageModel(getUrl);
+                                        imageUrlModel.setImageUrl(getUrl);
+                                        mFinalModelsArray.add(imageUrlModel);
+                                    }
+
                                     startActivity(new Intent(PrescriptionOrderSummaryActivity.this, ThankYouActivity.class));
                                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 }
