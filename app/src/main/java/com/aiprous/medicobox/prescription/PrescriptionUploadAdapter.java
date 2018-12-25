@@ -1,6 +1,6 @@
 package com.aiprous.medicobox.prescription;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import android.widget.ImageView;
 
 import com.aiprous.medicobox.R;
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class PrescriptionUploadAdapter extends RecyclerView.Adapter<PrescriptionUploadAdapter.ViewHolder> {
 
+    private ArrayList<ImageUrlModel> mDataArrayList;
+    private PrescriptionUploadActivity mContext;
+    private DeleteImageInterface mDeleteimages;
 
-    private ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList;
-    private Context mContext;
-
-    public PrescriptionUploadAdapter(Context mContext, ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList) {
+    public PrescriptionUploadAdapter(PrescriptionUploadActivity mContext, ArrayList<ImageUrlModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
+        this.mDeleteimages = mContext;
     }
 
     @NonNull
@@ -39,19 +40,21 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        holder.imgOption.setImageBitmap(mDataArrayList.get(position).getImagebitmap());
+        Picasso.with(mContext)
+                .load(mDataArrayList.get(position).getImageUrl())
+                .into(holder.imgOption);
 
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //To delete data according to position
-                deleteAlert(mDataArrayList, position);
+                deleteAlert(mDataArrayList.get(position).getImageUrl());
             }
         });
     }
 
     //To delete data according to position
-    private void deleteAlert(final ArrayList<PrescriptionUploadActivity.ListModel> mDataArrayList, final int position) {
+    private void deleteAlert(final String imageUrl) {
         new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText(mContext.getResources().getString(R.string.are_you_sure))
                 .setContentText(mContext.getResources().getString(R.string.confirm_deleted))
@@ -83,9 +86,10 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
 
                         //To delete the item
-                        try {
+                        mDeleteimages.DeleteImage("delete", imageUrl);
+                      /*  try {
                             for (int i = 0; i < mDataArrayList.size(); i++) {
-                                if (mDataArrayList.get(position).getImagebitmap().equals(mDataArrayList.get(i).getImagebitmap())) {
+                                if (mDataArrayList.get(position).getImageUrl().equals(mDataArrayList.get(i).getImageUrl())) {
                                     mDataArrayList.remove(i);
                                     notifyDataSetChanged();
                                     break;
@@ -94,7 +98,7 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 })
                 .show();
@@ -117,5 +121,9 @@ public class PrescriptionUploadAdapter extends RecyclerView.Adapter<Prescription
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface DeleteImageInterface {
+        public void DeleteImage(String delete, String url);
     }
 }

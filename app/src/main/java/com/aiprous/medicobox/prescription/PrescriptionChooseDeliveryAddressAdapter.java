@@ -114,7 +114,6 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
                         .putExtra("street", street)
                         .putExtra("landmark", landmark)
                         .putExtra("fromchooseDelivery", "true"));
-                ((Activity) mContext).finish();
                 mContext.overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 popup.dismiss();
             }

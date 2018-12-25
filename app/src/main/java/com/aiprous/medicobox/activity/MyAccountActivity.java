@@ -25,6 +25,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -131,60 +132,65 @@ public class MyAccountActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                        JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
-                        String status = responseArray.get("status").getAsString();
-                        if (status.equals("success")) {
-                            JsonArray jsonAddressArray = responseArray.get("address").getAsJsonArray();
-                            if (!(jsonAddressArray.size() == 0)) {
-                                for (int i = 0; i < jsonAddressArray.size(); i++) {
-                                    JsonObject asJsonObject = jsonAddressArray.get(i).getAsJsonObject();
-                                    if (asJsonObject.get("default_billing").getAsString().equalsIgnoreCase("true")) {
-                                        linearBillingAddress.setVisibility(View.VISIBLE);
-                                        id = asJsonObject.get("id").getAsString();
-                                        firstname = asJsonObject.get("firstname").getAsString();
-                                        lastname = asJsonObject.get("lastname").getAsString();
-                                        city = asJsonObject.get("city").getAsString();
-                                        country_id = asJsonObject.get("country_id").getAsString();
-                                        region_id = asJsonObject.get("region_id").getAsString();
-                                        postcode = asJsonObject.get("postcode").getAsString();
-                                        telephone = asJsonObject.get("telephone").getAsString();
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseArray.get("status").getAsString();
+                            if (status.equals("success")) {
+                                JsonArray jsonAddressArray = responseArray.get("address").getAsJsonArray();
+                                if (!(jsonAddressArray.size() == 0)) {
+                                    for (int i = 0; i < jsonAddressArray.size(); i++) {
+                                        JsonObject asJsonObject = jsonAddressArray.get(i).getAsJsonObject();
+                                        if (asJsonObject.get("default_billing").getAsString().equalsIgnoreCase("true")) {
+                                            linearBillingAddress.setVisibility(View.VISIBLE);
+                                            id = asJsonObject.get("id").getAsString();
+                                            firstname = asJsonObject.get("firstname").getAsString();
+                                            lastname = asJsonObject.get("lastname").getAsString();
+                                            city = asJsonObject.get("city").getAsString();
+                                            country_id = asJsonObject.get("country_id").getAsString();
+                                            region_id = asJsonObject.get("region_id").getAsString();
+                                            postcode = asJsonObject.get("postcode").getAsString();
+                                            telephone = asJsonObject.get("telephone").getAsString();
 
-                                        JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
-                                        JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                        flat = streetInnerArray.get(0).getAsString();
-                                        street = streetInnerArray.get(1).getAsString();
-                                        landmark = streetInnerArray.get(2).getAsString();
+                                            JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                            JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                            flat = streetInnerArray.get(0).getAsString();
+                                            street = streetInnerArray.get(1).getAsString();
+                                            landmark = streetInnerArray.get(2).getAsString();
 
-                                        String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
-                                        txtFullAddress.setText(fullAddress);
-                                        txtUsername.setText(firstname + " " + lastname);
-                                        txtTelephone.setText(telephone);
-                                        txtEditBillingAddress.setText("EDIT");
-                                    } else {
-                                        linearShippingAddress.setVisibility(View.VISIBLE);
-                                        id = asJsonObject.get("id").getAsString();
-                                        firstname = asJsonObject.get("firstname").getAsString();
-                                        lastname = asJsonObject.get("lastname").getAsString();
-                                        city = asJsonObject.get("city").getAsString();
-                                        country_id = asJsonObject.get("country_id").getAsString();
-                                        region_id = asJsonObject.get("region_id").getAsString();
-                                        postcode = asJsonObject.get("postcode").getAsString();
-                                        telephone = asJsonObject.get("telephone").getAsString();
-                                        JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
-                                        JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                        flat = streetInnerArray.get(0).getAsString();
-                                        street = streetInnerArray.get(1).getAsString();
-                                        landmark = streetInnerArray.get(2).getAsString();
+                                            String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
+                                            txtFullAddress.setText(fullAddress);
+                                            txtUsername.setText(firstname + " " + lastname);
+                                            txtTelephone.setText(telephone);
+                                            txtEditBillingAddress.setText("EDIT");
+                                        } else {
+                                            linearShippingAddress.setVisibility(View.VISIBLE);
+                                            id = asJsonObject.get("id").getAsString();
+                                            firstname = asJsonObject.get("firstname").getAsString();
+                                            lastname = asJsonObject.get("lastname").getAsString();
+                                            city = asJsonObject.get("city").getAsString();
+                                            country_id = asJsonObject.get("country_id").getAsString();
+                                            region_id = asJsonObject.get("region_id").getAsString();
+                                            postcode = asJsonObject.get("postcode").getAsString();
+                                            telephone = asJsonObject.get("telephone").getAsString();
 
-                                        String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
-                                        txtShippingAddress.setText(fullAddress);
-                                        txtShippingName.setText(firstname + " " + lastname);
-                                        txtShippingMobile.setText(telephone);
-                                        txt_shipping_address.setText("EDIT");
+                                            JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                            JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                            flat = streetInnerArray.get(0).getAsString();
+                                            street = streetInnerArray.get(1).getAsString();
+                                            landmark = streetInnerArray.get(2).getAsString();
+
+                                            String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
+                                            txtShippingAddress.setText(fullAddress);
+                                            txtShippingName.setText(firstname + " " + lastname);
+                                            txtShippingMobile.setText(telephone);
+                                            txt_shipping_address.setText("EDIT");
+                                        }
                                     }
                                 }
                             }
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
                         }
                         CustomProgressDialog.getInstance().dismissDialog();
                     }

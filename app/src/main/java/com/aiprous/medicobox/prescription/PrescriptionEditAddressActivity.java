@@ -258,6 +258,17 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
                 //for update API
                 JSONObject jsonObjectReg = null;
+                mStreetArray.clear();
+
+                String getFlatNo = edtFlatNo.getText().toString().trim();
+                String getStreet = edtStreet.getText().toString().trim();
+                String getLandmark = edtLandmark.getText().toString().trim();
+
+                mStreetArray.add(getFlatNo);
+                mStreetArray.add(getStreet);
+                mStreetArray.add(getLandmark);
+                jsonArray = new JSONArray(mStreetArray);
+
                 try {
                     JSONObject objCustomer = new JSONObject();
                     objCustomer.put("first_name", lFirstname);
@@ -269,7 +280,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     objCustomer.put("telephone", lPhone);
                     objCustomer.put("company", "Company");
                     objCustomer.put("fax", "fax");
-                    objCustomer.put("street", lStreet);
+                    objCustomer.put("street", jsonArray);
                     objCustomer.put("default_shipping", setShippingAddress);
                     objCustomer.put("default_billing", setBillingAddress);
 
