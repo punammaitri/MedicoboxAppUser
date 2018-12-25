@@ -136,6 +136,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mPregnancy_and_breast_feeding;
     private String mMore_info;
     private float mCalculatePrice;
+    private int mDiscountAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +237,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
             //mPrescription = getIntent().getStringExtra("prescription");
             //mMrp = getIntent().getStringExtra("MrpPrice");
-            mdiscount = getIntent().getStringExtra("discount");
+            //mdiscount = getIntent().getStringExtra("discount");
 
            /* tv_value.setText("" + mQty);
             tv_medicine_name.setText(mMedicineName);
@@ -352,12 +353,23 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                     mSku = data.get("sku").getAsString();
                                     String qty = data.get("qty").getAsString();
 
-                                    mQty = Integer.parseInt(qty);
 
                                     if (sale_price.isEmpty()) {
                                         mPrice = mMrp;
                                     } else {
                                         mPrice = sale_price;
+                                    }
+
+                                    if (!qty.isEmpty()) {
+                                        mQty = Integer.parseInt(qty);
+                                        mCalculatePrice = mQty * Float.parseFloat(mPrice);
+                                    }
+
+                                    if (!mMrp.isEmpty() && !sale_price.isEmpty()) {
+                                        mDiscountAmount = Integer.parseInt(mMrp) - Integer.parseInt(sale_price);
+                                        mdiscount = String.valueOf(((mDiscountAmount / Integer.parseInt(mMrp)) * 100));
+                                    }else {
+                                        mdiscount = "";
                                     }
 
                                     tv_value.setText("" + mQty);
@@ -366,7 +378,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                     tv_mrp_price.setText(mMrp);
                                     tv_item_description.setText(mValue);
 
-                                    mCalculatePrice = mQty * Float.parseFloat(mPrice);
 
                                     if (mPrescription.equals("0")) {
                                         llayout_prescription.setVisibility(View.GONE);
