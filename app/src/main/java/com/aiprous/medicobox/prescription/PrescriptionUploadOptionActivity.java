@@ -303,8 +303,9 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
         String newUpdatedmodel = gson.toJson(mUpdateGetImageUrlModel);
         startActivity(new Intent(mContext, PrescriptionChooseDeliveryAddressActivity.class)
                 .putExtra("PrescriptionImageModel", newUpdatedmodel)
-                .putExtra("choose_delivery_address", "true"));
-
+                .putExtra("choose_delivery_address", "true")
+                .putExtra("getPatientName", getPatientname)
+                .putExtra("getAdditionalComment", getAdditionalComment));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
@@ -534,9 +535,8 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 
 }

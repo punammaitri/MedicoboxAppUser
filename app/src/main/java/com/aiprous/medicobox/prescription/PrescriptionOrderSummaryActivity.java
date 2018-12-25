@@ -7,21 +7,41 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
+import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.DELETE_IMAGE_PRESCRIPTION;
+import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_PLACE_ORDER;
 
 
 public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
@@ -38,6 +58,11 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     private String chooseDeliveryAddess;
+    private String mAddressId;
+    private String choose_delivery_address;
+    private String PrescriptionImageModel;
+    private String getPatientName;
+    private String getAdditionalComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +100,14 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
+        //get billing flag
+        if (getIntent().getStringExtra("mAddressId") != null) {
+            mAddressId = getIntent().getStringExtra("mAddressId");
+            choose_delivery_address = getIntent().getStringExtra("choose_delivery_address");
+            PrescriptionImageModel = getIntent().getStringExtra("PrescriptionImageModel");
+            getPatientName = getIntent().getStringExtra("getPatientName");
+            getAdditionalComment = getIntent().getStringExtra("getAdditionalComment");
+        }
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -91,8 +124,61 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnConfirmOrder)
     public void ButtonConfirmOrder() {
-        startActivity(new Intent(this, ThankYouActivity.class));
-        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+        CallFinalOrder();
+    }
+
+    private void CallFinalOrder() {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("patient_name", getPatientName);
+            jsonObject.put("additional_comment", getAdditionalComment);
+            jsonObject.put("shipping_address", mAddressId);
+            jsonObject.put("billing_address", mAddressId);
+            jsonObject.put("order_type", "");
+            jsonObject.put("duration_days", "");
+            Log.e("url", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post(UPLOADED_PRESCRIPTION_PLACE_ORDER)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            if (response.has("data")) {
+                                mlistModelsArray.clear();
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                String status = getAllResponse.get("status").getAsString();
+                                if (status.equals("success")) {
+                                    startActivity(new Intent(PrescriptionOrderSummaryActivity.this, ThankYouActivity.class));
+                                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                }
+                                CustomProgressDialog.getInstance().dismissDialog();
+
+                            }
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(PrescriptionOrderSummaryActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 
 
@@ -163,8 +249,7 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

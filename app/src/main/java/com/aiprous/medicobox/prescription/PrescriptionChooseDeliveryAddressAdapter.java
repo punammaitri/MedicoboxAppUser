@@ -67,7 +67,7 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         holder.rb_checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mDeleteWishList.RadioButtonCheck(isChecked);
+                mDeleteWishList.RadioButtonCheck(isChecked,mDataArrayList.get(position).getId());
             }
         });
 
@@ -171,6 +171,6 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
     public interface DeleteInterface {
         public void Delete(String id);
 
-        public void RadioButtonCheck(boolean v);
+        public void RadioButtonCheck(boolean v,String id);
     }
 }

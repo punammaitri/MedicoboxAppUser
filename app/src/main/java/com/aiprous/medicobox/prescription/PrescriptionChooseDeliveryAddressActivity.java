@@ -67,7 +67,11 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layoutManager;
     private String chooseDeliveryAddess;
     private boolean isChecked = false;
-    private String flat,landmark;
+    private String flat, landmark;
+    private String mAddressId = "";
+    private String PrescriptionImageModel;
+    private String getAdditionalComment;
+    private String getPatientName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,9 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
 
         if (getIntent().getStringExtra("choose_delivery_address") != null) {
             chooseDeliveryAddess = getIntent().getStringExtra("choose_delivery_address");
+            PrescriptionImageModel = getIntent().getStringExtra("PrescriptionImageModel");
+            getPatientName = getIntent().getStringExtra("getPatientName");
+            getAdditionalComment = getIntent().getStringExtra("getAdditionalComment");
             btnInstaList.setVisibility(View.VISIBLE);
         }
 
@@ -139,7 +146,12 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @OnClick(R.id.btn_insta_list)
     public void ButtonInstaList() {
         if (isChecked) {
-            startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class));
+            startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class)
+                    .putExtra("mAddressId", "" + mAddressId)
+                    .putExtra("choose_delivery_address", "" + chooseDeliveryAddess)
+                    .putExtra("PrescriptionImageModel", "" + PrescriptionImageModel)
+                    .putExtra("getPatientName", "" + getPatientName)
+                    .putExtra("getAdditionalComment", "" + getAdditionalComment));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
             Toast.makeText(mContext, "Please select delivery address", Toast.LENGTH_SHORT).show();
@@ -179,7 +191,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                     landmark = streetInnerArray.get(2).getAsString();
 
                                     AllCustomerAddress allCustomerAddress = new AllCustomerAddress(id, telephone, postcode, region_id, country_id,
-                                            city, street, lastname, firstname,flat,landmark);
+                                            city, street, lastname, firstname, flat, landmark);
                                     allCustomerAddress.setId(id);
                                     allCustomerAddress.setTelephone(telephone);
                                     allCustomerAddress.setPostcode(postcode);
@@ -233,8 +245,9 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     }
 
     @Override
-    public void RadioButtonCheck(boolean value) {
+    public void RadioButtonCheck(boolean value, String id) {
         isChecked = value;
+        mAddressId = id;
     }
 
     private void CallDeleteAPI(JSONObject jsonObject) {
@@ -275,8 +288,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }
