@@ -46,7 +46,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -182,7 +181,10 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
         if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().dismissDialog();
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             GetAllPrescriptionAPI();
@@ -201,23 +203,25 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                         // do anything with response
                         try {
                             if (response.getString("status").equals("success")) {
-                                mlistModelsArray.clear();
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
-                                JsonArray getImageUrl = responseObject.get("images").getAsJsonArray();
 
-                                for (int i = 0; i < getImageUrl.size(); i++) {
-                                    String getUrl = getImageUrl.get(i).getAsString();
-                                    ImageUrlModel imageUrlModel = new ImageUrlModel(getUrl);
-                                    imageUrlModel.setImageUrl(getUrl);
-                                    mlistModelsArray.add(imageUrlModel);
+                                if (responseObject.has("images")){
+                                    mlistModelsArray.clear();
+                                    JsonArray getImageUrl = responseObject.get("images").getAsJsonArray();
+                                    for (int i = 0; i < getImageUrl.size(); i++) {
+                                        String getUrl = getImageUrl.get(i).getAsString();
+                                        ImageUrlModel imageUrlModel = new ImageUrlModel(getUrl);
+                                        imageUrlModel.setImageUrl(getUrl);
+                                        mlistModelsArray.add(imageUrlModel);
+                                    }
+                                    setListAdapter(mlistModelsArray);
                                 }
-                                setListAdapter(mlistModelsArray);
-                                CustomProgressDialog.getInstance().dismissDialog();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
@@ -253,9 +257,9 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                 break;
             case R.id.btnContinue:
                 if (edtPatientName.getText().length() == 0) {
-                    edtPatientName.setError("add patient name");
+                    Toast.makeText(mContext, "add patient name", Toast.LENGTH_SHORT).show();
                 } else if (edtAdditionalComment.getText().length() == 0) {
-                    Toast.makeText(mContext, "Add comment", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(mContext, "Add comment", Toast.LENGTH_SHORT).show();
                 } else {
                     String getPatientName = edtPatientName.getText().toString().trim();
                     String getAdditionalComment = edtAdditionalComment.getText().toString().trim();
@@ -607,14 +611,13 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                         // do anything with response
                         try {
                             if (response.has("data")) {
-                                mlistModelsArray.clear();
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 String status = getAllResponse.get("status").getAsString();
                                 if (status.equals("success")) {
                                     Toast.makeText(mContext, "Image deleted successfully", Toast.LENGTH_SHORT).show();
+                                    GetAllPrescriptionAPI();
                                 }
                                 CustomProgressDialog.getInstance().dismissDialog();
-                                GetAllPrescriptionAPI();
                             }
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();

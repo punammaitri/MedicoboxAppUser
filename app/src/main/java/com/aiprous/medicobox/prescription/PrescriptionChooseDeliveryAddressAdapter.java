@@ -36,6 +36,7 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
     private ArrayList<AllCustomerAddress> mDataArrayList;
     private PrescriptionChooseDeliveryAddressActivity mContext;
     private DeleteInterface mDeleteWishList;
+    private String getFullname;
 
     public PrescriptionChooseDeliveryAddressAdapter(PrescriptionChooseDeliveryAddressActivity mContext, ArrayList<AllCustomerAddress> mDataArrayList) {
         this.mContext = mContext;
@@ -58,16 +59,17 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
         holder.rb_checked.setText(mDataArrayList.get(position).getFirstname() + " " + mDataArrayList.get(position).getLastname());
         holder.txtMobile.setText(mDataArrayList.get(position).getTelephone());
 
-        String fullAddress = mDataArrayList.get(position).getFlat() + "," + mDataArrayList.get(position).getStreet() + ","
-                + mDataArrayList.get(position).getLandmark() + "," +"\n" + mDataArrayList.get(position).getCity() + ","
-                + mDataArrayList.get(position).getCountry_id() +  mDataArrayList.get(position).getPostcode();
+        final String fullAddress = mDataArrayList.get(position).getFlat() + "," + mDataArrayList.get(position).getStreet() + ","
+                + mDataArrayList.get(position).getLandmark() + "," + "\n" + mDataArrayList.get(position).getCity() + ","
+                + mDataArrayList.get(position).getCountry_id() + "," + mDataArrayList.get(position).getPostcode();
 
         holder.txtAddress.setText(fullAddress);
 
+        getFullname = mDataArrayList.get(position).getFirstname() + " " + mDataArrayList.get(position).getLastname();
         holder.rb_checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mDeleteWishList.RadioButtonCheck(isChecked,mDataArrayList.get(position).getId());
+                mDeleteWishList.RadioButtonCheck(isChecked, mDataArrayList.get(position).getId(), fullAddress, getFullname, mDataArrayList.get(position).getTelephone());
             }
         });
 
@@ -78,7 +80,7 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
                 ShowPopupWindow(view, mDataArrayList.get(position).getId(), mDataArrayList.get(position).getFirstname(), mDataArrayList.get(position).getLastname()
                         , mDataArrayList.get(position).getCity(), mDataArrayList.get(position).getCountry_id(), mDataArrayList.get(position).getRegion_id(),
                         mDataArrayList.get(position).getPostcode(), mDataArrayList.get(position).getTelephone(), mDataArrayList.get(position).getStreet(),
-                        mDataArrayList.get(position).getFlat(),mDataArrayList.get(position).getLandmark());
+                        mDataArrayList.get(position).getFlat(), mDataArrayList.get(position).getLandmark());
             }
         });
 
@@ -171,6 +173,6 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
     public interface DeleteInterface {
         public void Delete(String id);
 
-        public void RadioButtonCheck(boolean v,String id);
+        public void RadioButtonCheck(boolean v, String id, String address, String fullname, String mobile);
     }
 }

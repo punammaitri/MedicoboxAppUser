@@ -72,6 +72,11 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     private String PrescriptionImageModel;
     private String getAdditionalComment;
     private String getPatientName;
+    private String mFullname;
+    private String mMobile;
+    private String mAdress;
+    private String getDose;
+    private String getFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +105,10 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
 
         if (getIntent().getStringExtra("choose_delivery_address") != null) {
             chooseDeliveryAddess = getIntent().getStringExtra("choose_delivery_address");
-            PrescriptionImageModel = getIntent().getStringExtra("PrescriptionImageModel");
             getPatientName = getIntent().getStringExtra("getPatientName");
             getAdditionalComment = getIntent().getStringExtra("getAdditionalComment");
+            getDose = getIntent().getStringExtra("getDose");
+            getFlag = getIntent().getStringExtra("getFlag");
             btnInstaList.setVisibility(View.VISIBLE);
         }
 
@@ -149,8 +155,12 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
             startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class)
                     .putExtra("mAddressId", "" + mAddressId)
                     .putExtra("choose_delivery_address", "" + chooseDeliveryAddess)
-                    .putExtra("PrescriptionImageModel", "" + PrescriptionImageModel)
                     .putExtra("getPatientName", "" + getPatientName)
+                    .putExtra("getAddress", "" + mAdress)
+                    .putExtra("getFullname", "" + mFullname)
+                    .putExtra("getMobile", "" + mMobile)
+                    .putExtra("getDose", "" + getDose)
+                    .putExtra("getFlag", "" + getFlag)
                     .putExtra("getAdditionalComment", "" + getAdditionalComment));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
@@ -245,9 +255,12 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     }
 
     @Override
-    public void RadioButtonCheck(boolean value, String id) {
+    public void RadioButtonCheck(boolean value, String id, String address, String fullname, String mobile) {
         isChecked = value;
         mAddressId = id;
+        mAdress = address;
+        mFullname = fullname;
+        mMobile = mobile;
     }
 
     private void CallDeleteAPI(JSONObject jsonObject) {

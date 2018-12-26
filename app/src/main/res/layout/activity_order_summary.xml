@@ -57,6 +57,7 @@
 
 
                     <TextView
+                        android:id="@+id/txtusername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/height_2"
@@ -69,6 +70,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/height_15"
@@ -79,6 +81,7 @@
 
 
                     <TextView
+                        android:id="@+id/txtTelephone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/height_5"

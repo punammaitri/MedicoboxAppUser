@@ -293,20 +293,11 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
     }
 
     private void CallNextActivity(String mFlag) {
-
-        GetImageUrlModel getImageUrlModel = new GetImageUrlModel(getPatientname, getAdditionalComment, mFlag, getDose);
-        getImageUrlModel.setPatientName(getPatientname);
-        getImageUrlModel.setAdditionalComment(getAdditionalComment);
-        getImageUrlModel.setUploadPrescriptionFlag(mFlag);
-        getImageUrlModel.setGetDoseParam(getDose);
-        mUpdateGetImageUrlModel.add(getImageUrlModel);
-
-        Gson gson = new Gson();
-        String newUpdatedmodel = gson.toJson(mUpdateGetImageUrlModel);
         startActivity(new Intent(mContext, PrescriptionChooseDeliveryAddressActivity.class)
-                .putExtra("PrescriptionImageModel", newUpdatedmodel)
                 .putExtra("choose_delivery_address", "true")
                 .putExtra("getPatientName", getPatientname)
+                .putExtra("getDose", getDose)
+                .putExtra("getFlag", mFlag)
                 .putExtra("getAdditionalComment", getAdditionalComment));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }

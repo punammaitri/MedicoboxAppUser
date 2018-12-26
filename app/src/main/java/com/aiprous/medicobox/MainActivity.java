@@ -511,7 +511,7 @@ public class MainActivity extends AppCompatActivity
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
-                        Toast.makeText(MainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

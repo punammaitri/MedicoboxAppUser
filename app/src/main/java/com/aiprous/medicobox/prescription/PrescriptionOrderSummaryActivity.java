@@ -3,6 +3,7 @@ package com.aiprous.medicobox.prescription;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
@@ -25,15 +27,19 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +47,9 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.DELETE_IMAGE_PRESCRIPTION;
+import static com.aiprous.medicobox.utils.APIConstant.GET_UPLOADED_PRESCRIPTION;
 import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_PLACE_ORDER;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
@@ -54,8 +61,14 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
     RecyclerView rc_medicine_list;
-    ArrayList<PrescriptionOrderSummaryActivity.ListModel> mlistModelsArray = new ArrayList<>();
+    ArrayList<ImageUrlModel> mlistModelsArray = new ArrayList<>();
     ArrayList<FinalOrderImageModel> mFinalModelsArray = new ArrayList<>();
+    @BindView(R.id.txtusername)
+    TextView txtusername;
+    @BindView(R.id.txtAddress)
+    TextView txtAddress;
+    @BindView(R.id.txtTelephone)
+    TextView txtTelephone;
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -65,6 +78,12 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
     private String PrescriptionImageModel;
     private String getPatientName;
     private String getAdditionalComment;
+    private String getAddress;
+    private String getMobile;
+    private String getFullname;
+    ArrayList<PrescriptionModel> detailModelArrayList;
+    private String getDose="";
+    private String getFlag="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +101,6 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
         baseActivity.changeStatusBarColor(this);
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 
-        //add static data into List array list
-        mlistModelsArray.add(new PrescriptionOrderSummaryActivity.ListModel(R.drawable.bottle, "Shreya Saran", "Bottle of 60 tablet", "150", "30%", "135"));
-
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new PrescriptionOrderSummaryAdapter(mContext, mlistModelsArray));
-
     }
 
     @Override
@@ -105,10 +116,77 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("mAddressId") != null) {
             mAddressId = getIntent().getStringExtra("mAddressId");
             choose_delivery_address = getIntent().getStringExtra("choose_delivery_address");
-            PrescriptionImageModel = getIntent().getStringExtra("PrescriptionImageModel");
             getPatientName = getIntent().getStringExtra("getPatientName");
             getAdditionalComment = getIntent().getStringExtra("getAdditionalComment");
+            getAddress = getIntent().getStringExtra("getAddress");
+            getMobile = getIntent().getStringExtra("getMobile");
+            getFullname = getIntent().getStringExtra("getFullname");
+            getDose = getIntent().getStringExtra("getDose");
+            getFlag = getIntent().getStringExtra("getFlag");
+
+            txtAddress.setText(getAddress);
+            txtusername.setText(getFullname);
+            txtTelephone.setText(getMobile);
         }
+
+        if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            GetAllPrescriptionAPI();
+        }
+    }
+
+    private void GetAllPrescriptionAPI() {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(GET_UPLOADED_PRESCRIPTION)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            if (response.getString("status").equals("success")) {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
+
+                                if (responseObject.has("images")) {
+                                    mlistModelsArray.clear();
+                                    JsonArray getImageUrl = responseObject.get("images").getAsJsonArray();
+                                    for (int i = 0; i < getImageUrl.size(); i++) {
+                                        String getUrl = getImageUrl.get(i).getAsString();
+                                        ImageUrlModel imageUrlModel = new ImageUrlModel(getUrl);
+                                        imageUrlModel.setImageUrl(getUrl);
+                                        mlistModelsArray.add(imageUrlModel);
+                                    }
+                                    setListAdapter(mlistModelsArray);
+                                }
+
+                                CustomProgressDialog.getInstance().dismissDialog();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(PrescriptionOrderSummaryActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+    private void setListAdapter(ArrayList<ImageUrlModel> mlistModelsArray) {
+        layoutManager = new LinearLayoutManager(mContext);
+        rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rc_medicine_list.setHasFixedSize(true);
+        rc_medicine_list.setAdapter(new PrescriptionOrderSummaryAdapter(PrescriptionOrderSummaryActivity.this, mlistModelsArray));
     }
 
     @OnClick(R.id.rlayout_cart)
@@ -134,9 +212,9 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
             jsonObject.put("patient_name", getPatientName);
             jsonObject.put("additional_comment", getAdditionalComment);
             jsonObject.put("shipping_address", mAddressId);
-            jsonObject.put("billing_address", mAddressId);
-            jsonObject.put("order_type", "");
-            jsonObject.put("duration_days", "");
+            jsonObject.put("billing_address", "");
+            jsonObject.put("order_type", getFlag);
+            jsonObject.put("duration_days", getDose);
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.aiprous.medicobox.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,10 @@ import butterknife.ButterKnife;
 public class PrescriptionOrderSummaryAdapter extends RecyclerView.Adapter<PrescriptionOrderSummaryAdapter.ViewHolder> {
 
 
-    private ArrayList<PrescriptionOrderSummaryActivity.ListModel> mDataArrayList;
-    private Context mContext;
+    private ArrayList<ImageUrlModel> mDataArrayList;
+    private PrescriptionOrderSummaryActivity mContext;
 
-    public PrescriptionOrderSummaryAdapter(Context mContext, ArrayList<PrescriptionOrderSummaryActivity.ListModel> mDataArrayList) {
+    public PrescriptionOrderSummaryAdapter(PrescriptionOrderSummaryActivity mContext, ArrayList<ImageUrlModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -38,7 +39,9 @@ public class PrescriptionOrderSummaryAdapter extends RecyclerView.Adapter<Prescr
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        holder.imgOption.setImageResource(mDataArrayList.get(position).getImage());
+        Picasso.with(mContext)
+                .load(mDataArrayList.get(position).getImageUrl())
+                .into(holder.imgOption);
     }
 
     @Override

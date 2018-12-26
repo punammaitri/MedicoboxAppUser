@@ -77,6 +77,19 @@ public class MyAccountActivity extends AppCompatActivity {
     private String country_id, city, firstname, telephone;
     private String landmark;
     private String flat;
+    private String billing_id,billing_firstname,billing_lastname,billing_city;
+    private String billing_country_id,billing_region_id,billing_postcode,billing_telephone,billing_flat,billing_street,billing_landmark;
+    private String shipping_firstname;
+    private String shipping_lastname;
+    private String shipping_telephone;
+    private String shipping_flat;
+    private String shipping_street;
+    private String shipping_landmark;
+    private String shipping_city;
+    private String shipping_region_id;
+    private String shipping_postcode;
+    private String shipping_country_id;
+    private String shipping_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +120,8 @@ public class MyAccountActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_id", MedicoboxApp.onGetId());
@@ -115,15 +130,14 @@ public class MyAccountActivity extends AppCompatActivity {
         }
 
         if (!isNetworkAvailable(this)) {
+            CustomProgressDialog.getInstance().dismissDialog();
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             callGetAddress(jsonObject);
-
         }
     }
 
     private void callGetAddress(JSONObject jsonObject) {
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(GET_ALL_ADDRESS)
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
@@ -143,47 +157,49 @@ public class MyAccountActivity extends AppCompatActivity {
                                         JsonObject asJsonObject = jsonAddressArray.get(i).getAsJsonObject();
                                         if (asJsonObject.get("default_billing").getAsString().equalsIgnoreCase("true")) {
                                             linearBillingAddress.setVisibility(View.VISIBLE);
-                                            id = asJsonObject.get("id").getAsString();
-                                            firstname = asJsonObject.get("firstname").getAsString();
-                                            lastname = asJsonObject.get("lastname").getAsString();
-                                            city = asJsonObject.get("city").getAsString();
-                                            country_id = asJsonObject.get("country_id").getAsString();
-                                            region_id = asJsonObject.get("region_id").getAsString();
-                                            postcode = asJsonObject.get("postcode").getAsString();
-                                            telephone = asJsonObject.get("telephone").getAsString();
+                                            billing_id= asJsonObject.get("id").getAsString();
+                                            billing_firstname = asJsonObject.get("firstname").getAsString();
+                                            billing_lastname = asJsonObject.get("lastname").getAsString();
+                                            billing_city = asJsonObject.get("city").getAsString();
+                                            billing_country_id = asJsonObject.get("country_id").getAsString();
+                                            billing_region_id = asJsonObject.get("region_id").getAsString();
+                                            billing_postcode = asJsonObject.get("postcode").getAsString();
+                                            billing_telephone = asJsonObject.get("telephone").getAsString();
 
                                             JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
                                             JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                            flat = streetInnerArray.get(0).getAsString();
-                                            street = streetInnerArray.get(1).getAsString();
-                                            landmark = streetInnerArray.get(2).getAsString();
+                                            billing_flat = streetInnerArray.get(0).getAsString();
+                                            billing_street = streetInnerArray.get(1).getAsString();
+                                            billing_landmark = streetInnerArray.get(2).getAsString();
 
-                                            String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
-                                            txtFullAddress.setText(fullAddress);
-                                            txtUsername.setText(firstname + " " + lastname);
-                                            txtTelephone.setText(telephone);
+                                            String fullBillingAddress = billing_flat + "," + billing_street + "," + billing_landmark + "," + "\n" +
+                                                    billing_city + "," + billing_country_id +  ","+billing_postcode;
+                                            txtFullAddress.setText(fullBillingAddress);
+                                            txtUsername.setText(billing_firstname + " " + billing_lastname);
+                                            txtTelephone.setText(billing_telephone);
                                             txtEditBillingAddress.setText("EDIT");
                                         } else {
                                             linearShippingAddress.setVisibility(View.VISIBLE);
-                                            id = asJsonObject.get("id").getAsString();
-                                            firstname = asJsonObject.get("firstname").getAsString();
-                                            lastname = asJsonObject.get("lastname").getAsString();
-                                            city = asJsonObject.get("city").getAsString();
-                                            country_id = asJsonObject.get("country_id").getAsString();
-                                            region_id = asJsonObject.get("region_id").getAsString();
-                                            postcode = asJsonObject.get("postcode").getAsString();
-                                            telephone = asJsonObject.get("telephone").getAsString();
+                                            shipping_id = asJsonObject.get("id").getAsString();
+                                            shipping_firstname = asJsonObject.get("firstname").getAsString();
+                                            shipping_lastname = asJsonObject.get("lastname").getAsString();
+                                            shipping_city = asJsonObject.get("city").getAsString();
+                                            shipping_country_id = asJsonObject.get("country_id").getAsString();
+                                            shipping_region_id = asJsonObject.get("region_id").getAsString();
+                                            shipping_postcode = asJsonObject.get("postcode").getAsString();
+                                            shipping_telephone = asJsonObject.get("telephone").getAsString();
 
                                             JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
                                             JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                            flat = streetInnerArray.get(0).getAsString();
-                                            street = streetInnerArray.get(1).getAsString();
-                                            landmark = streetInnerArray.get(2).getAsString();
+                                            shipping_flat = streetInnerArray.get(0).getAsString();
+                                            shipping_street = streetInnerArray.get(1).getAsString();
+                                            shipping_landmark = streetInnerArray.get(2).getAsString();
 
-                                            String fullAddress = flat + "," + street + "," + landmark + "," +"\n" + city + "," + country_id +  postcode;
-                                            txtShippingAddress.setText(fullAddress);
-                                            txtShippingName.setText(firstname + " " + lastname);
-                                            txtShippingMobile.setText(telephone);
+                                            String fullShippingAddress = shipping_flat + "," + shipping_street + "," + shipping_landmark + "," + "\n" +
+                                                    shipping_city + "," + shipping_country_id + ","+ shipping_postcode;
+                                            txtShippingAddress.setText(fullShippingAddress);
+                                            txtShippingName.setText(shipping_firstname + " " + shipping_lastname);
+                                            txtShippingMobile.setText(shipping_telephone);
                                             txt_shipping_address.setText("EDIT");
                                         }
                                     }
@@ -235,17 +251,17 @@ public class MyAccountActivity extends AppCompatActivity {
                 } else {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("billingFlag", "true")
-                            .putExtra("id", id)
-                            .putExtra("firstname", firstname)
-                            .putExtra("lastname", lastname)
-                            .putExtra("city", city)
-                            .putExtra("country_id", country_id)
-                            .putExtra("region_id", region_id)
-                            .putExtra("postcode", postcode)
-                            .putExtra("telephone", telephone)
-                            .putExtra("flat", flat)
-                            .putExtra("street", street)
-                            .putExtra("landmark", landmark));
+                            .putExtra("id", billing_id)
+                            .putExtra("firstname", billing_firstname)
+                            .putExtra("lastname", billing_lastname)
+                            .putExtra("city", billing_city)
+                            .putExtra("country_id", billing_country_id)
+                            .putExtra("region_id", billing_region_id)
+                            .putExtra("postcode", billing_postcode)
+                            .putExtra("telephone", billing_telephone)
+                            .putExtra("flat", billing_flat)
+                            .putExtra("street", billing_street)
+                            .putExtra("landmark", billing_landmark));
                     finish();
                 }
 
@@ -259,17 +275,17 @@ public class MyAccountActivity extends AppCompatActivity {
                 } else {
                     startActivity(new Intent(MyAccountActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("shippingFlag", "true")
-                            .putExtra("id", id)
-                            .putExtra("firstname", firstname)
-                            .putExtra("lastname", lastname)
-                            .putExtra("city", city)
-                            .putExtra("country_id", country_id)
-                            .putExtra("region_id", region_id)
-                            .putExtra("postcode", postcode)
-                            .putExtra("telephone", telephone)
-                            .putExtra("flat", flat)
-                            .putExtra("street", street)
-                            .putExtra("landmark", landmark));
+                            .putExtra("id", shipping_id)
+                            .putExtra("firstname", shipping_firstname)
+                            .putExtra("lastname", shipping_lastname)
+                            .putExtra("city", shipping_city)
+                            .putExtra("country_id", shipping_country_id)
+                            .putExtra("region_id", shipping_region_id)
+                            .putExtra("postcode", shipping_postcode)
+                            .putExtra("telephone", shipping_telephone)
+                            .putExtra("flat", shipping_flat)
+                            .putExtra("street", shipping_street)
+                            .putExtra("landmark", shipping_landmark));
                     finish();
                 }
                 break;
@@ -277,8 +293,7 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }
