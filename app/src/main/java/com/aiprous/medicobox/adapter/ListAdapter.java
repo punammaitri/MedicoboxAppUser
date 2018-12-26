@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
@@ -43,16 +42,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import static com.aiprous.medicobox.activity.ListActivity.rlayout_cart;
 import static com.aiprous.medicobox.activity.ListActivity.tv_cart_size;
 import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
@@ -114,6 +109,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         mAlert = CustomProgressDialog.getInstance();
+
 
         //remove double qoute
         final String getCartId = MedicoboxApp.onGetCartID();
@@ -703,7 +699,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             public void onClick(View view) {
                 try {
                     if (!getWishListId.isEmpty()) {
-                        CallAddProductToWishListAPI(itemId, getWishListId,dialog);
+                        CallAddProductToWishListAPI(itemId, getWishListId, dialog);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -858,7 +854,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                                 CustomProgressDialog.getInstance().dismissDialog();
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
                             }
-                           CallGetAllWishListAPI(itemId);
+                            CallGetAllWishListAPI(itemId);
                         }
 
                         @Override

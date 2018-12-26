@@ -32,7 +32,6 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
@@ -50,10 +49,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,11 +61,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.DELETE_IMAGE_PRESCRIPTION;

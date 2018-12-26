@@ -5,7 +5,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
 
-
+    <string name="from_gallary">Choose from Gallery</string>
     <string name="upload_photo">Upload Photo</string>
     <string name="choose_from_gallery">Choose from Gallery</string>
     <string name="choose_cropping_app">Choose Croping App</string>

@@ -15,14 +15,15 @@
         android:id="@+id/tv_cart_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:text="No Items Available"
-        android:gravity="center"
         android:layout_below="@+id/layout_custom_toolbar"
-        android:textColor="@color/colorblack"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/open_sans_regular"
+        android:gravity="center"
+        android:text="No Items Available"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone"
-        android:fontFamily="@font/open_sans_regular"/>
+        android:textColor="@color/colorblack"
+        android:visibility="gone" />
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedscroll_cart"
         android:layout_width="match_parent"
@@ -49,8 +50,8 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/height_5"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_5"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
@@ -87,8 +88,8 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
                 android:layout_marginLeft="@dimen/height_4"
+                android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Items"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -97,8 +98,8 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/height_5"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_5"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
@@ -119,19 +120,28 @@
                 android:layout_marginLeft="@dimen/height_40"
                 android:layout_marginTop="@dimen/height_10"
                 android:layout_marginRight="@dimen/height_40"
-                android:layout_marginBottom="@dimen/height_10"
                 android:background="@drawable/custom_btn_bg"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Upload Prescription"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/height_16"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/txtUploadPrescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/colorblack"
+                android:visibility="gone" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"

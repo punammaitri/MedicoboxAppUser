@@ -1,5 +1,6 @@
 package com.aiprous.medicobox.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
@@ -48,10 +49,8 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
-
     private ArrayList<CartModel.Response> mCartArrayList;
-    private Context mContext;
-
+    private CartActivity mContext;
     private ArrayList<AddToCartOptionDetailModel> ItemModelList;
     boolean foundduplicateItem;
     int setValuePosition = 1;
@@ -69,11 +68,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private String mItemId;
     CustomProgressDialog mAlert;
     private float mCalculatePrice;
+    private ShowPrescriptionInterface mShowPrescriptionInterface;
 
-
-    public CartAdapter(Context mContext, ArrayList<CartModel.Response> mCartArrayList) {
+    public CartAdapter(CartActivity mContext, ArrayList<CartModel.Response> mCartArrayList) {
         this.mContext = mContext;
         this.mCartArrayList = mCartArrayList;
+        this.mShowPrescriptionInterface = mContext;
     }
 
     @NonNull
@@ -89,37 +89,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         mAlert = CustomProgressDialog.getInstance();
         holder.tv_item_name.setText(mCartArrayList.get(position).getName());
-         holder.tv_medicine_contains.setText(mCartArrayList.get(position).getShort_description());
-         holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs)+mCartArrayList.get(position).getPrice());
+        holder.tv_medicine_contains.setText(mCartArrayList.get(position).getShort_description());
+        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
 
 
-        if(mCartArrayList.get(position).getSale_price().isEmpty())
-        {
+        if (mCartArrayList.get(position).getSale_price().isEmpty()) {
             holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
-        }else {
+        } else {
             holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getSale_price());
         }
 
+        if (mCartArrayList.get(position).getPrescription_req() == 1) {
+            mContext.showPrescriptionUpload(1);
+        }
 
         //set number of items
         holder.tv_value.setText("" + mCartArrayList.get(position).getQty());
 
         //Add to cart
-         mMedicineName = mCartArrayList.get(position).getName();
-         mValue=mCartArrayList.get(position).getShort_description();
-         mMrp= String.valueOf(mCartArrayList.get(position).getPrice());
-         mdiscount= String.valueOf(mCartArrayList.get(position).getDiscount());
+        mMedicineName = mCartArrayList.get(position).getName();
+        mValue = mCartArrayList.get(position).getShort_description();
+        mMrp = String.valueOf(mCartArrayList.get(position).getPrice());
+        mdiscount = String.valueOf(mCartArrayList.get(position).getDiscount());
 
-         if(mCartArrayList.get(position).getSale_price().isEmpty())
-         {
-             mPrice = String.valueOf(mCartArrayList.get(position).getPrice());
-         }else {
-             mPrice = String.valueOf(mCartArrayList.get(position).getSale_price());
-         }
-        mImageURL=mCartArrayList.get(position).getImage();
+        if (mCartArrayList.get(position).getSale_price().isEmpty()) {
+            mPrice = String.valueOf(mCartArrayList.get(position).getPrice());
+        } else {
+            mPrice = String.valueOf(mCartArrayList.get(position).getSale_price());
+        }
+        mImageURL = mCartArrayList.get(position).getImage();
         mQty = Integer.parseInt(holder.tv_value.getText().toString());
-        mCalculatePrice=mQty*Float.parseFloat(mPrice);
+        mCalculatePrice = mQty * Float.parseFloat(mPrice);
 
         AddItemsToSingleton();
 
@@ -135,20 +136,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 int lItemIndex = Integer.parseInt("" + v.getTag());
                 mMedicineName = mCartArrayList.get(lItemIndex).getName();
-                 mValue=mCartArrayList.get(lItemIndex).getShort_description();
-                 mMrp= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                 mdiscount= String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
-                 if(String.valueOf(mCartArrayList.get(lItemIndex).getSale_price()).isEmpty())
-                {
+                mValue = mCartArrayList.get(lItemIndex).getShort_description();
+                mMrp = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                mdiscount = String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
+                if (String.valueOf(mCartArrayList.get(lItemIndex).getSale_price()).isEmpty()) {
                     mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                }else{
-                     mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
+                } else {
+                    mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
                 }
 
 
-                mCalculatePrice=mQty+Float.parseFloat(mPrice);
+                mCalculatePrice = mQty + Float.parseFloat(mPrice);
 
-                mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                mImageURL = mCartArrayList.get(lItemIndex).getImage();
                 mSku = mCartArrayList.get(lItemIndex).getSku();
                 setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
                 mQty = setValuePosition;
@@ -191,17 +191,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     holder.tv_value.setText("" + setValuePosition);
                     mQty = setValuePosition;
                     mMedicineName = mCartArrayList.get(lItemIndex).getName();
-                    mValue=mCartArrayList.get(lItemIndex).getShort_description();
-                    mMrp= String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                    mdiscount= String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
-                    if(String.valueOf(mCartArrayList.get(lItemIndex).getSale_price()).isEmpty())
-                    {
+                    mValue = mCartArrayList.get(lItemIndex).getShort_description();
+                    mMrp = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
+                    mdiscount = String.valueOf(mCartArrayList.get(lItemIndex).getDiscount());
+                    if (String.valueOf(mCartArrayList.get(lItemIndex).getSale_price()).isEmpty()) {
                         mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getPrice());
-                    }else {
+                    } else {
                         mPrice = String.valueOf(mCartArrayList.get(lItemIndex).getSale_price());
                     }
-                    mCalculatePrice=mQty*Float.parseFloat(mPrice);
-                    mImageURL=mCartArrayList.get(lItemIndex).getImage();
+                    mCalculatePrice = mQty * Float.parseFloat(mPrice);
+                    mImageURL = mCartArrayList.get(lItemIndex).getImage();
                     mSku = mCartArrayList.get(lItemIndex).getSku();
                     if (holder.tv_value.getText().equals("0")) {
 
@@ -306,7 +305,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
             if (!foundduplicateItem) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId,mCalculatePrice);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId, mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -341,7 +340,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         } else {
             if (mQty != 0) {
-                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId,mCalculatePrice);
+                AddToCartOptionDetailModel md = new AddToCartOptionDetailModel(mImageURL, mMedicineName, mValue, mMrp, mdiscount, mPrice, "" + mQty, mSku, mItemId, mCalculatePrice);
                 md.setImage(mImageURL);
                 md.setMedicineName(mMedicineName);
                 md.setValue(mValue);
@@ -372,10 +371,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 AddToCartOptionDetailModel tempObj = iterator.next();
                 if (tempObj.getMrp() != null && !tempObj.getMrp().isEmpty()) {
                     try {
-                        Float lqty= Float.valueOf(tempObj.getQty());
+                        Float lqty = Float.valueOf(tempObj.getQty());
                         String tempMRPCost = tempObj.getMrp();
                         Float tempPrice = tempObj.getCalculatePrice();
-                        mTotalMRPprice = mTotalMRPprice +(Float.parseFloat(tempMRPCost)*lqty);
+                        mTotalMRPprice = mTotalMRPprice + (Float.parseFloat(tempMRPCost) * lqty);
                         mTotalPrice = mTotalPrice + tempPrice;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -383,7 +382,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
             CartActivity.tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "" + mTotalMRPprice);
-             Float lPriceDiscount = mTotalMRPprice - mTotalPrice;
+            Float lPriceDiscount = mTotalMRPprice - mTotalPrice;
 
            /*  float lprice=mTotalMRPprice-mTotalPrice;
              Float getTotalDiscount = (lprice / mTotalMRPprice) * 100;*/
@@ -483,5 +482,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface ShowPrescriptionInterface {
+        public void showPrescriptionUpload(int value);
     }
 }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.OrderSummaryActivity;
+import com.aiprous.medicobox.model.CartModel;
+import com.aiprous.medicobox.model.CartOrderSummaryModel;
 
 import java.util.ArrayList;
 
@@ -21,10 +23,10 @@ import butterknife.ButterKnife;
 public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapter.ViewHolder> {
 
 
-    private ArrayList<OrderSummaryActivity.OrderSummaryModel> orderSummaryArrayList;
+    private ArrayList<CartOrderSummaryModel.Response> orderSummaryArrayList;
     private Context mContext;
 
-    public OrderSummaryAdapter(Context mContext, ArrayList<OrderSummaryActivity.OrderSummaryModel> orderSummaryArrayList) {
+    public OrderSummaryAdapter(Context mContext, ArrayList<CartOrderSummaryModel.Response> orderSummaryArrayList) {
         this.mContext = mContext;
         this.orderSummaryArrayList = orderSummaryArrayList;
     }
@@ -40,11 +42,11 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        holder.tv_item_name.setText(orderSummaryArrayList.get(position).getProductName());
-        holder.tv_medicine_contains.setText(orderSummaryArrayList.get(position).getProductcontains());
-        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + orderSummaryArrayList.get(position).getProduct_mrp());
+        holder.tv_item_name.setText(orderSummaryArrayList.get(position).getName());
+        holder.tv_medicine_contains.setText(orderSummaryArrayList.get(position).getProduct_type());
+        holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + orderSummaryArrayList.get(position).getPrice());
         holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + orderSummaryArrayList.get(position).getProduct_price());
+        holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + orderSummaryArrayList.get(position).getPrice());
 
         if (position == getItemCount() - 1) {
             holder.view_order_summary.setVisibility(View.GONE);
