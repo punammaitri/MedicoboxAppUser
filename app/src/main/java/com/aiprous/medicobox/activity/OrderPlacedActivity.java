@@ -25,14 +25,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
-    @BindView(R.id.tv_mrp_total)
-    TextView tv_mrp_total;
-    @BindView(R.id.tv_price_discount)
-    TextView tv_price_discount;
-    @BindView(R.id.tv_amount_paid)
-    TextView tv_amount_paid;
-    @BindView(R.id.tv_total_saved)
-    TextView tv_total_saved;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)

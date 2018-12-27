@@ -305,6 +305,7 @@
                 android:weightSum="1">
 
                 <TextView
+                    android:id="@+id/tv_Substitute_product_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.7"

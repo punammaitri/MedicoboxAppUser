@@ -95,6 +95,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     TextView tv_item_description;
     @BindView(R.id.llayout_prescription)
     LinearLayout llayout_prescription;
+    @BindView(R.id.tv_Substitute_product_name)
+    TextView tv_Substitute_product_name;
 
     ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
     private Context mcontext = this;
@@ -373,6 +375,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                     }
 
                                     tv_value.setText("" + mQty);
+                                    tv_Substitute_product_name.setText("Substitutes for "+mMedicineName);
                                     tv_medicine_name.setText(mMedicineName);
                                     tv_medicine_contains.setText(mValue);
                                     tv_mrp_price.setText(mMrp);
