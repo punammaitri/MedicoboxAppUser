@@ -196,7 +196,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     @OnClick(R.id.btn_continue_cart)
     public void onClickContinue() {
         if (txtUploadPrescription.getVisibility() == View.VISIBLE) {
-            startActivity(new Intent(this, OrderSummaryActivity.class));
+            startActivity(new Intent(this, OrderSummaryActivity.class)
+                    .putExtra("upload_presc_url", "" + mBitmap));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
             Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
@@ -395,8 +396,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             // Create content resolver.
                             ContentResolver contentResolver = getContentResolver();
                             InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
-                            Bitmap imgBitmap = BitmapFactory.decodeStream(inputStream);
-                            imageBinaryString = convertBitmapToString(imgBitmap);
+                            mBitmap = BitmapFactory.decodeStream(inputStream);
+                            imageBinaryString = convertBitmapToString(mBitmap);
                             //add to bitmap array
                             inputStream.close();
                         }
@@ -407,8 +408,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                         txtUploadPrescription.setText(multipleImageUrl.toString());
                         ContentResolver contentResolver = getContentResolver();
                         InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
-                        Bitmap imgBitmap = BitmapFactory.decodeStream(inputStream);
-                        imageBinaryString = convertBitmapToString(imgBitmap);
+                        mBitmap = BitmapFactory.decodeStream(inputStream);
+                        imageBinaryString = convertBitmapToString(mBitmap);
                         //add to bitmap array
                         inputStream.close();
                     }
@@ -419,9 +420,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             txtUploadPrescription.setVisibility(View.VISIBLE);
                             txtUploadPrescription.setText(outPutFile.getAbsolutePath());
 
-                          /*  mBitmap = decodeFile(outPutFile);
+                            mBitmap = decodeFile(outPutFile);
                             //ivProfile.setImageBitmap(mBitmap);
-                            imageBinaryString = convertBitmapToString(mBitmap);*/
+                            //imageBinaryString = convertBitmapToString(mBitmap);
                             //add to bitmap array
                         } else {
                             txtUploadPrescription.setVisibility(View.GONE);

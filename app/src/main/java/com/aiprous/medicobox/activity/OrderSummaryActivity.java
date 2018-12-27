@@ -2,6 +2,7 @@ package com.aiprous.medicobox.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,16 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.adapter.OrderSummaryAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
-import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.CartOrderSummaryModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -65,9 +65,12 @@ public class OrderSummaryActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
+    @BindView(R.id.imgPrescription)
+    ImageView imgPrescription;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<CartOrderSummaryModel.Response> orderSummaryArrayList = new ArrayList<>();
     private Context mContext = this;
+    private Bitmap upload_presc_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +94,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         tv_to_be_paid.setText(mContext.getResources().getString(R.string.Rs) + " 350.0");
         tv_total_savings.setText(mContext.getResources().getString(R.string.Rs) + " 30.0");
         tv_free_shipping_note.setText("Free shipping for orders above " + mContext.getResources().getString(R.string.Rs) + "500");
-
-
     }
 
     @Override
@@ -103,6 +104,11 @@ public class OrderSummaryActivity extends AppCompatActivity {
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
+        if (getIntent().getParcelableExtra("upload_presc_url") != null) {
+            Bitmap bitmap = (getIntent().getParcelableExtra("upload_presc_url"));
+            imgPrescription.setImageBitmap(bitmap);
         }
 
         if (!isNetworkAvailable(this)) {
@@ -131,9 +137,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 
     private void getCartItems(final String bearerToken) {
