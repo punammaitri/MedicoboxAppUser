@@ -55,6 +55,7 @@ import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.EDITCARTITEM;
+import static com.aiprous.medicobox.utils.APIConstant.RELATED_PRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SINGLEPRODUCT;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -224,6 +225,10 @@ public class ProductDetailBActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("productId") != null) {
             mProductId = getIntent().getStringExtra("productId");
             getSingleproducts(mProductId);
+
+            //call API to get related product
+            getRelatedProduct(mProductId);
+
 
             //mVisibiltyFlag = getIntent().getStringExtra("VisibiltyFlag");
             //mSku = getIntent().getStringExtra("SKU");
@@ -769,5 +774,50 @@ public class ProductDetailBActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this,SearchViewActivity.class));
     }
+
+    private void getRelatedProduct(String productId) {
+        if (!isNetworkAvailable(this)) {
+            Toast.makeText(this, "Check Your Network", Toast.LENGTH_SHORT).show();
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mcontext, "", APIConstant.PROGRESS_TYPE);
+            AndroidNetworking.get(RELATED_PRODUCT + productId)
+                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+                            //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+
+                            try {
+                                JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                                if (response.has("message")) {
+                                   // getAllResponse.getAsString("")
+                                    Toast.makeText(mcontext, "", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            }
+
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            // handle error
+                            Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
+
+
 
 }

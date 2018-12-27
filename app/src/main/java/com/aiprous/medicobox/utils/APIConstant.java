@@ -65,6 +65,8 @@ public class APIConstant {
     public static String UPDATE_ADDRESS = "http://user8.itsindev.com/medibox/API/update-address.php";
     public static String DELETE_ADDRESS = "http://user8.itsindev.com/medibox/API/delete-address.php";
 
+    //Substitutes product for any specific tablet
+    public static String RELATED_PRODUCT="http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
     //Response Status Code
     public static final int SUCCESS_CODE = 200;
     /*For Sweet alert*/
