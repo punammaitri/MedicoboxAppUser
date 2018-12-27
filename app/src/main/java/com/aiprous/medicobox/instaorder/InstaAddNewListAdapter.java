@@ -160,6 +160,14 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
             }
         });
 
+        //btn to add to cart  wishlist
+        holder.btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAddNewListInterface.addToCartWishList(mDataArrayList.get(position).getWishlist_name_id());
+            }
+        });
+
         holder.relOptionDots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,7 +213,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
                 } else if (edt_message.getText().length() == 0) {
                     Toast.makeText(mContext, "please add message", Toast.LENGTH_SHORT).show();
                 } else {
-                    mAddNewListInterface.shareWishList(MedicoboxApp.onGetId(), wishlist_name_id, edt_emails, edt_messages,dialog);
+                    mAddNewListInterface.shareWishList(MedicoboxApp.onGetId(), wishlist_name_id, edt_emails, edt_messages, dialog);
                 }
             }
         });
@@ -351,5 +359,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
         public void Delete();
 
         public void shareWishList(String s, String wishlist_name_id, String edt_emails, String edt_messages, Dialog dialog);
+
+        public void addToCartWishList(String wishlist_name_id);
     }
 }

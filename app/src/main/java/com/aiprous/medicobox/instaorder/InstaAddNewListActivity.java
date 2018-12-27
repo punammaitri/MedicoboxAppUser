@@ -43,6 +43,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.ADD_TO_CART_WISHLIST;
+import static com.aiprous.medicobox.utils.APIConstant.Authorization;
+import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_WISHLIST;
 import static com.aiprous.medicobox.utils.APIConstant.SHARE_WISHLIST;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
@@ -268,9 +271,49 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
         }
     }
 
+    @Override
+    public void addToCartWishList(String wishlist_name_id) {
+        if (!isNetworkAvailable(mContext)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("wishlist_name_id", wishlist_name_id);
+                Log.e("url", "" + jsonObject.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            AndroidNetworking.post(ADD_TO_CART_WISHLIST)
+                    .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                    .addJSONObjectBody(jsonObject) // posting json
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject jsonResponse = getAllResponse.get("response").getAsJsonObject();
+                            String status = jsonResponse.get("status").getAsString();
+                            if (status.equals("success")) {
+                                Toast.makeText(mContext, "Wishlist added to cart successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            CustomProgressDialog.getInstance().dismissDialog();
+                            Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                            Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                            Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                        }
+                    });
+        }
+    }
+
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

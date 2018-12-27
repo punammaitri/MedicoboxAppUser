@@ -44,6 +44,7 @@ public class APIConstant {
     public static String ADD_ITEM_WISHLIST = "http://user8.itsindev.com/medibox/API/add_item_wishlist.php";
     public static String DELETE_WISHLIST = "http://user8.itsindev.com/medibox/API/delete_wishlist.php";
     public static String SHARE_WISHLIST = "http://user8.itsindev.com/medibox/API/share-wishlist.php";
+    public static String ADD_TO_CART_WISHLIST = "http://user8.itsindev.com/medibox/API/wishlist-all-product-to-cart.php";
 
     //upload prescription
     public static String UPLOAD_PRESCRIPTION_IMAGE = "https://user8.itsindev.com/medibox/API/upload-prescription/image_action.php";
@@ -67,9 +68,8 @@ public class APIConstant {
     public static String DELETE_ADDRESS = "http://user8.itsindev.com/medibox/API/delete-address.php";
 
 
-
     //Substitutes product for any specific tablet
-    public static String RELATED_PRODUCT="http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
+    public static String RELATED_PRODUCT = "http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
     //Response Status Code
     public static final int SUCCESS_CODE = 200;
     /*For Sweet alert*/
