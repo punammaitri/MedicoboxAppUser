@@ -291,22 +291,25 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtOrderSummaryBillingAdd"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"
-                    android:text="EDIT"
+                    android:text="ADD"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardBilling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
                 app:cardElevation="@dimen/height_4">
@@ -318,26 +321,26 @@
                     android:padding="@dimen/height_10">
 
                     <TextView
+                        android:id="@+id/txtOrderSummaryBillingUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="Shreya Saran"
                         android:textColor="@color/colorblack"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtOrderSummaryBillingAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_10"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="@string/address" />
+                        android:fontFamily="@font/open_sans_regular" />
 
                     <TextView
+                        android:id="@+id/txtOrderSummaryBillingTelephone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_10"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="+91 8833748362"
                         android:textColor="@color/colorblack" />
 
                 </LinearLayout>
@@ -361,22 +364,25 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtOrderSummaryShippingAdd"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="end"
-                    android:text="CHANGE"
+                    android:text="ADD"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardShipping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
                 app:cardElevation="@dimen/height_4">
@@ -388,27 +394,27 @@
                     android:padding="@dimen/height_10">
 
                     <TextView
+                        android:id="@+id/txtOrderSummaryShippingUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="Shreya Saran"
                         android:textColor="@color/colorblack"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtOrderSummaryShippingAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_10"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="@string/address" />
+                        android:fontFamily="@font/open_sans_regular" />
 
 
                     <TextView
+                        android:id="@+id/txtOrderSummaryShippingTelephone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/height_10"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="+91 8833748362"
                         android:textColor="@color/colorblack" />
 
                     <TextView

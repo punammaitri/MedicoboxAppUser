@@ -197,7 +197,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     public void onClickContinue() {
         if (txtUploadPrescription.getVisibility() == View.VISIBLE) {
             startActivity(new Intent(this, OrderSummaryActivity.class)
-                    .putExtra("upload_presc_url", "" + mBitmap));
+                    .putExtra("upload_presc_url",  mBitmap));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
             Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
