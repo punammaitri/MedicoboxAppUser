@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
-import com.aiprous.medicobox.adapter.OrderDetailsAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
 
@@ -26,8 +25,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
-    @BindView(R.id.rc_order_placed)
-    RecyclerView rc_order_placed;
     @BindView(R.id.tv_mrp_total)
     TextView tv_mrp_total;
     @BindView(R.id.tv_price_discount)
@@ -42,8 +39,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
     TextView tv_cart_size;
 
     private Context mContext = this;
-    private RecyclerView.LayoutManager layoutManager;
-    ArrayList<OrderDetailsActivity.ProductModel> mproductArrayList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,23 +72,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
-
-        //set text default
-        tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
-        tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + "30");
-        tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
-        tv_total_saved.setText(mContext.getResources().getString(R.string.Rs) + "30.0");
-
-
-        mproductArrayList.add(new OrderDetailsActivity.ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
-        mproductArrayList.add(new OrderDetailsActivity.ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
-        mproductArrayList.add(new OrderDetailsActivity.ProductModel("Horicks Lite Badam Jar 450 gm", "235", "box of 450 gm powder", "200"));
-
-
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_order_placed.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rc_order_placed.setHasFixedSize(true);
-        rc_order_placed.setAdapter(new OrderDetailsAdapter(mContext, mproductArrayList));
 
     }
 

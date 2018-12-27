@@ -75,8 +75,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.isValidEmailId;
 import static com.aiprous.medicobox.utils.BaseActivity.showToast;
 
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_signup)
     Button btn_signup;
@@ -89,12 +88,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @BindView(R.id.edt_password)
     EditText edtPassword;
 
-    private String gmailProfileUrl;
-    private static final int RC_SIGN_IN = 1;
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private String mgoogleusername, twitterProfileImageUrl, googleUsername, googleLastname, getFirebaseToken;
-    GoogleApiClient mGoogleApiClient;
-    private String lLoginwithGooglegmailId;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private AccessTokenTracker accessTokenTracker;
@@ -103,7 +97,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private String mgmailFlag = "gmail";
     LoginButton btnfblogin;
     LinearLayout fb_login_layout;
-    LinearLayout goglayout;
     CustomProgressDialog mAlert;
     private String lEmailMobile;
     private String lPass;
@@ -136,19 +129,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         //firebaseAnalytics(this.getClass().getSimpleName());
         btnfblogin = (LoginButton) findViewById(R.id.btnfblogin);
-        goglayout = (LinearLayout) findViewById(R.id.goglayout);
         fb_login_layout = (LinearLayout) findViewById(R.id.fb_login_layout);
-        goglayout.setOnClickListener(this);
 
-        /////// Configure sign-in to request the user's ID, email address, and basic////////
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        ///// Build a GoogleApiClient with access to the Google Sign-In API and the options specified by gso.///
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, LoginActivity.this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
 
         fb_login_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,41 +224,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-        } else {
+
             callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount googleSignInAccount = result.getSignInAccount();
-            Log.e(TAG, "display name: " + googleSignInAccount.getDisplayName());
-            try {
-                mgoogleusername = googleSignInAccount.getDisplayName();
-                googleUsername = googleSignInAccount.getGivenName();
-                googleLastname = googleSignInAccount.getFamilyName();
-                lLoginwithGooglegmailId = googleSignInAccount.getEmail();
 
-                if (googleSignInAccount.getPhotoUrl() != null) {
-                    gmailProfileUrl = googleSignInAccount.getPhotoUrl().toString();
-                } else {
-                    gmailProfileUrl = String.valueOf(Uri.parse("R.drawable.profileimage"));
-                }
-                //gmailProfileUrl = "https://pikmail.herokuapp.com/" + lLoginwithGooglegmailId + "?size=50";
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-            updateUI(false);
-        }
-    }
 
     public void printhashkey() {
         PackageInfo info;
@@ -308,37 +260,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onResume();
     }
 
-    private void updateUI(boolean isLogin) {
-        if (isLogin) {
-            Toast.makeText(this, "Login With Gmail is successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-            //callSocialMedia(lLoginwithGooglegmailId, "social_media", getFirebaseToken, googleUsername, googleUsername, googleLastname, gmailProfileUrl, "gmail");
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.goglayout) {
-            if (mGoogleApiClient.isConnected()) {
-                mGoogleApiClient.disconnect();
-                mGoogleApiClient.connect();
-            }
-            googleSignIn();
-        }
-    }
-
-    private void googleSignIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mGoogleApiClient.disconnect();
-    }
-
     @OnClick(R.id.tv_forgot_password)
     public void onClickPassword() {
         startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag", "forgotpassword"));
@@ -358,10 +279,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
 
     @OnClick(R.id.btn_signup)
     public void onViewClicked() {
