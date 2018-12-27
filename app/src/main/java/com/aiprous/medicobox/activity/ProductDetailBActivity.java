@@ -28,6 +28,7 @@ import com.aiprous.medicobox.adapter.ViewPagerAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AddToCartOptionDetailModel;
+import com.aiprous.medicobox.model.RelatedProductModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -98,8 +99,9 @@ public class ProductDetailBActivity extends AppCompatActivity {
     LinearLayout llayout_prescription;
     @BindView(R.id.tv_Substitute_product_name)
     TextView tv_Substitute_product_name;
+    @BindView(R.id.tv_empty_msg)
+    TextView tv_empty_msg;
 
-    ArrayList<SubstituteProductModel> substituteProductModelArrayList = new ArrayList<>();
     private Context mcontext = this;
     private int dotscount;
     private ImageView[] dots;
@@ -140,6 +142,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mMore_info;
     private float mCalculatePrice;
     private int mDiscountAmount;
+    ArrayList<RelatedProductModel.Data> mRelatedProductArrayList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,16 +200,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
         });
 
 
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's", "By Abbott", 50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's", "By Abbott", 50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's", "By Abbott", 50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's", "By Abbott", 50));
-        substituteProductModelArrayList.add(new SubstituteProductModel("DUVADILAN 10 mg Tablets 50's", "By Abbott", 50));
-
-        //set adapter
-        rv_substitute_product.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
-        rv_substitute_product.setHasFixedSize(true);
-        rv_substitute_product.setAdapter(new SubstitutesProductAdapter(mcontext, substituteProductModelArrayList));
 
 
     }
@@ -287,41 +280,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-    public class SubstituteProductModel {
-        public String name;
-        public String company;
-        public int price;
-
-        public SubstituteProductModel(String name, String company, int price) {
-            this.name = name;
-            this.company = company;
-            this.price = price;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getCompany() {
-            return company;
-        }
-
-        public void setCompany(String company) {
-            this.company = company;
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public void setPrice(int price) {
-            this.price = price;
-        }
-    }
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressDetail() {
@@ -793,8 +751,39 @@ public class ProductDetailBActivity extends AppCompatActivity {
                             try {
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 if (response.has("message")) {
-                                   // getAllResponse.getAsString("")
-                                    Toast.makeText(mcontext, "", Toast.LENGTH_SHORT).show();
+                                   // String message=getAllResponse.get("message").toString();
+                                    //Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
+                                }else {
+
+                                    JsonArray lDatArray=getAllResponse.getAsJsonArray("data");
+                                    for(int i=0;i<lDatArray.size();i++)
+                                    {
+                                        JsonObject jsonData=lDatArray.get(i).getAsJsonObject();
+                                        String lname=jsonData.get("name").getAsString();
+                                        int lprice=jsonData.get("price").getAsInt();
+                                        String lCompanyName=jsonData.get("company_name").getAsString();
+
+                                        RelatedProductModel.Data lRelatedProductModel=new RelatedProductModel.Data(lname,lprice,lCompanyName);
+                                        lRelatedProductModel.setName(lname);
+                                        lRelatedProductModel.setPrice(lprice);
+                                        lRelatedProductModel.setCompanyName(lCompanyName);
+
+                                        mRelatedProductArrayList.add(lRelatedProductModel);
+
+                                    }
+                                }
+                                if(!mRelatedProductArrayList.isEmpty())
+                                {
+                                    //set adapter
+                                    tv_empty_msg.setVisibility(View.GONE);
+                                    rv_substitute_product.setVisibility(View.VISIBLE);
+                                    rv_substitute_product.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
+                                    rv_substitute_product.setHasFixedSize(true);
+                                    rv_substitute_product.setAdapter(new SubstitutesProductAdapter(mcontext, mRelatedProductArrayList));
+
+                                }else {
+                                    rv_substitute_product.setVisibility(View.GONE);
+                                    tv_empty_msg.setVisibility(View.VISIBLE);
                                 }
 
 

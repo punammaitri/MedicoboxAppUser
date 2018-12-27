@@ -53,6 +53,8 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
     // @BindView(R.id.rc_medicine_list)
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
+    @BindView(R.id.tv_sub_category_name)
+    TextView tv_sub_category_name;
     RecyclerView rc_medicine_list;
     public static RelativeLayout rlayout_cart;
     public static TextView tv_cart_size;
@@ -147,6 +149,10 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
             rlayout_cart.setVisibility(View.VISIBLE);
+        }
+
+        if (getIntent().getStringExtra("SubCategoryName") != null) {
+            tv_sub_category_name.setText(getIntent().getStringExtra("SubCategoryName"));
         }
 
         attemptToCallGetAllProductAPI();

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
+import com.aiprous.medicobox.model.RelatedProductModel;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,10 @@ import butterknife.ButterKnife;
 
 
 public class SubstitutesProductAdapter extends RecyclerView.Adapter<SubstitutesProductAdapter.ViewHolder> {
-    private ArrayList<ProductDetailBActivity.SubstituteProductModel> mDataArrayList;
+    private ArrayList<RelatedProductModel.Data> mDataArrayList;
     private Context mContext;
 
-    public SubstitutesProductAdapter(Context mContext, ArrayList<ProductDetailBActivity.SubstituteProductModel> mDataArrayList) {
+    public SubstitutesProductAdapter(Context mContext, ArrayList<RelatedProductModel.Data> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -43,8 +44,8 @@ public class SubstitutesProductAdapter extends RecyclerView.Adapter<SubstitutesP
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
       holder.tv_name.setText(mDataArrayList.get(position).getName());
-      holder.tv_company_name.setText(mDataArrayList.get(position).getCompany());
-      holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) +mDataArrayList.get(position).getPrice());
+      holder.tv_company_name.setText(mDataArrayList.get(position).getCompanyName());
+      holder.tv_price.setText(""+mContext.getResources().getString(R.string.Rs) +mDataArrayList.get(position).getPrice());
 
     }
 

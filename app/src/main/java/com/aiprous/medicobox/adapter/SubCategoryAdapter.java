@@ -52,7 +52,8 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         holder.llayout_subcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext,ListActivity.class).putExtra("subcategoryId",SubCategoryArrayList.get(position).getCategoryId()));
+                mContext.startActivity(new Intent(mContext,ListActivity.class).putExtra("subcategoryId",SubCategoryArrayList.get(position).getCategoryId())
+                        .putExtra("SubCategoryName",SubCategoryArrayList.get(position).getCategoryName()));
             }
         });
 
