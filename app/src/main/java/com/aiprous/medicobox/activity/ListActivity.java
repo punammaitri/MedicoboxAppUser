@@ -53,6 +53,8 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
     // @BindView(R.id.rc_medicine_list)
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
+    @BindView(R.id.tv_sub_category_name)
+    TextView tv_sub_category_name;
     RecyclerView rc_medicine_list;
     public static RelativeLayout rlayout_cart;
     public static TextView tv_cart_size;
@@ -149,14 +151,17 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
             rlayout_cart.setVisibility(View.VISIBLE);
         }
 
+        //get data from previous activity
+        if (getIntent().getStringExtra("SubCategoryName") != null) {
+            tv_sub_category_name.setText(getIntent().getStringExtra("SubCategoryName"));
+             mCategoryId = getIntent().getStringExtra("subcategoryId");
+        }
+
         attemptToCallGetAllProductAPI();
     }
 
     private void attemptToCallGetAllProductAPI() {
         try {
-            if (getIntent().getStringExtra("subcategoryId") != null) {
-                mCategoryId = getIntent().getStringExtra("subcategoryId");
-
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
                 jsonObject.put("category_id", mCategoryId);
@@ -166,7 +171,7 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
                 } else {
                     getAllproducts(jsonObject);
                 }
-            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
