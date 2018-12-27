@@ -151,8 +151,10 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
             rlayout_cart.setVisibility(View.VISIBLE);
         }
 
+        //get data from previous activity
         if (getIntent().getStringExtra("SubCategoryName") != null) {
             tv_sub_category_name.setText(getIntent().getStringExtra("SubCategoryName"));
+             mCategoryId = getIntent().getStringExtra("subcategoryId");
         }
 
         attemptToCallGetAllProductAPI();
@@ -160,9 +162,6 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
 
     private void attemptToCallGetAllProductAPI() {
         try {
-            if (getIntent().getStringExtra("subcategoryId") != null) {
-                mCategoryId = getIntent().getStringExtra("subcategoryId");
-
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
                 jsonObject.put("category_id", mCategoryId);
@@ -172,7 +171,7 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
                 } else {
                     getAllproducts(jsonObject);
                 }
-            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
