@@ -199,10 +199,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         if (txtUploadPrescription.getVisibility() == View.VISIBLE) {
             Gson gson = new Gson();
             String cartModel = gson.toJson(cartModelArrayList);
-
             startActivity(new Intent(this, OrderSummaryActivity.class)
-                 /*   .putExtra("upload_presc_url", mBitmap)*/
-                    .putExtra("cart_model", cartModel));
+                    .putExtra("cart_model", cartModel)
+                    .putExtra("imageBinaryString", multipleImageUrl.toString()));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
             Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
@@ -398,24 +397,25 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                         for (int i = 0; i < count; i++) {
                             multipleImageUrl = data.getClipData().getItemAt(i).getUri();
                             // Create content resolver.
-                            ContentResolver contentResolver = getContentResolver();
+                         /*   ContentResolver contentResolver = getContentResolver();
                             InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
                             mBitmap = BitmapFactory.decodeStream(inputStream);
-                            //  imageBinaryString = convertBitmapToString(mBitmap);
+                           // imageBinaryString = convertBitmapToString(mBitmap);
+
                             //add to bitmap array
-                            inputStream.close();
+                            inputStream.close();*/
                         }
                     } else if (data.getData() != null) {
                         multipleImageUrl = data.getData();
                         // Create content resolver.
                         txtUploadPrescription.setVisibility(View.VISIBLE);
                         txtUploadPrescription.setText(multipleImageUrl.toString());
-                        ContentResolver contentResolver = getContentResolver();
+                   /*     ContentResolver contentResolver = getContentResolver();
                         InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
                         mBitmap = BitmapFactory.decodeStream(inputStream);
-                        //imageBinaryString = convertBitmapToString(mBitmap);
+                       // imageBinaryString = convertBitmapToString(mBitmap);
                         //add to bitmap array
-                        inputStream.close();
+                        inputStream.close();*/
                     }
                 } else if (requestCode == RESULT_CROPING_CODE) {
 
@@ -426,7 +426,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
 
                             mBitmap = decodeFile(outPutFile);
                             //ivProfile.setImageBitmap(mBitmap);
-                            //imageBinaryString = convertBitmapToString(mBitmap);
+                           // imageBinaryString = convertBitmapToString(mBitmap);
                             //add to bitmap array
                         } else {
                             txtUploadPrescription.setVisibility(View.GONE);

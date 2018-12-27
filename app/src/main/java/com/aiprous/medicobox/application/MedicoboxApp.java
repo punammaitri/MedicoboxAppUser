@@ -72,7 +72,6 @@ public class MedicoboxApp extends MultiDexApplication {
 
 
     public static void onSaveCity(String city) {
-
         SharedPreferences.Editor edt = mSharedPreferences.edit();
         edt.putString("CITY", city);
         edt.commit();
@@ -93,9 +92,7 @@ public class MedicoboxApp extends MultiDexApplication {
         return mSharedPreferences.getString("LATILONG", "");
     }
 
-
     public static void onSaveCartId(String cartId) {
-
         SharedPreferences.Editor edt = mSharedPreferences.edit();
         edt.putString("CARDID", cartId);
         edt.commit();
@@ -104,5 +101,4 @@ public class MedicoboxApp extends MultiDexApplication {
     public static String onGetCartID() {
         return mSharedPreferences.getString("CARDID", "");
     }
-
 }

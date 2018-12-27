@@ -279,7 +279,7 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
             CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("wishlist_name_id", wishlist_name_id);
+                jsonObject.put("wishlist_name_id", Integer.parseInt(wishlist_name_id));
                 Log.e("url", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -297,6 +297,7 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
                             JsonObject jsonResponse = getAllResponse.get("response").getAsJsonObject();
                             String status = jsonResponse.get("status").getAsString();
                             if (status.equals("success")) {
+                                CustomProgressDialog.getInstance().dismissDialog();
                                 Toast.makeText(mContext, "Wishlist added to cart successfully", Toast.LENGTH_SHORT).show();
                             }
                         }

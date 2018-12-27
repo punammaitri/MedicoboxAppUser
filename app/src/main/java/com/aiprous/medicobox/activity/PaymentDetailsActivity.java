@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.CartModel;
+import com.aiprous.medicobox.model.FinalPaymentModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -68,6 +70,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     ArrayList<CartModel.Response> cartList;
     private String image;
 
+    ArrayList<FinalPaymentModel> mFinalPaymentModels = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,20 +96,10 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
-        }
-
-        if (!isNetworkAvailable(this)) {
-            CustomProgressDialog.getInstance().dismissDialog();
-            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-        } else {
-            //get cart items through api
-            CallOrderPlaceAPI();
         }
 
         // for passing cart model
@@ -118,36 +112,48 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             }.getType();
             cartList = gson.fromJson(cartListAsString, type);
 
-            for (CartModel.Response cars : cartList) {
-                Log.e("Cart Data", cars.getId());
-            }
-        }
+            for (int j = 0; j < cartList.size(); j++) {
+                String productId = cartList.get(j).getId();
+                int qty = cartList.get(j).getQty();
+                String price = cartList.get(j).getPrice();
 
+                FinalPaymentModel finalPaymentModel = new FinalPaymentModel(productId, qty, price);
+                finalPaymentModel.setProduct_id(productId);
+                finalPaymentModel.setQty(qty);
+                finalPaymentModel.setPrice(price);
+                mFinalPaymentModels.add(finalPaymentModel);
+            }
+
+            try {
+                Gson gsons = new Gson();
+                String listString = gsons.toJson(mFinalPaymentModels,
+                        new TypeToken<ArrayList<FinalPaymentModel>>() {
+                        }.getType());
+                jsonArray = new JSONArray(listString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void CallOrderPlaceAPI() {
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
         //jsonArray = new JSONArray(mStreetArray);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("address_id", address_id);
-            jsonObject.put("items", cartList);
+            jsonObject.put("items", jsonArray);
             jsonObject.put("shipping_method", "");
             jsonObject.put("payment_method", "cash");
-            jsonObject.put("image", image);
+            jsonObject.put("image", "" + image);
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        if (!isNetworkAvailable(this)) {
-            CustomProgressDialog.getInstance().dismissDialog();
-            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-        } else {
-            callAPI(jsonObject);
-        }
-    }
-
-    private void callAPI(JSONObject jsonObject) {
         AndroidNetworking.post(ADD_TO_CART_ORDER_PLACE)
                 .addJSONObjectBody(jsonObject) // posting json
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
@@ -161,6 +167,14 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
                             String status = responseArray.get("status").getAsString();
+
+                            if (status.equals("success")) {
+                                startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                            } else {
+                                String msg = responseArray.get("msg").getAsString();
+                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                            }
 
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
@@ -180,6 +194,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 });
     }
 
+
     @OnClick({R.id.searchview_medicine, R.id.tv_place_order, R.id.rlayout_back_button, R.id.rlayout_cart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -187,8 +202,12 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SearchViewActivity.class));
                 break;
             case R.id.tv_place_order:
-                startActivity(new Intent(this, OrderPlacedActivity.class));
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                if (!isNetworkAvailable(this)) {
+                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+                } else {
+                    //get cart items through api
+                    CallOrderPlaceAPI();
+                }
                 break;
             case R.id.rlayout_back_button:
                 finish();
