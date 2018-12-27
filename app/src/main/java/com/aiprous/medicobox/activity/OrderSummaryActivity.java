@@ -21,6 +21,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderSummaryAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.CartOrderSummaryModel;
 import com.aiprous.medicobox.prescription.PrescriptionEditAddressActivity;
 import com.aiprous.medicobox.utils.APIConstant;
@@ -30,17 +31,21 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileInputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,6 +117,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private String shipping_flat;
     private String shipping_street;
     private String shipping_landmark;
+    ArrayList<CartModel.Response> cartList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +130,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private void init() {
 
         searchview_medicine.setFocusable(false);
-
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
@@ -149,13 +154,23 @@ public class OrderSummaryActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
+        // for passing cart model
+        if (getIntent().getStringExtra("cart_model") != null) {
+            String cartListAsString = getIntent().getStringExtra("cart_model");
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<CartModel.Response>>() {
+            }.getType();
+            cartList = gson.fromJson(cartListAsString, type);
+            for (CartModel.Response cars : cartList) {
+                Log.e("Cart Data", cars.getId());
+            }
+        }
+
         if (getIntent().getStringExtra("upload_presc_url") != null) {
-            String filename = getIntent().getStringExtra("upload_presc_url");
             try {
-                FileInputStream is = this.openFileInput(filename);
-                bmp = BitmapFactory.decodeStream(is);
+                String filename = getIntent().getStringExtra("upload_presc_url");
+                bmp = BitmapFactory.decodeFile(filename);
                 imgPrescription.setImageBitmap(bmp);
-                is.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -364,8 +379,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
             case R.id.txtOrderSummaryBillingAdd:
                 if (txtOrderSummaryBillingAdd.getText().equals("ADD")) {
                     startActivity(new Intent(OrderSummaryActivity.this, PrescriptionEditAddressActivity.class)
-                            .putExtra("billingFlag", "true"));
-                    finish();
+                            .putExtra("billingFlag", "true")
+                            .putExtra("order_summary", "true"));
                 } else {
                     startActivity(new Intent(OrderSummaryActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("billingFlag", "true")
@@ -379,16 +394,15 @@ public class OrderSummaryActivity extends AppCompatActivity {
                             .putExtra("telephone", billing_telephone)
                             .putExtra("flat", billing_flat)
                             .putExtra("street", billing_street)
-                            .putExtra("landmark", billing_landmark));
-                    finish();
+                            .putExtra("landmark", billing_landmark)
+                            .putExtra("order_summary", "true"));
                 }
                 break;
             case R.id.txtOrderSummaryShippingAdd:
                 if (txtOrderSummaryShippingAdd.getText().equals("ADD")) {
                     startActivity(new Intent(OrderSummaryActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("shippingFlag", "true")
-                    );
-                    finish();
+                            .putExtra("order_summary", "true"));
                 } else {
                     startActivity(new Intent(OrderSummaryActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("shippingFlag", "true")
@@ -402,15 +416,18 @@ public class OrderSummaryActivity extends AppCompatActivity {
                             .putExtra("telephone", shipping_telephone)
                             .putExtra("flat", shipping_flat)
                             .putExtra("street", shipping_street)
-                            .putExtra("landmark", shipping_landmark));
-                    finish();
+                            .putExtra("landmark", shipping_landmark)
+                            .putExtra("order_summary", "true"));
                 }
                 break;
             case R.id.rlayout_back_button:
                 finish();
                 break;
             case R.id.btn_confirm_order:
-                startActivity(new Intent(this, PaymentDetailsActivity.class));
+                startActivity(new Intent(this, PaymentDetailsActivity.class)
+                        .putExtra("address_id", "" + billing_id)
+                        .putExtra("items", "" + cartList)
+                        .putExtra("image", "" + bmp));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.searchview_medicine:

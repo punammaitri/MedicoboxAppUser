@@ -49,6 +49,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -196,13 +197,16 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     @OnClick(R.id.btn_continue_cart)
     public void onClickContinue() {
         if (txtUploadPrescription.getVisibility() == View.VISIBLE) {
+            Gson gson = new Gson();
+            String cartModel = gson.toJson(cartModelArrayList);
+
             startActivity(new Intent(this, OrderSummaryActivity.class)
-                    .putExtra("upload_presc_url",  mBitmap));
+                 /*   .putExtra("upload_presc_url", mBitmap)*/
+                    .putExtra("cart_model", cartModel));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         } else {
             Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -397,7 +401,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             ContentResolver contentResolver = getContentResolver();
                             InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
                             mBitmap = BitmapFactory.decodeStream(inputStream);
-                            imageBinaryString = convertBitmapToString(mBitmap);
+                            //  imageBinaryString = convertBitmapToString(mBitmap);
                             //add to bitmap array
                             inputStream.close();
                         }
@@ -409,7 +413,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                         ContentResolver contentResolver = getContentResolver();
                         InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
                         mBitmap = BitmapFactory.decodeStream(inputStream);
-                        imageBinaryString = convertBitmapToString(mBitmap);
+                        //imageBinaryString = convertBitmapToString(mBitmap);
                         //add to bitmap array
                         inputStream.close();
                     }
@@ -460,6 +464,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             o2.inSampleSize = scale;
             return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -544,7 +549,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                     mBitmap = getSelectedImage(mImageCaptureUri);
                 //ivProfile.setImageBitmap(mBitmap);
                 // setListAdapter();
-                imageBinaryString = convertBitmapToString(mBitmap);
+                // imageBinaryString = convertBitmapToString(mBitmap);
                 //Call  upload prescription API
                 //callUploadPrescriptionImageAPI(imageBinaryString);
             }

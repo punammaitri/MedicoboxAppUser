@@ -309,7 +309,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
                 app:cardElevation="@dimen/height_4">
@@ -416,20 +416,6 @@
                         android:layout_marginTop="@dimen/height_10"
                         android:fontFamily="@font/open_sans_regular"
                         android:textColor="@color/colorblack" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/height_10"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:text="Special instructions"
-                        android:textColor="@color/colorblack" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/height_5"
-                        android:background="@color/colorlightlightGray" />
 
 
                 </LinearLayout>

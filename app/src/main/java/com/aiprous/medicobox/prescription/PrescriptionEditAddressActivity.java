@@ -2,6 +2,7 @@ package com.aiprous.medicobox.prescription;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -34,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -86,6 +88,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     ArrayList<String> mStreetArray = new ArrayList<String>();
     private String flat;
     private String landmark;
+    private String order_summary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +115,6 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
-
         //get billing flag
         if (getIntent().getStringExtra("billingFlag") != null) {
             billingFlag = getIntent().getStringExtra("billingFlag");
@@ -127,6 +129,10 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (getIntent().getStringExtra("fromchooseDelivery") != null) {
             chooseDelivery = getIntent().getStringExtra("fromchooseDelivery");
+        }
+
+        if (getIntent().getStringExtra("order_summary") != null) {
+            order_summary = getIntent().getStringExtra("order_summary");
         }
 
         //get shipping flag
@@ -373,7 +379,10 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressSDescription() {
-        if (chooseDelivery.isEmpty()) {
+
+        if (!order_summary.isEmpty()) {
+            finish();
+        } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
         } else {
@@ -384,7 +393,10 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (chooseDelivery.isEmpty()) {
+
+        if (!order_summary.isEmpty()) {
+            finish();
+        } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
         } else {
@@ -393,8 +405,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

@@ -20,6 +20,7 @@ public class APIConstant {
     public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/API/get_cart_item.php";
     //public static String GETCARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine";
 
+    public static String ADD_TO_CART_ORDER_PLACE = "http://user8.itsindev.com/medibox/API/order-place.php";
     public static String DELETECARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String EDITCARTITEM = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     //  public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
@@ -64,6 +65,8 @@ public class APIConstant {
     public static String GET_ALL_ADDRESS = "http://user8.itsindev.com/medibox/API/customer-addresses.php";
     public static String UPDATE_ADDRESS = "http://user8.itsindev.com/medibox/API/update-address.php";
     public static String DELETE_ADDRESS = "http://user8.itsindev.com/medibox/API/delete-address.php";
+
+
 
     //Substitutes product for any specific tablet
     public static String RELATED_PRODUCT="http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
