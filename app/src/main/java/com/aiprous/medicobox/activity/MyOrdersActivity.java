@@ -16,6 +16,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.MyOrdersModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -23,7 +24,12 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,10 +55,10 @@ public class MyOrdersActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-    ArrayList<MyOrdersModel> myOrdersArrayList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
     private Context mContext = this;
     private MyOrdersAdapter mlistAdapter;
+    ArrayList<MyOrdersModel> mMyorder = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,18 +76,6 @@ public class MyOrdersActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        myOrdersArrayList.add(new MyOrdersModel("MB1528394829281", "29/09/2018", "280.00", "0"));
-        myOrdersArrayList.add(new MyOrdersModel("MB1628394829281", "29/09/2018", "280.00", "1"));
-        myOrdersArrayList.add(new MyOrdersModel("MB1728394829281", "29/09/2018", "280.00", "2"));
-
-
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_my_order_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rc_my_order_list.setHasFixedSize(true);
-        mlistAdapter = new MyOrdersAdapter(mContext, myOrdersArrayList);
-        rc_my_order_list.setAdapter(mlistAdapter);
-
-
         try {
             searchview_order_id.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -93,8 +87,8 @@ public class MyOrdersActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextChange(String newText) {
 
-                    if (myOrdersArrayList != null && !myOrdersArrayList.isEmpty()) {
-                        ArrayList<MyOrdersModel> filteredModelList = filter(myOrdersArrayList, newText);
+                    if (mMyorder != null && !mMyorder.isEmpty()) {
+                        ArrayList<MyOrdersModel> filteredModelList = filter(mMyorder, newText);
                         mlistAdapter.setFilter(filteredModelList);
                     }
 
@@ -107,7 +101,7 @@ public class MyOrdersActivity extends AppCompatActivity {
                     final ArrayList<MyOrdersModel> filteredModelList = new ArrayList<>();
 
                     for (MyOrdersModel model : models) {
-                        final String text = model.orderId.toLowerCase();
+                        final String text = model.getEntity_id().toLowerCase();
                         if (text.contains(query)) {
                             filteredModelList.add(model);
                         }
@@ -124,6 +118,9 @@ public class MyOrdersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
         //show cart size
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.GONE);
@@ -133,6 +130,7 @@ public class MyOrdersActivity extends AppCompatActivity {
 
         //call my order API
         if (!isNetworkAvailable(MyOrdersActivity.this)) {
+            CustomProgressDialog.getInstance().dismissDialog();
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             getMyOrderAPI(MedicoboxApp.onGetAuthToken());
@@ -147,21 +145,41 @@ public class MyOrdersActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // do anything with response
-                      /*  try {
-                            JSONObject jsonObject = new JSONObject(response.getString("response"));
-                            String getId = jsonObject.get("id").toString();
-                            String getGroupId = jsonObject.get("group_id").toString();
-                            String getEmail = jsonObject.get("email").toString();
-                            String getFirstname = jsonObject.get("firstname").toString();
-                            String getLastname = jsonObject.get("lastname").toString();
-                            String getStoreId = jsonObject.get("store_id").toString();
-                            String getWebsiteId = jsonObject.get("website_id").toString();
-                            String getMobile = jsonObject.get("mobile").toString();
 
-                        } catch (JSONException e) {
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseArray.get("status").getAsString();
+
+                            if (status.equals("success")) {
+                                JsonArray order_data = responseArray.get("order_data").getAsJsonArray();
+                                mMyorder.clear();
+
+                                for (int i = 0; i < order_data.size(); i++) {
+                                    JsonObject jsonObjectForOrderData = order_data.get(i).getAsJsonObject();
+                                    String entity_id = jsonObjectForOrderData.get("entity_id").getAsString();
+                                    String user_status = jsonObjectForOrderData.get("status").getAsString();
+                                    String created_at = jsonObjectForOrderData.get("created_at").getAsString();
+                                    String grand_total = jsonObjectForOrderData.get("grand_total").getAsString();
+
+                                    MyOrdersModel myOrdersModel = new MyOrdersModel(entity_id, user_status, grand_total, created_at);
+                                    myOrdersModel.setEntity_id(entity_id);
+                                    myOrdersModel.setStatus(user_status);
+                                    myOrdersModel.setGrand_total(grand_total);
+                                    myOrdersModel.setCreated_at(created_at);
+                                    mMyorder.add(myOrdersModel);
+                                }
+                            }
+
+                            layoutManager = new LinearLayoutManager(mContext);
+                            rc_my_order_list.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
+                            rc_my_order_list.setHasFixedSize(true);
+                            rc_my_order_list.setAdapter(new MyOrdersAdapter(MyOrdersActivity.this, mMyorder));
+                        } catch (JsonSyntaxException e) {
                             e.printStackTrace();
-                        }*/
+                        }
+
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
@@ -187,55 +205,8 @@ public class MyOrdersActivity extends AppCompatActivity {
         finish();
     }
 
-    public class MyOrdersModel {
-        String orderId;
-        String order_date;
-        String order_price;
-        String deliverystatus;
-
-        public MyOrdersModel(String orderId, String order_date, String order_price, String deliverystatus) {
-            this.orderId = orderId;
-            this.order_date = order_date;
-            this.order_price = order_price;
-            this.deliverystatus = deliverystatus;
-        }
-
-        public String getOrderId() {
-            return orderId;
-        }
-
-        public void setOrderId(String orderId) {
-            this.orderId = orderId;
-        }
-
-        public String getOrder_date() {
-            return order_date;
-        }
-
-        public void setOrder_date(String order_date) {
-            this.order_date = order_date;
-        }
-
-        public String getOrder_price() {
-            return order_price;
-        }
-
-        public void setOrder_price(String order_price) {
-            this.order_price = order_price;
-        }
-
-        public String getDeliverystatus() {
-            return deliverystatus;
-        }
-
-        public void setDeliverystatus(String deliverystatus) {
-            this.deliverystatus = deliverystatus;
-        }
-    }
-
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

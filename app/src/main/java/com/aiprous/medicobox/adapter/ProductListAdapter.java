@@ -60,19 +60,23 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.view_order_details.setVisibility(View.GONE);
         }
 
-        Picasso.with(mContext)
-                .load(mDataArrayList.get(position).getImage())
-                .into(holder.img_medicine, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.progress_bar.setVisibility(View.GONE);
-                    }
+        //Check for image empty or not
+        if (!mDataArrayList.get(position).getImage().isEmpty()) {
+            Picasso.with(mContext)
+                    .load(mDataArrayList.get(position).getImage())
+                    .into(holder.img_medicine, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            holder.progress_bar.setVisibility(View.GONE);
+                        }
 
-                    @Override
-                    public void onError() {
-                        holder.progress_bar.setVisibility(View.GONE);
-                    }
-                });
+                        @Override
+                        public void onError() {
+                            holder.progress_bar.setVisibility(View.GONE);
+                        }
+                    });
+
+        }
 
     }
 

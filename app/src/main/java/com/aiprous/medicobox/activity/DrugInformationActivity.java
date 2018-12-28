@@ -79,9 +79,6 @@ public class DrugInformationActivity extends AppCompatActivity {
     private String mLiver;
     private String mPregnancy_and_breast_feeding;
     private  String mMore_info;
-
-
-
     private Context mcontext = this;
 
     @Override

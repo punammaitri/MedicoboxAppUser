@@ -222,10 +222,10 @@
                     android:id="@+id/cardview_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/height_4"
                     android:layout_marginLeft="@dimen/height_4"
-                    android:layout_marginRight="@dimen/height_4"
                     android:layout_marginTop="@dimen/height_8"
+                    android:layout_marginRight="@dimen/height_4"
+                    android:layout_marginBottom="@dimen/height_4"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_10">
 
@@ -240,8 +240,8 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:paddingLeft="@dimen/height_10"
-                            android:paddingRight="@dimen/height_10"
-                            android:paddingTop="@dimen/height_10">
+                            android:paddingTop="@dimen/height_10"
+                            android:paddingRight="@dimen/height_10">
 
                             <TextView
                                 android:id="@+id/txtOrderId"
@@ -328,10 +328,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/height_10"
+                            android:layout_marginTop="@dimen/height_10"
                             android:layout_toRightOf="@+id/txtOrderDate"
                             android:fontFamily="@font/open_sans_regular"
                             android:paddingLeft="@dimen/height_10"
-                            android:layout_marginTop="@dimen/height_10"
                             android:paddingTop="@dimen/height_5"
                             android:text="Delivery Address"
                             android:textAllCaps="true"
@@ -380,9 +380,9 @@
                             android:paddingTop="@dimen/height_5"
                             android:text="Ordered items"
                             android:textAllCaps="true"
-                            android:textStyle="bold"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/colorblack" />
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rc_medicine_list"
@@ -398,22 +398,19 @@
                     android:id="@+id/btn_Cancel_Order"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_45"
-                    android:layout_marginBottom="@dimen/height_20"
                     android:layout_marginLeft="@dimen/height_30"
+                    android:layout_marginTop="@dimen/height_10"
                     android:layout_marginRight="@dimen/height_30"
+                    android:layout_marginBottom="@dimen/height_20"
                     android:background="@drawable/custom_btn_bg"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Cancel Order"
                     android:textAllCaps="true"
-                    android:layout_marginTop="@dimen/height_10"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/height_16"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white" />
-
+                    android:visibility="invisible" />
             </LinearLayout>
-
         </android.support.v4.widget.NestedScrollView>
-
-
     </LinearLayout>
 </RelativeLayout>

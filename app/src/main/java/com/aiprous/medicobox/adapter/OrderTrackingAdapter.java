@@ -16,6 +16,8 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.OrderDetailsActivity;
 import com.aiprous.medicobox.activity.OrderTrackingActivity;
 import com.aiprous.medicobox.instaorder.InstaAddNewListActivity;
+import com.aiprous.medicobox.model.OrderTrackingModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,10 +27,10 @@ import butterknife.ButterKnife;
 
 public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdapter.ViewHolder> {
 
-    private ArrayList<OrderTrackingActivity.ListModel> mDataArrayList;
-    private Context mContext;
+    private ArrayList<OrderTrackingModel> mDataArrayList;
+    private OrderTrackingActivity mContext;
 
-    public OrderTrackingAdapter(Context mContext, ArrayList<OrderTrackingActivity.ListModel> mDataArrayList) {
+    public OrderTrackingAdapter(OrderTrackingActivity mContext, ArrayList<OrderTrackingModel> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -44,8 +46,11 @@ public class OrderTrackingAdapter extends RecyclerView.Adapter<OrderTrackingAdap
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        holder.imgProduct.setImageResource(mDataArrayList.get(position).getImage());
-        holder.tvProductName.setText(mDataArrayList.get(position).getMedicineName());
+        Picasso.with(mContext)
+                .load(mDataArrayList.get(position).getImage())
+                .into(holder.imgProduct);
+
+        holder.tvProductName.setText(mDataArrayList.get(position).getCompany_name());
 
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override

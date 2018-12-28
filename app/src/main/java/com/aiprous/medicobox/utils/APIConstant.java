@@ -24,6 +24,8 @@ public class APIConstant {
     public static String DELETECARTITEMS = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     public static String EDITCARTITEM = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/items/";
     //  public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/index.php/rest/V1/products/id/";
+
+
     public static String SINGLEPRODUCT = "http://user8.itsindev.com/medibox/API/single_product.php?product_id=";
     //Updated API
     public static String UPDATEDGETCATEGORY = "http://user8.itsindev.com/medibox/API/categories_new.php";
@@ -57,8 +59,7 @@ public class APIConstant {
     //user order
     public static String USERORDER = "http://user8.itsindev.com/medibox/API/user_orders.php";
     public static String SINGLE_ORDER = "http://user8.itsindev.com/medibox/API/single-order.php";
-
-    public static String ORDER_ADDRESS = "https://user8.itsindev.com/medibox/API/order_address.php/?order_id=";
+    public static String ORDER_TRACKING = "https://user8.itsindev.com/medibox/API/order_address.php/?order_id=";
 
     // add address
     public static String SHIPPING_ADDRESS = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/shippingAddress";

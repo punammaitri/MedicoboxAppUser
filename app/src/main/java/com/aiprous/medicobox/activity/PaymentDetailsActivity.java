@@ -1,11 +1,15 @@
 package com.aiprous.medicobox.activity;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -34,6 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +76,10 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     private String address_id;
     ArrayList<CartModel.Response> cartList;
     private String image;
-
+    public Bitmap mBitmap;
     ArrayList<FinalPaymentModel> mFinalPaymentModels = new ArrayList<>();
+    private Uri imageBinaryUri;
+    public String imageConvertedString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,16 +111,28 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
+        //Convert bitmap to string
+        try {
+            imageBinaryUri = Uri.parse(getIntent().getStringExtra("image"));
+            ContentResolver contentResolver = getContentResolver();
+            InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
+            mBitmap = BitmapFactory.decodeStream(inputStream);
+            imageConvertedString = convertBitmapToString(mBitmap);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         // for passing cart model
         if (getIntent().getStringExtra("items") != null) {
             address_id = getIntent().getStringExtra("address_id");
             String cartListAsString = getIntent().getStringExtra("items");
-            image = getIntent().getStringExtra("image");
             Gson gson = new Gson();
             Type type = new TypeToken<List<CartModel.Response>>() {
             }.getType();
+
             cartList = gson.fromJson(cartListAsString, type);
 
+            //for loop add item in final payment model
             for (int j = 0; j < cartList.size(); j++) {
                 String productId = cartList.get(j).getId();
                 int qty = cartList.get(j).getQty();
@@ -124,6 +145,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 mFinalPaymentModels.add(finalPaymentModel);
             }
 
+            //for converting arraylist to json array
             try {
                 Gson gsons = new Gson();
                 String listString = gsons.toJson(mFinalPaymentModels,
@@ -133,7 +155,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -148,7 +169,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             jsonObject.put("items", jsonArray);
             jsonObject.put("shipping_method", "");
             jsonObject.put("payment_method", "cash");
-            jsonObject.put("image", "" + image);
+            jsonObject.put("image", imageConvertedString);
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -205,7 +226,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 if (!isNetworkAvailable(this)) {
                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
                 } else {
-                    //get cart items through api
+                    //Call get cart items API
                     CallOrderPlaceAPI();
                 }
                 break;
@@ -217,5 +238,13 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
         }
+    }
+    public String convertBitmapToString(Bitmap bitmap) {
+        Bitmap immagex=bitmap;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        return imageEncoded;
     }
 }

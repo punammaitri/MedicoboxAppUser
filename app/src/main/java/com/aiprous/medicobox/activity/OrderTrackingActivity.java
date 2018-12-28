@@ -14,11 +14,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +30,14 @@ import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderTrackingAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
+import com.aiprous.medicobox.model.OrderTrackingModel;
+import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
+import com.aiprous.medicobox.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,6 +51,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,11 +66,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderTrackingActivity extends FragmentActivity implements OnMapReadyCallback,
+import static com.aiprous.medicobox.utils.APIConstant.ORDER_TRACKING;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
+
+public class OrderTrackingActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
-
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
@@ -69,18 +84,27 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     private LatLng mDropLatLng;
     @BindView(R.id.searchview_medicine)
     SearchView searchview_medicine;
+
+    @BindView(R.id.rc_medicine_list)
     RecyclerView rc_medicine_list;
+
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-    ArrayList<OrderTrackingActivity.ListModel> mlistModelsArray = new ArrayList<>();
-    private Context mContext = this;
+
+    private OrderTrackingActivity mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<LatLng> MarkerPoints;
-    private String mCurrentAddress;
-    private LatLng mCurrentLatLng;
-
+    private String mWarehouseAddress, mShippingAddress, mDeliveryAddress;
+    private LatLng mWarehouseLatLng;
+    private String order_id;
+    ArrayList<OrderTrackingModel> mTrackingModels = new ArrayList<>();
+    private String mWareHouseLat, mWareHouseLong, mDeliveryBoyLat;
+    private String mShippingLat, mShippingLong, mDeliveryBoyLong;
+    private String orderId, order_date, order_amount;
+    private LatLng mShippingLatLng, mDeliveryLatLng;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,32 +134,90 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         }
     }
 
+    private void CallTrackOrderAPI(String order_id) {
+        AndroidNetworking.get(ORDER_TRACKING + order_id)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                        JsonObject responseArray = getAllResponse.get("data").getAsJsonObject();
+                        orderId = responseArray.get("order_id").getAsString();
+                        order_amount = responseArray.get("order_amount").getAsString();
+                        order_date = responseArray.get("order_date").getAsString();
+
+                        //Warehouse lat long
+                        JsonObject warehouse = responseArray.get("warehouse").getAsJsonObject();
+                        if (warehouse != null) {
+                            mWareHouseLat = warehouse.get("lat").getAsString();
+                            mWareHouseLong = warehouse.get("long").getAsString();
+                        }
+
+                        //Shipping  lat long
+                        JsonObject shipping = responseArray.get("shipping").getAsJsonObject();
+                        if (shipping != null) {
+                            mShippingLat = shipping.get("lat").getAsString();
+                            mShippingLong = shipping.get("long").getAsString();
+                        }
+
+                        //Delivery boy lat long
+                        JsonObject delivery_boy = responseArray.get("delivery_boy").getAsJsonObject();
+                        if (shipping != null) {
+                            mDeliveryBoyLat = delivery_boy.get("lat").getAsString();
+                            mDeliveryBoyLong = delivery_boy.get("long").getAsString();
+                        }
+
+                        JsonArray items = responseArray.get("items").getAsJsonArray();
+
+                        if (items != null) {
+                            mTrackingModels.clear();
+                            for (int j = 0; j < items.size(); j++) {
+                                JsonObject itemObject = items.get(j).getAsJsonObject();
+                                String id = itemObject.get("id").getAsString();
+                                String company_name = itemObject.get("company_name").getAsString();
+                                String image = itemObject.get("image").getAsString();
+                                String price = itemObject.get("price").getAsString();
+
+                                OrderTrackingModel orderTrackingModel = new OrderTrackingModel(id, company_name, image, price);
+                                orderTrackingModel.setId(id);
+                                orderTrackingModel.setCompany_name(company_name);
+                                orderTrackingModel.setImage(image);
+                                orderTrackingModel.setPrice(price);
+                                mTrackingModels.add(orderTrackingModel);
+                            }
+                        }
+
+                        layoutManager = new LinearLayoutManager(mContext);
+                        rc_medicine_list.setLayoutManager(new LinearLayoutManager(OrderTrackingActivity.this, LinearLayoutManager.VERTICAL, false));
+                        rc_medicine_list.setHasFixedSize(true);
+                        rc_medicine_list.setAdapter(new OrderTrackingAdapter(OrderTrackingActivity.this, mTrackingModels));
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-
     private void init() {
-
         MarkerPoints = new ArrayList<>();
         searchview_medicine.setFocusable(false);
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
-
-        rc_medicine_list = findViewById(R.id.rc_medicine_list);
-
-        //add static data into List array list
-        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.bottle, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.bottle, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new OrderTrackingActivity.ListModel(R.drawable.bottle, "Horicks Lite Badam Jar 450 gm", "Bottle of 60 tablet", "150", "30%", "135"));
-
-        layoutManager = new LinearLayoutManager(mContext);
-        rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rc_medicine_list.setHasFixedSize(true);
-        rc_medicine_list.setAdapter(new OrderTrackingAdapter(mContext, mlistModelsArray));
 
         if (checkPlayServices()) {
             if (!BaseActivity.isLocationEnabled(this)) {
@@ -200,7 +282,6 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         }
     }
 
-
     @OnClick(R.id.btn_Cancel_Order)
     public void cancelOrder() {
         startActivity(new Intent(this, CancelOrderActivity.class));
@@ -210,72 +291,6 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     @OnClick(R.id.rlayout_back_button)
     public void BackPressDetail() {
         finish();
-    }
-
-    public class ListModel {
-        int image;
-        String medicineName;
-        String value;
-        String mrp;
-        String discount;
-        String price;
-
-        public ListModel(int image, String medicineName, String value, String mrp, String discount, String price) {
-            this.image = image;
-            this.medicineName = medicineName;
-            this.value = value;
-            this.mrp = mrp;
-            this.discount = discount;
-            this.price = price;
-        }
-
-        public int getImage() {
-            return image;
-        }
-
-        public void setImage(int image) {
-            this.image = image;
-        }
-
-        public String getMedicineName() {
-            return medicineName;
-        }
-
-        public void setMedicineName(String medicineName) {
-            this.medicineName = medicineName;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getMrp() {
-            return mrp;
-        }
-
-        public void setMrp(String mrp) {
-            this.mrp = mrp;
-        }
-
-        public String getDiscount() {
-            return discount;
-        }
-
-        public void setDiscount(String discount) {
-            this.discount = discount;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
     }
 
     @Override
@@ -328,21 +343,47 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     @Override
     public void onLocationChanged(Location location) {
 
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
+        if (getIntent().getStringExtra("order_id") != null) {
+            order_id = getIntent().getStringExtra("order_id");
+            if (!isNetworkAvailable(this)) {
+                CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+            } else {
+                CallTrackOrderAPI("77");
+            }
+        }
+
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
 
-        //get latlng from address
-        mDropLatLng = getLocationFromAddress(this, mDropAddress);
+     /*   Double warehouseLat = Double.valueOf(mWareHouseLat);
+        Double warehouseLong = Double.valueOf(mWareHouseLong);
 
-        //get current address from latlng
-        mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        mCurrentAddress = getAddressFromLatLng(this, location.getLatitude(), location.getLongitude());
+        Double shippingLat = Double.valueOf(mShippingLat);
+        Double shippingLong = Double.valueOf(mShippingLong);
+
+        Double deliveryLat = Double.valueOf(mDeliveryBoyLat);
+        Double deliveryLong = Double.valueOf(mDeliveryBoyLong);
+
+        //for warehouse
+        mWarehouseLatLng = new LatLng(warehouseLat, warehouseLong);
+        mWarehouseAddress = getAddressFromLatLng(OrderTrackingActivity.this, warehouseLat, warehouseLong);
+
+        //for shipping
+        mShippingLatLng = new LatLng(shippingLat, shippingLong);
+        mShippingAddress = getAddressFromLatLng(OrderTrackingActivity.this, shippingLat, shippingLong);
+
+        //for delivery boy
+        mDeliveryLatLng = new LatLng(deliveryLat, deliveryLong);
+        mDeliveryAddress = getAddressFromLatLng(OrderTrackingActivity.this, deliveryLat, deliveryLong);
 
         //Mark pickup and drop on map
-        markPickUpandDropOnMap(mCurrentLatLng, mCurrentAddress);
-        markPickUpandDropOnMap(mDropLatLng, mDropAddress);
+        markPickUpandDropOnMap(mWarehouseLatLng, mWarehouseAddress);
+        markPickUpandDropOnMap(mShippingLatLng, mShippingAddress);
+        markPickUpandDropOnMap(mDeliveryLatLng, mDeliveryAddress);*/
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -402,8 +443,6 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         return p1;
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -416,8 +455,6 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
-
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
@@ -446,10 +483,8 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
         // Setting the position of the marker
         options.position(point);
 
-
         DrawRouteMaps.getInstance(this)
                 .draw(point, mDropLatLng, mMap);
-
 
         if (MarkerPoints.size() == 1) {
             DrawMarker.getInstance(this).draw(mMap, point, R.drawable.marker_a, "" + address);
@@ -479,12 +514,10 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

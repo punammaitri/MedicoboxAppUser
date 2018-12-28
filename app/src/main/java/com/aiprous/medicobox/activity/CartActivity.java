@@ -2,7 +2,6 @@ package com.aiprous.medicobox.activity;
 
 import android.Manifest;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,8 +39,6 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.prescription.CropingOption;
-import com.aiprous.medicobox.prescription.ImageUrlModel;
-import com.aiprous.medicobox.prescription.PrescriptionUploadActivity;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -61,7 +58,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,17 +91,12 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     public static RelativeLayout rlayout_cart;
     public static NestedScrollView nestedscroll_cart;
     ArrayList<CartModel.Response> cartModelArrayList = new ArrayList<>();
-
-    CustomProgressDialog mAlert;
     private RecyclerView.LayoutManager layoutManager;
     private Context mContext = this;
 
     //*************************************for browse Images************************
     private static final int REQUEST_PERMISSIONS = 20;
-    int TAKE_IMAGE = 1;
     Bitmap bitmapCamera = null;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    String flagVariableImageEmpty = "";
     Uri mImageCaptureUri;
     final String TAG = getClass().getSimpleName();
     public Bitmap mBitmap;
@@ -122,7 +113,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     public String imageBinaryString = "";
     public static int activityCalled = 0;
     public static final int RESULT_OK = -1;
-    private Uri multipleImageUrl;
+    private Uri multipleImageUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +125,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
 
     private void init() {
 
-        mAlert = CustomProgressDialog.getInstance();
-
         tv_mrp_total = (TextView) findViewById(R.id.tv_mrp_total);
         tv_price_discount = (TextView) findViewById(R.id.tv_price_discount);
         tv_to_be_paid = (TextView) findViewById(R.id.tv_to_be_paid);
@@ -146,7 +135,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         tv_cart_size = (TextView) findViewById(R.id.tv_cart_size);
 
         searchview_medicine.setFocusable(false);
-
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
@@ -161,7 +149,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                 e.printStackTrace();
             }
         }
-
         //check is device above lollipop
         if (isAboveLollipop()) {
             if (!checkAppPermission()) requestPermission();
@@ -171,7 +158,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     @Override
     protected void onResume() {
         super.onResume();
-
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
@@ -184,7 +170,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             nestedscroll_cart.setVisibility(View.GONE);
             rlayout_cart.setVisibility(View.GONE);
         }
-
         rlayout_cart.setClickable(false);
     }
 
@@ -265,7 +250,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                                     cartModelArrayList.add(listModel);
                                 }
                             }
-
                             //visible cart layout
                             if (!cartModelArrayList.isEmpty()) {
                                 tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
@@ -387,47 +371,25 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                 if (requestCode == RESULT_TAKE_IMAGE) {
                     bitmapCamera = getCapturedImage(strFileCamera);
                     cropingIMG();
-                        /*mBitmap = (Bitmap) data.getExtras().get("data");
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);*/
                 } else if (requestCode == RESULT_UPLOAD_IMAGE) {
-
+                    //for multiple image selection
                     if (data.getClipData() != null) {
-                        int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
+                        int count = data.getClipData().getItemCount();
                         for (int i = 0; i < count; i++) {
                             multipleImageUrl = data.getClipData().getItemAt(i).getUri();
-                            // Create content resolver.
-                         /*   ContentResolver contentResolver = getContentResolver();
-                            InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
-                            mBitmap = BitmapFactory.decodeStream(inputStream);
-                           // imageBinaryString = convertBitmapToString(mBitmap);
-
-                            //add to bitmap array
-                            inputStream.close();*/
                         }
                     } else if (data.getData() != null) {
                         multipleImageUrl = data.getData();
-                        // Create content resolver.
                         txtUploadPrescription.setVisibility(View.VISIBLE);
                         txtUploadPrescription.setText(multipleImageUrl.toString());
-                   /*     ContentResolver contentResolver = getContentResolver();
-                        InputStream inputStream = contentResolver.openInputStream(multipleImageUrl);
-                        mBitmap = BitmapFactory.decodeStream(inputStream);
-                       // imageBinaryString = convertBitmapToString(mBitmap);
-                        //add to bitmap array
-                        inputStream.close();*/
                     }
                 } else if (requestCode == RESULT_CROPING_CODE) {
-
                     try {
                         if (outPutFile.exists()) {
+                            mBitmap = decodeFile(outPutFile);
+                            imageBinaryString = convertBitmapToString(mBitmap);
                             txtUploadPrescription.setVisibility(View.VISIBLE);
                             txtUploadPrescription.setText(outPutFile.getAbsolutePath());
-
-                            mBitmap = decodeFile(outPutFile);
-                            //ivProfile.setImageBitmap(mBitmap);
-                           // imageBinaryString = convertBitmapToString(mBitmap);
-                            //add to bitmap array
                         } else {
                             txtUploadPrescription.setVisibility(View.GONE);
                             Toast.makeText(mContext, "error while save file", Toast.LENGTH_SHORT).show();
@@ -493,6 +455,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
             bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return bitmap;
     }
@@ -547,11 +510,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                     mBitmap = bitmapCamera;
                 else
                     mBitmap = getSelectedImage(mImageCaptureUri);
-                //ivProfile.setImageBitmap(mBitmap);
-                // setListAdapter();
-                // imageBinaryString = convertBitmapToString(mBitmap);
-                //Call  upload prescription API
-                //callUploadPrescriptionImageAPI(imageBinaryString);
             }
         } catch (Exception e) {
             e.printStackTrace();

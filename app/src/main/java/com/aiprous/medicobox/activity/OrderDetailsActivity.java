@@ -85,6 +85,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     ArrayList<ProductsModel> mProductsModel = new ArrayList<ProductsModel>();
     ArrayList<ProductModel> mproductArrayList = new ArrayList<ProductModel>();
     private static DecimalFormat df2 = new DecimalFormat(".##");
+    private String order_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,18 +98,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private void init() {
 
         searchview_medicine.setFocusable(false);
-
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
         mAlert = CustomProgressDialog.getInstance();
-
         //set text default
 
         tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + "350.0");
-
         tv_total_saved.setText(mContext.getResources().getString(R.string.Rs) + "30.0");
-
     }
 
     @Override
@@ -123,18 +120,25 @@ public class OrderDetailsActivity extends AppCompatActivity {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
-        //Add Json Object
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("order_id", "76");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (getIntent().getStringExtra("order_id") != null) {
+            order_id = getIntent().getStringExtra("order_id");
+            CallOrderDetailsAPI(order_id);
         }
 
+    }
+
+    private void CallOrderDetailsAPI(String order_id) {
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
-            getSingleOrderAPI(jsonObject);
+            //Add Json Object
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("order_id", order_id);
+                getSingleOrderAPI(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -177,7 +181,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                     String country_id = shipping_address_object.get("country_id").getAsString();
                                     String postcode = shipping_address_object.get("postcode").getAsString();
 
-                                    txtShippingAddressUsername.setText(firstname+" "+lastname);
+                                    txtShippingAddressUsername.setText(firstname + " " + lastname);
                                     String fullShippingAddress = street + "," + city + "," + country_id + "\n" + postcode;
                                     txtShippingAddress.setText(fullShippingAddress);
                                 }
@@ -192,7 +196,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                     String country_id = billing_address_object.get("country_id").getAsString();
                                     String postcode = billing_address_object.get("postcode").getAsString();
 
-                                    txtBillingAddressUsername.setText(firstname+" "+lastname);
+                                    txtBillingAddressUsername.setText(firstname + " " + lastname);
                                     String fullBillingAddress = street + "," + city + "," + country_id + "\n" + postcode;
                                     txtBillingAddress.setText(fullBillingAddress);
                                 }
@@ -208,12 +212,17 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 Double shipping_amount = getJsonObject1.get("shipping_amount").getAsDouble();
                                 tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + price_discount);
                                 txtShippingAmount.setText(mContext.getResources().getString(R.string.Rs) + shipping_amount);
-                                //for amount paid
-                                Double grand_total_int = getJsonObject1.get("grand_total").getAsDouble();
-                                Double total_due_int = getJsonObject1.get("total_due").getAsDouble();
-                                Double amount_paid = grand_total_int - total_due_int;
+                                Double amount_paid = null;
 
-                                tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + amount_paid);
+                                try {
+                                    //for amount paid
+                                    Double grand_total_int = getJsonObject1.get("grand_total").getAsDouble();
+                                    Double total_due_int = getJsonObject1.get("total_due").getAsDouble();
+                                    amount_paid = grand_total_int - total_due_int;
+                                    tv_amount_paid.setText(mContext.getResources().getString(R.string.Rs) + amount_paid);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                                 //remove digit after dot
                                 double input = Double.parseDouble(grand_total);
@@ -278,7 +287,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_track_order)
     public void trackOrder() {
-        startActivity(new Intent(this, OrderTrackingActivity.class));
+        startActivity(new Intent(this, OrderTrackingActivity.class)
+        .putExtra("order_id",""+order_id));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
@@ -329,8 +339,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

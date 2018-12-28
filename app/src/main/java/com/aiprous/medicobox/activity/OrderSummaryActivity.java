@@ -128,6 +128,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private String imageBinaryString;
     public Bitmap mBitmap;
     public String imageConvertedString = "";
+    private Uri imageBinaryUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,14 +167,12 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         // for passing cart model
         if (getIntent().getStringExtra("cart_model") != null) {
-
             //load image in bitmap
             try {
-                Uri imageBinaryString  = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
+                imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
                 ContentResolver contentResolver = getContentResolver();
-                InputStream inputStream = contentResolver.openInputStream(imageBinaryString);
+                InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
                 mBitmap = BitmapFactory.decodeStream(inputStream);
-                imageConvertedString = convertBitmapToString(mBitmap);
                 imgPrescription.setImageBitmap(mBitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -214,14 +214,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
             callGetAddress(jsonObject);
         }
     }
-
-    public String convertBitmapToString(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
 
     private void callGetAddress(JSONObject jsonObject) {
         AndroidNetworking.post(GET_ALL_ADDRESS)
@@ -450,7 +442,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 startActivity(new Intent(this, PaymentDetailsActivity.class)
                         .putExtra("address_id", "" + billing_id)
                         .putExtra("items", "" + cartModel)
-                        .putExtra("image", "" + imageConvertedString));
+                        .putExtra("image", "" + imageBinaryUri));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.searchview_medicine:
