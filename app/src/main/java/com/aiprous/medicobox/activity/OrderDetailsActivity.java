@@ -83,7 +83,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     CustomProgressDialog mAlert;
     ArrayList<ProductsModel> mProductsModel = new ArrayList<ProductsModel>();
-    ArrayList<ProductModel> mproductArrayList = new ArrayList<ProductModel>();
+
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private String order_id;
 
@@ -292,51 +292,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
-    public static class ProductModel {
-        String medicine_name;
-        String mrp_price;
-        String item_contains;
-        String medicine_price;
-
-        public ProductModel(String medicine_name, String mrp_price, String item_contains, String medicine_price) {
-            this.medicine_name = medicine_name;
-            this.mrp_price = mrp_price;
-            this.item_contains = item_contains;
-            this.medicine_price = medicine_price;
-        }
-
-        public String getMedicine_name() {
-            return medicine_name;
-        }
-
-        public void setMedicine_name(String medicine_name) {
-            this.medicine_name = medicine_name;
-        }
-
-        public String getMrp_price() {
-            return mrp_price;
-        }
-
-        public void setMrp_price(String mrp_price) {
-            this.mrp_price = mrp_price;
-        }
-
-        public String getItem_contains() {
-            return item_contains;
-        }
-
-        public void setItem_contains(String item_contains) {
-            this.item_contains = item_contains;
-        }
-
-        public String getMedicine_price() {
-            return medicine_price;
-        }
-
-        public void setMedicine_price(String medicine_price) {
-            this.medicine_price = medicine_price;
-        }
-    }
 
     @OnClick(R.id.searchview_medicine)
     public void onClicksearch() {

@@ -59,7 +59,7 @@ public class APIConstant {
     //user order
     public static String USERORDER = "http://user8.itsindev.com/medibox/API/user_orders.php";
     public static String SINGLE_ORDER = "http://user8.itsindev.com/medibox/API/single-order.php";
-    public static String ORDER_TRACKING = "https://user8.itsindev.com/medibox/API/order_address.php/?order_id=";
+    public static String ORDER_TRACKING = "http://user8.itsindev.com/medibox/API/order_address.php/?order_id=";
 
     // add address
     public static String SHIPPING_ADDRESS = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/shippingAddress";
@@ -70,9 +70,19 @@ public class APIConstant {
     public static String UPDATE_ADDRESS = "http://user8.itsindev.com/medibox/API/update-address.php";
     public static String DELETE_ADDRESS = "http://user8.itsindev.com/medibox/API/delete-address.php";
 
-
     //Substitutes product for any specific tablet
     public static String RELATED_PRODUCT = "http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
+
+
+    //coupon
+    public static String APPLY_COUPON="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/coupons/";
+
+    //new order place with coupon code
+    public static String NEW_ADD_TO_CART_ORDER_PLACE = "http://user8.itsindev.com/medibox/API/order-place-new.php";
+    public static String GET_CART_TOTAL="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/totals";
+
+    //send sms API
+    public static String SEND_SMS="http://user8.itsindev.com/medibox/API/sms-notification.php";
     //Response Status Code
     public static final int SUCCESS_CODE = 200;
     /*For Sweet alert*/

@@ -53,6 +53,8 @@ import static com.aiprous.medicobox.utils.APIConstant.ADD_TO_CART_ORDER_PLACE;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_ADDRESS;
+import static com.aiprous.medicobox.utils.APIConstant.NEW_ADD_TO_CART_ORDER_PLACE;
+import static com.aiprous.medicobox.utils.APIConstant.SEND_SMS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class PaymentDetailsActivity extends AppCompatActivity {
@@ -158,7 +160,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void CallOrderPlaceAPI() {
+   /* private void CallOrderPlaceAPI() {
 
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
@@ -214,7 +216,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
-
+*/
 
     @OnClick({R.id.searchview_medicine, R.id.tv_place_order, R.id.rlayout_back_button, R.id.rlayout_cart})
     public void onViewClicked(View view) {
@@ -247,4 +249,125 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
         return imageEncoded;
     }
+
+    private void CallOrderPlaceAPI() {
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
+        //jsonArray = new JSONArray(mStreetArray);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("address_id", address_id);
+            jsonObject.put("quote_id", MedicoboxApp.onGetCartID());
+            jsonObject.put("shipping_method", "");
+            jsonObject.put("payment_method", "cash");
+            jsonObject.put("image", imageConvertedString);
+            Log.e("url", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post(NEW_ADD_TO_CART_ORDER_PLACE)
+                .addJSONObjectBody(jsonObject) // posting json
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseArray.get("status").getAsString();
+
+                            if (status.equals("success")) {
+                                String orderId = responseArray.get("order_id").getAsString();
+                                //send sms to user
+                                CallSendSmsApi(orderId);
+                            } else {
+                                String msg = responseArray.get("msg").getAsString();
+                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+    private void CallSendSmsApi(String orderId) {
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
+        //jsonArray = new JSONArray(mStreetArray);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("mobile_number", MedicoboxApp.onGetMobileNo());
+            jsonObject.put("message", "Your order placed successfully"+"Your order number is "+orderId);
+
+            Log.e("url", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post(SEND_SMS)
+                .addJSONObjectBody(jsonObject) // posting json
+               // .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseArray.get("status").getAsString();
+
+                            if (status.equals("success")) {
+                                startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+                                CustomProgressDialog.getInstance().dismissDialog();
+                            } else {
+                                String msg = responseArray.get("msg").getAsString();
+                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+
+
+
 }

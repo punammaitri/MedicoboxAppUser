@@ -28,6 +28,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,9 +47,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,9 +71,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.aiprous.medicobox.utils.APIConstant.APPLY_COUPON;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
+import static com.aiprous.medicobox.utils.APIConstant.GET_CART_TOTAL;
+import static com.aiprous.medicobox.utils.APIConstant.NEW_ADD_TO_CART_ORDER_PLACE;
+import static com.aiprous.medicobox.utils.APIConstant.SEND_SMS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class CartActivity extends AppCompatActivity implements CartAdapter.ShowPrescriptionInterface {
@@ -85,6 +92,10 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     Button btnUploadPrescription;
     @BindView(R.id.txtUploadPrescription)
     TextView txtUploadPrescription;
+    @BindView(R.id.edt_coupon_code)
+    EditText edt_coupon_code;
+    @BindView(R.id.tv_apply_code)
+    TextView tv_apply_code;
 
     public static TextView tv_mrp_total, tv_price_discount, tv_to_be_paid, tv_total_saving;
     public static TextView tv_cart_size, tv_cart_empty;
@@ -114,6 +125,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     public static int activityCalled = 0;
     public static final int RESULT_OK = -1;
     private Uri multipleImageUrl = null;
+    private String mQuote_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,12 +194,19 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     @OnClick(R.id.btn_continue_cart)
     public void onClickContinue() {
         if (txtUploadPrescription.getVisibility() == View.VISIBLE) {
-            Gson gson = new Gson();
-            String cartModel = gson.toJson(cartModelArrayList);
-            startActivity(new Intent(this, OrderSummaryActivity.class)
-                    .putExtra("cart_model", cartModel)
-                    .putExtra("imageBinaryString", multipleImageUrl.toString()));
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            //check is image uploaded or not.if uploaded than only
+            if(multipleImageUrl!=null)
+            {
+                Gson gson = new Gson();
+                String cartModel = gson.toJson(cartModelArrayList);
+                startActivity(new Intent(this, OrderSummaryActivity.class)
+                        .putExtra("cart_model", cartModel)
+                        .putExtra("imageBinaryString", multipleImageUrl.toString()));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }else {
+                Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
+            }
+
         } else {
             Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
         }
@@ -230,6 +249,10 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                                     String prescription = getAllProductList.getJSONObject(i).get("prescription").toString();
                                     int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
                                     int prescription_req = Integer.parseInt(getAllProductList.getJSONObject(i).get("prescription").toString());
+
+                                    mQuote_id=getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                    //save  quote id  to shared prf
+                                    MedicoboxApp.onSaveCartId(mQuote_id);
 
                                     CartModel.Response listModel = new CartModel.Response(discount, prescription, image,
                                             short_description, sale_price, lquoteId, product_type, price, name, id, qty, sku, item_id, prescription_req);
@@ -527,4 +550,99 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
         return thumbnail;
     }
+
+    @OnClick(R.id.tv_apply_code)
+    public void appyCouponCode(){
+
+        String lcoupon=edt_coupon_code.getText().toString();
+        if(lcoupon.length()==0)
+        {
+            edt_coupon_code.setError("Please enter coupon code");
+        }else {
+            getApplyCoupon(lcoupon);
+        }
+
+    }
+
+
+    private void getApplyCoupon(final String couponCode) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.put(APPLY_COUPON+couponCode)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                       /* try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            if (response.has("message")) {
+                                 String message=getAllResponse.get("message").toString();
+                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                            }else {
+
+                            }
+                            CustomProgressDialog.getInstance().dismissDialog();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }*/
+                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                        if (response.has("message")) {
+                            String message=getAllResponse.get("message").toString();
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                        }else {
+
+                        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(CartActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+
+    private void CallGetCardTotal() {
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
+        AndroidNetworking.get(GET_CART_TOTAL)
+               // .addJSONObjectBody(jsonObject) // posting json
+                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
 }

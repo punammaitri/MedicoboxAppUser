@@ -193,7 +193,11 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                         rc_medicine_list.setLayoutManager(new LinearLayoutManager(OrderTrackingActivity.this, LinearLayoutManager.VERTICAL, false));
                         rc_medicine_list.setHasFixedSize(true);
                         rc_medicine_list.setAdapter(new OrderTrackingAdapter(OrderTrackingActivity.this, mTrackingModels));
+
+
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
+
 
                     @Override
                     public void onError(ANError error) {

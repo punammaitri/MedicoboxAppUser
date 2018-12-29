@@ -65,6 +65,7 @@
                     android:weightSum="1">
 
                     <EditText
+                        android:id="@+id/edt_coupon_code"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
@@ -74,11 +75,12 @@
                         app:backgroundTint="@color/coloryellow" />
 
                     <TextView
+                        android:id="@+id/tv_apply_code"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="0.2"
                         android:fontFamily="@font/open_sans_regular"
-                        android:gravity="end"
+                        android:gravity="center|end"
                         android:text="APPLY"
                         android:textColor="@color/coloryellow" />
                 </LinearLayout>

@@ -21,6 +21,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +56,7 @@ public class OTPActivity extends AppCompatActivity {
     private String mMobileNumber;
     private String mFlag;
     private String mToken;
+    private String getMobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +194,7 @@ public class OTPActivity extends AppCompatActivity {
                                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                             }
 
+                           // CustomProgressDialog.getInstance().dismissDialog();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -258,6 +263,7 @@ public class OTPActivity extends AppCompatActivity {
 
 
     private void getUserInfo(final String bearerToken) {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.get(GETUSERINFO)
                 .addHeaders(Authorization, BEARER + bearerToken)
                 .setPriority(Priority.MEDIUM)
@@ -267,7 +273,8 @@ public class OTPActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // do anything with response
                         try {
-                            JSONObject jsonObject = new JSONObject(response.getString("response"));
+
+                            /*JSONObject jsonObject = new JSONObject(response.getString("response"));
                             String getId = jsonObject.get("id").toString();
                             String getGroupId = jsonObject.get("group_id").toString();
                             String getEmail = jsonObject.get("email").toString();
@@ -282,10 +289,40 @@ public class OTPActivity extends AppCompatActivity {
                             startActivity(new Intent(OTPActivity.this, MainActivity.class)
                                     .putExtra("email", "" + getEmail));
                             overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                            finish();
-                        } catch (JSONException e) {
+                            finish();*/
+
+
+                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                             JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                             String status = responseObject.get("status").getAsString();
+                             if (status.equals("success")) {
+                             JsonObject responseObjects = responseObject.get("data").getAsJsonObject();
+                             String getId = responseObjects.get("id").getAsString();
+                             String getGroupId = responseObjects.get("group_id").getAsString();
+                             String getEmail = responseObjects.get("email").getAsString();
+                             String getFirstname = responseObjects.get("firstname").getAsString();
+                             String getLastname = responseObjects.get("lastname").getAsString();
+                             String getStoreId = responseObjects.get("store_id").getAsString();
+                             String getWebsiteId = responseObjects.get("website_id").getAsString();
+                             JsonArray custom_attributes_array = responseObjects.get("custom_attributes").getAsJsonArray();
+
+                                 if (custom_attributes_array != null) {
+                                     for (int j = 0; j < custom_attributes_array.size(); j++) {
+                                         JsonObject customObject = custom_attributes_array.get(j).getAsJsonObject();
+                                         getMobileNumber = customObject.get("value").getAsString();
+                                       }
+                                 }
+                                 MedicoboxApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobileNumber, getEmail, getStoreId);
+                                 Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
+                                 startActivity(new Intent(OTPActivity.this, MainActivity.class)
+                                         .putExtra("email", "" + getEmail));
+                                         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                         finish();
+                             }
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
