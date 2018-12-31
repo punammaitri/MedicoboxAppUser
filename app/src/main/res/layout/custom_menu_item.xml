@@ -26,7 +26,8 @@
             android:layout_height="@dimen/height_30"
             android:layout_marginStart="@dimen/height_5"
             android:contentDescription="@null"
-            android:padding="@dimen/height_4" />
+            android:padding="@dimen/height_4"
+            android:layout_marginLeft="@dimen/height_5" />
 
         <!-- <View
              android:id="@+id/viewForDivider"
@@ -48,7 +49,8 @@
             android:text="abc"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/height_10" />
 
         <RelativeLayout
             android:layout_width="match_parent"

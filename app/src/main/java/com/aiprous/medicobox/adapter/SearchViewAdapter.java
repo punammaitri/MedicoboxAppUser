@@ -50,9 +50,11 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Vi
         holder.llayout_medicine_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent intent = new Intent(mContext, ProductDetailBActivity.class);
+                Intent intent = new Intent(mContext, ProductDetailBActivity.class);
                 intent.putExtra("productId", mSearchResultArrayList.get(position).getId());
-                intent.putExtra("VisibiltyFlag", "");
+                mContext.startActivity(intent);
+
+                /*intent.putExtra("VisibiltyFlag", "");
                 intent.putExtra("SKU", mSearchResultArrayList.get(position).getSku());
                 intent.putExtra("Qty","");
                 intent.putExtra("imageUrl", mSearchResultArrayList.get(position).getImage());
@@ -61,8 +63,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Vi
                 intent.putExtra("price", mSearchResultArrayList.get(position).getPrice());
                 intent.putExtra("prescription", mSearchResultArrayList.get(position).getShort_description());
                 intent.putExtra("MrpPrice", "");
-                intent.putExtra("discount", mSearchResultArrayList.get(position).getDiscount());
-                mContext.startActivity(intent);*/
+                intent.putExtra("discount", mSearchResultArrayList.get(position).getDiscount());*/
             }
         });
     }
@@ -70,8 +71,6 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Vi
     @Override
     public int getItemCount() {
         return (mSearchResultArrayList == null) ? 0 : mSearchResultArrayList.size();
-
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -137,6 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/height_4"
+                    android:id="@+id/relMyPrescription"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/height_8"
                     app:cardElevation="@dimen/height_5">
@@ -356,7 +357,7 @@
                     <ImageView
                         android:id="@+id/img_valid_prescription"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="350dp"
                         android:background="@drawable/valid_prescription_guide"
                         android:scaleType="fitXY" />
                 </LinearLayout>

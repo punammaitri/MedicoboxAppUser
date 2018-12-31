@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorwhite"
-    tools:context="com.aiprous.medicobox.activity.ProductDetailActivity">
-
+    android:background="@color/colorwhite">
 
     <include
         android:id="@+id/layout_custom_toolbar"
@@ -321,8 +319,8 @@
                     <ImageView
                         android:layout_width="@dimen/height_25"
                         android:layout_height="@dimen/height_25"
-                        android:src="@drawable/right_arrow"
-                        android:layout_alignParentRight="true" />
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -365,9 +363,9 @@
                     <ImageView
                         android:layout_width="@dimen/height_25"
                         android:layout_height="@dimen/height_25"
+                        android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/right_arrow"
-                        android:layout_alignParentRight="true" />
+                        android:src="@drawable/right_arrow" />
                 </RelativeLayout>
             </LinearLayout>
 

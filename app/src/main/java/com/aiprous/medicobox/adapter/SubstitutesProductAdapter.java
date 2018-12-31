@@ -12,6 +12,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.model.RelatedProductModel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 public class SubstitutesProductAdapter extends RecyclerView.Adapter<SubstitutesProductAdapter.ViewHolder> {
     private ArrayList<RelatedProductModel.Data> mDataArrayList;
     private Context mContext;
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     public SubstitutesProductAdapter(Context mContext, ArrayList<RelatedProductModel.Data> mDataArrayList) {
         this.mContext = mContext;
@@ -45,6 +47,7 @@ public class SubstitutesProductAdapter extends RecyclerView.Adapter<SubstitutesP
 
       holder.tv_name.setText(mDataArrayList.get(position).getName());
       holder.tv_company_name.setText(mDataArrayList.get(position).getCompanyName());
+
       holder.tv_price.setText(""+mContext.getResources().getString(R.string.Rs) +mDataArrayList.get(position).getPrice());
 
     }

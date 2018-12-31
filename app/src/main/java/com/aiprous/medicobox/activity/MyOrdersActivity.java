@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
+import com.aiprous.medicobox.adapter.SearchViewAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.MyOrdersModel;
@@ -86,22 +87,26 @@ public class MyOrdersActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-
-                    if (mMyorder != null && !mMyorder.isEmpty()) {
-                        ArrayList<MyOrdersModel> filteredModelList = filter(mMyorder, newText);
-                        mlistAdapter.setFilter(filteredModelList);
+                    try {
+                        if (mMyorder != null && !mMyorder.isEmpty()) {
+                            ArrayList<MyOrdersModel> filteredModelList = filter(mMyorder, newText);
+                            if (!(filteredModelList.size() == 0)){
+                                mlistAdapter.setFilter(filteredModelList);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
                     return true;
                 }
 
                 private ArrayList<MyOrdersModel> filter(ArrayList<MyOrdersModel> models, String query) {
-                    query = query.toLowerCase();
+                    query = query;
 
                     final ArrayList<MyOrdersModel> filteredModelList = new ArrayList<>();
 
                     for (MyOrdersModel model : models) {
-                        final String text = model.getEntity_id().toLowerCase();
+                        final String text = model.getEntity_id();
                         if (text.contains(query)) {
                             filteredModelList.add(model);
                         }
@@ -174,11 +179,11 @@ public class MyOrdersActivity extends AppCompatActivity {
                             layoutManager = new LinearLayoutManager(mContext);
                             rc_my_order_list.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
                             rc_my_order_list.setHasFixedSize(true);
-                            rc_my_order_list.setAdapter(new MyOrdersAdapter(MyOrdersActivity.this, mMyorder));
+                            mlistAdapter = new MyOrdersAdapter(MyOrdersActivity.this, mMyorder);
+                            rc_my_order_list.setAdapter(mlistAdapter);
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
-
                         CustomProgressDialog.getInstance().dismissDialog();
                     }
 

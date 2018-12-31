@@ -5,8 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activity.DrugInformationTabActivity">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -16,7 +15,7 @@
 
         <include
             android:id="@+id/layout_custom_toolbar"
-            layout="@layout/custom_toolbar"/>
+            layout="@layout/custom_toolbar" />
 
         <View
             android:layout_width="match_parent"
@@ -32,8 +31,8 @@
             app:tabIndicatorHeight="@dimen/height_3"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@color/colorblack"
-            app:tabTextAppearance="?android:attr/textAppearanceSmall"/>
+            app:tabTextAppearance="?android:attr/textAppearanceSmall"
+            app:tabTextColor="@color/colorblack" />
 
     </android.support.design.widget.AppBarLayout>
 

@@ -14,6 +14,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.MyOrdersActivity;
 import com.aiprous.medicobox.activity.OrderDetailsActivity;
 import com.aiprous.medicobox.model.MyOrdersModel;
+import com.aiprous.medicobox.model.SearchModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

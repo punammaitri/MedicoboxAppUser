@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,8 +12,6 @@ import android.widget.TextView;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +25,10 @@ public class OrderPlacedActivity extends AppCompatActivity {
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
     TextView tv_cart_size;
-
+    @BindView(R.id.txtOrderId)
+    TextView txtOrderId;
     private Context mContext = this;
-
+    private String order_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +46,12 @@ public class OrderPlacedActivity extends AppCompatActivity {
             rlayout_cart.setVisibility(View.GONE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
+        //order id
+        if (getIntent().getStringExtra("order_id") != null) {
+            order_id = getIntent().getStringExtra("order_id");
+            txtOrderId.setText("Order ID:  " + order_id);
         }
     }
 
@@ -75,8 +78,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
 
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 }

@@ -128,7 +128,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private String imageBinaryString;
     public Bitmap mBitmap;
     public String imageConvertedString = "";
-    private Uri imageBinaryUri;
+    private Uri imageBinaryUri ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,17 +167,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         // for passing cart model
         if (getIntent().getStringExtra("cart_model") != null) {
-            //load image in bitmap
-            try {
-                imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
-                ContentResolver contentResolver = getContentResolver();
-                InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
-                mBitmap = BitmapFactory.decodeStream(inputStream);
-                imgPrescription.setImageBitmap(mBitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
             //load cart model
             String cartListAsString = getIntent().getStringExtra("cart_model");
             Gson gson = new Gson();
@@ -188,6 +177,24 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 Log.e("Cart Data", cars.getId());
             }
         }
+
+        //load image in bitmap
+        if (getIntent().getStringExtra("imageBinaryString") != null) {
+            try {
+                imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
+                ContentResolver contentResolver = getContentResolver();
+                InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
+                mBitmap = BitmapFactory.decodeStream(inputStream);
+                imgPrescription.setImageBitmap(mBitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else {
+            imgPrescription.setVisibility(View.GONE);
+        }
+
+
+
 
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().dismissDialog();

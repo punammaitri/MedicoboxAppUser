@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAdapter.ViewHolder> {
     private ArrayList<FeaturedProductModel> mDataArrayList;
     private Context mContext;
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     public FeatureProductAdapter(Context mContext, ArrayList<FeaturedProductModel> mDataArrayList) {
         this.mContext = mContext;
@@ -47,9 +48,13 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
 
         //holder.img_product.setImageResource(mDataArrayList.get(position).getProduct_image());
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getName());
-        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getPrice());
+
+        double input = Double.parseDouble(mDataArrayList.get(position).getPrice());
+        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) +df2.format(input));
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + mDataArrayList.get(position).getFinal_price());
+
+        double final_price = Double.parseDouble(mDataArrayList.get(position).getFinal_price());
+        holder.tv_product_price.setText(mContext.getResources().getString(R.string.Rs) + df2.format(final_price));
 
         Float getActualPrice = Float.valueOf(mDataArrayList.get(position).getPrice());
         Float getFinalPrice = Float.valueOf(mDataArrayList.get(position).getFinal_price());

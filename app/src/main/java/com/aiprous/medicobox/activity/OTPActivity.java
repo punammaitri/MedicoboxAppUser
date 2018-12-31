@@ -330,8 +330,7 @@ public class OTPActivity extends AppCompatActivity {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
                         Toast.makeText(OTPActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
-                        Log.e("Error",
-                                "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error","onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }

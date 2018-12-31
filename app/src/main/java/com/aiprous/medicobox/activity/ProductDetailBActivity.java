@@ -45,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -143,6 +144,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private float mCalculatePrice;
     private int mDiscountAmount;
     ArrayList<RelatedProductModel.Data> mRelatedProductArrayList=new ArrayList<>();
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -341,9 +343,11 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                     tv_Substitute_product_name.setText("Substitutes for "+mMedicineName);
                                     tv_medicine_name.setText(mMedicineName);
                                     tv_medicine_contains.setText(mValue);
-                                    tv_mrp_price.setText(mMrp);
-                                    tv_item_description.setText(mValue);
 
+                                    //remove digit after dot
+                                    double input = Double.parseDouble(mMrp);
+                                    tv_mrp_price.setText(df2.format(input));
+                                    tv_item_description.setText(mValue);
 
                                     if (mPrescription.equals("0")) {
                                         llayout_prescription.setVisibility(View.GONE);
@@ -805,8 +809,4 @@ public class ProductDetailBActivity extends AppCompatActivity {
                     });
         }
     }
-
-
-
-
 }

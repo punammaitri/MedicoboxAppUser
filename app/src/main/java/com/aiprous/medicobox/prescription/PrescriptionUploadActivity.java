@@ -20,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -32,6 +33,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.aiprous.medicobox.BuildConfig;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
@@ -49,8 +51,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,9 +65,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.DELETE_IMAGE_PRESCRIPTION;
@@ -93,6 +99,8 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
     EditText edtPatientName;
     @BindView(R.id.edt_additional_comment)
     EditText edtAdditionalComment;
+    @BindView(R.id.relMyPrescription)
+    CardView relMyPrescription;
 
     private Context mContext = this;
     private RecyclerView.LayoutManager layoutManager;
@@ -155,9 +163,6 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                 e.printStackTrace();
             }
         }
-
-        //set list adapter
-        // setListAdapter();
     }
 
     private void setListAdapter(ArrayList<ImageUrlModel> mlistModelsArray) {
@@ -175,9 +180,11 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
+        callUploadPrescriptionAPI();
+    }
 
+    private void callUploadPrescriptionAPI() {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().dismissDialog();
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
@@ -201,7 +208,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
 
-                                if (responseObject.has("images")){
+                                if (responseObject.has("images")) {
                                     mlistModelsArray.clear();
                                     JsonArray getImageUrl = responseObject.get("images").getAsJsonArray();
                                     for (int i = 0; i < getImageUrl.size(); i++) {
@@ -229,51 +236,6 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
-    }
-
-    @OnClick({R.id.cardview_take_photo, R.id.cardview_gallery, R.id.radioButtonYes, R.id.radioButtonNo,
-            R.id.rlayout_back_button, R.id.btnContinue, R.id.rlayout_cart})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.cardview_take_photo:
-                selectImage("take_photo");
-                break;
-            case R.id.cardview_gallery:
-                selectImage("open_gallery");
-                break;
-            case R.id.radioButtonYes:
-                edtPatientName.setText(MedicoboxApp.onGetFirstName() + " " + MedicoboxApp.onGetLastName());
-                break;
-            case R.id.radioButtonNo:
-                edtPatientName.setText("");
-                break;
-            case R.id.rlayout_back_button:
-                finish();
-                break;
-            case R.id.btnContinue:
-                if (edtPatientName.getText().length() == 0) {
-                    Toast.makeText(mContext, "add patient name", Toast.LENGTH_SHORT).show();
-                } else if (edtAdditionalComment.getText().length() == 0) {
-                  Toast.makeText(mContext, "Add comment", Toast.LENGTH_SHORT).show();
-                } else {
-                    String getPatientName = edtPatientName.getText().toString().trim();
-                    String getAdditionalComment = edtAdditionalComment.getText().toString().trim();
-                    //send all data to prescription activity
-                    try {
-                        startActivity(new Intent(mContext, PrescriptionUploadOptionActivity.class)
-                                .putExtra("getPatientName", getPatientName)
-                                .putExtra("getAdditionalComment", getAdditionalComment));
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                break;
-            case R.id.rlayout_cart:
-                startActivity(new Intent(this, CartActivity.class));
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                break;
-        }
     }
 
     public void selectImage(String type) {
@@ -554,7 +516,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
 
     private void setInitialImage() {
         try {
-            if (mImageCaptureUri != null){
+            if (mImageCaptureUri != null) {
                 if (bitmapCamera != null)
                     mBitmap = bitmapCamera;
                 else
@@ -632,6 +594,8 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
     }
 
 
+
+
     public class ListModel {
 
         Bitmap Imagebitmap;
@@ -648,10 +612,58 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
             Imagebitmap = imagebitmap;
         }
     }
+
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 
+    @OnClick({R.id.cardview_take_photo, R.id.cardview_gallery, R.id.radioButtonYes, R.id.radioButtonNo,
+            R.id.rlayout_back_button, R.id.btnContinue, R.id.rlayout_cart,R.id.relMyPrescription})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.cardview_take_photo:
+                selectImage("take_photo");
+                break;
+            case R.id.cardview_gallery:
+                selectImage("open_gallery");
+                break;
+            case R.id.radioButtonYes:
+                edtPatientName.setText(MedicoboxApp.onGetFirstName() + " " + MedicoboxApp.onGetLastName());
+                break;
+            case R.id.radioButtonNo:
+                edtPatientName.setText("");
+                break;
+            case R.id.rlayout_back_button:
+                finish();
+                break;
+            case R.id.btnContinue:
+                if (edtPatientName.getText().length() == 0) {
+                    Toast.makeText(mContext, "add patient name", Toast.LENGTH_SHORT).show();
+                } else if (edtAdditionalComment.getText().length() == 0) {
+                    Toast.makeText(mContext, "Add comment", Toast.LENGTH_SHORT).show();
+                } else {
+                    String getPatientName = edtPatientName.getText().toString().trim();
+                    String getAdditionalComment = edtAdditionalComment.getText().toString().trim();
+                    //send all data to prescription activity
+                    try {
+                        startActivity(new Intent(mContext, PrescriptionUploadOptionActivity.class)
+                                .putExtra("getPatientName", getPatientName)
+                                .putExtra("getAdditionalComment", getAdditionalComment));
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case R.id.rlayout_cart:
+                startActivity(new Intent(this, CartActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                break;
+
+            case R.id.relMyPrescription:
+                callUploadPrescriptionAPI();
+                break;
+        }
+    }
 }

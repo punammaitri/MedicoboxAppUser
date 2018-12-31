@@ -176,7 +176,6 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="\u20B9 350"
                             android:textColor="@color/colorblack" />
                     </LinearLayout>
 
@@ -201,7 +200,6 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="-\u20B9 30"
                             android:textColor="@color/colorblack" />
 
 
@@ -255,7 +253,6 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="\u20B9 350.0"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
                     </LinearLayout>

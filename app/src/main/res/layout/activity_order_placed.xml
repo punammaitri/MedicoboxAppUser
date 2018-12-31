@@ -4,123 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.OrderPlacedActivity"
-    android:background="@color/color_gray_bg">
+    android:background="@color/color_gray_bg"
+    tools:context=".activity.OrderPlacedActivity">
 
 
-    <include layout="@layout/custom_toolbar"
-        android:id="@+id/layout_custom_toolbar"/>
+    <include
+        android:id="@+id/layout_custom_toolbar"
+        layout="@layout/custom_toolbar" />
 
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/height_10"
+        android:layout_marginRight="@dimen/height_10"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_thank_you"
+                android:layout_width="@dimen/height_50"
+                android:layout_height="@dimen/height_50"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/height_30"
+                android:background="@drawable/check"
+                android:scaleType="fitXY" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_thank_you"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_15"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="Thank You!"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_order_placed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_8"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="Order Placed Successfully"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/height_15"
+            android:layout_marginTop="@dimen/height_8"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="Your chosen Payment Mode: PayTM"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_order_placed"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/height_15"
+            android:layout_marginTop="@dimen/height_8"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="Paid: Rs.350"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/height_55"
+            android:layout_marginTop="@dimen/height_10"
+            android:layout_marginRight="@dimen/height_55"
+            android:background="@color/colorblack" />
+
+        <TextView
+            android:id="@+id/txtOrderId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/height_10"
+            android:layout_marginTop="@dimen/height_8"
             android:layout_marginRight="@dimen/height_10"
-            android:orientation="vertical"
-            android:layout_centerInParent="true">
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/img_thank_you"
-                    android:layout_width="@dimen/height_50"
-                    android:layout_height="@dimen/height_50"
-                    android:scaleType="fitXY"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/height_30"
-                    android:background="@drawable/check" />
-            </RelativeLayout>
+        <Button
+            android:id="@+id/btn_my_orders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/height_40"
+            android:layout_marginTop="@dimen/height_20"
+            android:layout_marginRight="@dimen/height_40"
+            android:layout_marginBottom="@dimen/height_20"
+            android:background="@drawable/custom_btn_bg"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Go to my orders"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/height_16"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_thank_you"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_15"
-                android:gravity="center"
-                android:text="Thank You!"
-                android:fontFamily="@font/open_sans_regular"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_order_placed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_8"
-                android:gravity="center"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="Order Placed Successfully"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/height_15"
-                android:fontFamily="@font/open_sans_regular"
-                android:layout_marginTop="@dimen/height_8"
-                android:gravity="center"
-                android:text="Your chosen Payment Mode: PayTM"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_order_placed"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/height_15"
-                android:fontFamily="@font/open_sans_regular"
-                android:layout_marginTop="@dimen/height_8"
-                android:gravity="center"
-                android:text="Paid: Rs.350"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/height_10"
-                android:background="@color/colorblack"
-                android:layout_marginRight="@dimen/height_55"
-                android:layout_marginLeft="@dimen/height_55"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_8"
-                android:gravity="center"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="Order ID: MB12838492829"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:layout_marginLeft="@dimen/height_10"
-                android:layout_marginRight="@dimen/height_10"/>
-
-            <Button
-                android:id="@+id/btn_my_orders"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/height_20"
-                android:fontFamily="@font/open_sans_regular"
-                android:layout_marginLeft="@dimen/height_40"
-                android:layout_marginRight="@dimen/height_40"
-                android:layout_marginTop="@dimen/height_20"
-                android:background="@drawable/custom_btn_bg"
-                android:text="Go to my orders"
-                android:textAllCaps="true"
-                android:textSize="@dimen/height_16"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

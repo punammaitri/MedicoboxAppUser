@@ -10,201 +10,199 @@
         android:id="@+id/rlayout_list_toolbar"
         layout="@layout/custom_toolbar" />
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rlayout_list_toolbar"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_6"
-            android:layout_marginTop="@dimen/height_6"
-            android:fontFamily="@font/open_sans_regular"
-            android:padding="@dimen/height_6"
-            android:text="Order Tracking"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
+        android:layout_below="@+id/rlayout_list_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/relFirstCircle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/txtHospitalfacilities"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/firstCircleView"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:gravity="center_horizontal"
-                    android:text="Processing"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/height_15"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/viewLine1"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/firstCircleView"
-                    android:background="@color/colorPrimary" />
-
-                <Button
-                    android:id="@+id/firstCircleView"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/border_for_track_order_button"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorwhite" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relSecondCircle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/txtEmployeeAttitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/SecondCircleView"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:gravity="center_horizontal"
-                    android:text="Dispatched"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/height_15"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/viewLine3"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/SecondCircleView"
-                    android:background="@color/colorPrimary" />
-
-                <View
-                    android:id="@+id/viewLine2"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/SecondCircleView"
-                    android:background="@color/colorPrimary" />
-
-                <Button
-                    android:id="@+id/SecondCircleView"
-                    android:layout_width="@dimen/height_25"
-                    android:layout_height="@dimen/height_25"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/height_5"
-                    android:background="@drawable/border_for_track_order_button"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorwhite" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relThirdCircle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/txtGenralCommunication"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/thirdCircleView"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:gravity="center_horizontal"
-                    android:text="In Transit"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/height_15"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/viewLine5"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/thirdCircleView"
-                    android:background="@color/colorlightGray" />
-
-                <View
-                    android:id="@+id/viewLine4"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/thirdCircleView"
-                    android:background="@color/colorPrimary" />
-
-                <Button
-                    android:id="@+id/thirdCircleView"
-                    android:layout_width="@dimen/height_25"
-                    android:layout_height="@dimen/height_25"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/height_5"
-                    android:background="@drawable/border_for_track_order_button"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorwhite" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relFourthCircle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/txtDistressManagement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/fourthCircleView"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:gravity="center_horizontal"
-                    android:text="Delivered"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/height_15"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/viewLine6"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/fourthCircleView"
-                    android:background="@color/colorlightGray" />
-
-                <Button
-                    android:id="@+id/fourthCircleView"
-                    android:layout_width="@dimen/height_25"
-                    android:layout_height="@dimen/height_25"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/height_5"
-                    android:background="@drawable/border_track_unselected_button"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorwhite" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/height_10">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/height_5"
+                android:layout_marginTop="@dimen/height_5"
+                android:fontFamily="@font/open_sans_regular"
+                android:padding="@dimen/height_6"
+                android:text="Order Tracking"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/relFirstCircle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtHospitalfacilities"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/firstCircleView"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:gravity="center_horizontal"
+                        android:text="Processing"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/height_15"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/viewLine1"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/firstCircleView"
+                        android:background="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/firstCircleView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/border_for_track_order_button"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorwhite" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relSecondCircle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtEmployeeAttitude"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/SecondCircleView"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:gravity="center_horizontal"
+                        android:text="Dispatched"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/height_15"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/viewLine3"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/SecondCircleView"
+                        android:background="@color/colorPrimary" />
+
+                    <View
+                        android:id="@+id/viewLine2"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/SecondCircleView"
+                        android:background="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/SecondCircleView"
+                        android:layout_width="@dimen/height_25"
+                        android:layout_height="@dimen/height_25"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:background="@drawable/border_for_track_order_button"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorwhite" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relThirdCircle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtGenralCommunication"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/thirdCircleView"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:gravity="center_horizontal"
+                        android:text="In Transit"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/height_15"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/viewLine5"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/thirdCircleView"
+                        android:background="@color/colorlightGray" />
+
+                    <View
+                        android:id="@+id/viewLine4"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/thirdCircleView"
+                        android:background="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/thirdCircleView"
+                        android:layout_width="@dimen/height_25"
+                        android:layout_height="@dimen/height_25"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:background="@drawable/border_for_track_order_button"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorwhite" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relFourthCircle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtDistressManagement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fourthCircleView"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:gravity="center_horizontal"
+                        android:text="Delivered"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/height_15"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/viewLine6"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/fourthCircleView"
+                        android:background="@color/colorlightGray" />
+
+                    <Button
+                        android:id="@+id/fourthCircleView"
+                        android:layout_width="@dimen/height_25"
+                        android:layout_height="@dimen/height_25"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/height_5"
+                        android:background="@drawable/border_track_unselected_button"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/colorwhite" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/height_5"
@@ -214,7 +212,7 @@
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="260dp"
                     tools:context=".activity.OrderTrackingActivity" />
 
 
@@ -223,12 +221,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/height_4"
-                    android:layout_marginTop="@dimen/height_8"
+                    android:layout_marginTop="250dp"
                     android:layout_marginRight="@dimen/height_4"
                     android:layout_marginBottom="@dimen/height_4"
                     app:cardCornerRadius="@dimen/height_8"
-                    app:cardElevation="@dimen/height_10">
-
+                    app:cardElevation="@dimen/height_8">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -248,22 +245,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="Order ID:"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
 
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/height_10"
-                                android:layout_toRightOf="@+id/txtOrderId"
-                                android:fontFamily="@font/open_sans_regular"
-                                android:text="MB1828394839281"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/colorblack"
-                                android:textStyle="bold" />
 
                         </RelativeLayout>
 
@@ -285,21 +270,22 @@
 
 
                             <TextView
+                                android:id="@+id/txtDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/height_10"
                                 android:layout_toRightOf="@+id/txtOrderDate"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="28/9/2018"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/txtOrderAmount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="@string/rs_symbol_thirty"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
@@ -340,6 +326,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/delivery_username"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/height_10"
@@ -347,12 +334,12 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:paddingLeft="@dimen/height_10"
                             android:paddingTop="@dimen/height_5"
-                            android:text="Shreya Saran"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/del_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/height_10"
@@ -360,7 +347,6 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:paddingLeft="@dimen/height_10"
                             android:paddingTop="@dimen/height_5"
-                            android:text="@string/address"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <View
@@ -410,7 +396,8 @@
                     android:textSize="@dimen/height_16"
                     android:textStyle="bold"
                     android:visibility="invisible" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

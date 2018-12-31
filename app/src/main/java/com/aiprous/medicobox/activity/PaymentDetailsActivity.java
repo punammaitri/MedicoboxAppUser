@@ -160,7 +160,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         }
     }
 
-   /* private void CallOrderPlaceAPI() {
+    private void CallOrderPlaceAPI() {
 
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
@@ -176,7 +176,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        //CallSendSmsApi
         AndroidNetworking.post(ADD_TO_CART_ORDER_PLACE)
                 .addJSONObjectBody(jsonObject) // posting json
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
@@ -192,8 +192,12 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             String status = responseArray.get("status").getAsString();
 
                             if (status.equals("success")) {
-                                startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
-                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                String orderId = responseArray.get("order_id").getAsString();
+                                //send sms to user
+                                CallSendSmsApi(orderId);
+
+                                /*startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
                             } else {
                                 String msg = responseArray.get("msg").getAsString();
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
@@ -216,7 +220,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
-*/
 
     @OnClick({R.id.searchview_medicine, R.id.tv_place_order, R.id.rlayout_back_button, R.id.rlayout_cart})
     public void onViewClicked(View view) {
@@ -241,16 +244,17 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 break;
         }
     }
+
     public String convertBitmapToString(Bitmap bitmap) {
-        Bitmap immagex=bitmap;
+        Bitmap immagex = bitmap;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         immagex.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
         return imageEncoded;
     }
 
-    private void CallOrderPlaceAPI() {
+  /*  private void CallOrderPlaceAPI() {
 
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
@@ -306,10 +310,10 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
-    }
+    }*/
 
 
-    private void CallSendSmsApi(String orderId) {
+    private void CallSendSmsApi(final String orderId) {
 
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
@@ -317,7 +321,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("mobile_number", MedicoboxApp.onGetMobileNo());
-            jsonObject.put("message", "Your order placed successfully"+"Your order number is "+orderId);
+            jsonObject.put("message", "Your order placed successfully" + "Your order number is " + orderId);
 
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {
@@ -326,7 +330,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
         AndroidNetworking.post(SEND_SMS)
                 .addJSONObjectBody(jsonObject) // posting json
-               // .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                // .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -339,7 +343,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             String status = responseArray.get("status").getAsString();
 
                             if (status.equals("success")) {
-                                startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
+                                startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class)
+                                        .putExtra("order_id", "" + orderId));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
                                 CustomProgressDialog.getInstance().dismissDialog();
@@ -365,9 +370,4 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
-
-
-
 }
