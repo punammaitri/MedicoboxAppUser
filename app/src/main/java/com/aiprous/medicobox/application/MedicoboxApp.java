@@ -12,7 +12,7 @@ import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
-@ReportsCrashes(mailTo = "punam.maitri1@gmail.com,malwandejitesh@gmail.com",
+@ReportsCrashes(mailTo = "malwandejitesh@gmail.com",
         customReportContent = {ReportField.APP_VERSION_CODE, ReportField.APP_VERSION_NAME, ReportField.ANDROID_VERSION, ReportField.PHONE_MODEL, ReportField.CUSTOM_DATA, ReportField.STACK_TRACE, ReportField.LOGCAT},
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_toast_text)
@@ -25,7 +25,7 @@ public class MedicoboxApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ACRA.init(this);
+        //ACRA.init(this);
         mContext = getApplicationContext();
         mSharedPreferences = mContext.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
     }

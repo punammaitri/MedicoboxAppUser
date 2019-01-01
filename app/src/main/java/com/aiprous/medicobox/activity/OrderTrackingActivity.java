@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,7 +93,7 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
     //private String mDropAddress = "Khamgaon";
     private LatLng mDropLatLng;
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.rc_medicine_list)
     RecyclerView rc_medicine_list;
     @BindView(R.id.rlayout_cart)

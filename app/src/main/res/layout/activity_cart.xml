@@ -11,24 +11,50 @@
         android:id="@+id/layout_custom_toolbar"
         layout="@layout/custom_toolbar" />
 
-    <TextView
-        android:id="@+id/tv_cart_empty"
+    <RelativeLayout
+        android:id="@+id/relMainView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_custom_toolbar"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/open_sans_regular"
-        android:gravity="center"
-        android:text="No Items Available"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/colorblack"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@+id/layout_custom_toolbar">
+
+        <TextView
+            android:id="@+id/tv_cart_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="No Items Available"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorblack" />
+
+        <Button
+            android:id="@+id/btnContinueShopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_cart_empty"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/height_10"
+            android:background="@drawable/custom_btn_bg"
+            android:fontFamily="@font/open_sans_regular"
+            android:paddingLeft="@dimen/height_50"
+            android:paddingRight="@dimen/height_50"
+            android:text="Continue Shopping"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/height_16"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedscroll_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_custom_toolbar">
+        android:layout_below="@+id/layout_custom_toolbar"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,7 +113,6 @@
             </android.support.v7.widget.CardView>
 
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/height_4"
@@ -99,6 +124,7 @@
                 android:textStyle="bold" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_5"
@@ -288,7 +314,6 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
-
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -321,7 +346,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/height_16"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

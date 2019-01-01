@@ -73,7 +73,6 @@ public class APIConstant {
     //Substitutes product for any specific tablet
     public static String RELATED_PRODUCT = "http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
 
-
     //coupon
     public static String APPLY_COUPON="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/coupons/";
 

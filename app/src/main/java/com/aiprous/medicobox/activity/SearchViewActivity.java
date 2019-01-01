@@ -1,5 +1,4 @@
 package com.aiprous.medicobox.activity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,15 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.SearchView;
 import android.widget.Toast;
-
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.SearchViewAdapter;
-import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
-import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -23,17 +18,13 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
 
 public class SearchViewActivity extends AppCompatActivity {

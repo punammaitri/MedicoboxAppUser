@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ import butterknife.OnClick;
 public class SubCategoryActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.rc_subcategory)
     RecyclerView rc_subcategory;
     @BindView(R.id.tv_main_category_name)

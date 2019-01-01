@@ -68,7 +68,7 @@ import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_DELE
 public class PrescriptionUploadOptionActivity extends AppCompatActivity implements SearchProductViewAdapter.DeleteCartItemInterface {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+  AutoCompleteTextView searchview_medicine;
     @BindView(R.id.edt_duration_of_dose)
     EditText edt_duration_of_dose;
     @BindView(R.id.txtCartItems)

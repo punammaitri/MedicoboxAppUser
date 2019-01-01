@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +28,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.medicobox.BuildConfig;
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.CartAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
@@ -81,13 +84,15 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 public class CartActivity extends AppCompatActivity implements CartAdapter.ShowPrescriptionInterface {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.rc_cart)
     RecyclerView rc_cart;
     @BindView(R.id.tv_shipping_note)
     TextView tv_shipping_note;
     @BindView(R.id.btn_upload_prescription)
     Button btnUploadPrescription;
+    @BindView(R.id.btnContinueShopping)
+    Button btnContinueShopping;
     @BindView(R.id.txtUploadPrescription)
     TextView txtUploadPrescription;
     @BindView(R.id.edt_coupon_code)
@@ -97,9 +102,10 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
 
     public static TextView tv_mrp_total, tv_price_discount, tv_to_be_paid, tv_total_saving;
     public static TextView tv_cart_size, tv_cart_empty;
-    public static RelativeLayout rlayout_cart;
+    public static RelativeLayout rlayout_cart, relMainView;
     public static NestedScrollView nestedscroll_cart;
     ArrayList<CartModel.Response> cartModelArrayList = new ArrayList<>();
+
     private RecyclerView.LayoutManager layoutManager;
     private Context mContext = this;
 
@@ -142,6 +148,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         tv_cart_empty = (TextView) findViewById(R.id.tv_cart_empty);
         nestedscroll_cart = (NestedScrollView) findViewById(R.id.nestedscroll_cart);
         rlayout_cart = (RelativeLayout) findViewById(R.id.rlayout_cart);
+        relMainView = (RelativeLayout) findViewById(R.id.relMainView);
         tv_cart_size = (TextView) findViewById(R.id.tv_cart_size);
 
         searchview_medicine.setFocusable(false);
@@ -176,7 +183,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         }
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            tv_cart_empty.setVisibility(View.VISIBLE);
+            relMainView.setVisibility(View.VISIBLE);
             nestedscroll_cart.setVisibility(View.GONE);
             rlayout_cart.setVisibility(View.GONE);
         }
@@ -278,7 +285,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             //visible cart layout
                             if (!cartModelArrayList.isEmpty()) {
                                 tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
-                                tv_cart_empty.setVisibility(View.GONE);
+                                relMainView.setVisibility(View.GONE);
                                 nestedscroll_cart.setVisibility(View.VISIBLE);
                                 rlayout_cart.setVisibility(View.VISIBLE);
                             }
@@ -348,7 +355,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
 
     private void selectImage() {
         final CharSequence[] options = {getString(R.string.take_photo), getString(R.string.from_gallary), getString(R.string.cancel)};
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(getString(R.string.add_photo));
         builder.setCancelable(false);
         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -631,9 +638,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             int base_discount_amount = getAllResponse.get("base_discount_amount").getAsInt();
                             int mTobePaid = mrpTotal - base_discount_amount;
 
-                            tv_mrp_total.setText("\u20B9"+mrpTotal);
-                            tv_price_discount.setText("-\u20B9"+base_discount_amount);
-                            tv_to_be_paid.setText("\u20B9"+mTobePaid);
+                            tv_mrp_total.setText("\u20B9" + mrpTotal);
+                            tv_price_discount.setText("-\u20B9" + base_discount_amount);
+                            tv_to_be_paid.setText("\u20B9" + mTobePaid);
 
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
@@ -651,5 +658,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
+    }
+
+    @OnClick(R.id.btnContinueShopping)
+    public void ContinueShopping() {
+        Intent intent = new Intent(CartActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        startActivity(intent);
+        finish();
     }
 }

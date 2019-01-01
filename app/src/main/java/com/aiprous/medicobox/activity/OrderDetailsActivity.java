@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,7 +45,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 public class OrderDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.rc_product)
     RecyclerView rc_product;
     @BindView(R.id.tv_mrp_total)

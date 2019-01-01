@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class InstaProductDetailActivity extends AppCompatActivity {
 
     // @BindView(R.id.rc_medicine_list)
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.searchview_sub_medicine)
     SearchView searchview_sub_medicine;
     @BindView(R.id.rlayout_cart)

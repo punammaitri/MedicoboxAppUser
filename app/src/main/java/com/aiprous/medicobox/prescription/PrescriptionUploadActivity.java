@@ -27,6 +27,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -80,7 +81,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 public class PrescriptionUploadActivity extends AppCompatActivity implements PrescriptionUploadAdapter.DeleteImageInterface {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
@@ -640,11 +641,9 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
             case R.id.btnContinue:
                 if (edtPatientName.getText().length() == 0) {
                     Toast.makeText(mContext, "add patient name", Toast.LENGTH_SHORT).show();
-                } else if (edtAdditionalComment.getText().length() == 0) {
-                    Toast.makeText(mContext, "Add comment", Toast.LENGTH_SHORT).show();
                 } else {
                     String getPatientName = edtPatientName.getText().toString().trim();
-                    String getAdditionalComment = edtAdditionalComment.getText().toString().trim();
+                    String getAdditionalComment = edtAdditionalComment.getText().toString();
                     //send all data to prescription activity
                     try {
                         startActivity(new Intent(mContext, PrescriptionUploadOptionActivity.class)

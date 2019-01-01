@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +55,7 @@ import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 public class InstaAddNewListActivity extends AppCompatActivity implements InstaAddNewListAdapter.InstaAddNewListInterface {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     public RecyclerView rc_medicine_list;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
@@ -81,7 +82,6 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
     private void init() {
 
         searchview_medicine.setFocusable(false);
-        searchview_medicine.setQueryHint("Search Lists");
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);

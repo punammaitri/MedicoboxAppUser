@@ -10,10 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +41,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,10 +61,10 @@ import static com.aiprous.medicobox.utils.APIConstant.SINGLEPRODUCT;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
-public class ProductDetailBActivity extends AppCompatActivity {
+public class ProductDetailBActivity extends AppCompatActivity implements SubstitutesProductAdapter.LoadProductInterface {
 
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.SliderDots)
@@ -102,6 +101,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     TextView tv_Substitute_product_name;
     @BindView(R.id.tv_empty_msg)
     TextView tv_empty_msg;
+    @BindView(R.id.linearlayoutMain)
+    LinearLayout linearlayoutMain;
 
     private Context mcontext = this;
     private int dotscount;
@@ -143,8 +144,9 @@ public class ProductDetailBActivity extends AppCompatActivity {
     private String mMore_info;
     private float mCalculatePrice;
     private int mDiscountAmount;
-    ArrayList<RelatedProductModel.Data> mRelatedProductArrayList=new ArrayList<>();
+    ArrayList<RelatedProductModel.Data> mRelatedProductArrayList = new ArrayList<>();
     private static DecimalFormat df2 = new DecimalFormat(".##");
+    private String mQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,8 +204,6 @@ public class ProductDetailBActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     @Override
@@ -219,11 +219,12 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
         if (getIntent().getStringExtra("productId") != null) {
             mProductId = getIntent().getStringExtra("productId");
+            mQuantity = getIntent().getStringExtra("Qty");
             getSingleproducts(mProductId);
 
             //call API to get related product
             getRelatedProduct(mProductId);
-
+            Log.e("productId", "" + mProductId);
 
             //mVisibiltyFlag = getIntent().getStringExtra("VisibiltyFlag");
             //mSku = getIntent().getStringExtra("SKU");
@@ -335,19 +336,18 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                     if (!mMrp.isEmpty() && !sale_price.isEmpty()) {
                                         mDiscountAmount = Integer.parseInt(mMrp) - Integer.parseInt(sale_price);
                                         mdiscount = String.valueOf(((mDiscountAmount / Integer.parseInt(mMrp)) * 100));
-                                    }else {
+                                    } else {
                                         mdiscount = "";
                                     }
 
-                                    tv_value.setText("" + mQty);
-                                    tv_Substitute_product_name.setText("Substitutes for "+mMedicineName);
+                                    tv_Substitute_product_name.setText("Substitutes for " + mMedicineName);
                                     tv_medicine_name.setText(mMedicineName);
                                     tv_medicine_contains.setText(mValue);
 
                                     //remove digit after dot
                                     double input = Double.parseDouble(mMrp);
                                     tv_mrp_price.setText(df2.format(input));
-                                    tv_item_description.setText(mValue);
+                                    // tv_item_description.setText(mValue);
 
                                     if (mPrescription.equals("0")) {
                                         llayout_prescription.setVisibility(View.GONE);
@@ -358,13 +358,14 @@ public class ProductDetailBActivity extends AppCompatActivity {
                                     //add underline to text
                                     tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-                                    if (qty.isEmpty()) {
+                                    if (mQuantity.equals("0")) {
                                         rlayout_plus_minus.setVisibility(View.GONE);
                                         btn_add_to_cart.setClickable(true);
                                         // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
                                         //Unable the cart button
                                         btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg);
                                     } else {
+                                        tv_value.setText("" + mQuantity);
                                         rlayout_plus_minus.setVisibility(View.VISIBLE);
                                         btn_add_to_cart.setClickable(false);
                                         // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
@@ -410,6 +411,7 @@ public class ProductDetailBActivity extends AppCompatActivity {
 
                                     JsonObject more_information = data.get("more_information").getAsJsonObject();
                                     mMore_info = more_information.get("more_info").getAsString();
+
                                 }
                             } catch (JsonSyntaxException e) {
                                 e.printStackTrace();
@@ -732,9 +734,8 @@ public class ProductDetailBActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 
     private void getRelatedProduct(String productId) {
@@ -751,41 +752,40 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             // do anything with response
                             //  Toast.makeText(mcontext, response.toString(), Toast.LENGTH_SHORT).show();
+                            mRelatedProductArrayList.clear();
 
                             try {
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 if (response.has("message")) {
-                                   // String message=getAllResponse.get("message").toString();
+                                    // String message=getAllResponse.get("message").toString();
                                     //Toast.makeText(mcontext, message, Toast.LENGTH_SHORT).show();
-                                }else {
+                                } else {
 
-                                    JsonArray lDatArray=getAllResponse.getAsJsonArray("data");
-                                    for(int i=0;i<lDatArray.size();i++)
-                                    {
-                                        JsonObject jsonData=lDatArray.get(i).getAsJsonObject();
-                                        String lname=jsonData.get("name").getAsString();
-                                        int lprice=jsonData.get("price").getAsInt();
-                                        String lCompanyName=jsonData.get("company_name").getAsString();
+                                    JsonArray lDatArray = getAllResponse.getAsJsonArray("data");
 
-                                        RelatedProductModel.Data lRelatedProductModel=new RelatedProductModel.Data(lname,lprice,lCompanyName);
+                                    for (int i = 0; i < lDatArray.size(); i++) {
+                                        JsonObject jsonData = lDatArray.get(i).getAsJsonObject();
+                                        String id = jsonData.get("id").getAsString();
+                                        String lname = jsonData.get("name").getAsString();
+                                        int lprice = jsonData.get("price").getAsInt();
+                                        String lCompanyName = jsonData.get("company_name").getAsString();
+
+                                        RelatedProductModel.Data lRelatedProductModel = new RelatedProductModel.Data(id, lname, lprice, lCompanyName);
+                                        lRelatedProductModel.setId(id);
                                         lRelatedProductModel.setName(lname);
                                         lRelatedProductModel.setPrice(lprice);
                                         lRelatedProductModel.setCompanyName(lCompanyName);
-
                                         mRelatedProductArrayList.add(lRelatedProductModel);
-
                                     }
                                 }
-                                if(!mRelatedProductArrayList.isEmpty())
-                                {
+                                if (!mRelatedProductArrayList.isEmpty()) {
                                     //set adapter
                                     tv_empty_msg.setVisibility(View.GONE);
                                     rv_substitute_product.setVisibility(View.VISIBLE);
                                     rv_substitute_product.setLayoutManager(new LinearLayoutManager(mcontext, LinearLayoutManager.VERTICAL, false));
                                     rv_substitute_product.setHasFixedSize(true);
-                                    rv_substitute_product.setAdapter(new SubstitutesProductAdapter(mcontext, mRelatedProductArrayList));
-
-                                }else {
+                                    rv_substitute_product.setAdapter(new SubstitutesProductAdapter(ProductDetailBActivity.this, mRelatedProductArrayList));
+                                } else {
                                     rv_substitute_product.setVisibility(View.GONE);
                                     tv_empty_msg.setVisibility(View.VISIBLE);
                                 }
@@ -808,5 +808,13 @@ public class ProductDetailBActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    @Override
+    public void LoadProduct(String product_id) {
+        //call API to get  product
+        getSingleproducts(product_id);
+        //call API to get related product
+        getRelatedProduct(product_id);
     }
 }

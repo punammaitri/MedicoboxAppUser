@@ -6,7 +6,7 @@
 
 
     <LinearLayout
-        android:id="@+id/layout_medicine"
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -56,7 +56,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/height_10"
         android:background="@color/colorlightlightGray"
-        android:layout_below="@+id/layout_medicine"
+        android:layout_below="@+id/layout_main"
         />
 
 

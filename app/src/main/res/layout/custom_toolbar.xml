@@ -6,92 +6,115 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/coloryellow">
 
-<RelativeLayout
-    android:id="@+id/rlayout_back_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerVertical="true">
+    <RelativeLayout
+        android:id="@+id/rlayout_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
 
-    <ImageView
-        android:layout_width="@dimen/height_35"
-        android:layout_height="@dimen/height_35"
-        android:src="@drawable/backarrow"
-        android:padding="@dimen/height_2"
-        android:layout_marginLeft="@dimen/height_15" />
-</RelativeLayout>
+        <ImageView
+            android:layout_width="@dimen/height_35"
+            android:layout_height="@dimen/height_35"
+            android:layout_marginLeft="@dimen/height_15"
+            android:padding="@dimen/height_2"
+            android:src="@drawable/backarrow" />
+    </RelativeLayout>
 
 
-<RelativeLayout
-    android:id="@+id/rlayout_plus"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    android:layout_toRightOf="@+id/rlayout_back_button">
+    <RelativeLayout
+        android:id="@+id/rlayout_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/rlayout_back_button">
 
-    <ImageView
-        android:layout_width="@dimen/height_30"
-        android:layout_height="@dimen/height_30"
-        android:src="@drawable/plus"
-        android:layout_marginLeft="@dimen/height_10" />
-</RelativeLayout>
+        <ImageView
+            android:layout_width="@dimen/height_30"
+            android:layout_height="@dimen/height_30"
+            android:layout_marginLeft="@dimen/height_10"
+            android:src="@drawable/plus" />
+    </RelativeLayout>
 
-<!--
-<android.support.v7.widget.SearchView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/rlayout_plus"
-    android:background="@drawable/custom_btn_bg_white"
-    android:layout_toLeftOf="@+id/rlayout_cart"
-    android:layout_marginLeft="@dimen/height_10"
-    app:queryHint="Search Medicine"
-    android:layout_centerInParent="true"
-    >
-
-</android.support.v7.widget.SearchView>-->
+    <!--
     <android.support.v7.widget.SearchView
-        android:id="@+id/searchview_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/rlayout_plus"
+        android:background="@drawable/custom_btn_bg_white"
+        android:layout_toLeftOf="@+id/rlayout_cart"
+        android:layout_marginLeft="@dimen/height_10"
+        app:queryHint="Search Medicine"
+        android:layout_centerInParent="true"
+        >
+
+    </android.support.v7.widget.SearchView>-->
+    <android.support.v7.widget.SearchView
+
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_35"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/height_10"
+        android:layout_marginRight="@dimen/height_10"
         android:layout_toLeftOf="@+id/rlayout_cart"
         android:layout_toRightOf="@+id/rlayout_plus"
         android:background="@drawable/custom_btn_bg_white"
+        android:clickable="true"
+        android:focusable="false"
+        android:queryBackground="@android:color/transparent"
+        android:visibility="gone"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@android:color/transparent"
+        app:queryHint="Search Medicines" />
+
+    <AutoCompleteTextView
+        android:id="@+id/searchview_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_35"
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/height_10"
-        android:clickable="true"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Medicines"
-        android:queryBackground="@android:color/transparent"
-        app:queryBackground="@android:color/transparent"
-        android:layout_marginRight="@dimen/height_10" />
+        android:layout_marginRight="@dimen/height_10"
+        android:layout_toLeftOf="@+id/rlayout_cart"
+        android:layout_toRightOf="@+id/rlayout_plus"
+        android:background="@drawable/custom_btn_bg_white"
+        android:ellipsize="end"
+        android:hint="Search Medicines"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/height_15"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/colorlightGray" />
 
-<RelativeLayout
-    android:id="@+id/rlayout_cart"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/height_15"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true">
 
-    <TextView
-        android:id="@+id/tv_cart_size"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="@dimen/height_27"
-        android:layout_marginTop="@dimen/height_4"
-        android:fontFamily="@font/open_sans_regular"
-        android:background="@drawable/border_circle"
-        android:gravity="center"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorwhite" />
+    <RelativeLayout
+        android:id="@+id/rlayout_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/height_15">
 
-    <TextView
-        android:id="@+id/txtCart"
-        android:layout_width="22dp"
-        android:layout_height="25dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/cart"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/tv_cart_size"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/height_27"
+            android:layout_marginTop="@dimen/height_4"
+            android:background="@drawable/border_circle"
+            android:fontFamily="@font/open_sans_regular"
+            android:gravity="center"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorwhite" />
 
-   </RelativeLayout>
+        <TextView
+            android:id="@+id/txtCart"
+            android:layout_width="22dp"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/cart"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </RelativeLayout>
 </RelativeLayout>

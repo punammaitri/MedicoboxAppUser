@@ -38,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.aiprous.medicobox.activity.CartActivity.nestedscroll_cart;
+import static com.aiprous.medicobox.activity.CartActivity.relMainView;
 import static com.aiprous.medicobox.activity.CartActivity.tv_cart_empty;
 import static com.aiprous.medicobox.activity.CartActivity.tv_cart_size;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
@@ -252,12 +253,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                             if (!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                                 //this is for make cart icon visible
                                 CartActivity.rlayout_cart.setVisibility(View.VISIBLE);
-                                tv_cart_empty.setVisibility(View.GONE);
+                                relMainView.setVisibility(View.GONE);
                                 nestedscroll_cart.setVisibility(View.VISIBLE);
                                 break;
                             }
                         }
-
                     }
                 }
 
@@ -272,7 +272,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                     CartActivity.rlayout_cart.setVisibility(View.GONE);
-                    tv_cart_empty.setVisibility(View.VISIBLE);
+                    relMainView.setVisibility(View.VISIBLE);
                     nestedscroll_cart.setVisibility(View.GONE);
                 }
 
@@ -325,12 +325,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         if (!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                             //this is for make cart icon visible
                             CartActivity.rlayout_cart.setVisibility(View.VISIBLE);
-                            tv_cart_empty.setVisibility(View.GONE);
+                            relMainView.setVisibility(View.GONE);
                             nestedscroll_cart.setVisibility(View.VISIBLE);
                         } else {
 
                             CartActivity.rlayout_cart.setVisibility(View.GONE);
-                            tv_cart_empty.setVisibility(View.VISIBLE);
+                            relMainView.setVisibility(View.VISIBLE);
                             nestedscroll_cart.setVisibility(View.GONE);
                         }
                     }

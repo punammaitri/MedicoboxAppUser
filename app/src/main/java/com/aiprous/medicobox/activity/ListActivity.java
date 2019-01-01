@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
 
     // @BindView(R.id.rc_medicine_list)
     @BindView(R.id.searchview_medicine)
-    SearchView searchview_medicine;
+    AutoCompleteTextView searchview_medicine;
     @BindView(R.id.tv_sub_category_name)
     TextView tv_sub_category_name;
     RecyclerView rc_medicine_list;
@@ -91,8 +92,8 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
         rc_medicine_list = (RecyclerView) findViewById(R.id.rc_medicine_list);
 
 
-        try {
-            searchview_medicine.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+     /*   try {
+            searchview_medicine.addTextChangedListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     searchview_medicine.clearFocus();
@@ -127,7 +128,7 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
 
         } catch (NullPointerException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -255,7 +256,6 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.Dismi
                     }
                 });
     }
-
 
     private void AttemptGetCartId() {
         AndroidNetworking.post(GETCARTID)
