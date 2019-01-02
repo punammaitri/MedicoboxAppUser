@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.MyOrdersAdapter;
 import com.aiprous.medicobox.adapter.SearchViewAdapter;
@@ -208,6 +209,21 @@ public class MyOrdersActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressDetail() {
+
+        Intent intent = new Intent(MyOrdersActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(MyOrdersActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        startActivity(intent);
         finish();
     }
 

@@ -52,6 +52,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Vi
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ProductDetailBActivity.class);
                 intent.putExtra("productId", mSearchResultArrayList.get(position).getId());
+                intent.putExtra("Qty", "0");
                 mContext.startActivity(intent);
 
                 /*intent.putExtra("VisibiltyFlag", "");

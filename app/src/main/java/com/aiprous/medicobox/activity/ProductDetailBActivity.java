@@ -147,6 +147,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
     ArrayList<RelatedProductModel.Data> mRelatedProductArrayList = new ArrayList<>();
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private String mQuantity;
+    private Integer mMrpAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -334,8 +335,11 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     }
 
                                     if (!mMrp.isEmpty() && !sale_price.isEmpty()) {
-                                        mDiscountAmount = Integer.parseInt(mMrp) - Integer.parseInt(sale_price);
-                                        mdiscount = String.valueOf(((mDiscountAmount / Integer.parseInt(mMrp)) * 100));
+                                        Double mDiscount = Double.parseDouble(mMrp) - Double.parseDouble(sale_price);
+                                        mDiscountAmount = Integer.valueOf(mDiscount.intValue());
+                                        Double mMrpDescAmount =Double.parseDouble(mMrp);
+                                        mMrpAmount = Integer.valueOf(mMrpDescAmount.intValue());
+                                        mdiscount = String.valueOf(((mDiscountAmount / mMrpAmount) * 100));
                                     } else {
                                         mdiscount = "";
                                     }
@@ -358,7 +362,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     //add underline to text
                                     tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-                                    if (mQuantity  == null) {
+                                    if (mQuantity.equals("0")) {
                                         rlayout_plus_minus.setVisibility(View.GONE);
                                         btn_add_to_cart.setClickable(true);
                                         // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
@@ -577,7 +581,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                             btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
 
                             rlayout_plus_minus.setVisibility(View.VISIBLE);
-                            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+
                             rlayout_cart.setVisibility(View.VISIBLE);
                             try {
                                 mItemId = response.getString("item_id");
@@ -589,6 +593,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                             Toast.makeText(mcontext, "Product added to cart", Toast.LENGTH_SHORT).show();
                             //save item id into itemid variable
                             addItemsSingleton();
+                            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
                             CustomProgressDialog.getInstance().dismissDialog();
 
                         }

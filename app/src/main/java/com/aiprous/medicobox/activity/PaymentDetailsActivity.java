@@ -344,6 +344,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             String status = responseArray.get("status").getAsString();
 
                             if (status.equals("success")) {
+                                Toast.makeText(mContext, "Your order placed successfully", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class)
                                         .putExtra("order_id", "" + orderId));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);

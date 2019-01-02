@@ -383,13 +383,13 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (!order_summary.isEmpty()) {
             finish();
+        }else if (billingFlag.equals("true")){
+            finish();
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
         } else if(!billingFlag.equals("") || !shippingFlag.equals("")){
             startActivity(new Intent(mContext, MyAccountActivity.class));
-            finish();
-        }else if (billingFlag.equals("true")){
             finish();
         }else {
             finish();
@@ -402,13 +402,13 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (!order_summary.isEmpty()) {
             finish();
+        }else if (billingFlag.equals("true")){
+            finish();
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
         } else if(!billingFlag.equals("") || !shippingFlag.equals("")){
             startActivity(new Intent(mContext, MyAccountActivity.class));
-            finish();
-        }else if (billingFlag.equals("true")){
             finish();
         }else {
             finish();

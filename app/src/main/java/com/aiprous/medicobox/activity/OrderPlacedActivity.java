@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aiprous.medicobox.MainActivity;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -71,10 +72,29 @@ public class OrderPlacedActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.rlayout_back_button)
+    public void Back() {
+        startActivity(new Intent(this, MyOrdersActivity.class));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(OrderPlacedActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        startActivity(intent);
+        finish();
+
+    }
+
     @OnClick(R.id.btn_my_orders)
     public void myOrders() {
         startActivity(new Intent(this, MyOrdersActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        finish();
     }
 
 
