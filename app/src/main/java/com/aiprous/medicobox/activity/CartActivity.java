@@ -421,7 +421,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             mBitmap = decodeFile(outPutFile);
                             imageBinaryString = convertBitmapToString(mBitmap);
                             txtUploadPrescription.setVisibility(View.VISIBLE);
-                            txtUploadPrescription.setText(outPutFile.getAbsolutePath());
+                            txtUploadPrescription.setText(outPutFile.getName());
+                            multipleImageUrl = getImageUri(getApplicationContext(), mBitmap);
+
                         } else {
                             txtUploadPrescription.setVisibility(View.GONE);
                             Toast.makeText(mContext, "error while save file", Toast.LENGTH_SHORT).show();
@@ -434,6 +436,13 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     private Bitmap decodeFile(File f) {
@@ -485,7 +494,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             }
 
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+            bitmap = BitmapFactory.decodeFile(f.getName(), bitmapOptions);
         } catch (Exception e) {
             e.printStackTrace();
         }

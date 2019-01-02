@@ -138,6 +138,7 @@
                                 android:fontFamily="@font/open_sans_regular"
                                 android:hint="Medicine(s) name, quantity/duration"
                                 android:imeOptions="actionSearch"
+                                android:textColor="@color/colorPrimary"
                                 android:dropDownVerticalOffset="10dp"
                                 android:inputType="textAutoComplete|textAutoCorrect"
                                 android:textAppearance="?android:attr/textAppearanceSmall" />

@@ -64,7 +64,6 @@
                         android:layout_marginLeft="@dimen/height_15"
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_6"
-                        android:text="Shreya Saran"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
@@ -76,7 +75,6 @@
                         android:layout_marginLeft="@dimen/height_15"
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_4"
-                        android:text="@string/address"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
@@ -88,27 +86,8 @@
                         android:layout_marginLeft="@dimen/height_15"
                         android:fontFamily="@font/open_sans_regular"
                         android:layout_marginTop="@dimen/height_5"
-                        android:text="+91 8833748362"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorPrimary" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:layout_marginLeft="@dimen/height_15"
-                        android:text="Special Instructions"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.35dp"
-                        android:layout_marginLeft="@dimen/height_15"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="@dimen/height_15"
-                        android:layout_marginTop="@dimen/height_12"
-                        android:background="@color/colorGray"/>
 
 
                 </LinearLayout>

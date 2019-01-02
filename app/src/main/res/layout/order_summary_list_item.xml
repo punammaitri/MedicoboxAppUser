@@ -10,7 +10,5 @@
         android:id="@+id/imgOption"
         android:layout_width="@dimen/height_100"
         android:layout_height="@dimen/height_100"
-        android:layout_gravity="center"
-        android:background="@drawable/capsules_home" />
-
+        android:layout_gravity="center" />
 </LinearLayout>

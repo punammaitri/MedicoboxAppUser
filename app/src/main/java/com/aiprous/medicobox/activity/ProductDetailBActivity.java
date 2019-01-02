@@ -358,7 +358,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     //add underline to text
                                     tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-                                    if (mQuantity.equals("0")) {
+                                    if (mQuantity  == null) {
                                         rlayout_plus_minus.setVisibility(View.GONE);
                                         btn_add_to_cart.setClickable(true);
                                         // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));

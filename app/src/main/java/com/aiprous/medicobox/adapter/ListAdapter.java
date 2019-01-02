@@ -700,6 +700,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 try {
                     if (!getWishListId.isEmpty()) {
                         CallAddProductToWishListAPI(itemId, getWishListId, dialog);
+                    }else {
+                        Toast.makeText(mContext, "Please add item to wishlist", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

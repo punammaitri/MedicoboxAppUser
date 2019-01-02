@@ -65,10 +65,11 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
 
         holder.txtAddress.setText(fullAddress);
 
-        getFullname = mDataArrayList.get(position).getFirstname() + " " + mDataArrayList.get(position).getLastname();
+
         holder.rb_checked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                getFullname = mDataArrayList.get(position).getFirstname() + " " + mDataArrayList.get(position).getLastname();
                 mDeleteWishList.RadioButtonCheck(isChecked, mDataArrayList.get(position).getId(), fullAddress, getFullname, mDataArrayList.get(position).getTelephone());
             }
         });

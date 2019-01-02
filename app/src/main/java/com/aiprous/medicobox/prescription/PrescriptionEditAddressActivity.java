@@ -89,7 +89,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     ArrayList<String> mStreetArray = new ArrayList<String>();
     private String flat;
     private String landmark;
-    private String order_summary;
+    private String order_summary="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -386,7 +386,12 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
-        } else {
+        } else if(!billingFlag.equals("") || !shippingFlag.equals("")){
+            startActivity(new Intent(mContext, MyAccountActivity.class));
+            finish();
+        }else if (billingFlag.equals("true")){
+            finish();
+        }else {
             finish();
         }
     }
@@ -400,7 +405,12 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
-        } else {
+        } else if(!billingFlag.equals("") || !shippingFlag.equals("")){
+            startActivity(new Intent(mContext, MyAccountActivity.class));
+            finish();
+        }else if (billingFlag.equals("true")){
+            finish();
+        }else {
             finish();
         }
     }

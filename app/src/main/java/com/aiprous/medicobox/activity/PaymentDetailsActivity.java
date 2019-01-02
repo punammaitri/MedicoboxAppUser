@@ -321,8 +321,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         //jsonArray = new JSONArray(mStreetArray);
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("mobile_number", MedicoboxApp.onGetMobileNo());
-            jsonObject.put("message", "Your order placed successfully" + "Your order number is " + orderId);
+            jsonObject.put("mobile_number", "91" + MedicoboxApp.onGetMobileNo());
+            jsonObject.put("message", "Your order placed successfully" + " Your order number is " + orderId);
 
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {

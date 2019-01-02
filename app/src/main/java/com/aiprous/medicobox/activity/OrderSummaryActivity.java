@@ -62,6 +62,7 @@ import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_ADDRESS;
+import static com.aiprous.medicobox.utils.APIConstant.GET_CART_TOTAL;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class OrderSummaryActivity extends AppCompatActivity {
@@ -146,12 +147,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-        //set Text
-        tv_mrp_total.setText(mContext.getResources().getString(R.string.Rs) + " 350.0");
-        tv_price_discount.setText("-" + mContext.getResources().getString(R.string.Rs) + " 30.0");
-        tv_to_be_paid.setText(mContext.getResources().getString(R.string.Rs) + " 350.0");
-        tv_total_savings.setText(mContext.getResources().getString(R.string.Rs) + " 30.0");
-        tv_free_shipping_note.setText("Free shipping for orders above " + mContext.getResources().getString(R.string.Rs) + "500");
     }
 
     @Override
@@ -203,6 +198,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         } else {
             //get cart items through api
             getCartItems(MedicoboxApp.onGetAuthToken());
+            CallGetCardTotal();
         }
         CallAddressAPI();
     }
@@ -461,5 +457,47 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
         }
+    }
+
+    private void CallGetCardTotal() {
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.get(GET_CART_TOTAL)
+                // .addJSONObjectBody(jsonObject) // posting json
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+
+                            int mrpTotal = getAllResponse.get("grand_total").getAsInt();
+                            int base_discount_amount = getAllResponse.get("base_discount_amount").getAsInt();
+                            int mTobePaid = mrpTotal - base_discount_amount;
+
+                            tv_mrp_total.setText("\u20B9" + mrpTotal);
+                            tv_price_discount.setText("-\u20B9" + base_discount_amount);
+                            tv_to_be_paid.setText("\u20B9" + mTobePaid);
+
+                            tv_total_savings.setText(mContext.getResources().getString(R.string.Rs) + " 30.0");
+                            tv_free_shipping_note.setText("Free shipping for orders above " + mContext.getResources().getString(R.string.Rs) + "500");
+
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        CustomProgressDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 }
