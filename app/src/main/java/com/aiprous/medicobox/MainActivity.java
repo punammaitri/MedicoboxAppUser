@@ -172,7 +172,8 @@ public class MainActivity extends AppCompatActivity
         getCartItems(MedicoboxApp.onGetAuthToken());
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         } else {
             rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
@@ -489,7 +490,8 @@ public class MainActivity extends AppCompatActivity
                                 }
 
                                 if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-                                    rlayout_cart.setVisibility(View.GONE);
+                                    rlayout_cart.setVisibility(View.VISIBLE);
+                                    tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
                                 } else {
                                     rlayout_cart.setVisibility(View.VISIBLE);
                                     tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());

@@ -109,6 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:padding="@dimen/height_10">
 
                         <TextView
@@ -141,6 +142,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/height_10"
                         android:background="@color/colorlightlightGray" />
 

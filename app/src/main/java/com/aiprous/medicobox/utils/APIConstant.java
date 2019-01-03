@@ -74,7 +74,7 @@ public class APIConstant {
     public static String RELATED_PRODUCT = "http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
 
     //coupon
-    public static String APPLY_COUPON="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/coupons/";
+    public static String APPLY_COUPON="http://user8.itsindev.com/medibox/API/apply_coupon.php";
 
     //new order place with coupon code
     public static String NEW_ADD_TO_CART_ORDER_PLACE = "http://user8.itsindev.com/medibox/API/order-place-new.php";

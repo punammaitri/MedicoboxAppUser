@@ -36,6 +36,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -56,6 +57,7 @@ import static com.aiprous.medicobox.utils.APIConstant.ADDTOCART;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.EDITCARTITEM;
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTID;
 import static com.aiprous.medicobox.utils.APIConstant.RELATED_PRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SINGLEPRODUCT;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
@@ -163,15 +165,11 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
 
         searchview_medicine.setFocusable(false);
 
+
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
-
-        //remove back slash
-        String getCartId = MedicoboxApp.onGetCartID();
-        String lCartId = getCartId;
-        mCartId = lCartId.replace("\"", "");
 
         //set spinner
         //Creating the ArrayAdapter instance having the value list
@@ -203,8 +201,31 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
 
             }
         });
+    }
 
+    private void AttemptGetCartId() {
+        AndroidNetworking.post(GETCARTID)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
+                        MedicoboxApp.onSaveCartId(response);
+                        Log.e("Cart id", "Cart Id  : " + response.toString());
+                        // mAlert.onShowProgressDialog(ListActivity.this, false);
+                    }
 
+                    @Override
+                    public void onError(ANError anError) {
+                        // mAlert.onShowProgressDialog(ListActivity.this, false);
+                        //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                    }
+                });
     }
 
     @Override
@@ -212,11 +233,19 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
         super.onResume();
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
             rlayout_cart.setVisibility(View.VISIBLE);
         }
+
+        AttemptGetCartId();
+
+        //remove back slash
+        String getCartId = MedicoboxApp.onGetCartID();
+        String lCartId = getCartId;
+        mCartId = lCartId.replace("\"", "");
 
         if (getIntent().getStringExtra("productId") != null) {
             mProductId = getIntent().getStringExtra("productId");
@@ -337,7 +366,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     if (!mMrp.isEmpty() && !sale_price.isEmpty()) {
                                         Double mDiscount = Double.parseDouble(mMrp) - Double.parseDouble(sale_price);
                                         mDiscountAmount = Integer.valueOf(mDiscount.intValue());
-                                        Double mMrpDescAmount =Double.parseDouble(mMrp);
+                                        Double mMrpDescAmount = Double.parseDouble(mMrp);
                                         mMrpAmount = Integer.valueOf(mMrpDescAmount.intValue());
                                         mdiscount = String.valueOf(((mDiscountAmount / mMrpAmount) * 100));
                                     } else {
@@ -362,7 +391,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     //add underline to text
                                     tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-                                    if (mQuantity.equals("0")) {
+                                  /*  if (mQuantity.equals("0")) {
                                         rlayout_plus_minus.setVisibility(View.GONE);
                                         btn_add_to_cart.setClickable(true);
                                         // btn_add_to_cart.setBackgroundColor(Color.parseColor("#1f2c4c"));
@@ -375,7 +404,15 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                         // btn_add_to_cart.setBackgroundColor(Color.parseColor("#808080"));
                                         //make button disable
                                         btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg_disable);
-                                    }
+                                    }*/
+
+                                    tv_value.setText("" + mQuantity);
+                                    rlayout_plus_minus.setVisibility(View.VISIBLE);
+                                    btn_add_to_cart.setClickable(true);
+                                    btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg);
+                                    //make button disable
+                                    //btn_add_to_cart.setBackgroundResource(R.drawable.custom_btn_bg_disable);
+
 
                                     tv_company_name.setText(company_name);
 
@@ -465,7 +502,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
         //call guest add to cart api
         try {
 
-            setValuePosition = Integer.parseInt(tv_value.getText().toString()) + 1;
+            setValuePosition = Integer.parseInt(tv_value.getText().toString());
             mQty = setValuePosition;
             tv_value.setText("" + setValuePosition);
 
@@ -583,6 +620,8 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                             rlayout_plus_minus.setVisibility(View.VISIBLE);
 
                             rlayout_cart.setVisibility(View.VISIBLE);
+                            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+
                             try {
                                 mItemId = response.getString("item_id");
 
@@ -690,6 +729,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                         if (!SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
                             //this is for make cart icon visible
                             rlayout_cart.setVisibility(View.VISIBLE);
+                            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
                         } else {
                             // rlayout_cart.setVisibility(View.GONE);
                         }

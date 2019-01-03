@@ -169,11 +169,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 String increment_id = getJsonObject1.get("increment_id").getAsString();
                                 String grand_total = getJsonObject1.get("grand_total").getAsString();
                                 String total_due = getJsonObject1.get("total_due").getAsString();
-                                JsonObject shipping_address_object = getJsonObject1.get("shipping_address").getAsJsonObject();
+                                //JsonObject shipping_address_object = getJsonObject1.get("shipping_address").getAsJsonObject();
                                 JsonObject billing_address_object = getJsonObject1.get("billing_address").getAsJsonObject();
 
                                 //for shipping address
-                                if (shipping_address_object != null) {
+                              /*  if (shipping_address_object != null) {
                                     String firstname = shipping_address_object.get("firstname").getAsString();
                                     String lastname = shipping_address_object.get("lastname").getAsString();
                                     String street = shipping_address_object.get("street").getAsString();
@@ -185,7 +185,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                     txtShippingAddressUsername.setText(firstname + " " + lastname);
                                     String fullShippingAddress = street + "," + city + "," + country_id + "\n" + postcode;
                                     txtShippingAddress.setText(fullShippingAddress);
-                                }
+                                }*/
 
                                 //for billing address
                                 if (billing_address_object != null) {

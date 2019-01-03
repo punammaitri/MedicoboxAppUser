@@ -185,7 +185,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             relMainView.setVisibility(View.VISIBLE);
             nestedscroll_cart.setVisibility(View.GONE);
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
+            tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
         rlayout_cart.setClickable(false);
     }
@@ -576,14 +577,21 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         if (lcoupon.length() == 0) {
             edt_coupon_code.setError("Please enter coupon code");
         } else {
-            getApplyCoupon(lcoupon, edt_coupon_code);
-            CallGetCardTotal();
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("coupon_code", lcoupon);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getApplyCoupon(jsonObject, edt_coupon_code);
+
         }
     }
 
-    private void getApplyCoupon(final String couponCode, EditText edt_coupon_code) {
+    private void getApplyCoupon(final JSONObject couponCode, EditText edt_coupon_code) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.put(APPLY_COUPON + couponCode)
+        AndroidNetworking.post(APPLY_COUPON + couponCode)
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -591,27 +599,17 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
-                       /* try {
+                        try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            if (response.has("message")) {
-                                 String message=getAllResponse.get("message").toString();
+                            if (response.has("status")) {
+                                String message = getAllResponse.get("msg").toString();
                                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                            }else {
-
+                                CallGetCardTotal();
                             }
                             CustomProgressDialog.getInstance().dismissDialog();
-
-                        } catch (JSONException e) {
+                        } catch (JsonSyntaxException e) {
                             e.printStackTrace();
-                        }*/
-                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                        if (response.has("message")) {
-                            String message = getAllResponse.get("message").toString();
-                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                        } else {
-
                         }
-                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override

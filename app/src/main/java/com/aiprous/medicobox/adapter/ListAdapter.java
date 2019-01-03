@@ -306,7 +306,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     mPrice = mDataArrayList.get(lItemIndex).getSale_price();
                 }
                 mImageURL = mDataArrayList.get(lItemIndex).getImage();
-                setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) + 1;
+                setValuePosition = Integer.parseInt(holder.tv_value.getText().toString()) ;
                 mQty = setValuePosition;
                 holder.tv_value.setText("" + setValuePosition);
                 mCalculatePrice = mQty * Float.parseFloat(mPrice);
