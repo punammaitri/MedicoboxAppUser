@@ -48,6 +48,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +82,8 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
     TextView tv_mrp_price;
     @BindView(R.id.tv_per_tablet_price)
     TextView tv_per_tablet_price;
+    @BindView(R.id.txtUom)
+    TextView txtUom;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
@@ -103,6 +106,12 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
     TextView tv_Substitute_product_name;
     @BindView(R.id.tv_empty_msg)
     TextView tv_empty_msg;
+    @BindView(R.id.txtSoldBy)
+    TextView txtSoldBy;
+    @BindView(R.id.txtFulfilledBy)
+    TextView txtFulfilledBy;
+    @BindView(R.id.txtAvailability)
+    TextView txtAvailability;
     @BindView(R.id.linearlayoutMain)
     LinearLayout linearlayoutMain;
 
@@ -150,6 +159,8 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private String mQuantity;
     private Integer mMrpAmount;
+    private String mComposition, mFulfilled_by, mSold_by, mAvailability;
+    private String mSellingUom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +172,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
 
     private void init() {
         // tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs) + "68.60");
-        tv_per_tablet_price.setText("(" + mcontext.getResources().getString(R.string.Rs) + "6.86/Tablet SR" + ")");
+        //tv_per_tablet_price.setText("(" + mcontext.getResources().getString(R.string.Rs) + "6.86/Tablet SR" + ")");
 
         searchview_medicine.setFocusable(false);
 
@@ -342,6 +353,11 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                 if (status.equals("success")) {
                                     JsonObject data = asJsonObject.get("data").getAsJsonObject();
                                     mMedicineName = data.get("title").getAsString();
+                                    mComposition = data.get("composition").getAsString();
+                                    mFulfilled_by = data.get("fulfilled_by").getAsString();
+                                    mSold_by = data.get("sold_by").getAsString();
+                                    mAvailability = data.get("availability").getAsString();
+                                    mSellingUom = data.get("sellinguom").getAsString();
                                     mValue = data.get("short_description").getAsString();
                                     String company_name = data.get("company_name").getAsString();
                                     mPrescription = data.get("prescription_required").getAsString();
@@ -351,6 +367,11 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     mSku = data.get("sku").getAsString();
                                     String qty = data.get("qty").getAsString();
 
+                                    tv_medicine_contains.setText(mComposition);
+                                    txtSoldBy.setText("Sold by : " + mSold_by);
+                                    txtFulfilledBy.setText("Fulfilled by : " + mFulfilled_by);
+                                    txtAvailability.setText(mAvailability);
+                                    txtUom.setText(mSellingUom);
 
                                     if (sale_price.isEmpty()) {
                                         mPrice = mMrp;
@@ -375,11 +396,18 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
 
                                     tv_Substitute_product_name.setText("Substitutes for " + mMedicineName);
                                     tv_medicine_name.setText(mMedicineName);
-                                    tv_medicine_contains.setText(mValue);
+                                    // tv_medicine_contains.setText(mValue);
+
+                                    //for printing 2 dot after decimal
+                                    StringTokenizer st = new StringTokenizer(mMrp, ".");
+                                    String actual_price = st.nextToken();
+                                    String decimal_price = st.nextToken();
+                                    String first2char = decimal_price.substring(0, 2);
+                                    tv_mrp_price.setText(actual_price + "." + first2char);
 
                                     //remove digit after dot
-                                    double input = Double.parseDouble(mMrp);
-                                    tv_mrp_price.setText(df2.format(input));
+                                    /*double input = Double.parseDouble(mMrp);
+                                    tv_mrp_price.setText(df2.format(input));*/
                                     // tv_item_description.setText(mValue);
 
                                     if (mPrescription.equals("0")) {
@@ -389,7 +417,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     }
 
                                     //add underline to text
-                                    tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                    //tv_medicine_contains.setPaintFlags(tv_medicine_contains.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
                                   /*  if (mQuantity.equals("0")) {
                                         rlayout_plus_minus.setVisibility(View.GONE);

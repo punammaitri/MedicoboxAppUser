@@ -71,6 +71,16 @@ public class ThankYouActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ThankYouActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+        startActivity(intent);
+        finish();
+    }
+
     @OnClick(R.id.searchview_medicine)
     public void onClicksearch() {
         startActivity(new Intent(this, SearchViewActivity.class));

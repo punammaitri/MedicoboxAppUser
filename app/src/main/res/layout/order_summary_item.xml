@@ -13,39 +13,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/tv_item_name"
                 android:layout_width="0dp"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Horicks Lite Badam Jar 450 gm"
-                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack"/>
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3">
+                android:layout_weight="0.3"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_mrp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MRP"
+                    android:layout_marginRight="@dimen/height_10"
                     android:fontFamily="@font/open_sans_regular"
-                    android:layout_marginRight="@dimen/height_10"/>
+                    android:text="MRP" />
+
                 <TextView
                     android:id="@+id/tv_mrp_price"
                     android:layout_width="wrap_content"
-                    android:fontFamily="@font/open_sans_regular"
+
                     android:layout_height="wrap_content"
-                    android:text="\u20B9235.0"
-                    android:layout_toRightOf="@+id/tv_mrp"/>
+                    android:layout_toRightOf="@+id/tv_mrp"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="\u20B9235.0" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -53,30 +56,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
+            android:layout_marginTop="@dimen/height_10"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/height_10">
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/tv_medicine_contains"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
+                android:visibility="gone"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Box of 450 gm powder" />
 
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="\u20B9235.0"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorblack"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_toRightOf="@+id/tv_mrp"/>
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_mrp"
+                android:layout_weight="0.3"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="\u20B9235.0"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorblack"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -85,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/height_10"
-            android:background="@color/colorlightlightGray"/>
+            android:background="@color/colorlightlightGray" />
 
     </LinearLayout>
 </RelativeLayout>

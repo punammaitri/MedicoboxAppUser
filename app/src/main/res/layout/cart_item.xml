@@ -13,62 +13,66 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/tv_item_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_weight="0.9"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Horicks Lite Badam Jar 450 gm"
-                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorblack"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/rlayout_delete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/delete"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/delete" />
             </RelativeLayout>
         </LinearLayout>
 
 
-
-         <TextView
-             android:id="@+id/tv_medicine_contains"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="box of 450 gm powder"
-             android:fontFamily="@font/open_sans_regular"
-              android:layout_marginTop="@dimen/height_10"/>
+        <TextView
+            android:id="@+id/tv_medicine_contains"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height_10"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="box of 450 gm powder"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MRP"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_marginTop="@dimen/height_10"
-                android:layout_marginRight="@dimen/height_10"/>
+                android:layout_marginRight="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="MRP" />
+
             <TextView
                 android:id="@+id/tv_mrp_price"
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_height="wrap_content"
-                android:text="Rs150"
-                android:layout_marginTop="@dimen/height_10"/>
+                android:layout_marginTop="@dimen/height_10"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Rs150" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,11 +88,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Rs150"
                 android:gravity="center|left"
-                android:textStyle="bold"
+                android:text="Rs150"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorblack"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textStyle="bold" />
 
 
             <RelativeLayout
@@ -98,44 +102,43 @@
                 android:gravity="right">
 
 
-
                 <TextView
                     android:id="@+id/tv_minus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textSize="15sp"
+                    android:layout_marginRight="@dimen/height_10"
                     android:background="@drawable/rounded_textview"
-                    android:textColor="@color/colorblack"
+                    android:fontFamily="@font/open_sans_regular"
                     android:gravity="center"
-                    android:layout_marginRight="@dimen/height_10"/>
+                    android:text="-"
+                    android:textColor="@color/colorblack"
+                    android:textSize="15sp" />
 
 
                 <TextView
                     android:id="@+id/tv_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
-                    android:fontFamily="@font/open_sans_regular"
                     android:layout_marginRight="@dimen/height_10"
+                    android:layout_toRightOf="@+id/tv_minus"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:text="1"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@+id/tv_minus"/>
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/tv_plus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textSize="15sp"
+                    android:layout_toRightOf="@+id/tv_value"
                     android:background="@drawable/rounded_textview"
-                    android:textColor="@color/colorblack"
+                    android:fontFamily="@font/open_sans_regular"
                     android:gravity="center"
-                    android:layout_toRightOf="@+id/tv_value"/>
+                    android:text="+"
+                    android:textColor="@color/colorblack"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -145,10 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/height_10"
-            android:background="@color/colorlightlightGray"/>
-
-
-
+            android:background="@color/colorlightlightGray" />
 
 
     </LinearLayout>

@@ -17,9 +17,9 @@
         android:layout_below="@+id/toolbar_product">
 
         <LinearLayout
+            android:id="@+id/linearlayoutMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearlayoutMain"
             android:layout_margin="@dimen/height_10"
             android:orientation="vertical">
 
@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="ADILIN 10mg Tablet 10's"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
@@ -39,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_5"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="By Lincoln Pharmaceuticals Ltd"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -47,7 +45,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="@string/tabSubname"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorPrimary" />
 
@@ -55,7 +52,7 @@
                 android:id="@+id/llayout_prescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_5"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -70,10 +67,40 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/height_5"
                     android:fontFamily="@font/open_sans_regular"
-                    android:text="Prescription Required"
+                    android:text="Prescription Needed"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtSoldBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/height_3"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtFulfilledBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/height_5"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/txtAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/height_5"
+                android:layout_marginBottom="@dimen/height_5"
+                android:fontFamily="@font/open_sans_regular"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/color_available"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -125,18 +152,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_alignParentBottom="true"
+                                android:layout_marginLeft="@dimen/height_5"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="MRP" />
+                                android:text="\u20B9"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textColor="@color/colorblack"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tv_mrp_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_alignParentBottom="true"
-                                android:layout_marginLeft="@dimen/height_5"
+                                android:layout_marginLeft="@dimen/height_3"
                                 android:layout_toRightOf="@+id/tv_mrp"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="Rs.68.60"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
@@ -149,21 +179,45 @@
                                 android:layout_marginLeft="@dimen/height_5"
                                 android:layout_toRightOf="@+id/tv_mrp_price"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="" />
+                                android:text=""
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txtUom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/height_5"
+                                android:fontFamily="@font/open_sans_regular"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/colorblack" />
                         </RelativeLayout>
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlayout_price"
+                        android:layout_marginTop="@dimen/height_15"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
                         <RelativeLayout
                             android:id="@+id/rlayout_plus_minus"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true">
+                            android:layout_alignParentRight="true"
+                            android:layout_weight="0.5">
 
                             <TextView
                                 android:id="@+id/tv_minus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/height_10"
+                                android:layout_marginLeft="@dimen/height_10"
                                 android:layout_toRightOf="@+id/tv_quantity"
                                 android:background="@drawable/rounded_textview"
                                 android:fontFamily="@font/open_sans_regular"
@@ -178,6 +232,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/height_10"
                                 android:layout_marginRight="@dimen/height_10"
                                 android:layout_toRightOf="@+id/tv_minus"
                                 android:fontFamily="@font/open_sans_regular"
@@ -200,40 +255,32 @@
                                 android:textColor="@color/colorblack"
                                 android:textSize="15sp" />
                         </RelativeLayout>
-                    </RelativeLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/rlayout_price"
-                        android:layout_marginTop="@dimen/height_15"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="0.55"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tv_item_description"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="10 tablet sr in 1 strip" />
+                                android:text="10 tablet sr in 1 strip"
+                                android:visibility="gone" />
 
                             <Spinner
                                 android:id="@+id/spinner_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/height_5"
-                                android:visibility="gone"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text="1 strip" />
+                                android:text="1 strip"
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <Button
@@ -241,9 +288,11 @@
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
-                            android:layout_weight="0.45"
+                            android:layout_weight="0.5"
                             android:background="@drawable/custom_btn_bg"
                             android:fontFamily="@font/open_sans_regular"
+                            android:paddingLeft="@dimen/height_15"
+                            android:paddingRight="@dimen/height_15"
                             android:text="Add to cart"
                             android:textAllCaps="true"
                             android:textColor="@android:color/white"
@@ -324,7 +373,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:layout_marginBottom="@dimen/height_20"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_empty_msg"
@@ -333,8 +382,8 @@
                 android:layout_marginTop="@dimen/height_10"
                 android:layout_marginBottom="@dimen/height_20"
                 android:gravity="center"
-                android:visibility="gone"
-                android:text="No any substitute available for this product"/>
+                android:text="No any substitute available for this product"
+                android:visibility="gone" />
 
 
         </LinearLayout>

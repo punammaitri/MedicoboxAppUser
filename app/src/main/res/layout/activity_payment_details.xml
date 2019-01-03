@@ -7,7 +7,6 @@
     android:background="@color/color_gray_bg"
     tools:context=".activity.PaymentDetailsActivity">
 
-
     <include
         android:id="@+id/layout_custom_toolbar"
         layout="@layout/custom_toolbar" />
@@ -50,11 +49,11 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
-                app:cardElevation="@dimen/height_4"
-                android:layout_marginTop="@dimen/height_10">
+                app:cardElevation="@dimen/height_4">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,12 +67,14 @@
                         android:orientation="horizontal"
                         android:weightSum="1">
 
-                        <TextView
+                        <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.7"
+                            android:clickable="false"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="PAYTM"
+                            android:textAllCaps="true"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
@@ -112,12 +113,14 @@
                         android:orientation="horizontal"
                         android:weightSum="1">
 
-                        <TextView
+                        <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.7"
+                            android:clickable="false"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="ONLINE PAYMENT"
+                            android:textAllCaps="true"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
@@ -143,6 +146,33 @@
                         android:fontFamily="@font/open_sans_regular"
                         android:text="Wallets, Debit/Cards, Net Banking, UPI" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <RadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:checked="true"
+                            android:fontFamily="@font/open_sans_regular"
+                            android:text="Cash on delivery"
+                            android:textAllCaps="true"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/colorblack"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/height_10"
+                        android:fontFamily="@font/open_sans_regular"
+                        android:text="Cash on delivery" />
+
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -150,11 +180,11 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/height_10"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="#fff"
                 app:cardCornerRadius="@dimen/height_8"
-                app:cardElevation="@dimen/height_4"
-                android:layout_marginTop="@dimen/height_10">
+                app:cardElevation="@dimen/height_4">
 
 
                 <LinearLayout
@@ -271,7 +301,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/height_20"
+                        android:layout_marginTop="@dimen/height_10"
                         android:orientation="horizontal">
 
                         <TextView
