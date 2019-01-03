@@ -248,18 +248,22 @@ public class OrderSummaryActivity extends AppCompatActivity {
                                             billing_postcode = asJsonObject.get("postcode").getAsString();
                                             billing_telephone = asJsonObject.get("telephone").getAsString();
 
-                                            JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
-                                            JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                            billing_flat = streetInnerArray.get(0).getAsString();
-                                            billing_street = streetInnerArray.get(1).getAsString();
-                                            billing_landmark = streetInnerArray.get(2).getAsString();
+                                            try {
+                                                JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                                JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                                billing_flat = streetInnerArray.get(0).getAsString();
+                                                billing_street = streetInnerArray.get(1).getAsString();
+                                                billing_landmark = streetInnerArray.get(2).getAsString();
 
-                                            String fullBillingAddress = billing_flat + "," + billing_street + "," + billing_landmark + "," + "\n" +
-                                                    billing_city + "," + billing_country_id + "," + billing_postcode;
-                                            txtOrderSummaryBillingAddress.setText(fullBillingAddress);
-                                            txtOrderSummaryBillingUsername.setText(billing_firstname + " " + billing_lastname);
-                                            txtOrderSummaryBillingTelephone.setText(billing_telephone);
-                                            txtOrderSummaryBillingAdd.setText("EDIT");
+                                                String fullBillingAddress = billing_flat + "," + billing_street + "," + billing_landmark + "," + "\n" +
+                                                        billing_city + "," + billing_country_id + "," + billing_postcode;
+                                                txtOrderSummaryBillingAddress.setText(fullBillingAddress);
+                                                txtOrderSummaryBillingUsername.setText(billing_firstname + " " + billing_lastname);
+                                                txtOrderSummaryBillingTelephone.setText(billing_telephone);
+                                                txtOrderSummaryBillingAdd.setText("EDIT");
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                         } else {
                                             cardShipping.setVisibility(View.VISIBLE);
                                             shipping_id = asJsonObject.get("id").getAsString();
@@ -271,18 +275,22 @@ public class OrderSummaryActivity extends AppCompatActivity {
                                             shipping_postcode = asJsonObject.get("postcode").getAsString();
                                             shipping_telephone = asJsonObject.get("telephone").getAsString();
 
-                                            JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
-                                            JsonArray streetInnerArray = streetArray.getAsJsonArray();
-                                            shipping_flat = streetInnerArray.get(0).getAsString();
-                                            shipping_street = streetInnerArray.get(1).getAsString();
-                                            shipping_landmark = streetInnerArray.get(2).getAsString();
+                                            try {
+                                                JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
+                                                JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                                shipping_flat = streetInnerArray.get(0).getAsString();
+                                                shipping_street = streetInnerArray.get(1).getAsString();
+                                                shipping_landmark = streetInnerArray.get(2).getAsString();
 
-                                            String fullShippingAddress = shipping_flat + "," + shipping_street + "," + shipping_landmark + "," + "\n" +
-                                                    shipping_city + "," + shipping_country_id + "," + shipping_postcode;
-                                            txtOrderSummaryShippingAddress.setText(fullShippingAddress);
-                                            txtOrderSummaryShippingUsername.setText(shipping_firstname + " " + shipping_lastname);
-                                            txtOrderSummaryShippingTelephone.setText(shipping_telephone);
-                                            txtOrderSummaryShippingAdd.setText("EDIT");
+                                                String fullShippingAddress = shipping_flat + "," + shipping_street + "," + shipping_landmark + "," + "\n" +
+                                                        shipping_city + "," + shipping_country_id + "," + shipping_postcode;
+                                                txtOrderSummaryShippingAddress.setText(fullShippingAddress);
+                                                txtOrderSummaryShippingUsername.setText(shipping_firstname + " " + shipping_lastname);
+                                                txtOrderSummaryShippingTelephone.setText(shipping_telephone);
+                                                txtOrderSummaryShippingAdd.setText("EDIT");
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     }
                                 }
