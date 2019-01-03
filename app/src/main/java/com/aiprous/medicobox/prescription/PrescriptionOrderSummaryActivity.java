@@ -234,7 +234,13 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
                             if (response.has("status")) {
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                                 String status = getAllResponse.get("status").getAsString();
-                                if (status.equals("success")) {
+
+                                if (status.equals("success")){
+                                    startActivity(new Intent(PrescriptionOrderSummaryActivity.this, ThankYouActivity.class));
+                                    Toast.makeText(mContext, "Order placed successfully", Toast.LENGTH_SHORT).show();
+                                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                }
+                                /*if (status.equals("success")) {
                                     mFinalModelsArray.clear();
                                     JsonObject data = getAllResponse.get("data").getAsJsonObject();
                                     String id = data.get("id").getAsString();
@@ -256,7 +262,9 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
 
                                     startActivity(new Intent(PrescriptionOrderSummaryActivity.this, ThankYouActivity.class));
                                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                                }
+                                }*/
+
+
                                 CustomProgressDialog.getInstance().dismissDialog();
 
                             }
