@@ -124,11 +124,12 @@ public class FeaturedProductModel {
     public String entity_id;
 
 
-    public FeaturedProductModel(String image, String name, String actual_price, String final_price) {
+    public FeaturedProductModel(String image, String name, String actual_price, String final_price, String entity_id) {
         this.image = image;
         this.name = name;
         this.price = actual_price;
         this.final_price = final_price;
+        this.entity_id = entity_id;
     }
 
     public String getRequest_path() {

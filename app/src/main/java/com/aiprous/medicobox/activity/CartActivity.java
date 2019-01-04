@@ -414,7 +414,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                     } else if (data.getData() != null) {
                         multipleImageUrl = data.getData();
                         txtUploadPrescription.setVisibility(View.VISIBLE);
-                        txtUploadPrescription.setText(multipleImageUrl.toString());
+                        txtUploadPrescription.setText(multipleImageUrl.getPath());
                     }
                 } else if (requestCode == RESULT_CROPING_CODE) {
                     try {

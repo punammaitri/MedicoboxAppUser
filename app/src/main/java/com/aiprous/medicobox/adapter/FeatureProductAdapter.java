@@ -1,6 +1,7 @@
 package com.aiprous.medicobox.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aiprous.medicobox.R;
+import com.aiprous.medicobox.activity.ProductDetailBActivity;
 import com.aiprous.medicobox.featuredproduct.FeaturedProductModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -43,14 +45,14 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
 
         //holder.img_product.setImageResource(mDataArrayList.get(position).getProduct_image());
         holder.tv_medicine_name.setText(mDataArrayList.get(position).getName());
 
         double input = Double.parseDouble(mDataArrayList.get(position).getPrice());
-        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) +df2.format(input));
+        holder.tv_product_mrp.setText(mContext.getResources().getString(R.string.Rs) + df2.format(input));
         holder.tv_product_mrp.setPaintFlags(holder.tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         double final_price = Double.parseDouble(mDataArrayList.get(position).getFinal_price());
@@ -61,9 +63,27 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
 
         Float finalDisAmount = getActualPrice - getFinalPrice;
         Float getTotalDiscount = (finalDisAmount / getActualPrice) * 100;
-        String formattedDiscount = String.format ("%,.0f", getTotalDiscount);
+        String formattedDiscount = String.format("%,.0f", getTotalDiscount);
 
         holder.tv_product_discount.setText(formattedDiscount + "%" + " Off");
+
+        if (formattedDiscount.equals("0")) {
+            holder.tv_product_mrp.setVisibility(View.GONE);
+        }else {
+            holder.tv_product_mrp.setVisibility(View.VISIBLE);
+        }
+
+
+        holder.cardRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ProductDetailBActivity.class);
+                intent.putExtra("productId", mDataArrayList.get(position).getEntity_id());
+                intent.putExtra("Qty", "1");
+                mContext.startActivity(intent);
+            }
+        });
+
 
         //Use Picasso to load image
         Picasso.with(mContext)

@@ -244,7 +244,7 @@ public class HomeFragment extends Fragment {
                 break;
             case R.id.rlayout_medicines:
                 //startActivity(new Intent(getActivity(), ListActivity.class));
-                startActivity(new Intent(getActivity(),MainCategoryActivity.class));
+                startActivity(new Intent(getActivity(), MainCategoryActivity.class));
                 getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 break;
             case R.id.rlayout_lab_tests:
@@ -276,12 +276,14 @@ public class HomeFragment extends Fragment {
                                 String name = ((JsonObject) entries.get(i)).get("name").getAsString();
                                 String actual_price = ((JsonObject) entries.get(i)).get("price").getAsString();
                                 String final_price = ((JsonObject) entries.get(i)).get("final_price").getAsString();
+                                String entity_id = ((JsonObject) entries.get(i)).get("entity_id").getAsString();
 
-                                FeaturedProductModel featuredProductModel = new FeaturedProductModel(image, name, actual_price, final_price);
+                                FeaturedProductModel featuredProductModel = new FeaturedProductModel(image, name, actual_price, final_price, entity_id);
                                 featuredProductModel.setImage(image);
                                 featuredProductModel.setName(name);
                                 featuredProductModel.setPrice(actual_price);
                                 featuredProductModel.setFinal_price(final_price);
+                                featuredProductModel.setEntity_id(entity_id);
                                 mFeaturedProductModels.add(featuredProductModel);
                             }
                         }

@@ -28,7 +28,7 @@
             android:layout_marginTop="@dimen/height_8"
             android:fontFamily="@font/open_sans_regular"
             android:padding="@dimen/height_8"
-            android:text="wishlist"
+            android:text="Insta Orders"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />

@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity
                 R.drawable.home,
                 R.drawable.box,
                 R.drawable.user,
-                R.drawable.cart,
+                R.drawable.heart_blue,
                 R.drawable.bell,
                 R.drawable.settings,
                 R.drawable.logout,};
@@ -520,5 +520,4 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
     }
-
 }

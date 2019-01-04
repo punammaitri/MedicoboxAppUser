@@ -97,8 +97,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
     TextView txtOrderSummaryBillingTelephone;
     @BindView(R.id.cardBilling)
     CardView cardBilling;
-    @BindView(R.id.txtOrderSummaryShippingAdd)
-    TextView txtOrderSummaryShippingAdd;
+  /*  @BindView(R.id.txtOrderSummaryShippingAdd)
+    TextView txtOrderSummaryShippingAdd;*/
     @BindView(R.id.txtOrderSummaryShippingUsername)
     TextView txtOrderSummaryShippingUsername;
     @BindView(R.id.txtOrderSummaryShippingAddress)
@@ -198,7 +198,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         } else {
             //get cart items through api
             getCartItems(MedicoboxApp.onGetAuthToken());
-            CallGetCardTotal();
+            //CallGetCardTotal();
         }
         CallAddressAPI();
     }
@@ -287,7 +287,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                                                 txtOrderSummaryShippingAddress.setText(fullShippingAddress);
                                                 txtOrderSummaryShippingUsername.setText(shipping_firstname + " " + shipping_lastname);
                                                 txtOrderSummaryShippingTelephone.setText(shipping_telephone);
-                                                txtOrderSummaryShippingAdd.setText("EDIT");
+                                               // txtOrderSummaryShippingAdd.setText("EDIT");
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
@@ -397,7 +397,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 });
     }
 
-    @OnClick({R.id.txtOrderSummaryBillingAdd, R.id.txtOrderSummaryShippingAdd, R.id.rlayout_back_button,
+    @OnClick({R.id.txtOrderSummaryBillingAdd, R.id.rlayout_back_button,
             R.id.btn_confirm_order, R.id.searchview_medicine, R.id.rlayout_cart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -423,7 +423,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                             .putExtra("order_summary", "true"));
                 }
                 break;
-            case R.id.txtOrderSummaryShippingAdd:
+           /* case R.id.txtOrderSummaryShippingAdd:
                 if (txtOrderSummaryShippingAdd.getText().equals("ADD")) {
                     startActivity(new Intent(OrderSummaryActivity.this, PrescriptionEditAddressActivity.class)
                             .putExtra("shippingFlag", "true")
@@ -444,7 +444,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                             .putExtra("landmark", shipping_landmark)
                             .putExtra("order_summary", "true"));
                 }
-                break;
+                break;*/
             case R.id.rlayout_back_button:
                 finish();
                 break;

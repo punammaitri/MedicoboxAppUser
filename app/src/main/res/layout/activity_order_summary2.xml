@@ -204,6 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -311,7 +312,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="\u20B9 350" />
+                            android:text="\u20B9 350.00" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -385,7 +386,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="\u20B9 350.0"
+                            android:text="\u20B9 350.00"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -415,7 +416,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="\u20B9 30.0"
+                            android:text="\u20B9 30.00"
                             android:textColor="@color/colorgreen"
                             android:textStyle="bold" />
                     </LinearLayout>

@@ -388,18 +388,25 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                                 mlistModelsArray.clear();
 
                                 JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                                JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
-                                JsonArray getImageUrl = responseObject.get("images").getAsJsonArray();
+                                String status = getAllResponse.get("status").getAsString();
+                                if (!status.equals("error")) {
+                                    JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
+                                    JsonArray getImageUrl = responseObject.get("images").getAsJsonArray();
 
-                                for (int i = 0; i < getImageUrl.size(); i++) {
-                                    String getUrl = getImageUrl.get(i).getAsString();
-                                    ImageUrlModel imageUrlModel = new ImageUrlModel(getUrl);
-                                    imageUrlModel.setImageUrl(getUrl);
-                                    mlistModelsArray.add(imageUrlModel);
+                                    for (int i = 0; i < getImageUrl.size(); i++) {
+                                        String getUrl = getImageUrl.get(i).getAsString();
+                                        ImageUrlModel imageUrlModel = new ImageUrlModel(getUrl);
+                                        imageUrlModel.setImageUrl(getUrl);
+                                        mlistModelsArray.add(imageUrlModel);
+                                    }
+                                    setListAdapter(mlistModelsArray);
+                                    CustomProgressDialog.getInstance().dismissDialog();
+                                    GetAllPrescriptionAPI();
+                                } else {
+                                    String message = getAllResponse.get("message").getAsString();
+                                    Toast.makeText(mContext, "" + message, Toast.LENGTH_SHORT).show();
                                 }
-                                setListAdapter(mlistModelsArray);
-                                CustomProgressDialog.getInstance().dismissDialog();
-                                GetAllPrescriptionAPI();
+
                             }
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
@@ -595,8 +602,6 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
     }
 
 
-
-
     public class ListModel {
 
         Bitmap Imagebitmap;
@@ -620,7 +625,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
     }
 
     @OnClick({R.id.cardview_take_photo, R.id.cardview_gallery, R.id.radioButtonYes, R.id.radioButtonNo,
-            R.id.rlayout_back_button, R.id.btnContinue, R.id.rlayout_cart,R.id.relMyPrescription})
+            R.id.rlayout_back_button, R.id.btnContinue, R.id.rlayout_cart, R.id.relMyPrescription})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cardview_take_photo:

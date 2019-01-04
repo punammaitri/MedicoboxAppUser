@@ -7,80 +7,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/height_10">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/linearMainView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/tv_item_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="Horicks Lite Badam Jar 450 gm"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
+            android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/relMain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="0.3"
-                android:visibility="gone">
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tv_mrp"
+                <ImageView
+                    android:id="@+id/img_product"
+                    android:layout_width="@dimen/height_60"
+                    android:layout_height="@dimen/height_60"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/height_10"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="MRP" />
-
-                <TextView
-                    android:id="@+id/tv_mrp_price"
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv_mrp"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="\u20B9235.0" />
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
             </RelativeLayout>
-        </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/height_10"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/tv_medicine_contains"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
-                android:visibility="gone"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="Box of 450 gm powder" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tv_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/height_10"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorblack" />
 
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_mrp"
-                android:layout_weight="0.3"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="\u20B9235.0"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_qty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorblack" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorblack" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
