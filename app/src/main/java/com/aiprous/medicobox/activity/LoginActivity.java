@@ -200,8 +200,19 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 String name = object.getString("name");
                                 if (!name.isEmpty()) {
+
                                     Toast.makeText(LoginActivity.this, "Login with facebook is successfully", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                                    //user info
+                                    String email = object.getString("email");
+                                    StringTokenizer st = new StringTokenizer(name, " ");
+                                    String lFirstname = st.nextToken();
+                                    String lLastname = st.nextToken();
+
+                                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class)
+                                            .putExtra("firstname", lFirstname)
+                                            .putExtra("lastname", lLastname)
+                                            .putExtra("email", email));
                                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Login with facebook is failed", Toast.LENGTH_SHORT).show();
@@ -225,10 +236,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-            callbackManager.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-
 
     public void printhashkey() {
         PackageInfo info;
@@ -278,7 +287,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, MobileNumberActivity.class).putExtra("flag", "SignWithOTP"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
-
 
 
     @OnClick(R.id.btn_signup)
