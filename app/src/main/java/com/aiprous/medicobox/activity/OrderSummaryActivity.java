@@ -200,6 +200,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             getCartItems(MedicoboxApp.onGetAuthToken());
             //CallGetCardTotal();
         }
+
         CallAddressAPI();
     }
 
@@ -265,7 +266,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                                                 e.printStackTrace();
                                             }
                                         } else {
-                                            cardShipping.setVisibility(View.VISIBLE);
+                                            cardShipping.setVisibility(View.GONE);
                                             shipping_id = asJsonObject.get("id").getAsString();
                                             shipping_firstname = asJsonObject.get("firstname").getAsString();
                                             shipping_lastname = asJsonObject.get("lastname").getAsString();

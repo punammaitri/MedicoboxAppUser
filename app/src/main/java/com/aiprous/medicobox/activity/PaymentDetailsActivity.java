@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +28,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -53,10 +53,9 @@ import butterknife.OnClick;
 import static com.aiprous.medicobox.utils.APIConstant.ADD_TO_CART_ORDER_PLACE;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_ADDRESS;
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTID;
 import static com.aiprous.medicobox.utils.APIConstant.NEW_ADD_TO_CART_ORDER_PLACE;
 import static com.aiprous.medicobox.utils.APIConstant.ORDER_ASSIGN;
-import static com.aiprous.medicobox.utils.APIConstant.RELATED_PRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SEND_SMS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -85,6 +84,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     ArrayList<FinalPaymentModel> mFinalPaymentModels = new ArrayList<>();
     private Uri imageBinaryUri;
     public String imageConvertedString = "";
+    private String mQuoteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +161,34 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        //get quote Id
+        AttemptGetCartId();
+    }
+
+    private void AttemptGetCartId() {
+        AndroidNetworking.post(GETCARTID)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
+                        mQuoteId = response.replace("\"", "");
+                        Log.e("Cart id", "Cart Id  : " + response.toString());
+                        // mAlert.onShowProgressDialog(ListActivity.this, false);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        // mAlert.onShowProgressDialog(ListActivity.this, false);
+                        //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                    }
+                });
     }
 
     private void CallOrderPlaceAPI() {
@@ -169,7 +197,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
         //jsonArray = new JSONArray(mStreetArray);
         JSONObject jsonObject = new JSONObject();
-        try {
+        /*try {
             jsonObject.put("address_id", address_id);
             jsonObject.put("items", jsonArray);
             jsonObject.put("shipping_method", "");
@@ -178,13 +206,26 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
+        }*/
+
+        try {
+            jsonObject.put("quote_id", mQuoteId);
+            jsonObject.put("address_id", address_id);
+            jsonObject.put("image", imageConvertedString);
+            jsonObject.put("payment_method", "checkmo");
+            jsonObject.put("shipping_method", "wkvendordropship_wkvendordropship");
+            Log.e("url", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
         //CallSendSmsApi
-        AndroidNetworking.post(ADD_TO_CART_ORDER_PLACE)
+        AndroidNetworking.post(NEW_ADD_TO_CART_ORDER_PLACE)
                 .addJSONObjectBody(jsonObject) // posting json
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
+
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -216,7 +257,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
-                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PaymentDetailsActivity.this, "Something happen from server side", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

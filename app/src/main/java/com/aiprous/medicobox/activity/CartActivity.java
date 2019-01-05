@@ -50,6 +50,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -77,6 +78,7 @@ import butterknife.OnClick;
 import static com.aiprous.medicobox.utils.APIConstant.APPLY_COUPON;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
+import static com.aiprous.medicobox.utils.APIConstant.GETCARTID;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.GET_CART_TOTAL;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
@@ -189,12 +191,40 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
         rlayout_cart.setClickable(false);
+
+        //get quote Id
+        AttemptGetCartId();
     }
 
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+    private void AttemptGetCartId() {
+        AndroidNetworking.post(GETCARTID)
+                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
+                        MedicoboxApp.onSaveCartId(response);
+                        Log.e("Cart id", "Cart Id  : " + response.toString());
+                        // mAlert.onShowProgressDialog(ListActivity.this, false);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        // mAlert.onShowProgressDialog(ListActivity.this, false);
+                        //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + anError.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + anError.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
+                    }
+                });
     }
 
     @OnClick(R.id.btn_continue_cart)
@@ -261,8 +291,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                                     int prescription_req = Integer.parseInt(getAllProductList.getJSONObject(i).get("prescription").toString());
 
                                     mQuote_id = getAllProductList.getJSONObject(i).get("quote_id").toString();
-                                    //save  quote id  to shared prf
-                                    MedicoboxApp.onSaveCartId(mQuote_id);
 
                                     CartModel.Response listModel = new CartModel.Response(discount, prescription, image,
                                             short_description, sale_price, lquoteId, product_type, price, name, id, qty, sku, item_id, prescription_req);
@@ -583,15 +611,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             getApplyCoupon(jsonObject, edt_coupon_code);
-
         }
     }
 
     private void getApplyCoupon(final JSONObject couponCode, EditText edt_coupon_code) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.post(APPLY_COUPON + couponCode)
+        AndroidNetworking.post(APPLY_COUPON)
+                .addJSONObjectBody(couponCode) // posting json
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -601,8 +628,10 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                         // do anything with response
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            if (response.has("status")) {
-                                String message = getAllResponse.get("msg").toString();
+                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseObject.get("status").getAsString();
+                            if (status.equals("success")) {
+                                String message = responseObject.get("msg").getAsString();
                                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                                 CallGetCardTotal();
                             }

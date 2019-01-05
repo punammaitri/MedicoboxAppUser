@@ -97,6 +97,9 @@
                         android:layout_weight="0.8"
                         android:fontFamily="@font/open_sans_regular"
                         android:hint="Enter Coupon Code"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"
+                        android:singleLine="true"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         app:backgroundTint="@color/coloryellow" />
 
@@ -323,12 +326,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
-                android:visibility="gone"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="Free shipping for orders above Rs500"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_continue_cart"

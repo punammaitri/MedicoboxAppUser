@@ -195,7 +195,7 @@ public class SignUpActivity extends AppCompatActivity {
                 jsonObject.put("message", "Thanks for registration." + "\n" + "Team Medicobox");
             } else {
                 jsonObject.put("mobile_number", "91" + lMobile);
-                jsonObject.put("message", "Thanks for registration with MedicoBox your email is  " + lEmail + " and password is " + lPass + "\n" + "Team medicoBox .");
+                jsonObject.put("message", "Thanks for registration with MedicoBox your email is  " + lEmail + " and password is " + lPass + "\n\n" + "Team medicoBox .");
             }
             Log.e("url", jsonObject.toString());
         } catch (JSONException e) {

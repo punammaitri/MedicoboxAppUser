@@ -662,7 +662,6 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                             addItemsSingleton();
                             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
                             CustomProgressDialog.getInstance().dismissDialog();
-
                         }
 
                         @Override
