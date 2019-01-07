@@ -25,6 +25,7 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.CartOrderSummaryModel;
+import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
 import com.aiprous.medicobox.prescription.PrescriptionEditAddressActivity;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -93,8 +94,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
     TextView txtOrderSummaryBillingTelephone;
     @BindView(R.id.cardBilling)
     CardView cardBilling;
-  /*  @BindView(R.id.txtOrderSummaryShippingAdd)
-    TextView txtOrderSummaryShippingAdd;*/
+    /*  @BindView(R.id.txtOrderSummaryShippingAdd)
+      TextView txtOrderSummaryShippingAdd;*/
     @BindView(R.id.txtOrderSummaryShippingUsername)
     TextView txtOrderSummaryShippingUsername;
     @BindView(R.id.txtOrderSummaryShippingAddress)
@@ -163,7 +164,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             //load cart model
             String cartListAsString = getIntent().getStringExtra("cart_model");
            quote_id = getIntent().getStringExtra("quote_id");
-            
+
             Gson gson = new Gson();
             Type type = new TypeToken<List<CartModel.Response>>() {
             }.getType();
@@ -187,9 +188,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
         }else {
             imgPrescription.setVisibility(View.GONE);
         }
-
-
-
 
         if (!isNetworkAvailable(this)) {
             CustomProgressDialog.getInstance().dismissDialog();

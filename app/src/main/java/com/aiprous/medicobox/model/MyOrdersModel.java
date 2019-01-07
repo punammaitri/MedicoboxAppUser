@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class MyOrdersModel {
+public class MyOrdersModel {
 
     @Expose
     @SerializedName("entity_id")
@@ -20,13 +20,16 @@ public  class MyOrdersModel {
     @Expose
     @SerializedName("created_at")
     private String created_at;
+    @Expose
+    @SerializedName("order_inc_id")
+    private String order_inc_id;
 
-
-    public MyOrdersModel(String entity_id, String status, String grand_total, String created_at) {
+    public MyOrdersModel(String entity_id, String status, String grand_total, String created_at, String order_inc_id) {
         this.entity_id = entity_id;
         this.status = status;
         this.grand_total = grand_total;
         this.created_at = created_at;
+        this.order_inc_id = order_inc_id;
     }
 
     public String getEntity_id() {
@@ -59,5 +62,13 @@ public  class MyOrdersModel {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public String getOrder_inc_id() {
+        return order_inc_id;
+    }
+
+    public void setOrder_inc_id(String order_inc_id) {
+        this.order_inc_id = order_inc_id;
     }
 }

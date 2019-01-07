@@ -45,7 +45,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        holder.tv_order_id.setText("Order ID: " + myOrdersArrayList.get(position).getEntity_id());
+        holder.tv_order_id.setText("Order ID: " + myOrdersArrayList.get(position).getOrder_inc_id());
 
         //for showing date
         String created_at =myOrdersArrayList.get(position).getCreated_at();

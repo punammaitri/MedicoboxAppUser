@@ -166,7 +166,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
         //jsonArray = new JSONArray(mStreetArray);
-        JSONObject jsonObject = new JSONObject();
+
         /*try {
             jsonObject.put("address_id", address_id);
             jsonObject.put("items", jsonArray);
@@ -177,7 +177,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
-
+        JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("quote_id", quote_id);
             jsonObject.put("address_id", address_id);
@@ -207,7 +207,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             if (status.equals("success")) {
                                 String orderId = responseArray.get("order_id").getAsString();
                                 //send sms to user
-                                CallOrderAssignApi(orderId);
+                                CallOrderAssignApi(orderId,address_id);
 
                                 /*startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
@@ -326,9 +326,19 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     }*/
 
 
-    private void CallOrderAssignApi(final String orderId) {
+    private void CallOrderAssignApi(final String orderId, String address_id) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("order_id", orderId);
+            jsonObject.put("address_id", address_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(ORDER_ASSIGN + orderId)
+        AndroidNetworking.post(ORDER_ASSIGN )
+                .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -344,9 +354,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
-
                     @Override
                     public void onError(ANError error) {
                         // handle error
