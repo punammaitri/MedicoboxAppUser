@@ -24,7 +24,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +49,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -78,7 +76,6 @@ import butterknife.OnClick;
 import static com.aiprous.medicobox.utils.APIConstant.APPLY_COUPON;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GETCARTID;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.GET_CART_TOTAL;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
@@ -182,6 +179,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             //get cart items through api
+            MedicoboxApp.onSaveCartId("");
             getCartItems(MedicoboxApp.onGetAuthToken());
         }
 

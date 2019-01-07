@@ -28,7 +28,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -50,10 +49,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.aiprous.medicobox.utils.APIConstant.ADD_TO_CART_ORDER_PLACE;
-import static com.aiprous.medicobox.utils.APIConstant.Authorization;
-import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GETCARTID;
 import static com.aiprous.medicobox.utils.APIConstant.NEW_ADD_TO_CART_ORDER_PLACE;
 import static com.aiprous.medicobox.utils.APIConstant.ORDER_ASSIGN;
 import static com.aiprous.medicobox.utils.APIConstant.SEND_SMS;
@@ -197,7 +192,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         //CallSendSmsApi
         AndroidNetworking.post(NEW_ADD_TO_CART_ORDER_PLACE)
                 .addJSONObjectBody(jsonObject) // posting json
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
 

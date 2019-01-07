@@ -3,7 +3,6 @@ package com.aiprous.medicobox.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -161,6 +160,7 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
     private Integer mMrpAmount;
     private String mComposition, mFulfilled_by, mSold_by, mAvailability;
     private String mSellingUom;
+    private String mQuoteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,8 +223,9 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                     @Override
                     public void onResponse(String response) {
                         // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
-                        MedicoboxApp.onSaveCartId(response);
-                        Log.e("Cart id", "Cart Id  : " + response.toString());
+                        mQuoteId = response.replace("\"", "");
+                        MedicoboxApp.onSaveCartId(mQuoteId);
+                        Log.e("Cart id", "Cart Id  : " + mQuoteId);
                         // mAlert.onShowProgressDialog(ListActivity.this, false);
                     }
 

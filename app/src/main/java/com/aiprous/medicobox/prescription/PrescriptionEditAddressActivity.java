@@ -237,7 +237,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     objCustomer.put("first_name", lFirstname);
                     objCustomer.put("last_name", lLastname);
                     objCustomer.put("city", lCity);
-                    objCustomer.put("state_code", 1);
+                    objCustomer.put("state_code", "553");
                     objCustomer.put("country_id", "IN");
                     objCustomer.put("postcode", lPincode);
                     objCustomer.put("telephone", lPhone);
@@ -282,7 +282,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     objCustomer.put("first_name", lFirstname);
                     objCustomer.put("last_name", lLastname);
                     objCustomer.put("city", lCity);
-                    objCustomer.put("state_code", 1);
+                    objCustomer.put("state_code", "553");
                     objCustomer.put("country_id", "IN");
                     objCustomer.put("postcode", lPincode);
                     objCustomer.put("telephone", lPhone);
