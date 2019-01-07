@@ -11,6 +11,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.SearchViewAdapter;
 import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
+import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -48,6 +49,10 @@ public class SearchViewActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         try {
             searchview_all_medicine.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {

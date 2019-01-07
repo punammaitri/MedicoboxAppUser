@@ -7,7 +7,6 @@ import android.support.multidex.MultiDexApplication;
 
 import com.aiprous.medicobox.R;
 
-import org.acra.ACRA;
 import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;

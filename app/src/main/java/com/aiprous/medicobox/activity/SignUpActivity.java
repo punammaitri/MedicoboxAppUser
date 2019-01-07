@@ -137,6 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
                 JSONObject jsonObjectReg = new JSONObject();
                 jsonObjectReg.put("customer", objCustomer);
                 jsonObjectReg.put("password", lPass);
+                Log.e("url", jsonObjectReg.toString());
 
                 if (!isNetworkAvailable(this)) {
                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
