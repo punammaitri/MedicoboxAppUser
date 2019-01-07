@@ -131,6 +131,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     public Bitmap mBitmap;
     public String imageConvertedString = "";
     private Uri imageBinaryUri ;
+    private String quote_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +166,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("cart_model") != null) {
             //load cart model
             String cartListAsString = getIntent().getStringExtra("cart_model");
+           quote_id = getIntent().getStringExtra("quote_id");
+            
             Gson gson = new Gson();
             Type type = new TypeToken<List<CartModel.Response>>() {
             }.getType();
@@ -454,6 +457,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 String cartModel = gson.toJson(cartList);
                 startActivity(new Intent(this, PaymentDetailsActivity.class)
                         .putExtra("address_id", "" + billing_id)
+                        .putExtra("quote_id", "" + quote_id)
                         .putExtra("items", "" + cartModel)
                         .putExtra("image", "" + imageBinaryUri));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);

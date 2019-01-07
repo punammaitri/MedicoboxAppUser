@@ -40,7 +40,6 @@ import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity implements android.location.LocationListener {
 
-
     private static int SPLASH_TIME_OUT = 4000;
     private static final int REQUEST_PERMISSIONS = 20;
     final static int REQUEST_LOCATION = 199;

@@ -85,6 +85,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     private Uri imageBinaryUri;
     public String imageConvertedString = "";
     private String mQuoteId;
+    private String quote_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         // for passing cart model
         if (getIntent().getStringExtra("items") != null) {
             address_id = getIntent().getStringExtra("address_id");
+            quote_id = getIntent().getStringExtra("quote_id");
+
             String cartListAsString = getIntent().getStringExtra("items");
             Gson gson = new Gson();
             Type type = new TypeToken<List<CartModel.Response>>() {
@@ -161,34 +164,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-        //get quote Id
-        AttemptGetCartId();
-    }
-
-    private void AttemptGetCartId() {
-        AndroidNetworking.post(GETCARTID)
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
-                        mQuoteId = response.replace("\"", "");
-                        Log.e("Cart id", "Cart Id  : " + response.toString());
-                        // mAlert.onShowProgressDialog(ListActivity.this, false);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        // mAlert.onShowProgressDialog(ListActivity.this, false);
-                        //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                        Log.e("Error", "onError errorCode : " + anError.getErrorCode());
-                        Log.e("Error", "onError errorBody : " + anError.getErrorBody());
-                        Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
-                    }
-                });
     }
 
     private void CallOrderPlaceAPI() {
@@ -209,7 +184,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         }*/
 
         try {
-            jsonObject.put("quote_id", mQuoteId);
+            jsonObject.put("quote_id", quote_id);
             jsonObject.put("address_id", address_id);
             jsonObject.put("image", imageConvertedString);
             jsonObject.put("payment_method", "checkmo");

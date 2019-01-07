@@ -132,6 +132,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
     public static final int RESULT_OK = -1;
     private Uri multipleImageUrl = null;
     private String mQuote_id;
+    private String lquoteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,40 +192,12 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
         rlayout_cart.setClickable(false);
-
-        //get quote Id
-        AttemptGetCartId();
     }
 
     @OnClick(R.id.rlayout_cart)
     public void ShowCart() {
         startActivity(new Intent(this, CartActivity.class));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
-    }
-
-    private void AttemptGetCartId() {
-        AndroidNetworking.post(GETCARTID)
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Toast.makeText(mContext, response.toString(), Toast.LENGTH_SHORT).show();
-                        MedicoboxApp.onSaveCartId(response);
-                        Log.e("Cart id", "Cart Id  : " + response.toString());
-                        // mAlert.onShowProgressDialog(ListActivity.this, false);
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        // mAlert.onShowProgressDialog(ListActivity.this, false);
-                        //  Toast.makeText(ListActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                        Log.e("Error", "onError errorCode : " + anError.getErrorCode());
-                        Log.e("Error", "onError errorBody : " + anError.getErrorBody());
-                        Log.e("Error", "onError errorDetail : " + anError.getErrorDetail());
-                    }
-                });
     }
 
     @OnClick(R.id.btn_continue_cart)
@@ -236,6 +209,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                 String cartModel = gson.toJson(cartModelArrayList);
                 startActivity(new Intent(this, OrderSummaryActivity.class)
                         .putExtra("cart_model", cartModel)
+                        .putExtra("quote_id", lquoteId)
                         .putExtra("imageBinaryString", multipleImageUrl.toString()));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             } else {
@@ -247,7 +221,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             String cartModel = gson.toJson(cartModelArrayList);
             startActivity(new Intent(this, OrderSummaryActivity.class)
                     .putExtra("cart_model", cartModel)
-            );
+                    .putExtra("quote_id", lquoteId));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         }
     }
@@ -282,7 +256,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                                     String name = getAllProductList.getJSONObject(i).get("name").toString();
                                     String price = getAllProductList.getJSONObject(i).get("price").toString();
                                     String product_type = getAllProductList.getJSONObject(i).get("product_type").toString();
-                                    String lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                    lquoteId = getAllProductList.getJSONObject(i).get("quote_id").toString();
                                     String sale_price = getAllProductList.getJSONObject(i).get("sale_price").toString();
                                     String short_description = getAllProductList.getJSONObject(i).get("short_description").toString();
                                     String image = getAllProductList.getJSONObject(i).get("image").toString();
@@ -290,7 +264,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                                     int discount = Integer.parseInt(getAllProductList.getJSONObject(i).get("discount").toString());
                                     int prescription_req = Integer.parseInt(getAllProductList.getJSONObject(i).get("prescription").toString());
 
-                                    mQuote_id = getAllProductList.getJSONObject(i).get("quote_id").toString();
+                                    //to save quote id
+                                    MedicoboxApp.onSaveCartId("");
+                                    MedicoboxApp.onSaveCartId(lquoteId);
 
                                     CartModel.Response listModel = new CartModel.Response(discount, prescription, image,
                                             short_description, sale_price, lquoteId, product_type, price, name, id, qty, sku, item_id, prescription_req);
@@ -301,7 +277,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                                     listModel.setName(name);
                                     listModel.setPrice(price);
                                     listModel.setProduct_type(product_type);
-                                    listModel.getQuote_id();
+                                    listModel.setQuote_id(lquoteId);
                                     listModel.setSale_price(sale_price);
                                     listModel.setShort_description(short_description);
                                     listModel.setImage(image);
