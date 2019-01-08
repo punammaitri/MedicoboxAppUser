@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.OrderSummaryActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
@@ -78,6 +79,10 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     private String mAdress;
     private String getDose;
     private String getFlag;
+    private String choose_billing_address;
+    private String address_id;
+    private String quote_id;
+    private String imageBinaryUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,6 +267,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
         mAdress = address;
         mFullname = fullname;
         mMobile = mobile;
+
     }
 
     private void CallDeleteAPI(JSONObject jsonObject) {

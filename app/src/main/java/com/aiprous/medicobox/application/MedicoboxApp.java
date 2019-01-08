@@ -106,4 +106,30 @@ public class MedicoboxApp extends MultiDexApplication {
     public static String onGetCartID() {
         return mSharedPreferences.getString("CARDID", "");
     }
+
+
+    public static void onSaveAddress(String mAddressId, String mAdress, String mFullname, String mMobile) {
+        SharedPreferences.Editor edt = mSharedPreferences.edit();
+        edt.putString("ADD_ID", mAddressId);
+        edt.putString("ADDRESS", mAdress);
+        edt.putString("ADD_FULLNAME", mFullname);
+        edt.putString("ADD_MOBILE", mMobile);
+        edt.commit();
+    }
+
+    public static String onGetAddressId() {
+        return mSharedPreferences.getString("ADD_ID", "");
+    }
+
+    public static String onGetAddress() {
+        return mSharedPreferences.getString("ADDRESS", "");
+    }
+
+    public static String onGetFullname() {
+        return mSharedPreferences.getString("ADD_FULLNAME", "");
+    }
+
+    public static String onGetMobile() {
+        return mSharedPreferences.getString("ADD_MOBILE", "");
+    }
 }

@@ -63,9 +63,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
             holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.colorgreen));
             holder.tv_deliver_order_status.setText("Delivered");
 
-        } else if (myOrdersArrayList.get(position).getStatus().equals("processing")) {
+        } else if (myOrdersArrayList.get(position).getStatus().equals("pending")) {
             holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.coloryellow));
-            holder.tv_deliver_order_status.setText("Processing");
+            holder.tv_deliver_order_status.setText("pending");
         } else {
             holder.tv_deliver_order_status.setTextColor(mContext.getResources().getColor(R.color.colorred));
             holder.tv_deliver_order_status.setText("Cancelled");

@@ -213,7 +213,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             } else {
                 Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
             }
-
         } else {
             Gson gson = new Gson();
             String cartModel = gson.toJson(cartModelArrayList);

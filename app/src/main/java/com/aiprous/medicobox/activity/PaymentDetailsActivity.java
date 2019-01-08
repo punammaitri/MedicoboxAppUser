@@ -346,14 +346,18 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            String status = response.getString("status");
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseObject.get("status").getAsString();
+
                             if (status.equals("success")) {
                                 CallSendSmsApi(orderId);
                                 CustomProgressDialog.getInstance().dismissDialog();
                             }
-                        } catch (JSONException e) {
+                        } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
+
                     }
                     @Override
                     public void onError(ANError error) {
@@ -369,7 +373,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
     private void CallSendSmsApi(final String orderId) {
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        //jsonArray = new JSONArray(mStreetArray);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("mobile_number", "91" + MedicoboxApp.onGetMobileNo());
@@ -381,7 +384,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
         AndroidNetworking.post(SEND_SMS)
                 .addJSONObjectBody(jsonObject) // posting json
-                // .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
