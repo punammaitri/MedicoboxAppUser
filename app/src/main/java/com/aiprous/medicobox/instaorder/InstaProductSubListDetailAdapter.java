@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.aiprous.medicobox.R;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,8 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
     private Context mContext;
     private Dialog dialog;
     private TextView txtOk;
+    private TextView txtTabName, txt_price;
+    private ImageView imgPill;
 
     public InstaProductSubListDetailAdapter(Context mContext, JsonArray mDataArrayList) {
         this.mContext = mContext;
@@ -41,7 +44,7 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         JsonArray getItemData = mSubListArray.getAsJsonArray();
 
@@ -55,7 +58,7 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
         holder.img_Info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowProductInfoAlert(mContext);
+                ShowProductInfoAlert(mContext, mSubListArray.getAsJsonArray(), position);
             }
         });
 
@@ -66,7 +69,7 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
         }
     }
 
-    private void ShowProductInfoAlert(Context mContext) {
+    private void ShowProductInfoAlert(Context mContext, JsonArray asJsonArray, int pos) {
         dialog = new Dialog(mContext, R.style.Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -78,7 +81,28 @@ public class InstaProductSubListDetailAdapter extends RecyclerView.Adapter<Insta
         dialog.show();
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
+
+        txtTabName = dialog.findViewById(R.id.txtTabName);
+        imgPill = dialog.findViewById(R.id.imgPill);
+        txt_price = dialog.findViewById(R.id.txt_price);
         txtOk = dialog.findViewById(R.id.txtOk);
+
+        JsonArray getItemData = mSubListArray.getAsJsonArray();
+        JsonObject jsonObject = (JsonObject) getItemData.get(pos);
+        String name = jsonObject.get("name").getAsString();
+        String product_id = jsonObject.get("product_id").getAsString();
+        String price = jsonObject.get("price").getAsString();
+        String image = jsonObject.get("image").getAsString();
+
+        txtTabName.setText(name);
+        txt_price.setText(" \u20B9 " + price);
+
+        if (image.contains("https")) {
+            String url = jsonObject.get("image").getAsString().replace("https", "http");
+            Picasso.with(mContext)
+                    .load(url)
+                    .into(imgPill);
+        }
 
         txtOk.setOnClickListener(new View.OnClickListener() {
             @Override

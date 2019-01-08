@@ -383,7 +383,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (!order_summary.isEmpty()) {
             finish();
-        }else if (billingFlag.equals("true")){
+        }else if (billingFlag.equals("true") || shippingFlag.equals("true")){
+            startActivity(new Intent(PrescriptionEditAddressActivity.this, MyAccountActivity.class));
             finish();
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
@@ -402,7 +403,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (!order_summary.isEmpty()) {
             finish();
-        }else if (billingFlag.equals("true")){
+        }else if (billingFlag.equals("true") || shippingFlag.equals("true")){
+            startActivity(new Intent(PrescriptionEditAddressActivity.this, MyAccountActivity.class));
             finish();
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));

@@ -20,6 +20,7 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.MainCategoryModel;
 import com.aiprous.medicobox.utils.APIConstant;
+import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -63,6 +64,9 @@ public class MainCategoryActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         rlayout_cart = (RelativeLayout) findViewById(R.id.rlayout_cart);
         tv_cart_size = (TextView) findViewById(R.id.tv_cart_size);

@@ -1,18 +1,15 @@
 package com.aiprous.medicobox.prescription;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -26,13 +23,10 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.activity.ListActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
-import com.aiprous.medicobox.adapter.ListAdapter;
 import com.aiprous.medicobox.adapter.SearchProductViewAdapter;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
-import com.aiprous.medicobox.model.ListModel;
 import com.aiprous.medicobox.model.SearchModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
@@ -41,8 +35,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -59,7 +51,6 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
-import static com.aiprous.medicobox.utils.APIConstant.GETPRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
 import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_ADD_CART;
 import static com.aiprous.medicobox.utils.APIConstant.UPLOADED_PRESCRIPTION_DELETE_CART;
@@ -284,6 +275,8 @@ public class PrescriptionUploadOptionActivity extends AppCompatActivity implemen
                     }
                 } else if (mFlag.equals("specify_medicine")) {
                     CallNextActivity(mFlag);
+                }else {
+                    Toast.makeText(mContext, "Please select atleast one option", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.rlayout_back_button:

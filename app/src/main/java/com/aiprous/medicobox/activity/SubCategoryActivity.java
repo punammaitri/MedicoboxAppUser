@@ -16,6 +16,7 @@ import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.SubCategoryAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.MainCategoryModel;
+import com.aiprous.medicobox.utils.BaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -54,6 +55,9 @@ public class SubCategoryActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         rlayout_cart = (RelativeLayout) findViewById(R.id.rlayout_cart);
         tv_cart_size = (TextView) findViewById(R.id.tv_cart_size);
