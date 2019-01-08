@@ -146,7 +146,8 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @OnClick(R.id.tv_add_new)
     public void addNew() {
         startActivity(new Intent(this, PrescriptionEditAddressActivity.class)
-                .putExtra("billingFlag", "true"));
+                .putExtra("billingFlag", "true")
+                .putExtra("edit_popup", "true"));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 

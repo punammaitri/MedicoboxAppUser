@@ -89,7 +89,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     ArrayList<String> mStreetArray = new ArrayList<String>();
     private String flat;
     private String landmark;
-    private String order_summary="";
+    private String order_summary = "";
+    private String mEdit="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,12 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("fromchooseDelivery") != null) {
             chooseDelivery = getIntent().getStringExtra("fromchooseDelivery");
         }
+
+        //for back page issue
+        if (getIntent().getStringExtra("edit_popup") != null) {
+            mEdit = getIntent().getStringExtra("edit_popup");
+        }
+
 
         if (getIntent().getStringExtra("order_summary") != null) {
             order_summary = getIntent().getStringExtra("order_summary");
@@ -383,16 +390,18 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (!order_summary.isEmpty()) {
             finish();
-        }else if (billingFlag.equals("true") || shippingFlag.equals("true")){
+        } else if (mEdit.equals("true")) {
+            finish();
+        } else if (billingFlag.equals("true") || shippingFlag.equals("true")) {
             startActivity(new Intent(PrescriptionEditAddressActivity.this, MyAccountActivity.class));
             finish();
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
-        } else if(!billingFlag.equals("") || !shippingFlag.equals("")){
+        } else if (!billingFlag.equals("") || !shippingFlag.equals("")) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
-        }else {
+        } else {
             finish();
         }
     }
@@ -403,16 +412,18 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
         if (!order_summary.isEmpty()) {
             finish();
-        }else if (billingFlag.equals("true") || shippingFlag.equals("true")){
+        } else if (mEdit.equals("true")) {
+            finish();
+        } else if (billingFlag.equals("true") || shippingFlag.equals("true")) {
             startActivity(new Intent(PrescriptionEditAddressActivity.this, MyAccountActivity.class));
             finish();
         } else if (chooseDelivery.isEmpty()) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
-        } else if(!billingFlag.equals("") || !shippingFlag.equals("")){
+        } else if (!billingFlag.equals("") || !shippingFlag.equals("")) {
             startActivity(new Intent(mContext, MyAccountActivity.class));
             finish();
-        }else {
+        } else {
             finish();
         }
     }

@@ -105,6 +105,7 @@ public class PrescriptionChooseDeliveryAddressAdapter extends RecyclerView.Adapt
             public void onClick(View view) {
                 mContext.startActivity(new Intent(mContext, PrescriptionEditAddressActivity.class)
                         .putExtra("billingFlag", "true")
+                        .putExtra("edit_popup", "true")
                         .putExtra("id", id)
                         .putExtra("firstname", firstname)
                         .putExtra("lastname", lastname)

@@ -301,6 +301,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                             CustomProgressDialog.getInstance().dismissDialog();
 
                         } catch (JSONException e) {
+                            CustomProgressDialog.getInstance().dismissDialog();
                             e.printStackTrace();
                         }
                     }
