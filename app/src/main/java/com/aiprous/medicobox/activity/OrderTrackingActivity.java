@@ -146,7 +146,7 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
             if (!isNetworkAvailable(this)) {
                 CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
             } else {
-                CallTrackOrderAPI("77");
+                CallTrackOrderAPI(order_id);
             }
         }
     }

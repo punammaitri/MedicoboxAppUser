@@ -87,6 +87,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private String order_id;
+    private String entity_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +165,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
                             if (success.equals("success")) {
                                 JsonObject getJsonObject1 = (JsonObject) new JsonParser().parse(response.getString("order_data"));
-                                String entity_id = getJsonObject1.get("entity_id").getAsString();
+                                entity_id = getJsonObject1.get("entity_id").getAsString();
                                 String status = getJsonObject1.get("status").getAsString();
                                 String increment_id = getJsonObject1.get("increment_id").getAsString();
                                 String grand_total = getJsonObject1.get("grand_total").getAsString();
@@ -289,10 +290,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
     @OnClick(R.id.btn_track_order)
     public void trackOrder() {
         startActivity(new Intent(this, OrderTrackingActivity.class)
-        .putExtra("order_id",""+order_id));
+                .putExtra("order_id", "" + entity_id));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
-
 
     @OnClick(R.id.searchview_medicine)
     public void onClicksearch() {

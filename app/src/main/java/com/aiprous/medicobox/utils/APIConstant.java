@@ -60,7 +60,8 @@ public class APIConstant {
     public static String USERORDER = "http://user8.itsindev.com/medibox/API/user_orders.php";
     public static String SINGLE_ORDER = "http://user8.itsindev.com/medibox/API/single-order.php";
     public static String ORDER_TRACKING = "http://user8.itsindev.com/medibox/API/order_address.php/?order_id=";
-    public static String ORDER_ASSIGN = "https://user8.itsindev.com/medibox/API/order-assign-to-warehouse.php";
+    public static String ORDER_ASSIGN = "http://user8.itsindev.com/medibox/API/order-assign-to-warehouse.php";
+    public static String ORDER_ASSIGN_SELLER = "http://user8.itsindev.com/medibox/API/order-assign-to-seller.php";
 
     // add address
     public static String SHIPPING_ADDRESS = "http://user8.itsindev.com/medibox/index.php/rest/V1/customers/me/shippingAddress";

@@ -560,7 +560,7 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
         try {
             jsonObject.put("action", delete);
             jsonObject.put("image", url);
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

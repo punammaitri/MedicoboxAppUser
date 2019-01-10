@@ -39,6 +39,37 @@
                 android:textStyle="bold"
                 android:theme="@style/MyRadioButton" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <fragment
+                    android:id="@+id/place_autocomplete_fragment"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/search_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_35"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_15"
+                android:layout_marginRight="@dimen/height_10"
+                android:background="@drawable/custom_btn_bg_white"
+                android:ellipsize="end"
+                android:hint="Search address"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/height_15"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/colorlightGray" />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,8 +180,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Pincode*"
-                    android:inputType="number"
                     android:imeOptions="actionNext"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
@@ -186,46 +217,6 @@
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </android.support.design.widget.TextInputLayout>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_8"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Home"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorblack"
-                    android:theme="@style/MyRadioButton" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Office"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorblack"
-                    android:theme="@style/MyRadioButton" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Other"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorblack"
-                    android:theme="@style/MyRadioButton" />
-
-            </RadioGroup>
 
             <Button
                 android:id="@+id/btn_save"

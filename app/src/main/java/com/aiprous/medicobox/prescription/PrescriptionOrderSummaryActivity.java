@@ -216,7 +216,7 @@ public class PrescriptionOrderSummaryActivity extends AppCompatActivity {
             jsonObject.put("billing_address", "");
             jsonObject.put("order_type", getFlag);
             jsonObject.put("duration_days", getDose);
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

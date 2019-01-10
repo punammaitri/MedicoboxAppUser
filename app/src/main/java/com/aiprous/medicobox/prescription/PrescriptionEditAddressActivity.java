@@ -3,6 +3,8 @@ package com.aiprous.medicobox.prescription;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
+import com.aiprous.medicobox.activity.GooglePlacesActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
@@ -29,6 +32,15 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -37,7 +49,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +67,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
     @BindView(R.id.searchview_medicine)
     AutoCompleteTextView searchview_medicine;
+    @BindView(R.id.search_address)
+    EditText search_address;
     @BindView(R.id.rlayout_cart)
     RelativeLayout rlayout_cart;
     @BindView(R.id.tv_cart_size)
@@ -90,7 +107,19 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private String flat;
     private String landmark;
     private String order_summary = "";
-    private String mEdit="";
+    private String mEdit = "";
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    Double lat = 0.0;
+    Double log = 0.0;
+    private String mAddress = "";
+    private String mAreaUsingPlaces = "";
+    private String mCityUsingPlaces = "";
+    private String mStateUsingPlaces = "";
+    String mArea;
+    private String subArea1 = "";
+    private String subArea2 = "";
+    private String mPostalCodeUsingPlaces;
+    private String mFeatureName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +131,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
 
     private void init() {
         searchview_medicine.setFocusable(false);
+        search_address.setFocusable(false);
 
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
@@ -257,7 +287,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     jsonObjectReg = new JSONObject();
                     jsonObjectReg.put("user_id", MedicoboxApp.onGetId());
                     jsonObjectReg.put("address", objCustomer);
-                    Log.e("url", jsonObjectReg.toString());
+                    Log.e("data", jsonObjectReg.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -303,7 +333,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     jsonObjectReg.put("user_id", MedicoboxApp.onGetId());
                     jsonObjectReg.put("address_id", id);
                     jsonObjectReg.put("address", objCustomer);
-                    Log.e("url", jsonObjectReg.toString());
+                    Log.e("data", jsonObjectReg.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -431,5 +461,140 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     @OnClick(R.id.searchview_medicine)
     public void onClicksearch() {
         startActivity(new Intent(this, SearchViewActivity.class));
+    }
+
+    @OnClick(R.id.search_address)
+    public void searchAddress() {
+        Search();
+    }
+
+    private void Search() {
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                Log.i("Places", "Place: " + place.getName());
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.i("Places", "An error occurred: " + status);
+            }
+        });
+
+        try {
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                    .setTypeFilter(Place.TYPE_COUNTRY)
+                    .setCountry("IND")
+                    .build();
+
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                    .setFilter(typeFilter)
+                    .build(this);
+
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                mAddress = (String) place.getAddress();
+
+                Log.e("address", "" + (CharSequence) place.getAddress());
+                //edt_gps_current_location_partnerwithus.setText();
+                LatLng latlog = place.getLatLng();
+
+                lat = latlog.latitude;
+                log = latlog.longitude;
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(lat, log, 1);
+                    if (addresses != null) {
+                        mAreaUsingPlaces = " " + addresses.get(0).getSubLocality();
+                        mCityUsingPlaces = addresses.get(0).getLocality();
+                        mStateUsingPlaces = addresses.get(0).getAdminArea();
+                        mPostalCodeUsingPlaces = addresses.get(0).getPostalCode();
+                        mFeatureName = addresses.get(0).getFeatureName();
+
+                        edtStreet.setText(mFeatureName);
+                        edtLandmark.setText(mAreaUsingPlaces);
+                        edtPincde.setText(mPostalCodeUsingPlaces);
+                        edtState.setText(mStateUsingPlaces);
+                        edtCity.setText(mCityUsingPlaces);
+                        getMyLocation(lat, log);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Log.i("Result Ok", "Place: " + place.getName());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.i("Result Error", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
+    private String getMyLocation(double latitude1, double longitude1) {
+        String local_address = "";
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(mContext, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude1, longitude1, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+            if (addresses.size() > 0) {
+                Log.e("Address", addresses.get(0).getLocality());
+                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                mArea = " " + addresses.get(0).getSubLocality();
+
+                String[] arr = address.split(",");
+                try {
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i].equals(mArea)) {
+                            subArea1 = arr[i - 1];
+                            subArea2 = arr[i - 2];
+                            if (subArea2.isEmpty()) {
+                                subArea2 = subArea1;
+                            }
+                            break;
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    if (addresses.get(0).getThoroughfare().equalsIgnoreCase("null")) {
+                        //edtEmailLogin.setText(addresses.get(0).getLocality());
+                    } else {
+                        //edtEmailLogin.setText(addresses.get(0).getLocality());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // AlertDialogs.getInstance().onShowToastNotification(this, getString(R.string.error_location));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return local_address;
     }
 }

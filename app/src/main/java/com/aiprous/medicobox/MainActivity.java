@@ -84,6 +84,7 @@ import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
 import static com.aiprous.medicobox.utils.APIConstant.SEARCHPRODUCT;
+import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 
 public class MainActivity extends AppCompatActivity
@@ -169,7 +170,11 @@ public class MainActivity extends AppCompatActivity
         //navigation drawer for pharmacist
         //navigationItemPharmacist(true);
 
-        getCartItems(MedicoboxApp.onGetAuthToken());
+        if (!isNetworkAvailable(mContext)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        }else {
+            getCartItems(MedicoboxApp.onGetAuthToken());
+        }
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.VISIBLE);

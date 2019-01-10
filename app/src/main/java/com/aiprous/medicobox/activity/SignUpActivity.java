@@ -137,7 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
                 JSONObject jsonObjectReg = new JSONObject();
                 jsonObjectReg.put("customer", objCustomer);
                 jsonObjectReg.put("password", lPass);
-                Log.e("url", jsonObjectReg.toString());
+                Log.e("data", jsonObjectReg.toString());
 
                 if (!isNetworkAvailable(this)) {
                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
@@ -198,7 +198,7 @@ public class SignUpActivity extends AppCompatActivity {
                 jsonObject.put("mobile_number", "91" + lMobile);
                 jsonObject.put("message", "Thanks for registration with MedicoBox your email is  " + lEmail + " and password is " + lPass + "\n\n" + "Team medicoBox .");
             }
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

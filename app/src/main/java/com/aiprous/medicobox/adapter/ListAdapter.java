@@ -719,7 +719,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -785,7 +785,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             try {
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
                 jsonObject.put("wishlist_name", getValueFromEdittext);
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -830,7 +830,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
                 jsonObject.put("wishlist_name_id", getWishListId);
                 jsonObject.put("item_id", itemId);
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

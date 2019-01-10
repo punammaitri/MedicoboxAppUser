@@ -51,6 +51,7 @@ import butterknife.OnClick;
 
 import static com.aiprous.medicobox.utils.APIConstant.NEW_ADD_TO_CART_ORDER_PLACE;
 import static com.aiprous.medicobox.utils.APIConstant.ORDER_ASSIGN;
+import static com.aiprous.medicobox.utils.APIConstant.ORDER_ASSIGN_SELLER;
 import static com.aiprous.medicobox.utils.APIConstant.SEND_SMS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
@@ -173,7 +174,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             jsonObject.put("shipping_method", "");
             jsonObject.put("payment_method", "cash");
             jsonObject.put("image", imageConvertedString);
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
@@ -184,7 +185,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             jsonObject.put("image", imageConvertedString);
             jsonObject.put("payment_method", "checkmo");
             jsonObject.put("shipping_method", "wkvendordropship_wkvendordropship");
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -207,7 +208,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             if (status.equals("success")) {
                                 String orderId = responseArray.get("order_id").getAsString();
                                 //send sms to user
-                                CallOrderAssignApi(orderId,address_id);
+                                CallOrderAssignApi(orderId, address_id);
 
                                 /*startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
@@ -279,7 +280,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             jsonObject.put("shipping_method", "");
             jsonObject.put("payment_method", "cash");
             jsonObject.put("image", imageConvertedString);
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -337,7 +338,52 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         }
 
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.post(ORDER_ASSIGN )
+        AndroidNetworking.post(ORDER_ASSIGN)
+                .addJSONObjectBody(jsonObject) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseObject.get("status").getAsString();
+
+                            if (status.equals("success")) {
+                                CallAssignSellerAPI(orderId);
+                                CustomProgressDialog.getInstance().dismissDialog();
+                            }
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
+    }
+
+    private void CallAssignSellerAPI(final String orderId) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("order_id", orderId);
+            Log.e("data",jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        AndroidNetworking.post(ORDER_ASSIGN_SELLER)
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -357,8 +403,8 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
-
                     }
+
                     @Override
                     public void onError(ANError error) {
                         // handle error
@@ -377,7 +423,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         try {
             jsonObject.put("mobile_number", "91" + MedicoboxApp.onGetMobileNo());
             jsonObject.put("message", "Your order placed successfully" + " Your order number is " + orderId);
-            Log.e("url", jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

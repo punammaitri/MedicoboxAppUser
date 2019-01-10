@@ -156,7 +156,7 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -235,7 +235,7 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
                 jsonObject.put("wishlistname_id", wishlist_name_id);
                 jsonObject.put("emails", edt_emails);
                 jsonObject.put("message", edt_messages);
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -280,7 +280,7 @@ public class InstaAddNewListActivity extends AppCompatActivity implements InstaA
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("wishlist_name_id", Integer.parseInt(wishlist_name_id));
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -259,7 +259,7 @@ public class InstaAddNewListAdapter extends RecyclerView.Adapter<InstaAddNewList
             try {
                 jsonObject.put("user_id", MedicoboxApp.onGetId());
                 jsonObject.put("wishlist_name_id", "" + wishlistNameId);
-                Log.e("url", "" + jsonObject.toString());
+                Log.e("data", "" + jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
