@@ -271,7 +271,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
 
                 if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-                    CartActivity.rlayout_cart.setVisibility(View.GONE);
+                    CartActivity.rlayout_cart.setVisibility(View.VISIBLE);
                     relMainView.setVisibility(View.VISIBLE);
                     nestedscroll_cart.setVisibility(View.GONE);
                 }
@@ -329,7 +329,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                             nestedscroll_cart.setVisibility(View.VISIBLE);
                         } else {
 
-                            CartActivity.rlayout_cart.setVisibility(View.GONE);
+                            CartActivity.rlayout_cart.setVisibility(View.VISIBLE);
                             relMainView.setVisibility(View.VISIBLE);
                             nestedscroll_cart.setVisibility(View.GONE);
                         }

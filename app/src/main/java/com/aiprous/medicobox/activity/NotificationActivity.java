@@ -65,7 +65,7 @@ public class NotificationActivity extends AppCompatActivity {
         super.onResume();
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }

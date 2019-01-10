@@ -116,8 +116,9 @@ public class MyAccountActivity extends AppCompatActivity {
         super.onResume();
         //show cart size
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
+            rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
@@ -146,7 +147,6 @@ public class MyAccountActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
                             JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();

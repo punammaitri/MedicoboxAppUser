@@ -108,8 +108,9 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         super.onResume();
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
+            rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
@@ -446,7 +447,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                                 startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class)
                                         .putExtra("order_id", "" + orderId));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
+                                SingletonAddToCart.getGsonInstance().option.clear();
                                 CustomProgressDialog.getInstance().dismissDialog();
                             } else {
                                 String msg = responseArray.get("msg").getAsString();

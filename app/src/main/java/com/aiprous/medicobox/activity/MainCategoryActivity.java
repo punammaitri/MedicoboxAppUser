@@ -48,8 +48,9 @@ public class MainCategoryActivity extends AppCompatActivity {
     AutoCompleteTextView searchview_medicine;
     @BindView(R.id.rc_main_category)
     RecyclerView rc_main_category;
+
     private RecyclerView.LayoutManager layoutManager;
-    ArrayList<MainCategoryModel> mMainCategoryArrayList=new ArrayList<>();
+    ArrayList<MainCategoryModel> mMainCategoryArrayList = new ArrayList<>();
     private Context mContext = this;
     ArrayList<MainCategoryModel.SubCat> lSubCatArrayList;
     public static RelativeLayout rlayout_cart;
@@ -70,10 +71,20 @@ public class MainCategoryActivity extends AppCompatActivity {
 
         rlayout_cart = (RelativeLayout) findViewById(R.id.rlayout_cart);
         tv_cart_size = (TextView) findViewById(R.id.tv_cart_size);
+
+
+        rlayout_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, CartActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
+        });
+
         searchview_medicine.setFocusable(false);
         //set cart value
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
             rlayout_cart.setVisibility(View.VISIBLE);
@@ -102,7 +113,7 @@ public class MainCategoryActivity extends AppCompatActivity {
                             JSONObject jsonObj = new JSONObject(response.toString());
                             JSONArray lResponseArray = jsonObj.getJSONArray("response");
 
-                            for(int i=0; i<lResponseArray.length(); i++) {
+                            for (int i = 0; i < lResponseArray.length(); i++) {
                                 JSONObject jsonObjCat = lResponseArray.getJSONObject(i);
 
                                 String lcategoryName = jsonObjCat.getString("categoryName").toString();
@@ -118,15 +129,15 @@ public class MainCategoryActivity extends AppCompatActivity {
                                     JSONArray lSubCategoryArray = jsonObjCat.getJSONArray("SubCategory");
 
                                     //fetch suncategory items
-                                    lSubCatArrayList= new ArrayList<>();
-                                    for(int j=0; j<lSubCategoryArray.length(); j++) {
+                                    lSubCatArrayList = new ArrayList<>();
+                                    for (int j = 0; j < lSubCategoryArray.length(); j++) {
                                         JSONObject json = lSubCategoryArray.getJSONObject(j);
-                                        String lsubcategoryName=json.getString("categoryName").toString();
-                                        String lsubcategoryID=json.getString("CategoryId").toString();
-                                        String lsubcategoryurl=json.getString("image_url").toString();
+                                        String lsubcategoryName = json.getString("categoryName").toString();
+                                        String lsubcategoryID = json.getString("CategoryId").toString();
+                                        String lsubcategoryurl = json.getString("image_url").toString();
 
 
-                                        MainCategoryModel.SubCat lsubCat= new MainCategoryModel.SubCat(lsubcategoryName,lsubcategoryID,lsubcategoryurl);
+                                        MainCategoryModel.SubCat lsubCat = new MainCategoryModel.SubCat(lsubcategoryName, lsubcategoryID, lsubcategoryurl);
                                         lsubCat.setCategoryName(lsubcategoryName);
                                         lsubCat.setCategoryId(lsubcategoryID);
                                         lsubCat.setImage_url(lsubcategoryurl);
@@ -136,7 +147,7 @@ public class MainCategoryActivity extends AppCompatActivity {
 
                                 }
 
-                                MainCategoryModel lmainCategoryModel=new MainCategoryModel(lcategoryName,lCategoryId,limage_url,lSubCatArrayList);
+                                MainCategoryModel lmainCategoryModel = new MainCategoryModel(lcategoryName, lCategoryId, limage_url, lSubCatArrayList);
                                 lmainCategoryModel.setCategoryName(lcategoryName);
                                 lmainCategoryModel.setCategoryId(lCategoryId);
                                 lmainCategoryModel.setImage_url(limage_url);
@@ -168,9 +179,8 @@ public class MainCategoryActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.searchview_medicine)
-    public void onClicksearch()
-    {
-        startActivity(new Intent(this,SearchViewActivity.class));
+    public void onClicksearch() {
+        startActivity(new Intent(this, SearchViewActivity.class));
     }
 
 }

@@ -103,11 +103,11 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
     private OrderTrackingActivity mContext = this;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<LatLng> MarkerPoints;
-    private String mWarehouseAddress="", mShippingAddress="", mDeliveryAddress="";
+    private String mWarehouseAddress = "", mShippingAddress = "", mDeliveryAddress = "";
     private LatLng mWarehouseLatLng;
     private String order_id;
     ArrayList<OrderTrackingModel> mTrackingModels = new ArrayList<>();
-    private String mWareHouseLat = "", mWareHouseLong="", mDeliveryBoyLat="";
+    private String mWareHouseLat = "", mWareHouseLong = "", mDeliveryBoyLat = "";
     private String mShippingLat, mShippingLong, mDeliveryBoyLong;
     private String orderId, order_date, order_amount;
     private LatLng mShippingLatLng, mDeliveryLatLng;
@@ -119,6 +119,12 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
 
     ArrayList<HashMap<String, String>> location = new ArrayList<HashMap<String, String>>();
     HashMap<String, String> map;
+    private Double warehouseLat;
+    private Double warehouseLong;
+    private Double shippingLong;
+    private Double shippingLat;
+    private Double deliveryLat;
+    private Double deliveryLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +162,9 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
         super.onResume();
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
+            rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
     }
@@ -195,11 +202,22 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                             if (warehouse != null) {
                                 mWareHouseLat = warehouse.get("lat").getAsString();
                                 mWareHouseLong = warehouse.get("long").getAsString();
-                                Double warehouseLat = Double.valueOf(mWareHouseLat);
-                                Double warehouseLong = Double.valueOf(mWareHouseLong);
-                                //for warehouse
-                                mWarehouseLatLng = new LatLng(warehouseLat, warehouseLong);
-                                mWarehouseAddress = getAddressFromLatLng(OrderTrackingActivity.this, warehouseLat, warehouseLong);
+
+                                //for warehouse latlong
+                                if (!mWareHouseLat.equals("") && !mWareHouseLong.equals("")) {
+                                    warehouseLat = Double.valueOf(mWareHouseLat);
+                                    warehouseLong = Double.valueOf(mWareHouseLong);
+                                    //for warehouse
+                                    mWarehouseLatLng = new LatLng(warehouseLat, warehouseLong);
+                                    mWarehouseAddress = getAddressFromLatLng(OrderTrackingActivity.this, warehouseLat, warehouseLong);
+
+                                    //add location to arrayList for warehouse
+                                    map = new HashMap<String, String>();
+                                    map.put("Latitude", mWareHouseLat);
+                                    map.put("Longitude", mWareHouseLong);
+                                    map.put("LocationName", mWarehouseAddress);
+                                    location.add(map);
+                                }
                             }
 
                             //Shipping  lat long
@@ -207,11 +225,21 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                             if (shipping != null) {
                                 mShippingLat = shipping.get("lat").getAsString();
                                 mShippingLong = shipping.get("long").getAsString();
-                                Double shippingLat = Double.valueOf(mShippingLat);
-                                Double shippingLong = Double.valueOf(mShippingLong);
-                                //for shipping
-                                mShippingLatLng = new LatLng(shippingLat, shippingLong);
-                                mShippingAddress = getAddressFromLatLng(OrderTrackingActivity.this, shippingLat, shippingLong);
+
+                                if (!mShippingLat.equals("") && !mShippingLong.equals("")) {
+                                    shippingLat = Double.valueOf(mShippingLat);
+                                    shippingLong = Double.valueOf(mShippingLong);
+                                    //for shipping
+                                    mShippingLatLng = new LatLng(shippingLat, shippingLong);
+                                    mShippingAddress = getAddressFromLatLng(OrderTrackingActivity.this, shippingLat, shippingLong);
+
+                                    //add location to arrayList for shipping
+                                    map = new HashMap<String, String>();
+                                    map.put("Latitude", mShippingLat);
+                                    map.put("Longitude", mShippingLong);
+                                    map.put("LocationName", mShippingAddress);
+                                    location.add(map);
+                                }
                             }
 
                             //Delivery boy lat long
@@ -219,35 +247,25 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                             if (shipping != null) {
                                 mDeliveryBoyLat = delivery_boy.get("lat").getAsString();
                                 mDeliveryBoyLong = delivery_boy.get("long").getAsString();
-                                Double deliveryLat = Double.valueOf(mDeliveryBoyLat);
-                                Double deliveryLong = Double.valueOf(mDeliveryBoyLong);
-                                //for delivery boy
-                                mDeliveryLatLng = new LatLng(deliveryLat, deliveryLong);
-                                mDeliveryAddress = getAddressFromLatLng(OrderTrackingActivity.this, deliveryLat, deliveryLong);
+
+                                if (!mDeliveryBoyLat.equals("") && !mDeliveryBoyLong.equals("")) {
+                                    deliveryLat = Double.valueOf(mDeliveryBoyLat);
+                                    deliveryLong = Double.valueOf(mDeliveryBoyLong);
+                                    //for delivery boy
+                                    mDeliveryLatLng = new LatLng(deliveryLat, deliveryLong);
+                                    mDeliveryAddress = getAddressFromLatLng(OrderTrackingActivity.this, deliveryLat, deliveryLong);
+
+                                    //add location to arrayList for delivery boy
+                                    map = new HashMap<String, String>();
+                                    map.put("Latitude", mDeliveryBoyLat);
+                                    map.put("Longitude", mDeliveryBoyLong);
+                                    map.put("LocationName", mDeliveryAddress);
+                                    location.add(map);
+                                }
                             }
 
-                            //add location to arrayList for warehouse
-                            map = new HashMap<String, String>();
-                            map.put("Latitude", mWareHouseLat);
-                            map.put("Longitude", mWareHouseLong);
-                            map.put("LocationName", mWarehouseAddress);
-                            location.add(map);
 
-                            //add location to arrayList for shipping
-                            map = new HashMap<String, String>();
-                            map.put("Latitude", mShippingLat);
-                            map.put("Longitude", mShippingLong);
-                            map.put("LocationName", mShippingAddress);
-                            location.add(map);
-
-                            //add location to arrayList for delivery boy
-                            map = new HashMap<String, String>();
-                            map.put("Latitude", mDeliveryBoyLat);
-                            map.put("Longitude", mDeliveryBoyLong);
-                            map.put("LocationName", mDeliveryAddress);
-                            location.add(map);
-
-                            //for adding marker
+                            //for adding marker on map
                             for (int i = 0; i < location.size(); i++) {
                                 Latitude = Double.parseDouble(location.get(i).get("Latitude").toString());
                                 Longitude = Double.parseDouble(location.get(i).get("Longitude").toString());
@@ -257,7 +275,7 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                                 if (i == 0) {
                                     marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                                     mMap.addMarker(marker);
-                                } else if (i ==1) {
+                                } else if (i == 1) {
                                     marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
                                     mMap.addMarker(marker);
                                 } else if (i == 2) {

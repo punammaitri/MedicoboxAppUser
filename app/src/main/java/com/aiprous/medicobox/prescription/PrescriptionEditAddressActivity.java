@@ -2,12 +2,10 @@ package com.aiprous.medicobox.prescription;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
-import com.aiprous.medicobox.activity.GooglePlacesActivity;
 import com.aiprous.medicobox.activity.MyAccountActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
@@ -48,7 +45,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +106,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private String mEdit = "";
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     Double lat = 0.0;
-    Double log = 0.0;
+    Double lng = 0.0;
     private String mAddress = "";
     private String mAreaUsingPlaces = "";
     private String mCityUsingPlaces = "";
@@ -120,6 +116,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private String subArea2 = "";
     private String mPostalCodeUsingPlaces;
     private String mFeatureName;
+    private String mLandmark = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +139,9 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
+            rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         }
 
@@ -280,6 +278,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                     objCustomer.put("telephone", lPhone);
                     objCustomer.put("company", "Company");
                     objCustomer.put("fax", "fax");
+                    objCustomer.put("lat_long", lat + "," + lng);
                     objCustomer.put("street", jsonArray);
                     objCustomer.put("default_shipping", setShippingAddress);
                     objCustomer.put("default_billing", setBillingAddress);
@@ -507,6 +506,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
+                mLandmark = (String) place.getName();
                 mAddress = (String) place.getAddress();
 
                 Log.e("address", "" + (CharSequence) place.getAddress());
@@ -514,10 +514,10 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                 LatLng latlog = place.getLatLng();
 
                 lat = latlog.latitude;
-                log = latlog.longitude;
+                lng = latlog.longitude;
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());
                 try {
-                    List<Address> addresses = geocoder.getFromLocation(lat, log, 1);
+                    List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
                     if (addresses != null) {
                         mAreaUsingPlaces = " " + addresses.get(0).getSubLocality();
                         mCityUsingPlaces = addresses.get(0).getLocality();
@@ -525,12 +525,12 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                         mPostalCodeUsingPlaces = addresses.get(0).getPostalCode();
                         mFeatureName = addresses.get(0).getFeatureName();
 
-                        edtStreet.setText(mFeatureName);
+                        edtStreet.setText(mLandmark);
                         edtLandmark.setText(mAreaUsingPlaces);
                         edtPincde.setText(mPostalCodeUsingPlaces);
                         edtState.setText(mStateUsingPlaces);
                         edtCity.setText(mCityUsingPlaces);
-                        getMyLocation(lat, log);
+                        getMyLocation(lat, lng);
                     }
 
                 } catch (IOException e) {

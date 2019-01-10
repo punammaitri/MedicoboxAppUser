@@ -64,11 +64,20 @@ public class SubCategoryActivity extends AppCompatActivity {
         searchview_medicine.setFocusable(false);
         //set cart value
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
-            rlayout_cart.setVisibility(View.GONE);
+            rlayout_cart.setVisibility(View.VISIBLE);
         } else {
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
             rlayout_cart.setVisibility(View.VISIBLE);
         }
+
+        rlayout_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, CartActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
+        });
+
 
         if (getIntent().getStringExtra("SubCategoryArray") != null) {
             Gson gson = new Gson();

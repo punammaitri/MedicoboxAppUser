@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         autocomplete_all_medicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mContext,SearchViewActivity.class));
+                startActivity(new Intent(mContext, SearchViewActivity.class));
             }
         });
 
@@ -170,18 +170,20 @@ public class MainActivity extends AppCompatActivity
         //navigation drawer for pharmacist
         //navigationItemPharmacist(true);
 
-        if (!isNetworkAvailable(mContext)) {
-            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-        }else {
-            getCartItems(MedicoboxApp.onGetAuthToken());
-        }
 
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.VISIBLE);
+            SingletonAddToCart.getGsonInstance().option.clear();
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
         } else {
             rlayout_cart.setVisibility(View.VISIBLE);
             tv_cart_size.setText("" + SingletonAddToCart.getGsonInstance().getOptionList().size());
+        }
+
+        if (!isNetworkAvailable(mContext)) {
+            CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            getCartItems(MedicoboxApp.onGetAuthToken());
         }
     }
 
@@ -279,7 +281,7 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             return;
-        }else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
             startActivity(new Intent(mContext, MyOrdersActivity.class));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -518,7 +520,8 @@ public class MainActivity extends AppCompatActivity
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
-                        //Toast.makeText(MainActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Something wrong at server site", Toast.LENGTH_SHORT).show();
+                        SingletonAddToCart.getGsonInstance().option.clear();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

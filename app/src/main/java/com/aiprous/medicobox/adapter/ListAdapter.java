@@ -496,7 +496,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             //this is for make cart icon visible
                             rlayout_cart.setVisibility(View.VISIBLE);
                         } else {
-                            rlayout_cart.setVisibility(View.GONE);
+                            rlayout_cart.setVisibility(View.VISIBLE);
                         }
                     }
                 }

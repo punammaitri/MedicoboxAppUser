@@ -7,6 +7,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.aiprous.medicobox.R;
 
+import org.acra.ACRA;
 import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -24,7 +25,7 @@ public class MedicoboxApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        //ACRA.init(this);
+        ACRA.init(this);
         mContext = getApplicationContext();
         mSharedPreferences = mContext.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
     }
