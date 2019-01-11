@@ -531,7 +531,6 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                         edtPincde.setText(mPostalCodeUsingPlaces);
                         edtState.setText(mStateUsingPlaces);
                         edtCity.setText(mCityUsingPlaces);
-                        btnSave.setText("Update");
                         mFlag = false;
                         getMyLocation(lat, lng);
                     }

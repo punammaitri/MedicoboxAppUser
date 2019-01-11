@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class AllCustomerAddress {
+public class AllCustomerAddress {
 
     @Expose
     @SerializedName("default_shipping")
@@ -59,10 +59,12 @@ public  class AllCustomerAddress {
     @Expose
     @SerializedName("firstname")
     private String firstname;
+    @Expose
+    @SerializedName("lat_long")
+    private String lat_long;
 
-
-    public AllCustomerAddress(String id,String telephone, String postcode, String region_id,
-                              String country_id, String city, String street, String lastname, String firstname,String flat,String landmark) {
+    public AllCustomerAddress(String id, String telephone, String postcode, String region_id,
+                              String country_id, String city, String street, String lastname, String firstname, String flat, String landmark, String lat_long) {
         this.id = id;
         this.telephone = telephone;
         this.postcode = postcode;
@@ -74,6 +76,7 @@ public  class AllCustomerAddress {
         this.firstname = firstname;
         this.flat = flat;
         this.landmark = landmark;
+        this.lat_long = lat_long;
     }
 
     public boolean isDefault_shipping() {
@@ -210,5 +213,13 @@ public  class AllCustomerAddress {
 
     public void setLandmark(String landmark) {
         this.landmark = landmark;
+    }
+
+    public String getLat_long() {
+        return lat_long;
+    }
+
+    public void setLat_long(String lat_long) {
+        this.lat_long = lat_long;
     }
 }

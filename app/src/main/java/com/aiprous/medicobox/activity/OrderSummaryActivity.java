@@ -25,8 +25,6 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.model.CartOrderSummaryModel;
-import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
-import com.aiprous.medicobox.prescription.PrescriptionEditAddressActivity;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -34,12 +32,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,9 +42,7 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +51,6 @@ import butterknife.OnClick;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
-import static com.aiprous.medicobox.utils.APIConstant.GET_ALL_ADDRESS;
 import static com.aiprous.medicobox.utils.APIConstant.GET_CART_TOTAL;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 

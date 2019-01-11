@@ -98,6 +98,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     ArrayList<CartModel.Response> cartList = new ArrayList<>();
     public Bitmap mBitmap;
     private String cartListAsString = "";
+    private String lat_long;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,6 +257,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                     region_id = asJsonObject.get("region_id").getAsString();
                                     postcode = asJsonObject.get("postcode").getAsString();
                                     telephone = asJsonObject.get("telephone").getAsString();
+                                    lat_long = asJsonObject.get("lat_long").getAsString();
                                     JsonArray streetArray = asJsonObject.get("street").getAsJsonArray();
                                     JsonArray streetInnerArray = streetArray.getAsJsonArray();
                                     flat = streetInnerArray.get(0).getAsString();
@@ -263,7 +265,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                     landmark = streetInnerArray.get(2).getAsString();
 
                                     AllCustomerAddress allCustomerAddress = new AllCustomerAddress(id, telephone, postcode, region_id, country_id,
-                                            city, street, lastname, firstname, flat, landmark);
+                                            city, street, lastname, firstname, flat, landmark,lat_long);
                                     allCustomerAddress.setId(id);
                                     allCustomerAddress.setTelephone(telephone);
                                     allCustomerAddress.setPostcode(postcode);
@@ -275,6 +277,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                     allCustomerAddress.setFirstname(firstname);
                                     allCustomerAddress.setFlat(flat);
                                     allCustomerAddress.setLandmark(landmark);
+                                    allCustomerAddress.setLat_long(lat_long);
                                     mAllCustomerArrayList.add(allCustomerAddress);
                                 }
 
