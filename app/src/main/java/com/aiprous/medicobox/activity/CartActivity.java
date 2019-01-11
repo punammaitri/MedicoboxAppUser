@@ -311,7 +311,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
-                        Toast.makeText(CartActivity.this, "Something wrong at server site", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CartActivity.this, "Something wrong at server site", Toast.LENGTH_SHORT).show();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());

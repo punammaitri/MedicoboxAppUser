@@ -136,20 +136,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_5"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="View Attached Prescriptions(1)"
+                            android:text="View Attached Prescriptions "
                             android:textColor="@color/colorblack"
                             android:textStyle="bold"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                        <ImageView
-                            android:layout_width="@dimen/height_20"
-                            android:layout_height="@dimen/height_20"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/height_10"
-                            android:layout_marginTop="@dimen/height_8"
-                            android:background="@drawable/arrow_yellow" />
-
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rc_medicine_list"

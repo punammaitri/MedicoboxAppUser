@@ -343,15 +343,6 @@
                             android:textStyle="bold"
                             android:textSize="14dp" />
 
-                        <ImageView
-                            android:layout_width="@dimen/height_20"
-                            android:layout_height="@dimen/height_20"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/height_10"
-                            android:layout_marginTop="@dimen/height_8"
-                            android:background="@drawable/arrow_yellow" />
-
                     </RelativeLayout>
 
                     <ImageView

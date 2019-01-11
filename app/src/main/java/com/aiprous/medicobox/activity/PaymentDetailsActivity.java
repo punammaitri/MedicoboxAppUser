@@ -167,8 +167,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
     private void CallOrderPlaceAPI() {
 
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-
         //jsonArray = new JSONArray(mStreetArray);
 
         /*try {
@@ -181,6 +179,9 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
+
+        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("quote_id", quote_id);
@@ -220,7 +221,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
-                        CustomProgressDialog.getInstance().dismissDialog();
                     }
 
                     @Override
@@ -278,7 +278,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(ORDER_ASSIGN)
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
@@ -294,7 +293,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
                             if (status.equals("success")) {
                                 CallAssignSellerAPI(orderId);
-                                CustomProgressDialog.getInstance().dismissDialog();
                             }
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
@@ -322,7 +320,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         AndroidNetworking.post(ORDER_ASSIGN_SELLER)
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
@@ -338,7 +335,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
                             if (status.equals("success")) {
                                 CallSendSmsApi(orderId);
-                                CustomProgressDialog.getInstance().dismissDialog();
                             }
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
@@ -358,7 +354,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
     }
 
     private void CallSendSmsApi(final String orderId) {
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("mobile_number", "91" + MedicoboxApp.onGetMobileNo());
@@ -387,7 +382,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                                         .putExtra("order_id", "" + orderId));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 SingletonAddToCart.getGsonInstance().option.clear();
-                                CustomProgressDialog.getInstance().dismissDialog();
                             } else {
                                 String msg = responseArray.get("msg").getAsString();
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();

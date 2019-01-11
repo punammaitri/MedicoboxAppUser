@@ -186,6 +186,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @OnClick(R.id.btn_insta_list)
     public void ButtonInstaList() {
 
+        //for cart order place
         if (!cartListAsString.equals("") && isChecked) {
             Gson gson = new Gson();
             String cartModel = gson.toJson(cartListAsString);
@@ -211,8 +212,8 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                         .putExtra("imageBinaryString", ""));
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
-
         } else if (isChecked && cartListAsString.equals("")) {
+            //for upload prescription  order place
             startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class)
                     .putExtra("mAddressId", "" + mAddressId)
                     .putExtra("choose_delivery_address", "" + chooseDeliveryAddess)

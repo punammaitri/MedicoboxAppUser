@@ -68,7 +68,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.tv_product_discount.setText(formattedDiscount + "%" + " Off");
 
         if (formattedDiscount.equals("0")) {
-            holder.tv_product_discount.setVisibility(View.GONE);
+            holder.tv_product_discount.setVisibility(View.INVISIBLE);
             holder.tv_product_mrp.setVisibility(View.GONE);
         }else {
             holder.tv_product_discount.setVisibility(View.VISIBLE);
