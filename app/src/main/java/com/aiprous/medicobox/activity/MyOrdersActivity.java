@@ -168,14 +168,14 @@ public class MyOrdersActivity extends AppCompatActivity {
                                     String entity_id = jsonObjectForOrderData.get("entity_id").getAsString();
                                     String user_status = jsonObjectForOrderData.get("status").getAsString();
                                     String created_at = jsonObjectForOrderData.get("created_at").getAsString();
-                                    String grand_total = jsonObjectForOrderData.get("grand_total").getAsString();
+                                    String base_subtotal = jsonObjectForOrderData.get("base_subtotal").getAsString();
                                     String order_inc_id = jsonObjectForOrderData.get("increment_id").getAsString();
 
 
-                                    MyOrdersModel myOrdersModel = new MyOrdersModel(entity_id, user_status, grand_total, created_at,order_inc_id);
+                                    MyOrdersModel myOrdersModel = new MyOrdersModel(entity_id, user_status, base_subtotal, created_at,order_inc_id);
                                     myOrdersModel.setEntity_id(entity_id);
                                     myOrdersModel.setStatus(user_status);
-                                    myOrdersModel.setGrand_total(grand_total);
+                                    myOrdersModel.setBase_subtotal(base_subtotal);
                                     myOrdersModel.setCreated_at(created_at);
                                     myOrdersModel.setOrder_inc_id(order_inc_id);
                                     mMyorder.add(myOrdersModel);

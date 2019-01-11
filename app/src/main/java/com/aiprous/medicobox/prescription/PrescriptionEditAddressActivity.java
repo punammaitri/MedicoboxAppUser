@@ -117,6 +117,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
     private String mPostalCodeUsingPlaces;
     private String mFeatureName;
     private String mLandmark = "";
+    boolean mFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +184,7 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
             }
         }
 
-        if (getIntent().getStringExtra("id") != null) {
+        if (getIntent().getStringExtra("id") != null && mFlag) {
             id = getIntent().getStringExtra("id");
             firstname = getIntent().getStringExtra("firstname");
             lastname = getIntent().getStringExtra("lastname");
@@ -530,6 +531,8 @@ public class PrescriptionEditAddressActivity extends AppCompatActivity {
                         edtPincde.setText(mPostalCodeUsingPlaces);
                         edtState.setText(mStateUsingPlaces);
                         edtCity.setText(mCityUsingPlaces);
+                        btnSave.setText("Update");
+                        mFlag = false;
                         getMyLocation(lat, lng);
                     }
 

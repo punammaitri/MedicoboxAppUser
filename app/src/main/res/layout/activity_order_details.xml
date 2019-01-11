@@ -228,27 +228,13 @@
                     android:weightSum="1">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.9"
                         android:fontFamily="@font/open_sans_regular"
-                        android:text="View Attached Prescriptions (1)"
+                        android:text="View Attached Prescriptions"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/colorblack" />
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1">
-
-                        <ImageView
-                            android:layout_width="@dimen/height_25"
-                            android:layout_height="@dimen/height_25"
-                            android:layout_centerInParent="true"
-                            android:layout_marginRight="@dimen/height_15"
-                            android:src="@drawable/arrow_yellow" />
-
-                    </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

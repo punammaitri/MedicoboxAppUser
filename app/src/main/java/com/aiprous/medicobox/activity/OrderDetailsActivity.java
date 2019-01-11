@@ -169,7 +169,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 entity_id = getJsonObject1.get("entity_id").getAsString();
                                 String status = getJsonObject1.get("status").getAsString();
                                 String increment_id = getJsonObject1.get("increment_id").getAsString();
-                                String grand_total = getJsonObject1.get("grand_total").getAsString();
+                                String base_subtotal = getJsonObject1.get("base_subtotal").getAsString();
                                 String total_due = getJsonObject1.get("total_due").getAsString();
                                 //JsonObject shipping_address_object = getJsonObject1.get("shipping_address").getAsJsonObject();
                                 JsonObject billing_address_object = getJsonObject1.get("billing_address").getAsJsonObject();
@@ -228,7 +228,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 }
 
                                 //remove digit after dot
-                                double input = Double.parseDouble(grand_total);
+                                double input = Double.parseDouble(base_subtotal);
                                 // for set value
                                 tv_total_product_price.setText(mContext.getResources().getString(R.string.Rs) + df2.format(input));
                                 txtOrderId.setText("Order ID: " + increment_id);

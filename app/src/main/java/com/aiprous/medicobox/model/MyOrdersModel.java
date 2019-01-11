@@ -15,8 +15,8 @@ public class MyOrdersModel {
     @SerializedName("status")
     private String status;
     @Expose
-    @SerializedName("grand_total")
-    private String grand_total;
+    @SerializedName("base_subtotal")
+    private String base_subtotal;
     @Expose
     @SerializedName("created_at")
     private String created_at;
@@ -24,10 +24,10 @@ public class MyOrdersModel {
     @SerializedName("order_inc_id")
     private String order_inc_id;
 
-    public MyOrdersModel(String entity_id, String status, String grand_total, String created_at, String order_inc_id) {
+    public MyOrdersModel(String entity_id, String status, String base_subtotal, String created_at, String order_inc_id) {
         this.entity_id = entity_id;
         this.status = status;
-        this.grand_total = grand_total;
+        this.base_subtotal = base_subtotal;
         this.created_at = created_at;
         this.order_inc_id = order_inc_id;
     }
@@ -48,12 +48,12 @@ public class MyOrdersModel {
         this.status = status;
     }
 
-    public String getGrand_total() {
-        return grand_total;
+    public String getBase_subtotal() {
+        return base_subtotal;
     }
 
-    public void setGrand_total(String grand_total) {
-        this.grand_total = grand_total;
+    public void setBase_subtotal(String base_subtotal) {
+        this.base_subtotal = base_subtotal;
     }
 
     public String getCreated_at() {

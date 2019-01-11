@@ -56,7 +56,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
         holder.tv_order_date.setText("Order Date: " + date);
 
         //for price
-        double input = Double.parseDouble(myOrdersArrayList.get(position).getGrand_total());
+        double input = Double.parseDouble(myOrdersArrayList.get(position).getBase_subtotal());
         holder.tv_order_price.setText(mContext.getResources().getString(R.string.Rs) + df2.format(input));
 
         if (myOrdersArrayList.get(position).getStatus().equals("delivered")) {
