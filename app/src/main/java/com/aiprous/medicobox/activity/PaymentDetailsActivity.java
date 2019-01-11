@@ -28,11 +28,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,9 +39,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,11 +92,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         //Change status bar color
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
-        //set text
-        tv_mrp_total.setText(this.getResources().getString(R.string.Rs) + " 350.0");
-        tv_price_discount.setText("-" + this.getResources().getString(R.string.Rs) + " 30.0");
-        tv_to_be_paid.setText(this.getResources().getString(R.string.Rs) + " 350.0");
-        tv_total_savings.setText(this.getResources().getString(R.string.Rs) + "30.0");
     }
 
     @Override
@@ -116,21 +107,32 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
         //Convert bitmap to string
         try {
-            imageBinaryUri = Uri.parse(getIntent().getStringExtra("image"));
-            ContentResolver contentResolver = getContentResolver();
-            InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
-            mBitmap = BitmapFactory.decodeStream(inputStream);
-            imageConvertedString = convertBitmapToString(mBitmap);
+            if (!getIntent().getStringExtra("imageBinaryString").equals("")) {
+                imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
+                ContentResolver contentResolver = getContentResolver();
+                InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
+                mBitmap = BitmapFactory.decodeStream(inputStream);
+                imageConvertedString = convertBitmapToString(mBitmap);
+            } else {
+                imageConvertedString = "";
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+
         // for passing cart model
-        if (getIntent().getStringExtra("items") != null) {
+        if (getIntent().getStringExtra("address_id") != null) {
             address_id = getIntent().getStringExtra("address_id");
             quote_id = getIntent().getStringExtra("quote_id");
 
-            String cartListAsString = getIntent().getStringExtra("items");
+            //set text
+            tv_mrp_total.setText(this.getResources().getString(R.string.Rs) + getIntent().getStringExtra("mrp"));
+            tv_price_discount.setText("-" + this.getResources().getString(R.string.Rs) +  getIntent().getStringExtra("discount"));
+            tv_to_be_paid.setText(this.getResources().getString(R.string.Rs) + getIntent().getStringExtra("final_value"));
+            tv_total_savings.setText(this.getResources().getString(R.string.Rs) +  getIntent().getStringExtra("discount"));
+
+        /*    String cartListAsString = getIntent().getStringExtra("items");
             Gson gson = new Gson();
             Type type = new TypeToken<List<CartModel.Response>>() {
             }.getType();
@@ -159,7 +161,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 jsonArray = new JSONArray(listString);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
@@ -184,7 +186,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             jsonObject.put("quote_id", quote_id);
             jsonObject.put("address_id", address_id);
             jsonObject.put("image", imageConvertedString);
-            jsonObject.put("payment_method", "checkmo");
+            jsonObject.put("payment_method", "cashondelivery");
             jsonObject.put("shipping_method", "wkvendordropship_wkvendordropship");
             Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
@@ -210,9 +212,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                                 String orderId = responseArray.get("order_id").getAsString();
                                 //send sms to user
                                 CallOrderAssignApi(orderId, address_id);
-
-                                /*startActivity(new Intent(PaymentDetailsActivity.this, OrderPlacedActivity.class));
-                                overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
                             } else {
                                 String msg = responseArray.get("msg").getAsString();
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
@@ -269,65 +268,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         return imageEncoded;
     }
 
-  /*  private void CallOrderPlaceAPI() {
-
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-
-        //jsonArray = new JSONArray(mStreetArray);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("address_id", address_id);
-            jsonObject.put("quote_id", MedicoboxApp.onGetCartID());
-            jsonObject.put("shipping_method", "");
-            jsonObject.put("payment_method", "cash");
-            jsonObject.put("image", imageConvertedString);
-            Log.e("data", jsonObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        AndroidNetworking.post(NEW_ADD_TO_CART_ORDER_PLACE)
-                .addJSONObjectBody(jsonObject) // posting json
-                .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
-                            String status = responseArray.get("status").getAsString();
-
-                            if (status.equals("success")) {
-                                String orderId = responseArray.get("order_id").getAsString();
-                                //send sms to user
-                                CallSendSmsApi(orderId);
-                            } else {
-                                String msg = responseArray.get("msg").getAsString();
-                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
-                            }
-
-                        } catch (JsonSyntaxException e) {
-                            e.printStackTrace();
-                        }
-                        CustomProgressDialog.getInstance().dismissDialog();
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        CustomProgressDialog.getInstance().dismissDialog();
-                        //Toast.makeText(MyOrdersActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
-                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                    }
-                });
-    }*/
-
-
     private void CallOrderAssignApi(final String orderId, String address_id) {
 
         JSONObject jsonObject = new JSONObject();
@@ -359,7 +299,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
@@ -378,7 +317,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("order_id", orderId);
-            Log.e("data",jsonObject.toString());
+            Log.e("data", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

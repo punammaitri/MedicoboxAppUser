@@ -42,6 +42,7 @@ import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.prescription.CropingOption;
+import com.aiprous.medicobox.prescription.PrescriptionChooseDeliveryAddressActivity;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -205,7 +206,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
             if (multipleImageUrl != null) {
                 Gson gson = new Gson();
                 String cartModel = gson.toJson(cartModelArrayList);
-                startActivity(new Intent(this, OrderSummaryActivity.class)
+                startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class)
                         .putExtra("cart_model", cartModel)
                         .putExtra("quote_id", lquoteId)
                         .putExtra("imageBinaryString", multipleImageUrl.toString()));
@@ -216,7 +217,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.ShowP
         } else {
             Gson gson = new Gson();
             String cartModel = gson.toJson(cartModelArrayList);
-            startActivity(new Intent(this, OrderSummaryActivity.class)
+            startActivity(new Intent(this, PrescriptionChooseDeliveryAddressActivity.class)
                     .putExtra("cart_model", cartModel)
                     .putExtra("quote_id", lquoteId));
             overridePendingTransition(R.anim.right_in, R.anim.left_out);

@@ -62,6 +62,7 @@
 
 
             <android.support.v7.widget.CardView
+                android:id="@+id/card_view_attach_prescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
@@ -84,27 +85,13 @@
 
                         <TextView
                             android:id="@+id/txtViewAttached"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.9"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="View Attached Prescriptions (1)"
+                            android:text="View Attached Prescriptions"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorblack" />
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1">
-
-                            <ImageView
-                                android:layout_width="@dimen/height_25"
-                                android:layout_height="@dimen/height_25"
-                                android:layout_centerInParent="true"
-                                android:layout_marginRight="@dimen/height_15"
-                                android:src="@drawable/arrow_yellow" />
-
-                        </RelativeLayout>
                     </LinearLayout>
 
                     <ImageView
@@ -125,26 +112,14 @@
                 android:weightSum="1">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Billing Address"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorblack"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txtOrderSummaryBillingAdd"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:gravity="end"
-                    android:text="ADD"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/colorblack"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <android.support.v7.widget.CardView
@@ -204,8 +179,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
-                android:visibility="gone"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="1">
 
                 <TextView
@@ -311,8 +286,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
-                            android:gravity="end"
-                            android:text="\u20B9 350.00" />
+                            android:gravity="end" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -334,8 +308,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
-                            android:gravity="end"
-                            android:text="-\u20B9 30" />
+                            android:gravity="end" />
 
 
                     </LinearLayout>
@@ -386,7 +359,6 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="\u20B9 350.00"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -416,7 +388,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="\u20B9 30.00"
                             android:textColor="@color/colorgreen"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -432,7 +403,6 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic" />
 
-
             <Button
                 android:id="@+id/btn_confirm_order"
                 android:layout_width="match_parent"
@@ -443,7 +413,7 @@
                 android:layout_marginRight="@dimen/height_30"
                 android:layout_marginBottom="@dimen/height_20"
                 android:background="@drawable/custom_btn_bg"
-                android:text="Confirm Order"
+                android:text="Continue"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/height_16"

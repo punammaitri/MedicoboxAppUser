@@ -1,7 +1,11 @@
 package com.aiprous.medicobox.prescription;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +22,12 @@ import android.widget.Toast;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.activity.CartActivity;
 import com.aiprous.medicobox.activity.OrderSummaryActivity;
+import com.aiprous.medicobox.activity.PaymentDetailsActivity;
 import com.aiprous.medicobox.activity.SearchViewActivity;
 import com.aiprous.medicobox.application.MedicoboxApp;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
 import com.aiprous.medicobox.model.AllCustomerAddress;
+import com.aiprous.medicobox.model.CartModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
@@ -30,14 +36,20 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +94,10 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     private String choose_billing_address;
     private String address_id;
     private String quote_id;
-    private String imageBinaryUri;
+    private Uri imageBinaryUri;
+    ArrayList<CartModel.Response> cartList = new ArrayList<>();
+    public Bitmap mBitmap;
+    private String cartListAsString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +118,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
         if (SingletonAddToCart.getGsonInstance().getOptionList().isEmpty()) {
             rlayout_cart.setVisibility(View.VISIBLE);
         } else {
@@ -119,8 +135,18 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
             btnInstaList.setVisibility(View.VISIBLE);
         }
 
+        // for passing cart model
+        if (getIntent().getStringExtra("cart_model") != null) {
+            //load cart model
+            cartListAsString = getIntent().getStringExtra("cart_model");
+            quote_id = getIntent().getStringExtra("quote_id");
+        }
+
+        if (getIntent().getStringExtra("imageBinaryString") != null) {
+            imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
+        }
+
         CallGetAddressAPI();
-        CustomProgressDialog.getInstance().dismissDialog();
     }
 
     private void CallGetAddressAPI() {
@@ -159,7 +185,34 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
 
     @OnClick(R.id.btn_insta_list)
     public void ButtonInstaList() {
-        if (isChecked) {
+
+        if (!cartListAsString.equals("") && isChecked) {
+            Gson gson = new Gson();
+            String cartModel = gson.toJson(cartListAsString);
+
+            if (imageBinaryUri != null) {
+                startActivity(new Intent(this, OrderSummaryActivity.class)
+                        .putExtra("address_id", "" + id)
+                        .putExtra("quote_id", "" + quote_id)
+                        .putExtra("full_address", "" + mAdress)
+                        .putExtra("fullname", "" + mFullname)
+                        .putExtra("mobile", "" + mMobile)
+                        .putExtra("items", "" + cartModel)
+                        .putExtra("imageBinaryString", "" + imageBinaryUri));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            } else {
+                startActivity(new Intent(this, OrderSummaryActivity.class)
+                        .putExtra("address_id", "" + id)
+                        .putExtra("quote_id", "" + quote_id)
+                        .putExtra("full_address", "" + mAdress)
+                        .putExtra("fullname", "" + mFullname)
+                        .putExtra("mobile", "" + mMobile)
+                        .putExtra("items", "" + cartModel)
+                        .putExtra("imageBinaryString", ""));
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
+
+        } else if (isChecked && cartListAsString.equals("")) {
             startActivity(new Intent(this, PrescriptionOrderSummaryActivity.class)
                     .putExtra("mAddressId", "" + mAddressId)
                     .putExtra("choose_delivery_address", "" + chooseDeliveryAddess)
@@ -228,6 +281,7 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
                                 rc_medicine_list.setLayoutManager(new LinearLayoutManager(PrescriptionChooseDeliveryAddressActivity.this, LinearLayoutManager.VERTICAL, false));
                                 rc_medicine_list.setHasFixedSize(true);
                                 rc_medicine_list.setAdapter(new PrescriptionChooseDeliveryAddressAdapter(PrescriptionChooseDeliveryAddressActivity.this, mAllCustomerArrayList));
+                                CustomProgressDialog.getInstance().dismissDialog();
                             }
                         }
                     }
@@ -269,7 +323,6 @@ public class PrescriptionChooseDeliveryAddressActivity extends AppCompatActivity
         mAdress = address;
         mFullname = fullname;
         mMobile = mobile;
-
     }
 
     private void CallDeleteAPI(JSONObject jsonObject) {

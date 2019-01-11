@@ -93,13 +93,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.tv_medicine_contains.setText(mCartArrayList.get(position).getShort_description());
         holder.tv_mrp_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
 
+        if (mCartArrayList.get(position).getPrice().equals("") || mCartArrayList.get(position).getPrice().equals("0")) {
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) +"0");
+        } else {
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
+        }
 
-        if (mCartArrayList.get(position).getSale_price().isEmpty()) {
+
+     /*   if (mCartArrayList.get(position).getSale_price().isEmpty()) {
             holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
         } else {
             holder.tv_mrp_price.setPaintFlags(holder.tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getSale_price());
-        }
+            holder.tv_price.setText(mContext.getResources().getString(R.string.Rs) + mCartArrayList.get(position).getPrice());
+        }*/
 
         if (mCartArrayList.get(position).getPrescription_req() == 1) {
             mContext.showPrescriptionUpload(1);

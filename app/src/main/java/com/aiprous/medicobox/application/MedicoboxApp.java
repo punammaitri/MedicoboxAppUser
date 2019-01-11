@@ -25,7 +25,7 @@ public class MedicoboxApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ACRA.init(this);
+        //ACRA.init(this);
         mContext = getApplicationContext();
         mSharedPreferences = mContext.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
     }

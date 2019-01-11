@@ -154,9 +154,8 @@
                         android:weightSum="1">
 
                         <RadioButton
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.7"
                             android:checked="true"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Cash on delivery"
@@ -212,7 +211,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="Rs350" />
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -235,7 +234,7 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="-Rs30" />
+                           />
 
 
                     </LinearLayout>
@@ -304,7 +303,6 @@
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans_regular"
                             android:gravity="end"
-                            android:text="Rs350.0"
                             android:textColor="@color/colorblack"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -335,7 +333,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_regular"
-                            android:text="Rs30.0"
                             android:textColor="@color/colorgreen"
                             android:textStyle="bold" />
 

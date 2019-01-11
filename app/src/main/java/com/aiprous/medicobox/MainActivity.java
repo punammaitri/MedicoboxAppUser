@@ -520,7 +520,7 @@ public class MainActivity extends AppCompatActivity
                     public void onError(ANError error) {
                         // handle error
                         CustomProgressDialog.getInstance().dismissDialog();
-                        Toast.makeText(MainActivity.this, "Something wrong at server site", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Something wrong at server site", Toast.LENGTH_SHORT).show();
                         SingletonAddToCart.getGsonInstance().option.clear();
                         Log.e("Error", "onError errorCode : " + error.getErrorCode());
                         Log.e("Error", "onError errorBody : " + error.getErrorBody());

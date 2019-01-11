@@ -602,7 +602,6 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                 });
     }
 
-
     public class ListModel {
 
         Bitmap Imagebitmap;
@@ -645,7 +644,9 @@ public class PrescriptionUploadActivity extends AppCompatActivity implements Pre
                 finish();
                 break;
             case R.id.btnContinue:
-                if (edtPatientName.getText().length() == 0) {
+                if (mlistModelsArray.size() == 0) {
+                    Toast.makeText(mContext, "Please upload prescription", Toast.LENGTH_SHORT).show();
+                } else if (edtPatientName.getText().length() == 0) {
                     Toast.makeText(mContext, "add patient name", Toast.LENGTH_SHORT).show();
                 } else {
                     String getPatientName = edtPatientName.getText().toString().trim();

@@ -3,6 +3,7 @@ package com.aiprous.medicobox.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -171,6 +172,8 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
     }
 
     private void init() {
+
+
         // tv_mrp_price.setText(mcontext.getResources().getString(R.string.Rs) + "68.60");
         //tv_per_tablet_price.setText("(" + mcontext.getResources().getString(R.string.Rs) + "6.86/Tablet SR" + ")");
 
@@ -391,7 +394,31 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                         Double mMrpDescAmount = Double.parseDouble(mMrp);
                                         mMrpAmount = Integer.valueOf(mMrpDescAmount.intValue());
                                         mdiscount = String.valueOf(((mDiscountAmount / mMrpAmount) * 100));
+
+                                        //for printing 2 dot after decimal with strike
+                                        StringTokenizer st = new StringTokenizer(mMrp, ".");
+                                        String actual_price = st.nextToken();
+                                        String decimal_price = st.nextToken();
+                                        String first2char = decimal_price.substring(0, 2);
+                                        tv_mrp_price.setText(" \u20B9 " + actual_price + "." + first2char);
+                                        tv_mrp_price.setPaintFlags(tv_mrp_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                                        //for sale price
+                                        StringTokenizer salePrice = new StringTokenizer(sale_price, ".");
+                                        String mPrice = salePrice.nextToken();
+                                        String mDot = salePrice.nextToken();
+                                        String remove_dot = mDot.substring(0, 2);
+                                        tv_per_tablet_price.setText(" \u20B9 " + mPrice + "." + remove_dot);
+
                                     } else {
+
+                                        //for printing 2 dot after decimal with strike
+                                        StringTokenizer st = new StringTokenizer(mMrp, ".");
+                                        String actual_price = st.nextToken();
+                                        String decimal_price = st.nextToken();
+                                        String first2char = decimal_price.substring(0, 2);
+                                        tv_mrp_price.setText(" \u20B9 " + actual_price + "." + first2char);
+                                        tv_mrp_price.setTextColor(mcontext.getResources().getColor(R.color.colorblack));
                                         mdiscount = "";
                                     }
 
@@ -399,12 +426,6 @@ public class ProductDetailBActivity extends AppCompatActivity implements Substit
                                     tv_medicine_name.setText(mMedicineName);
                                     // tv_medicine_contains.setText(mValue);
 
-                                    //for printing 2 dot after decimal
-                                    StringTokenizer st = new StringTokenizer(mMrp, ".");
-                                    String actual_price = st.nextToken();
-                                    String decimal_price = st.nextToken();
-                                    String first2char = decimal_price.substring(0, 2);
-                                    tv_mrp_price.setText(actual_price + "." + first2char);
 
                                     //remove digit after dot
                                     /*double input = Double.parseDouble(mMrp);

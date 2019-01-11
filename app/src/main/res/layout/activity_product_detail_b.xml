@@ -155,6 +155,7 @@
                                 android:layout_marginLeft="@dimen/height_5"
                                 android:fontFamily="@font/open_sans_regular"
                                 android:text="\u20B9"
+                                android:visibility="gone"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/colorblack"
                                 android:textStyle="bold" />
@@ -167,9 +168,7 @@
                                 android:layout_marginLeft="@dimen/height_3"
                                 android:layout_toRightOf="@+id/tv_mrp"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="@color/colorblack"
-                                android:textStyle="bold" />
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
 
                             <TextView
                                 android:id="@+id/tv_per_tablet_price"
@@ -179,8 +178,10 @@
                                 android:layout_marginLeft="@dimen/height_5"
                                 android:layout_toRightOf="@+id/tv_mrp_price"
                                 android:fontFamily="@font/open_sans_regular"
-                                android:text=""
-                                android:visibility="gone" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textColor="@color/colorblack"
+                                android:textStyle="bold"
+                                android:visibility="visible" />
 
                             <TextView
                                 android:id="@+id/txtUom"

@@ -213,11 +213,11 @@ public class MyOrdersActivity extends AppCompatActivity {
 
     @OnClick(R.id.rlayout_back_button)
     public void BackPressDetail() {
-
         Intent intent = new Intent(MyOrdersActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
         startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         finish();
     }
 
