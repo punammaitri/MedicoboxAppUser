@@ -76,15 +76,18 @@ public class APIConstant {
     public static String RELATED_PRODUCT = "http://user8.itsindev.com/medibox/API/related_product.php?product_id=";
 
     //coupon
-    public static String APPLY_COUPON="http://user8.itsindev.com/medibox/API/apply_coupon.php";
+    public static String APPLY_COUPON = "http://user8.itsindev.com/medibox/API/apply_coupon.php";
 
     //new order place with coupon code
     public static String ADD_TO_CART_ORDER_PLACE = "http://user8.itsindev.com/medibox/API/order-place.php";
     public static String NEW_ADD_TO_CART_ORDER_PLACE = "http://user8.itsindev.com/medibox/API/order-place-new.php";
-    public static String GET_CART_TOTAL="http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/totals";
+    public static String GET_CART_TOTAL = "http://user8.itsindev.com/medibox/index.php/rest/V1/carts/mine/totals";
+    public static String GET_SHIPPING_ESTIMATE_BY_ADDRESS = "https://user8.itsindev.com/medibox/rest/english/V1/carts/mine/estimate-shipping-methods-by-address-id";
 
     //send sms API
-    public static String SEND_SMS="http://user8.itsindev.com/medibox/API/sms-notification.php";
+    public static String OTP_REG = "http://user8.itsindev.com/medibox/API/otp-register.php";
+    public static String VERIFY_OTP = "http://user8.itsindev.com/medibox/API/verify-register-otp.php";
+    public static String SEND_SMS = "http://user8.itsindev.com/medibox/API/sms-notification.php";
     //Response Status Code
     public static final int SUCCESS_CODE = 200;
     /*For Sweet alert*/

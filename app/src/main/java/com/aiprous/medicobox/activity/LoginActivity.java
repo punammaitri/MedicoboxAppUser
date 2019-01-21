@@ -306,8 +306,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("username", "geetbasakare@gmail.com");
-                        jsonObject.put("password", "Geet@789");
+                        jsonObject.put("username", lEmailMobile);
+                        jsonObject.put("password", lPass);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

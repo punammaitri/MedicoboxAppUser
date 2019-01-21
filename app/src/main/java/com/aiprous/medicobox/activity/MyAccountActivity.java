@@ -196,8 +196,8 @@ public class MyAccountActivity extends AppCompatActivity {
                                             shipping_street = streetInnerArray.get(1).getAsString();
                                             shipping_landmark = streetInnerArray.get(2).getAsString();
 
-                                            String fullShippingAddress = shipping_flat + "," + shipping_street + "," + shipping_landmark + "," + "\n" +
-                                                    shipping_city + "," + shipping_country_id + ","+ shipping_postcode;
+                                            String fullShippingAddress = shipping_flat + "," + shipping_street + "," + shipping_landmark + "," +
+                                                    "\n" + shipping_city + "," + shipping_country_id + ","+ shipping_postcode;
                                             txtShippingAddress.setText(fullShippingAddress);
                                             txtShippingName.setText(shipping_firstname + " " + shipping_lastname);
                                             txtShippingMobile.setText(shipping_telephone);

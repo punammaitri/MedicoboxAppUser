@@ -88,6 +88,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private String order_id;
     private String entity_id = "";
+    private String streetInnerArray_flat;
+    private String streetInnerArray_street;
+    private String streetInnerArray_landmark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,14 +196,21 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                 if (billing_address_object != null) {
                                     String firstname = billing_address_object.get("firstname").getAsString();
                                     String lastname = billing_address_object.get("lastname").getAsString();
-                                    String street = billing_address_object.get("street").getAsString();
+
+                                    JsonArray streetArray = billing_address_object.get("street").getAsJsonArray();
+                                    JsonArray streetInnerArray = streetArray.getAsJsonArray();
+                                    streetInnerArray_flat = streetInnerArray.get(0).getAsString();
+                                    streetInnerArray_street = streetInnerArray.get(1).getAsString();
+                                    streetInnerArray_landmark = streetInnerArray.get(2).getAsString();
+
                                     String city = billing_address_object.get("city").getAsString();
                                     String telephone = billing_address_object.get("telephone").getAsString();
                                     String country_id = billing_address_object.get("country_id").getAsString();
                                     String postcode = billing_address_object.get("postcode").getAsString();
 
                                     txtBillingAddressUsername.setText(firstname + " " + lastname);
-                                    String fullBillingAddress = street + "," + city + "," + country_id + "\n" + postcode;
+                                    String fullBillingAddress = streetInnerArray_flat + "," + streetInnerArray_landmark + "," + streetInnerArray_street + "," +
+                                            "\n" + city + "," + country_id + "," + postcode;
                                     txtBillingAddress.setText(fullBillingAddress);
                                 }
 

@@ -168,6 +168,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 String errorMessage = jsonResponse.getString("message");
                                 Toast.makeText(mContext, "" + errorMessage, Toast.LENGTH_SHORT).show();
                             } else {
+                                CallOTPAPI();
                                 CallSmsAPI(lMobile, lEmail, lPass);
                             }
                         } catch (JSONException e) {
@@ -184,6 +185,10 @@ public class SignUpActivity extends AppCompatActivity {
                         Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
+    }
+
+    private void CallOTPAPI() {
+
     }
 
     private void CallSmsAPI(String lMobile, String lEmail, String lPass) {

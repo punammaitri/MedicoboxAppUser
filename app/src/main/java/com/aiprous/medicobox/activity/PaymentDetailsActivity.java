@@ -180,7 +180,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
 
-        CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
+        //CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -194,7 +194,6 @@ public class PaymentDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //CallSendSmsApi
         AndroidNetworking.post(NEW_ADD_TO_CART_ORDER_PLACE)
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
@@ -211,7 +210,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
                             if (status.equals("success")) {
                                 String orderId = responseArray.get("order_id").getAsString();
-                                //send sms to user
+                                //call order asign api
                                 CallOrderAssignApi(orderId, address_id);
                             } else {
                                 String msg = responseArray.get("msg").getAsString();
@@ -245,6 +244,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 if (!isNetworkAvailable(this)) {
                     CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
                 } else {
+                    CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
                     //Call get cart items API
                     CallOrderPlaceAPI();
                 }
@@ -268,6 +268,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
         return imageEncoded;
     }
 
+    //Call Order assigned to warehouse API
     private void CallOrderAssignApi(final String orderId, String address_id) {
 
         JSONObject jsonObject = new JSONObject();
@@ -292,6 +293,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             String status = responseObject.get("status").getAsString();
 
                             if (status.equals("success")) {
+                                //call order asign to seller api
                                 CallAssignSellerAPI(orderId);
                             }
                         } catch (JsonSyntaxException e) {
@@ -311,6 +313,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 });
     }
 
+    //call order asign to seller api
     private void CallAssignSellerAPI(final String orderId) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -334,6 +337,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                             String status = responseObject.get("status").getAsString();
 
                             if (status.equals("success")) {
+                                //call send sms api
                                 CallSendSmsApi(orderId);
                             }
                         } catch (JsonSyntaxException e) {
@@ -353,6 +357,7 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 });
     }
 
+    //call send sms api
     private void CallSendSmsApi(final String orderId) {
         JSONObject jsonObject = new JSONObject();
         try {

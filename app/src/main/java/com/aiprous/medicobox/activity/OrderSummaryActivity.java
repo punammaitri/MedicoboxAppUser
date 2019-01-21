@@ -31,6 +31,7 @@ import com.aiprous.medicobox.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -51,7 +52,7 @@ import butterknife.OnClick;
 import static com.aiprous.medicobox.utils.APIConstant.Authorization;
 import static com.aiprous.medicobox.utils.APIConstant.BEARER;
 import static com.aiprous.medicobox.utils.APIConstant.GETCARTITEMS;
-import static com.aiprous.medicobox.utils.APIConstant.GET_CART_TOTAL;
+import static com.aiprous.medicobox.utils.APIConstant.GET_SHIPPING_ESTIMATE_BY_ADDRESS;
 import static com.aiprous.medicobox.utils.BaseActivity.isNetworkAvailable;
 
 public class OrderSummaryActivity extends AppCompatActivity implements OrderSummaryAdapter.AddDiscountInterfce {
@@ -195,18 +196,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements OrderSumm
         } else {
             //get cart items through api
             getCartItems(MedicoboxApp.onGetAuthToken());
-            //CallGetCardTotal();
-        }
-
-        CallAddressAPI();
-    }
-
-    private void CallAddressAPI() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("user_id", MedicoboxApp.onGetId());
-        } catch (JSONException e) {
-            e.printStackTrace();
+            //get estimate-shipping-methods-by-address-id
+            CallGetShippingEstimate(billing_id);
         }
     }
 
@@ -334,24 +325,26 @@ public class OrderSummaryActivity extends AppCompatActivity implements OrderSumm
         }
     }
 
-    private void CallGetCardTotal() {
+    private void CallGetShippingEstimate(String billing_id) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("addressId", billing_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         CustomProgressDialog.getInstance().showDialog(mContext, "", APIConstant.PROGRESS_TYPE);
-        AndroidNetworking.get(GET_CART_TOTAL)
-                // .addJSONObjectBody(jsonObject) // posting json
+        AndroidNetworking.post(GET_SHIPPING_ESTIMATE_BY_ADDRESS)
+                .addJSONObjectBody(jsonObject) // posting json
                 .addHeaders(Authorization, BEARER + MedicoboxApp.onGetAuthToken())
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
-                            JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-
-                            int mrpTotal = getAllResponse.get("grand_total").getAsInt();
-                            int base_discount_amount = getAllResponse.get("base_discount_amount").getAsInt();
-                            int mTobePaid = mrpTotal - base_discount_amount;
-
-                            tv_free_shipping_note.setText("Free shipping for orders above " + mContext.getResources().getString(R.string.Rs) + "500");
+                            //JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
 
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();

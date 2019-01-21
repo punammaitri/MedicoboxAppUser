@@ -66,6 +66,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services:12.0.1'
     implementation 'com.google.android.gms:play-services-auth:12.0.1'
     implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.maps:google-maps-services:0.1.20'
     // for direction
     implementation 'com.github.ar-android:DrawRouteMaps:1.0.0'
     //picasso
@@ -84,6 +85,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:12.0.1'
     //bar chart
     implementation 'com.github.PhilJay:MPAndroidChart:v2.0.9'
+    implementation 'com.akexorcist:googledirectionlibrary:1.1.1'
     //crash lib
     implementation 'ch.acra:acra:4.9.2'
 
