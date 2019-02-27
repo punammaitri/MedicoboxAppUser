@@ -43,7 +43,6 @@
             android:id="@+id/tv_order_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Order ID: MB12838492829"
             android:textColor="@color/colorblack"
             android:textStyle="bold"
             android:layout_gravity="center"

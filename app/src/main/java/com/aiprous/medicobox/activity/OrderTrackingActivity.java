@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -20,7 +19,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -28,9 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahmadrosid.lib.drawroutemap.DrawMarker;
-import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
-import com.ahmadrosid.lib.drawroutemap.FetchUrl;
 import com.aiprous.medicobox.R;
 import com.aiprous.medicobox.adapter.OrderTrackingAdapter;
 import com.aiprous.medicobox.designpattern.SingletonAddToCart;
@@ -38,10 +33,6 @@ import com.aiprous.medicobox.model.OrderTrackingModel;
 import com.aiprous.medicobox.utils.APIConstant;
 import com.aiprous.medicobox.utils.BaseActivity;
 import com.aiprous.medicobox.utils.CustomProgressDialog;
-import com.akexorcist.googledirection.DirectionCallback;
-import com.akexorcist.googledirection.GoogleDirection;
-import com.akexorcist.googledirection.constant.AvoidType;
-import com.akexorcist.googledirection.model.Direction;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
@@ -57,9 +48,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -446,8 +435,10 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
 
     @OnClick(R.id.btn_Cancel_Order)
     public void cancelOrder() {
-        startActivity(new Intent(this, CancelOrderActivity.class));
+        startActivity(new Intent(OrderTrackingActivity.this, CancelOrderActivity.class)
+                .putExtra("order_id", "" + order_id));
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -474,7 +465,6 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
         }
 
 
-
         // Setting onclick event listener for the map
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
@@ -496,7 +486,7 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                 // Setting the position of the marker
                 options.position(point);
 
-            /*    *
+                /*    *
                  * For the start location, the color of marker is GREEN and
                  * for the end location, the color of marker is RED.*/
 
@@ -524,13 +514,10 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                     FetchUrl.execute(url);
                     //move map camera
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
                 }
-
             }
         });
-
-
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -580,7 +567,7 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
 
         //stop location updates
@@ -785,17 +772,17 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask",jsonData[0].toString());
+                Log.d("ParserTask", jsonData[0].toString());
                 DataParser parser = new DataParser();
                 Log.d("ParserTask", parser.toString());
 
                 // Starts parsing data
                 routes = parser.parse(jObject);
-                Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
+                Log.d("ParserTask", "Executing routes");
+                Log.d("ParserTask", routes.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask",e.toString());
+                Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routes;
@@ -831,16 +818,15 @@ public class OrderTrackingActivity extends AppCompatActivity implements OnMapRea
                 lineOptions.width(10);
                 lineOptions.color(Color.RED);
 
-                Log.d("onPostExecute","onPostExecute lineoptions decoded");
+                Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
             }
 
             // Drawing polyline in the Google Map for the i-th route
-            if(lineOptions != null) {
+            if (lineOptions != null) {
                 mMap.addPolyline(lineOptions);
-            }
-            else {
-                Log.d("onPostExecute","without Polylines drawn");
+            } else {
+                Log.d("onPostExecute", "without Polylines drawn");
             }
         }
     }

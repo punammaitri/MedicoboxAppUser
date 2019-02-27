@@ -173,20 +173,24 @@ public class OrderSummaryActivity extends AppCompatActivity implements OrderSumm
         }
 
         //load image in bitmap
-        if (!getIntent().getStringExtra("imageBinaryString").equals("")) {
-            try {
-                imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
-                ContentResolver contentResolver = getContentResolver();
-                InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
-                mBitmap = BitmapFactory.decodeStream(inputStream);
-                //set data
-                card_view_attach_prescription.setVisibility(View.VISIBLE);
-                imgPrescription.setImageBitmap(mBitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        try {
+            if (!getIntent().getStringExtra("imageBinaryString").equals("")) {
+                try {
+                    imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
+                    ContentResolver contentResolver = getContentResolver();
+                    InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
+                    mBitmap = BitmapFactory.decodeStream(inputStream);
+                    //set data
+                    card_view_attach_prescription.setVisibility(View.VISIBLE);
+                    imgPrescription.setImageBitmap(mBitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                card_view_attach_prescription.setVisibility(View.GONE);
             }
-        } else {
-            card_view_attach_prescription.setVisibility(View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

@@ -28,6 +28,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -107,16 +108,20 @@ public class PaymentDetailsActivity extends AppCompatActivity {
 
         //Convert bitmap to string
         try {
-            if (!getIntent().getStringExtra("imageBinaryString").equals("")) {
-                imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
-                ContentResolver contentResolver = getContentResolver();
-                InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
-                mBitmap = BitmapFactory.decodeStream(inputStream);
-                imageConvertedString = convertBitmapToString(mBitmap);
-            } else {
-                imageConvertedString = "";
+            try {
+                if (!getIntent().getStringExtra("imageBinaryString").equals("")) {
+                    imageBinaryUri = Uri.parse(getIntent().getStringExtra("imageBinaryString"));
+                    ContentResolver contentResolver = getContentResolver();
+                    InputStream inputStream = contentResolver.openInputStream(imageBinaryUri);
+                    mBitmap = BitmapFactory.decodeStream(inputStream);
+                    imageConvertedString = convertBitmapToString(mBitmap);
+                } else {
+                    imageConvertedString = "";
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -198,22 +203,38 @@ public class PaymentDetailsActivity extends AppCompatActivity {
                 .addJSONObjectBody(jsonObject) // posting json
                 .setPriority(Priority.MEDIUM)
                 .build()
+             /* .getAsString(new StringRequestListener() {
+                  @Override
+                  public void onResponse(String response) {
+                      JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
 
+                  }
+
+                  @Override
+                  public void onError(ANError error) {
+                      // handle error
+                      CustomProgressDialog.getInstance().dismissDialog();
+                      Toast.makeText(PaymentDetailsActivity.this, "Something happen from server side", Toast.LENGTH_SHORT).show();
+                      Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                      Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                      Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                  }
+              });*/
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JsonObject responseArray = getAllResponse.get("response").getAsJsonObject();
-                            String status = responseArray.get("status").getAsString();
+                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
+                            String status = responseObject.get("status").getAsString();
+                            String order_id = responseObject.get("order_id").getAsString();
 
                             if (status.equals("success")) {
-                                String orderId = responseArray.get("order_id").getAsString();
-                                //call order asign api
-                                CallOrderAssignApi(orderId, address_id);
+                                CallSendSmsApi(order_id);
+                                //CallOrderAssignApi(orderId, address_id);
                             } else {
-                                String msg = responseArray.get("msg").getAsString();
+                                String msg = responseObject.get("msg").getAsString();
                                 Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
                             }
 

@@ -375,27 +375,30 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/height_8" />
 
+
                     </LinearLayout>
+
 
                 </android.support.v7.widget.CardView>
 
-                <Button
-                    android:id="@+id/btn_Cancel_Order"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_45"
-                    android:layout_marginLeft="@dimen/height_30"
-                    android:layout_marginTop="@dimen/height_10"
-                    android:layout_marginRight="@dimen/height_30"
-                    android:layout_marginBottom="@dimen/height_20"
-                    android:background="@drawable/custom_btn_bg"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:text="Cancel Order"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/height_16"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_Cancel_Order"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginLeft="@dimen/height_30"
+                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_30"
+                android:layout_marginBottom="@dimen/height_20"
+                android:background="@drawable/custom_btn_bg"
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Cancel Order"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
